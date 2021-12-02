@@ -46,7 +46,7 @@ RSpec.configure do |config|
   def config_defaults
     {
       "destination" => dest_dir,
-      "gems" => ["jekyll-glossary_tooltip"] # Called "plugins" in Jekyll >=3.5.0
+      "gems" => ["nestedtext-ruby"] # Called "plugins" in Jekyll >=3.5.0
     }.freeze
   end
 

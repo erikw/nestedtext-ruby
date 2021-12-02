@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require "jekyll-glossary_tooltip/options_parser"
-require "jekyll-glossary_tooltip/errors"
+require "nestedtext-ruby/options_parser"
+require "nestedtext-ruby/errors"
 
-P = Jekyll::GlossaryTooltip::OptionsParser
-E = Jekyll::GlossaryTooltip::Errors
+P = Jekyll::NestedText::OptionsParser
+E = Jekyll::NestedText::Errors
 
-RSpec.describe Jekyll::GlossaryTooltip::OptionsParser do
+RSpec.describe Jekyll::NestedText::OptionsParser do
   context "when providing valid term name" do
     let(:actual) { P.parse("a_term") }
     let(:expected) do

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "jekyll-glossary_tooltip/errors"
+require "nestedtext-ruby/errors"
 
 module Jekyll
-  module GlossaryTooltip
+  module NestedText
     # Stripped down & modified version of
     # https://github.com/ayastreb/jekyll-maps/blob/master/lib/jekyll-maps/options_parser.rb
     class OptionsParser

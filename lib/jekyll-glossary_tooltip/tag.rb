@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require "jekyll"
-require "jekyll-glossary_tooltip/errors"
+require "nestedtext-ruby/errors"
 
 module Jekyll
-  module GlossaryTooltip
+  module NestedText
     # Custom liquid tag implementation.
     class Tag < Liquid::Tag
       def initialize(tag_name, args, tokens)
@@ -63,4 +63,4 @@ module Jekyll
   end
 end
 
-Liquid::Template.register_tag("glossary", Jekyll::GlossaryTooltip::Tag)
+Liquid::Template.register_tag("glossary", Jekyll::NestedText::Tag)

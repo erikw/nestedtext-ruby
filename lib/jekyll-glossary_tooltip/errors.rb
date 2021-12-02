@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Jekyll
-  module GlossaryTooltip
+  module NestedText
     module Errors
       class MissingTermDefinition < StandardError
         def initialize(term_name); super("Glossary entry for '#{term_name}' does not contain a definition!") end

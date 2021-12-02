@@ -2,12 +2,12 @@
 
 require "fileutils"
 
-require "jekyll-glossary_tooltip/tag"
-require "jekyll-glossary_tooltip/errors"
+require "nestedtext-ruby/tag"
+require "nestedtext-ruby/errors"
 
-E = Jekyll::GlossaryTooltip::Errors  # Make namespace referencing easier here.
+E = Jekyll::NestedText::Errors  # Make namespace referencing easier here.
 
-RSpec.describe Jekyll::GlossaryTooltip::Tag do
+RSpec.describe Jekyll::NestedText::Tag do
   after(:context) { remove_dest_dir }
 
   context "when a site is correctly configured" do

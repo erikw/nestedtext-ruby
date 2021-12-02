@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe Jekyll::GlossaryTooltip do
+RSpec.describe Jekyll::NestedText do
   it "has a version number" do
-    expect(Jekyll::GlossaryTooltip::VERSION).not_to be nil
+    expect(Jekyll::NestedText::VERSION).not_to be nil
   end
 end
