@@ -40,7 +40,7 @@ Lint/EmptyClass:
 Layout/EmptyLineBetweenDefs:
   Enabled: true
   Exclude:
-  - lib/jekyll-glossary_tooltip/errors.rb
+  - lib/nestedtext-ruby/errors.rb
 Lint/EmptyInPattern:
   Enabled: true
 Lint/LambdaWithoutLiteralBlock:
@@ -84,7 +84,7 @@ Metrics/MethodLength:
 Naming/FileName:
   Enabled: false
   Exclude:
-  - lib/jekyll-glossary_tooltip.rb
+  - lib/nestedtext-ruby.rb
 Naming/InclusiveLanguage:
   Enabled: true
 
@@ -95,7 +95,7 @@ Style/CollectionCompact:
 Style/Documentation:
   Enabled: true
   Exclude:
-  - lib/jekyll-glossary_tooltip/errors.rb
+  - lib/nestedtext-ruby/errors.rb
 Style/DocumentDynamicEvalDefinition:
   Enabled: true
 Style/EndlessMethod:
@@ -123,7 +123,7 @@ Style/RegexpLiteral:
 Style/SingleLineMethods:
   Enabled: true
   Exclude:
-  - lib/jekyll-glossary_tooltip/errors.rb
+  - lib/nestedtext-ruby/errors.rb
 Style/StringChars:
   Enabled: true
 Style/StringLiterals:

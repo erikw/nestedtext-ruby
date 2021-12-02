@@ -5,4 +5,4 @@ layout: default
 
 # Fixture
 
-A simple fixture page to {% glossary term_no_def %} the glossary.
+A simple fixture page to {% nestedtext term_no_def %} the nestedtext.

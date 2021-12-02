@@ -5,4 +5,4 @@ layout: default
 
 # Fixture
 
-A simple fixture page to {% glossary term with spaces %} the glossary.
+A simple fixture page to {% nestedtext term with spaces %} the nestedtext.

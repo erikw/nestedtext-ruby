@@ -22,23 +22,23 @@ RSpec.describe Jekyll::NestedText::Tag do
     let(:page4) { File.read(dest_dir("page4.html")) }
     let(:page5) { File.read(dest_dir("page5.html")) }
 
-    it "renders a glossary tag with a URL" do
+    it "renders a nestedtext tag with a URL" do
       expect_tag_match(page1, "term_with_url")
     end
 
-    it "renders a glossary tag without a URL" do
+    it "renders a nestedtext tag without a URL" do
       expect_tag_match(page2, "term_without_url", url: false)
     end
 
-    it "renders a glossary tag from case insensitive lookup" do
+    it "renders a nestedtext tag from case insensitive lookup" do
       expect_tag_match(page3, "TERM_CASE_INSENSITIVE", term_display: "TerM_Case_Insensitive")
     end
 
-    it "renders a glossary tag having spaces" do
+    it "renders a nestedtext tag having spaces" do
       expect_tag_match(page4, "term with spaces", url: false)
     end
 
-    it "renders a glossary tag with alternative display name" do
+    it "renders a nestedtext tag with alternative display name" do
       expect_tag_match(page5, "term_with_url", term_display: "term alt display name")
     end
   end
@@ -59,15 +59,15 @@ RSpec.describe Jekyll::NestedText::Tag do
     end
   end
 
-  context "when a site is incorrectly configured (missing glossary file)" do
-    let(:site) { make_site({ "source" => source_dir("missing_glossary") }) }
+  context "when a site is incorrectly configured (missing nestedtext file)" do
+    let(:site) { make_site({ "source" => source_dir("missing_nestedtext") }) }
 
     it "building the site will raise an error" do
-      expect { site.process }.to raise_error(E::NoGlossaryFile)
+      expect { site.process }.to raise_error(E::NoNestedTextFile)
     end
   end
 
-  context "when a site is incorrectly configured (missing term in glossary)" do
+  context "when a site is incorrectly configured (missing term in nestedtext)" do
     let(:site) { make_site({ "source" => source_dir("missing_term") }) }
 
     it "building the site will raise an error" do
@@ -75,7 +75,7 @@ RSpec.describe Jekyll::NestedText::Tag do
     end
   end
 
-  context "when a site is incorrectly configured (duplicate term in glossary)" do
+  context "when a site is incorrectly configured (duplicate term in nestedtext)" do
     let(:site) { make_site({ "source" => source_dir("duplicate_term") }) }
 
     it "building the site will raise an error" do

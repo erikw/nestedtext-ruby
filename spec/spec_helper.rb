@@ -14,9 +14,9 @@ SOURCE_DIR = File.expand_path("fixtures", __dir__)
 DEST_DIR   = File.expand_path("dest", __dir__)
 
 # Tag matching regex parts.
-R1 = %r{<span class="jekyll-glossary">\s*}
-R2 = %r{\s*<span class="jekyll-glossary-tooltip">\s*}
-R3 = %r{\s*<br(\s/)?><a class="jekyll-glossary-source-link" href="}
+R1 = %r{<span class="jekyll-nestedtext">\s*}
+R2 = %r{\s*<span class="jekyll-nestedtext-tooltip">\s*}
+R3 = %r{\s*<br(\s/)?><a class="jekyll-nestedtext-source-link" href="}
 R4 = %r{" target="_blank"></a>\s*}
 R5 = %r{</span>\s*</span>}
 

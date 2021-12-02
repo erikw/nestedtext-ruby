@@ -5,5 +5,5 @@ layout: default
 
 # Fixture
 
-A simple fixture page to {% glossary TerM_Case_Insensitive %} the glossary.
+A simple fixture page to {% nestedtext TerM_Case_Insensitive %} the nestedtext.
 
