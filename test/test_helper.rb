@@ -6,12 +6,7 @@
 require "minitest/autorun"
 require "minitest/reporters"
 
+require "nestedtext"
+
 # Colorized test reporter.
 Minitest::Reporters.use!
-
-# TODO: conf minitest
-# Minitest::Reporters.use! [
-## Minitest::Reporters::SpecReporter.new,
-# Minitest::Reporters::DefaultReporter.new
-# ]
-# Minitest::Reporters.use!(Minitest::Reporters::DefaultReporter.new)

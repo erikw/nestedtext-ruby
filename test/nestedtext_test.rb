@@ -1,11 +1,11 @@
 require "test_helper"
 
 class NestedTextTest < Minitest::Test
-  def test_success
-    assert_equal 4, 4
+  def test_has_version
+    refute_nil NestedText::VERSION
   end
 
-  def test_fail
-    assert_equal 4, 5
+  def test_has_version_semantic
+    assert_match /\d+\.\d+\.\d+/, NestedText::VERSION
   end
 end
