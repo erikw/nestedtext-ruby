@@ -1,4 +1,4 @@
-# Jekyll NestedText Tooltip Tag Plugin [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Get%20a%20nifty%20tooltip%20for%20term%20definitions%20in%20your%20Jekyll%20blog%20with%20this%20plugin&url=https://github.com/erikw/nestedtext-ruby&via=erik_westrup&hashtags=jekyll,plugin)
+# NestedText Ruby Library [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Get%20a%20nifty%20tooltip%20for%20term%20definitions%20in%20your%20Jekyll%20blog%20with%20this%20plugin&url=https://github.com/erikw/nestedtext-ruby&via=erik_westrup&hashtags=jekyll,plugin)
 [![Gem Version](https://badge.fury.io/rb/nestedtext-ruby.svg)](https://badge.fury.io/rb/nestedtext-ruby)
 [![Gem Downloads](https://ruby-gem-downloads-badge.herokuapp.com/nestedtext-ruby?color=brightgreen&type=total&label=gem%20downloads)](https://rubygems.org/gems/nestedtext-ruby)
 [![Travis Build Status](https://img.shields.io/travis/erikw/nestedtext-ruby/main?logo=travis)](https://app.travis-ci.com/github/erikw/nestedtext-ruby)
