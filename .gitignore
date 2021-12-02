@@ -8,17 +8,11 @@ gemfiles/Gemfile*.lock
 # Bundle local config
 .bundle/
 
-# Package gem from ($rake install)
+# Package gem from $(rake install)
 pkg/
+
+# minitest
+/test/reports/
 
 # simplecov
 coverage/
-
-# rspec
-.jekyll-cache/
-.rspec_status
-spec/dest/
-spec/reports/
-
-# Jekyll - when switching from gh-pages-source branch
-_site/
