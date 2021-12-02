@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-module Jekyll
-  module NestedText
-    VERSION = "1.3.1"
-  end
+module NestedText
+  VERSION = "0.1.0"
 end
