@@ -3,8 +3,8 @@
 # TODO: extend IOError, EncodingError?
 module NestedText
   module Errors
-    class LineTypeUnknown < StandardError
-      def initialize(type) = super("The Line type #{type} is not among the allowed ones #{Line::ALLOWED_LINE_TYPES}")
+    class LineTagUnknown < StandardError
+      def initialize(tag) = super("The Line tag #{tag} is not among the allowed ones #{Line::ALLOWED_LINE_TAGS}")
     end
 
     class LineScannerIsEmpty < StandardError

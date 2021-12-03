@@ -33,24 +33,33 @@ module NestedText
                      nil
                    else
                      # linestr.chomp!
-                     # TODO continue here; detect :key_item properly
-                     Line.new(linestr, :key_item, @io.lineno)
+                     Line.new(linestr, @io.lineno)
                    end
     end
 
     class Line
       # Reference: https://nestedtext.org/en/latest/file_format.html
-      ALLOWED_LINE_TYPES = %i[comment blank list_item dictionary_item string_item key_item inline]
+      ALLOWED_LINE_TAGS = %i[comment blank list_item dictionary_item string_item key_item inline]
 
-      attr_reader :type
+      attr_reader :tag
 
-      def initialize(line_content, type, lineno)
+      def initialize(line_content, lineno)
         @line_content = line_content
-        @type = type
         @lineno = lineno
+      end
 
+      def length
+        @line_content.length
+      end
+
+      def [](index)
+        @line_content[index]
+      end
+
+      def tag=(tag)
+        @tag = tag
         # TODO: unit test this
-        raise Errors::LineTypeUnknown, type unless ALLOWED_LINE_TYPES.include?(@type)
+        raise Errors::LineTagUnknown, type unless ALLOWED_LINE_TAGS.include?(@tag)
       end
     end
   end
