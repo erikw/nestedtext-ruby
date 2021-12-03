@@ -61,6 +61,7 @@ module NestedText
       elsif @cur_line[@line_col] == ">" && (@line_col == @cur_line.length - 1 || @cur_line[@line_col] == " ")
         @cur_line.tag = :string_item
       end
+      # TODO: handle the rest of the cases in if-else, and set Line.value to be rest of string depending on the line tag.
     end
 
     def parse_skip_leading_spaces
