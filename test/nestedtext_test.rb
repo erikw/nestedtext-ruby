@@ -6,6 +6,6 @@ class NestedTextTest < Minitest::Test
   end
 
   def test_has_version_semantic
-    assert_match /\d+\.\d+\.\d+/, NestedText::VERSION
+    assert_match %r{\d+\.\d+\.\d+}, NestedText::VERSION
   end
 end
