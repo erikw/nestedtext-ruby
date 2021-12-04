@@ -16,6 +16,8 @@ module NestedText
 
     def parse
       result = {} # TODO: Assume top level is dict for now
+
+      # TODO: break out to helper method so a unit test can test one line at a time.
       until @line_scanner.empty?
         @cur_line = @line_scanner.next
         @line_col = 0
@@ -27,16 +29,16 @@ module NestedText
         when :comment
           raise NotImplementedError
         when :blank
-          raise NotImplementedError
+          result = {}
         when :list_item
           raise NotImplementedError
-        when :dictionary_item
-          raise NotImplementedError
+        when :dict_item
+          # TODO: set value of line
+          result = { a: :b }
         when :string_item
           raise NotImplementedError
         when :key_item
-          # TODO: set value of line
-          result = { a: :b }
+          raise NotImplementedError
         when :inline
           raise NotImplementedError
         end
@@ -49,9 +51,6 @@ module NestedText
     def parse_line_tag
       if @line_col == @cur_line.length
         @cur_line.tag = :blank
-        # elsif @line_col == @cur_line.length @line_col < @cur_line.length -1 && @cur_line[@line_col + 1] ==
-        # elsif @cur_line[@line_col] == ":" && (@line_col == @cur_line.length - 1 || @cur_line[@line_col] == " ")
-        # @cur_line.tag = :key_item
       elsif @cur_line[@line_col] == "#"
         @cur_line.tag = :comment
       elsif @cur_line[@line_col] == ":" && (@line_col == @cur_line.length - 1 || @cur_line[@line_col] == " ")
@@ -60,6 +59,19 @@ module NestedText
         @cur_line.tag = :list_item
       elsif @cur_line[@line_col] == ">" && (@line_col == @cur_line.length - 1 || @cur_line[@line_col] == " ")
         @cur_line.tag = :string_item
+      elsif @cur_line[@line_col] == "{"
+        @cur_line.tag = :inline_dict
+      elsif @cur_line[@line_col] == "["
+        @cur_line.tag = :inline_list
+      else
+        match = /^(?<key>\S[^\r\n]*?)\s*?:(?<value>.*)/.match @cur_line.line_content[@line_col..]
+        if match
+          @cur_line.tag = :dict_item
+          @cur_line.key = match["key"]
+          @cur_line.value = match["value"]
+        else
+          raise Errors::ParserNoLineTagDetected, @cur_line
+        end
       end
       # TODO: handle the rest of the cases in if-else, and set Line.value to be rest of string depending on the line tag.
     end
