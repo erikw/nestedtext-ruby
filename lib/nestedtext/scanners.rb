@@ -25,59 +25,92 @@ module NestedText
       line
     end
 
+    def next_peek
+      @next_line
+    end
+
     private
 
     def prepare_next_line
-      linestr = @io.gets&.chomp
-      @next_line = if linestr.nil?
-                     nil
-                   else
-                     # linestr.chomp!
-                     Line.new(linestr, @io.lineno)
-                   end
+      loop do
+        linestr = @io.gets&.chomp
+        @next_line = linestr.nil? ? nil : Line.new(linestr, @io.lineno)
+        break if @next_line.nil? || !%i[blank comment].include?(@next_line.tag)
+      end
+    end
+  end
+
+  class Line
+    # Reference: https://nestedtext.org/en/latest/file_format.html
+    # :comment            # a comment
+    # :blank
+    # :list_item         -item
+    # :dict_item   key: value (or value on next line)
+    # :string_item       > a string
+    # :key_item          : key on a line
+    # inline_dict        {key1: value1, key2: value2}
+    # inline_list        [value1, value2]
+    ALLOWED_LINE_TAGS = %i[comment blank list_item dict_item string_item key_item inline_dict inline_list]
+
+    attr_reader :tag, :line_content
+    attr_accessor :key, :value
+
+    def initialize(line_content, lineno)
+      @line_content = line_content
+      @lineno = lineno
+      _detect_line_tag
+      # TODO: key value should be stored in some parse_attribs dict?
+      @key = nil
+      @value = nil
     end
 
-    class Line
-      # Reference: https://nestedtext.org/en/latest/file_format.html
-      # :comment            # a comment
-      # :blank
-      # :list_item         -item
-      # :dict_item   key: value (or value on next line)
-      # :string_item       > a string
-      # :key_item          : key on a line
-      # inline_dict        {key1: value1, key2: value2}
-      # inline_list        [value1, value2]
-      ALLOWED_LINE_TAGS = %i[comment blank list_item dict_item string_item key_item inline_dict inline_list]
+    def length
+      @line_content.length
+    end
 
-      attr_reader :tag, :line_content
-      attr_accessor :key, :value
+    def [](index)
+      @line_content[index]
+    end
 
-      def initialize(line_content, lineno)
-        @line_content = line_content
-        @lineno = lineno
-        @tag = nil
-        # TODO: key value should be stored in some parse_attribs dict?
-        @key = nil
-        @value = nil
+    def tag=(tag)
+      @tag = tag
+      # TODO: unit test this
+      raise Errors::LineTagUnknown, type unless ALLOWED_LINE_TAGS.include?(@tag)
+    end
+
+    def to_s
+      "[##{@lineno}] #{@line_content}"
+    end
+
+    private
+
+    def _detect_line_tag
+      col = 0
+      col += 1 while col < @line_content.length && @line_content[col] == " "
+
+      if col == @line_content.length
+        @tag = :blank
+      elsif @line_content[col] == "#"
+        @tag = :comment
+      elsif @line_content[col] == ":" && (col == @line_content.length - 1 || @line_content[col] == " ")
+        @tag = :key_item
+      elsif @line_content[col] == "-" && (col == @line_content.length - 1 || @line_content[col] == " ")
+        @tag = :list_item
+      elsif @line_content[col] == ">" && (col == @line_content.length - 1 || @line_content[col] == " ")
+        @tag = :string_item
+      elsif @line_content[col] == "{"
+        @tag = :inline_dict
+      elsif @line_content[col] == "["
+        @tag = :inline_list
+      elsif /^(?<key>[^ ][^\r\n]*?) *?:(?<value>.*)/.match @line_content[col..]
+        # TODO: this regex must be tested. What are the constraints of the value?
+        @tag = :dict_item
+        @key = Regexp.last_match("key")
+        @value = Regexp.last_match("value")
+      else
+        raise Errors::LineTagNotDetected, @line_content
       end
-
-      def length
-        @line_content.length
-      end
-
-      def [](index)
-        @line_content[index]
-      end
-
-      def tag=(tag)
-        @tag = tag
-        # TODO: unit test this
-        raise Errors::LineTagUnknown, type unless ALLOWED_LINE_TAGS.include?(@tag)
-      end
-
-      def to_s
-        "[##{@lineno}] #{@line_content}"
-      end
+      # TODO: handle the rest of the cases in if-else, and set Line.value to be rest of string depending on the line tag.
     end
   end
 end

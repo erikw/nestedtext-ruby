@@ -11,7 +11,7 @@ module NestedText
       def initialize = super("There is no more input to consume. You should have checked this with #empty? before calling.")
     end
 
-    class ParserNoLineTagDetected < StandardError
+    class LineTagNotDetected < StandardError
       def initialize(line) = super("The type tag for the line could not be detected, using wrong syntax?\n#{line}")
     end
   end
