@@ -18,6 +18,7 @@ module NestedText
       result = {} # TODO: Assume top level is dict for now
 
       # TODO: break out to helper method so a unit test can test one line at a time.
+      # TODO parse recusively and let parse methods use the line scanner when needed?
       until @line_scanner.empty?
         @cur_line = @line_scanner.next
         @line_col = 0
@@ -64,6 +65,7 @@ module NestedText
       elsif @cur_line[@line_col] == "["
         @cur_line.tag = :inline_list
       else
+        # TODO: this regex must be tested. What are the constraints of the value?
         match = /^(?<key>\S[^\r\n]*?)\s*?:(?<value>.*)/.match @cur_line.line_content[@line_col..]
         if match
           @cur_line.tag = :dict_item
