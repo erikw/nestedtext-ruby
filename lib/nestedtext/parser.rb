@@ -17,10 +17,10 @@ module NestedText
 
     def parse
       result = nil
-      case @top.to_s
-      when Object.to_s
+      case @top.object_id
+      when Object.object_id
         result = _parse_any unless @line_scanner.empty?
-      when Hash.to_s
+      when Hash.object_id
         result = @line_scanner.empty? ? {} : _parse_any
       else
         # TODO
