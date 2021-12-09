@@ -7,8 +7,9 @@ require "nestedtext/scanners"
 
 module NestedText
   class Parser
-    def initialize(raw_input)
+    def initialize(raw_input, top)
       @raw_input = raw_input
+      @top = top
       @line_scanner = LineScanner.new(StringIO.new(@raw_input))
       @cur_line = nil
       @line_col = 0
@@ -21,9 +22,7 @@ module NestedText
     private
 
     def _parse_any
-      # TODO: how make sure that file with only blanks gives an empty dict back, or shold it do that, check with ntpy-test? => return empty top level. if top-level =any, then return nil
-      # @cur_line = @line_scanner.next # TODO: don't fetchline here, but in respective tag parse subroutine as needed.
-      case @line_scanner.peek&.tag
+      case @line_scanner.peek&.tag # Use Null Pattern instead with a EndOfInput tag?
       when :list_item
         raise NotImplementedError
       when :dict_item
