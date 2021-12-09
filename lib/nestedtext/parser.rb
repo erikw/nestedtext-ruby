@@ -16,7 +16,16 @@ module NestedText
     end
 
     def parse
-      result = _parse_any
+      result = nil
+      case @top.to_s
+      when Object.to_s
+        result = _parse_any unless @line_scanner.empty?
+      when Hash.to_s
+        result = @line_scanner.empty? ? {} : _parse_any
+      else
+        # TODO
+      end
+      result
     end
 
     private
