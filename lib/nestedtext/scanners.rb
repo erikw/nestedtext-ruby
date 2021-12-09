@@ -25,6 +25,10 @@ module NestedText
       line
     end
 
+    def peek
+      @next_line
+    end
+
     def next_peek
       @next_line
     end
@@ -58,10 +62,10 @@ module NestedText
     def initialize(line_content, lineno)
       @line_content = line_content
       @lineno = lineno
-      _detect_line_tag
       # TODO: key value should be stored in some parse_attribs dict?
       @key = nil
       @value = nil
+      _detect_line_tag
     end
 
     def length
@@ -102,11 +106,11 @@ module NestedText
         @tag = :inline_dict
       elsif @line_content[col] == "["
         @tag = :inline_list
-      elsif /^(?<key>[^ ][^\r\n]*?) *?:(?<value>.*)/.match @line_content[col..]
+      elsif /^(?<key>[^ ][^\r\n]*?) *?:[ \n](?<value>.*)/.match @line_content[col..]
         # TODO: this regex must be tested. What are the constraints of the value?
         @tag = :dict_item
-        @key = Regexp.last_match("key")
-        @value = Regexp.last_match("value")
+        @key = Regexp.last_match(:key)
+        @value = Regexp.last_match(:value)
       else
         raise Errors::LineTagNotDetected, @line_content
       end
