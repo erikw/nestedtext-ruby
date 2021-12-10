@@ -12,7 +12,7 @@ gemfiles/Gemfile*.lock
 pkg/
 
 # minitest
+/test/html_reports/
 /test/reports/
-
 # simplecov
 coverage/
