@@ -9,6 +9,4 @@
 [![OSS Lifecycle](https://img.shields.io/osslifecycle/erikw/nestedtext-ruby)](https://github.com/Netflix/osstracker)
 
 
-:point_right: **Live demo**: https://erikw.github.io/nestedtext-ruby/
-
 (On-going development at branch [**dev**](https://github.com/erikw/nestedtext-ruby/tree/dev))
