@@ -1,8 +1,38 @@
 require "test_helper"
 
+class DecodeTop < Minitest::Test
+  def test_top_invalid_enumerable
+    assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
+      NestedText.load("", top: Enumerable)
+    end
+  end
+
+  def test_top_invalid_nil
+    assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
+      NestedText.load("", top: nil)
+    end
+  end
+
+  def test_input_invalid_array
+    assert_raises(NestedText::Errors::WrongInputTypeError) do
+      NestedText.load([])
+    end
+  end
+
+  def test_input_invalid_hash
+    assert_raises(NestedText::Errors::WrongInputTypeError) do
+      NestedText.load({})
+    end
+  end
+end
+
 class DecodeStringTopAnyTest < Minitest::Test
   def test_empty
     assert_nil NestedText.load("")
+  end
+
+  def test_empty_top_any
+    assert_nil NestedText.load("", top: Object)
   end
 
   def test_empty_whitespace

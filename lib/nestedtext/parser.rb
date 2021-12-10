@@ -10,7 +10,7 @@ module NestedText
     def initialize(raw_input, top)
       @raw_input = raw_input
       @top = top
-      @line_scanner = LineScanner.new(StringIO.new(@raw_input))
+      @line_scanner = LineScanner.new(StringIO.new(@raw_input)) # TODO: case when on raw_input type, and create IO or StringIO. assert with Errors
       @cur_line = nil
       @line_col = 0
     end
@@ -23,7 +23,7 @@ module NestedText
       when Hash.object_id
         result = @line_scanner.empty? ? {} : _parse_any
       else
-        # TODO
+        raise Errors::UnsupportedTopLevelTypeError, @top
       end
       result
     end
