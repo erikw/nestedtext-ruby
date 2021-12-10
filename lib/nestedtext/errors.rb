@@ -25,5 +25,9 @@ module NestedText
     class WrongInputTypeError < ArgumentError
       def initialize(class_exps, class_act) = super("The given input type #{class_act.class.name} is unsupported. Expected to be of types #{class_exps.map(&:name).join(", ")}")
     end
+
+    class TopLevelTypeMismatchParsedType < StandardError
+      def initialize(class_exp, class_act) = super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act&.class&.name || "nil"}.")
+    end
   end
 end

@@ -10,16 +10,16 @@ require "stringio"
 module NestedText
   extend self # to make methods module public.
 
-  def load(ntstring, top: Object)
+  def load(ntstring, top_class: Object)
     # logger = Logger.new(STDOUT) # TODO: make this available to other classes in module. How avoid singleton?
     # logger.info "input=#{raw_input_string}"
     # logger.info "top=#{top}"
 
     raise Errors::WrongInputTypeError.new([String], ntstring) unless ntstring.nil? || ntstring.is_a?(String)
 
-    assert_valid_top_level_type top
+    assert_valid_top_level_type top_class
 
-    parser = Parser.new(StringIO.new(ntstring), top)
+    parser = Parser.new(StringIO.new(ntstring), top_class)
     parser.parse
   end
 

@@ -3,13 +3,13 @@ require "test_helper"
 class DecodeTopTest < Minitest::Test
   def test_top_invalid_enumerable
     assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
-      NestedText.load("", top: Enumerable)
+      NestedText.load("", top_class: Enumerable)
     end
   end
 
   def test_top_invalid_nil
     assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
-      NestedText.load("", top: nil)
+      NestedText.load("", top_class: nil)
     end
   end
 
@@ -32,7 +32,7 @@ class DecodeStringTopAnyTest < Minitest::Test
   end
 
   def test_empty_top_any
-    assert_nil NestedText.load("", top: Object)
+    assert_nil NestedText.load("", top_class: Object)
   end
 
   def test_empty_whitespace
@@ -50,11 +50,11 @@ end
 
 class DecodeStringTopHashTest < Minitest::Test
   def test_top_hash_dict_empty
-    assert_equal({}, NestedText.load("", top: Hash))
+    assert_equal({}, NestedText.load("", top_class: Hash))
   end
 
   def test_top_hash_empty_whitespace
-    assert_equal({}, NestedText.load("  ", top: Hash))
+    assert_equal({}, NestedText.load("  ", top_class: Hash))
   end
 end
 

@@ -8,26 +8,29 @@ require "nestedtext/helpers"
 
 module NestedText
   class Parser
-    def initialize(raw_input, top)
+    def initialize(raw_input, top_class)
       _assert_valid_input_type raw_input
       @raw_input = raw_input
-      # TODO: why do we need to prefix NestedText. here, but not whne used in decode.rb?
-      NestedText.assert_valid_top_level_type top
-      @top = top
+      # TODO: why do we need to prefix NestedText. here, but not when used in decode.rb?
+      NestedText.assert_valid_top_level_type top_class
+      @top_class = top_class
       @line_scanner = LineScanner.new(raw_input)
       @cur_line = nil
       @line_col = 0
     end
 
     def parse
-      result = nil
-      case @top.object_id
+      result = _parse_any
+      case @top_class.object_id
       when Object.object_id
-        result = _parse_any unless @line_scanner.empty?
+        # raise "better error here" unless result.instance_of?(Object)
+        # TODO test that result is Hash, Array, String, or nil
+
       when Hash.object_id
-        result = @line_scanner.empty? ? {} : _parse_any
+        result = {} if result.nil?
+        raise Errors::TopLevelTypeMismatchParsedType.new(@top_class, result) unless result.instance_of?(Hash)
       else
-        raise Errors::UnsupportedTopLevelTypeError, @top
+        raise Errors::UnsupportedTopLevelTypeError, @top_class
       end
       result
     end
@@ -44,12 +47,10 @@ module NestedText
     end
 
     def _parse_any
-      case @line_scanner.peek&.tag # Use Null Pattern instead with a EndOfInput tag?
+      case @line_scanner.peek&.tag # TODO: Use Null Pattern instead with a EndOfInput tag?
       when :list_item
         raise NotImplementedError
       when :dict_item
-        # TODO: set value of line
-        # result = { a: :b }
         _parse_dict_item
       when :string_item
         raise NotImplementedError
@@ -57,6 +58,8 @@ module NestedText
         raise NotImplementedError
       when :inline
         raise NotImplementedError
+      else
+        nil # TODO: replace with null pattern?
       end
     end
 

@@ -1,5 +1,8 @@
 # See pages relaed at https://docs.rubocop.org/rubocop/1.12/cops_layout.html
 
+
+# TODO  clean this upand remove Excludes not needed.
+
 # Rubocop extensions
 require:
   - rubocop-rake
