@@ -4,10 +4,6 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
 
-# rspec: Testing framework. Adds 'spec' rake task.
-# require "rspec/core/rake_task"
-# RSpec::Core::RakeTask.new(:spec)
-
 # rubocop: Linting. Adds 'rubocop' rake task.
 require "rubocop/rake_task"
 RuboCop::RakeTask.new(:rubocop) do |t|
