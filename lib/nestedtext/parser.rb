@@ -4,13 +4,18 @@ require "stringio"
 
 require "nestedtext/errors"
 require "nestedtext/scanners"
+require "nestedtext/helpers"
 
 module NestedText
   class Parser
     def initialize(raw_input, top)
       @raw_input = raw_input
       @top = top
-      @line_scanner = LineScanner.new(StringIO.new(@raw_input)) # TODO: case when on raw_input type, and create IO or StringIO. assert with Errors
+      # TODO: why do we need to prefix NestedText. here, but not whne used in decode.rb?
+      NestedText.assert_valid_top_level_type top
+      # TODO: assert type of top
+      # TODO assert type of raw_input
+      @line_scanner = LineScanner.new(raw_input) # TODO: case when on raw_input type, and create IO or StringIO. assert with Errors
       @cur_line = nil
       @line_col = 0
     end

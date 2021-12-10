@@ -2,8 +2,10 @@
 
 require "nestedtext/parser"
 require "nestedtext/errors"
+require "nestedtext/helpers"
 
 require "logger"
+require "stringio"
 
 module NestedText
   extend self # to make methods module public.
@@ -15,11 +17,9 @@ module NestedText
 
     raise Errors::WrongInputTypeError, ntstring unless ntstring.nil? || ntstring.is_a?(String)
 
-    unless !top.nil? && TOP_LEVEL_TYPES.map(&:object_id).include?(top.object_id)
-      raise Errors::UnsupportedTopLevelTypeError, top
-    end
+    assert_valid_top_level_type top
 
-    parser = Parser.new(ntstring, top)
+    parser = Parser.new(StringIO.new(ntstring), top)
     parser.parse
   end
 

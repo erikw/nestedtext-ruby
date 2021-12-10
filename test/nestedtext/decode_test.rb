@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DecodeTop < Minitest::Test
+class DecodeTopTest < Minitest::Test
   def test_top_invalid_enumerable
     assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
       NestedText.load("", top: Enumerable)
