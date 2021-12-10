@@ -23,7 +23,7 @@ module NestedText
     end
 
     class WrongInputTypeError < ArgumentError
-      def initialize(input) = super("The given input type #{input.class.name} is unsupported. Chose between it must be")
+      def initialize(class_exps, class_act) = super("The given input type #{class_act.class.name} is unsupported. Expected to be of types #{class_exps.map(&:name).join(", ")}")
     end
   end
 end

@@ -9,13 +9,12 @@ require "nestedtext/helpers"
 module NestedText
   class Parser
     def initialize(raw_input, top)
+      _assert_valid_input_type raw_input
       @raw_input = raw_input
-      @top = top
       # TODO: why do we need to prefix NestedText. here, but not whne used in decode.rb?
       NestedText.assert_valid_top_level_type top
-      # TODO: assert type of top
-      # TODO assert type of raw_input
-      @line_scanner = LineScanner.new(raw_input) # TODO: case when on raw_input type, and create IO or StringIO. assert with Errors
+      @top = top
+      @line_scanner = LineScanner.new(raw_input)
       @cur_line = nil
       @line_col = 0
     end
@@ -34,6 +33,15 @@ module NestedText
     end
 
     private
+
+    PARSER_INPUT_TYPES = [IO, StringIO]
+
+    def _assert_valid_input_type(input)
+      # raise Errors::WrongInputTypeError.new([IO, StringIO], raw_input) unless [IO, StringIO].include? top.class
+      unless input.nil? || PARSER_INPUT_TYPES.map(&:object_id).include?(input.class.object_id)
+        raise Errors::WrongInputTypeError.new([IO, StringIO], input)
+      end
+    end
 
     def _parse_any
       case @line_scanner.peek&.tag # Use Null Pattern instead with a EndOfInput tag?

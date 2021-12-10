@@ -8,4 +8,10 @@ class ParserTest < Minitest::Test
       NestedText::Parser.new(StringIO.new, Enumerable)
     end
   end
+
+  def test_io_invalid_string
+    assert_raises(NestedText::Errors::WrongInputTypeError) do
+      NestedText::Parser.new("", Hash)
+    end
+  end
 end

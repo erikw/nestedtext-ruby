@@ -15,7 +15,7 @@ module NestedText
     # logger.info "input=#{raw_input_string}"
     # logger.info "top=#{top}"
 
-    raise Errors::WrongInputTypeError, ntstring unless ntstring.nil? || ntstring.is_a?(String)
+    raise Errors::WrongInputTypeError.new([String], ntstring) unless ntstring.nil? || ntstring.is_a?(String)
 
     assert_valid_top_level_type top
 
