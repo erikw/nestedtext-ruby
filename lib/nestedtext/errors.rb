@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # TODO: extend IOError, EncodingError?
+# TODO move errors to be in respective class who raise them?
 module NestedText
   module Errors
     class LineTagUnknown < StandardError

@@ -1,20 +1,12 @@
 require "test_helper"
 
-class DecodeTest < Minitest::Test
-  def test_top_any_empty
+class DecodeStringTopAnyTest < Minitest::Test
+  def test_empty
     assert_nil NestedText.load("")
   end
 
-  def test_top_hash_dict_empty
-    assert_equal({}, NestedText.load("", top: Hash))
-  end
-
-  def test_top_any_empty_whitespace
+  def test_empty_whitespace
     assert_nil NestedText.load("  ")
-  end
-
-  def test_top_hash_empty_whitespace
-    assert_equal({}, NestedText.load("  ", top: Hash))
   end
 
   def test_top_empty_dict_single_entry
@@ -25,3 +17,15 @@ class DecodeTest < Minitest::Test
     assert_equal({ "a" => "b", "5" => "7" }, NestedText.load("a: b\n5: 7"))
   end
 end
+
+class DecodeStringTopHashTest < Minitest::Test
+  def test_top_hash_dict_empty
+    assert_equal({}, NestedText.load("", top: Hash))
+  end
+
+  def test_top_hash_empty_whitespace
+    assert_equal({}, NestedText.load("  ", top: Hash))
+  end
+end
+
+# TODO: class DecodeFile...Test
