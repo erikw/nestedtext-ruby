@@ -29,5 +29,9 @@ module NestedText
     class TopLevelTypeMismatchParsedType < StandardError
       def initialize(class_exp, class_act) = super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act&.class&.name || "nil"}.")
     end
+
+    class InvalidIndentation < StandardError
+      def initialize = super("The indentation of the current line is not valid. TODO better description of exactly when it is valid/invalid.")
+    end
   end
 end

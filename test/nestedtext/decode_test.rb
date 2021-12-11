@@ -39,16 +39,34 @@ class DecodeStringTopAnyTest < Minitest::Test
     assert_nil NestedText.load("  ")
   end
 
-  def test_top_empty_dict_single_entry
+  def test_dict_single_entry
     assert_equal({ "a" => "b" }, NestedText.load("a: b"))
   end
 
-  def test_top_empty_dict_two_entries
+  def test_dict_two_entries
     assert_equal({ "a" => "b", "5" => "7" }, NestedText.load("a: b\n5: 7"))
   end
 
-  def test_top_empty_dict_three_entries
+  def test_dict_three_entries
     assert_equal({ "g" => "f", "5" => "7", "a" => "b" }, NestedText.load("a: b\n5: 7\n  \n\ng: f"))
+  end
+
+  def test_dict_nested
+    nts = <<-NT
+      one:
+        two: 3
+    NT
+    assert_equal({ "one" => { "two" => "3" } }, NestedText.load(nts))
+  end
+
+  def test_dict_nested_invalid
+    nts = <<-NT
+      one: 1
+        two: 2
+    NT
+    assert_raises(NestedText::Errors::InvalidIndentation) do
+      NestedText.load(nts)
+    end
   end
 end
 
