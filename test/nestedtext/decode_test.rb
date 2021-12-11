@@ -46,6 +46,10 @@ class DecodeStringTopAnyTest < Minitest::Test
   def test_top_empty_dict_two_entries
     assert_equal({ "a" => "b", "5" => "7" }, NestedText.load("a: b\n5: 7"))
   end
+
+  def test_top_empty_dict_three_entries
+    assert_equal({ "g" => "f", "5" => "7", "a" => "b" }, NestedText.load("a: b\n5: 7\n  \n\ng: f"))
+  end
 end
 
 class DecodeStringTopHashTest < Minitest::Test
