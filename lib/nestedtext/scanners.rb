@@ -65,7 +65,9 @@ module NestedText
       # TODO: key value should be stored in some parse_attribs dict?
       @key = nil
       @value = nil
-      _detect_line_tag
+      @tag = nil
+      @indentation = 0
+      _detect_line_tag_and_indentation
     end
 
     def length
@@ -88,25 +90,25 @@ module NestedText
 
     private
 
-    def _detect_line_tag
-      col = 0
-      col += 1 while col < @line_content.length && @line_content[col] == " "
+    def _detect_line_tag_and_indentation
+      @indentation += 1 while @indentation < @line_content.length && @line_content[@indentation] == " "
+      @line_content = @line_content[@indentation..]
 
-      if col == @line_content.length || /[\n\r]+/.match(@line_content[col])
+      if @line_content.length == 0
         @tag = :blank
-      elsif @line_content[col] == "#"
+      elsif @line_content[0] == "#"
         @tag = :comment
-      elsif @line_content[col] == ":" && (col == @line_content.length - 1 || @line_content[col] == " ")
+      elsif /^:(?: |$)/.match @line_content
         @tag = :key_item
-      elsif @line_content[col] == "-" && (col == @line_content.length - 1 || @line_content[col] == " ")
+      elsif /-(?: |$)/.match @line_content
         @tag = :list_item
-      elsif @line_content[col] == ">" && (col == @line_content.length - 1 || @line_content[col] == " ")
+      elsif />(?: |$)/.match @line_content
         @tag = :string_item
-      elsif @line_content[col] == "{"
+      elsif @line_content[0] == "{"
         @tag = :inline_dict
-      elsif @line_content[col] == "["
+      elsif @line_content[0] == "["
         @tag = :inline_list
-      elsif /^(?<key>.*?) *:(?: (?<value>.+)?)?$/.match @line_content[col..]
+      elsif /^(?<key>.*?) *:(?: (?<value>.+)?)?$/.match @line_content
         # TODO: this regex must be tested. What are the constraints of the value?
         @tag = :dict_item
         @key = Regexp.last_match(:key)
