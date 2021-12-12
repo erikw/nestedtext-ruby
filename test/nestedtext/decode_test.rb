@@ -52,7 +52,7 @@ class DecodeStringTopAnyTest < Minitest::Test
   end
 
   def test_dict_nested
-    nts = <<-NT
+    nts = <<~NT
       one:
         two: 3
     NT
@@ -60,7 +60,7 @@ class DecodeStringTopAnyTest < Minitest::Test
   end
 
   def test_dict_nested_invalid_indentation
-    nts = <<-NT
+    nts = <<~NT
       one: 1
         two: 2
     NT

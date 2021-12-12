@@ -20,7 +20,7 @@ module NestedText
     end
 
     def parse
-      result = _parse_any
+      result = _parse_any(0)
       case @top_class.object_id
       when Object.object_id
         # raise "better error here" unless result.instance_of?(Object)
@@ -46,12 +46,12 @@ module NestedText
       end
     end
 
-    def _parse_any
+    def _parse_any(indentation)
       case @line_scanner.peek&.tag # TODO: Use Null Pattern instead with a EndOfInput tag?
       when :list_item
         raise NotImplementedError
       when :dict_item
-        _parse_dict_item
+        _parse_dict_item(indentation)
       when :string_item
         raise NotImplementedError
       when :key_item
@@ -63,12 +63,15 @@ module NestedText
       end
     end
 
-    def _parse_dict_item
+    def _parse_dict_item(indentation)
       result = {}
       # @cur_line = @line_scanner.next
-      while @line_scanner.peek&.tag == :dict_item # just while hasNext pattern instead of peek?
+      # while @line_scanner.peek&.tag == :dict_item # just while hasNext pattern instead of peek?
+      while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         @cur_line = @line_scanner.next
-        result[@cur_line.key] = (@cur_line.value || _parse_any)
+        raise Errors::InvalidIndentation.new(indentation, @cur_line.indentation) if @cur_line.indentation != indentation
+
+        result[@cur_line.key] = (@cur_line.value || _parse_any(@line_scanner.peek&.indentation))
       end
       result
     end

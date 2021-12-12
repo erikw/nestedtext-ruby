@@ -56,7 +56,7 @@ module NestedText
     # inline_list        [value1, value2]
     ALLOWED_LINE_TAGS = %i[comment blank list_item dict_item string_item key_item inline_dict inline_list]
 
-    attr_reader :tag, :line_content
+    attr_reader :tag, :line_content, :indentation
     attr_accessor :key, :value
 
     def initialize(line_content, lineno)
@@ -85,7 +85,7 @@ module NestedText
     end
 
     def to_s
-      "[##{@lineno}] #{@line_content}"
+      "[##{@lineno}] #{" " * @indentation}#{@line_content}"
     end
 
     private
