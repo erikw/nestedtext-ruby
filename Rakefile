@@ -18,5 +18,7 @@ Rake::TestTask.new do |t|
 end
 desc "Run tests"
 
+# TODO: rake test task that takes input class.test or class-pattern<space>test-pattern
+
 # default task: Add spec and rubocop to default tasks.
 task default: %i[test rubocop]

@@ -108,7 +108,7 @@ module NestedText
         @tag = :inline_dict
       elsif @line_content[0] == "["
         @tag = :inline_list
-      elsif /^(?<key>.*?) *:(?: (?<value>.+)?)?$/.match @line_content
+      elsif /^(?<key>.*?) *:(?: (?<value>.*))?$/.match @line_content
         # TODO: this regex must be tested. What are the constraints of the value?
         @tag = :dict_item
         @key = Regexp.last_match(:key)

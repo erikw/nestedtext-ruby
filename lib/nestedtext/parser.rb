@@ -71,7 +71,7 @@ module NestedText
         @cur_line = @line_scanner.next
         raise Errors::InvalidIndentation.new(indentation, @cur_line.indentation) if @cur_line.indentation != indentation
 
-        result[@cur_line.key] = (@cur_line.value || _parse_any(@line_scanner.peek&.indentation))
+        result[@cur_line.key] = (@cur_line.value || _parse_any(@line_scanner.peek&.indentation))  # TODO: makes more sense to sent indentation in _parse_any from next line instead?
       end
       result
     end

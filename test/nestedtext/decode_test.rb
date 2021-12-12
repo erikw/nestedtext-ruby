@@ -51,6 +51,10 @@ class DecodeStringTopAnyTest < Minitest::Test
     assert_equal({ "g" => "f", "5" => "7", "a" => "b" }, NestedText.load("a: b\n5: 7\n  \n\ng: f\n"))
   end
 
+  def test_dict_empty_value
+    assert_equal({ "a" => "" }, NestedText.load("a: "))
+  end
+
   def test_dict_nested
     nts = <<~NT
       one:
@@ -65,7 +69,7 @@ class DecodeStringTopAnyTest < Minitest::Test
         two: 2
     NT
     assert_raises(NestedText::Errors::InvalidIndentation) do
-      pp NestedText.load(nts)
+      NestedText.load(nts)
     end
   end
 end
