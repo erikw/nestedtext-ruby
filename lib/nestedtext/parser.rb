@@ -66,9 +66,9 @@ module NestedText
     def _parse_dict_item
       result = {}
       # @cur_line = @line_scanner.next
-      while @line_scanner.peek&.tag == :dict_item  # just while hasNext pattern instead of peek?
+      while @line_scanner.peek&.tag == :dict_item # just while hasNext pattern instead of peek?
         @cur_line = @line_scanner.next
-        result[@cur_line.key] = @cur_line.value
+        result[@cur_line.key] = (@cur_line.value || _parse_any)
       end
       result
     end

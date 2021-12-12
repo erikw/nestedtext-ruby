@@ -37,7 +37,7 @@ module NestedText
 
     def prepare_next_line
       loop do
-        linestr = @io.gets&.chomp
+        linestr = @io.gets
         @next_line = linestr.nil? ? nil : Line.new(linestr, @io.lineno)
         break if @next_line.nil? || !%i[blank comment].include?(@next_line.tag)
       end
@@ -92,7 +92,7 @@ module NestedText
       col = 0
       col += 1 while col < @line_content.length && @line_content[col] == " "
 
-      if col == @line_content.length
+      if col == @line_content.length || /[\n\r]+/.match(@line_content[col])
         @tag = :blank
       elsif @line_content[col] == "#"
         @tag = :comment
@@ -106,7 +106,7 @@ module NestedText
         @tag = :inline_dict
       elsif @line_content[col] == "["
         @tag = :inline_list
-      elsif /^(?<key>[^ ][^\r\n]*?) *?:[ \n](?<value>.*)/.match @line_content[col..]
+      elsif /^(?<key>.*?) *:(?: (?<value>.+)?\n?|\n)$/.match @line_content[col..]
         # TODO: this regex must be tested. What are the constraints of the value?
         @tag = :dict_item
         @key = Regexp.last_match(:key)
