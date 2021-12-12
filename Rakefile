@@ -11,14 +11,18 @@ RuboCop::RakeTask.new(:rubocop) do |t|
   t.options = ["--display-cop-names", "--parallel"]
 end
 
+# Can be called like
+# rake test TEST=path/to/some_test.rb TESTOPTS="-n='/test_method_pattern/'"
+# or hacked together a bit shorter like
+# rake test F=path/to/some_test.rb M=test_method_pattern
 Rake::TestTask.new do |t|
+  ENV["TEST"] = ENV["F"] if ENV.key? "F"
+  ENV["TESTOPTS"] = "-n='/#{ENV["M"]}/'" if ENV.key? "M"
   t.libs << "test"
   t.test_files = FileList["test/**/*_test.rb"]
   # t.verbose = true
 end
 desc "Run tests"
-
-# TODO: rake test task that takes input class.test or class-pattern<space>test-pattern
 
 # default task: Add spec and rubocop to default tasks.
 task default: %i[test rubocop]
