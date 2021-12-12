@@ -65,7 +65,7 @@ class DecodeStringTopAnyTest < Minitest::Test
         two: 2
     NT
     assert_raises(NestedText::Errors::InvalidIndentation) do
-      NestedText.load(nts)
+      pp NestedText.load(nts)
     end
   end
 end
