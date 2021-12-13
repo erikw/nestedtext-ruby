@@ -17,7 +17,7 @@ module NestedText
       @next_line.nil?
     end
 
-    def next
+    def read_next
       raise Errors::LineScannerIsEmpty if empty?
 
       line = @next_line

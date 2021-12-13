@@ -4,6 +4,7 @@ require "nestedtext/constants"
 
 # TODO: extend IOError, EncodingError?
 # TODO move errors to be in respective class who raise them?
+# TODO attach column + read line and print out fancy arrow pointing at location where error was detected, similar to ntpy?
 module NestedText
   module Errors
     class LineTagUnknown < StandardError
