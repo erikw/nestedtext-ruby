@@ -23,7 +23,6 @@ module NestedText
     parser.parse
   end
 
-  # TODO: def load_file() like YAML.load_file
   def load_file(filename, top_class: Object)
     raise Errors::WrongInputTypeError.new([String], filename) unless filename.nil? || filename.is_a?(String)
 

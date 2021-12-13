@@ -8,13 +8,12 @@ require "nestedtext/helpers"
 
 module NestedText
   class Parser
-    def initialize(raw_input, top_class)
-      _assert_valid_input_type raw_input
-      @raw_input = raw_input
+    def initialize(io, top_class)
+      _assert_valid_input_type io
       # TODO: why do we need to prefix NestedText. here, but not when used in decode.rb?
       NestedText.assert_valid_top_level_type top_class
       @top_class = top_class
-      @line_scanner = LineScanner.new(raw_input)
+      @line_scanner = LineScanner.new(io)
     end
 
     def parse
@@ -35,12 +34,8 @@ module NestedText
 
     private
 
-    PARSER_INPUT_TYPES = [IO, File, StringIO]
-
-    # TODO: better way to detect the "interface" or sublcass of IO?
     def _assert_valid_input_type(input)
-      # raise Errors::WrongInputTypeError.new([IO, StringIO], raw_input) unless [IO, StringIO].include? top.class
-      unless input.nil? || PARSER_INPUT_TYPES.map(&:object_id).include?(input.class.object_id)
+      unless input.nil? || input.is_a?(IO) || input.is_a?(StringIO)
         raise Errors::WrongInputTypeError.new([IO, StringIO], input)
       end
     end
