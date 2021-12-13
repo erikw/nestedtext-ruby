@@ -11,8 +11,7 @@ module NestedText
     # Doc: caller is responsible for closing IO after done with Parser.
     def initialize(io, top_class)
       _assert_valid_input_type io
-      # TODO: why do we need to prefix NestedText. here, but not when used in decode.rb?
-      NestedText.assert_valid_top_level_type top_class
+      NestedText.assert_valid_top_level_type(top_class)
       @top_class = top_class
       @line_scanner = LineScanner.new(io)
     end
