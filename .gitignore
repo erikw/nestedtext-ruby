@@ -14,5 +14,6 @@ pkg/
 # minitest
 /test/html_reports/
 /test/reports/
+
 # simplecov
-coverage/
+/coverage/
