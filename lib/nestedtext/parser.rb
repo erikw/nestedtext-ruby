@@ -8,6 +8,7 @@ require "nestedtext/helpers"
 
 module NestedText
   class Parser
+    # Doc: caller is responsible for closing IO after done with Parser.
     def initialize(io, top_class)
       _assert_valid_input_type io
       # TODO: why do we need to prefix NestedText. here, but not when used in decode.rb?
