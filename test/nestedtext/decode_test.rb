@@ -39,6 +39,12 @@ class DecodeStringTopAnyTest < Minitest::Test
     assert_nil NestedText.load("  ")
   end
 
+  def test_invalid_indentation_first_entry_col0
+    assert_raises(NestedText::Errors::InvalidIndentation) do
+      NestedText.load(" a: b")
+    end
+  end
+
   def test_dict_single_entry
     assert_equal({ "a" => "b" }, NestedText.load("a: b"))
   end

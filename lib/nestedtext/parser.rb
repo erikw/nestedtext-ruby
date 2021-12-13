@@ -47,7 +47,9 @@ module NestedText
     end
 
     def _parse_any(indentation)
-      case @line_scanner.peek&.tag # TODO: Use Null Pattern instead with a EndOfInput tag?
+      return nil if @line_scanner.peek.nil?
+
+      case @line_scanner.peek.tag # TODO: Use Null Pattern instead with a EndOfInput tag?
       when :list_item
         raise NotImplementedError
       when :dict_item
@@ -59,7 +61,7 @@ module NestedText
       when :inline
         raise NotImplementedError
       else
-        nil # TODO: replace with null pattern?
+        raise "Unexpected line tag!"
       end
     end
 
@@ -71,7 +73,7 @@ module NestedText
         @cur_line = @line_scanner.read_next
         raise Errors::InvalidIndentation.new(indentation, @cur_line.indentation) if @cur_line.indentation != indentation
 
-        result[@cur_line.key] = (@cur_line.value || _parse_any(@line_scanner.peek&.indentation))  # TODO: makes more sense to set indentation in _parse_any from next line instead?
+        result[@cur_line.key] = (@cur_line.value || _parse_any(@line_scanner.peek&.indentation))
       end
       result
     end
