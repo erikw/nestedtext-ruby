@@ -72,7 +72,7 @@ module NestedText
         raise Errors::LineTypeNotExpected.new(:dict_item, cur_line.tag) if cur_line.tag != :dict_item
 
         value = cur_line.value
-        if value.nil? # TODO: !value?
+        unless value.nil?
           if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
             value = _parse_any(@line_scanner.peek&.indentation)
           elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :dict_item

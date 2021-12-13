@@ -93,6 +93,14 @@ class DecodeStringTopAnyTest < Minitest::Test
     nts = <<~NT
       one:
       two: 2
+    NT
+    assert_equal({ "one" => "", "two" => "2" }, NestedText.load(nts))
+  end
+
+  def test_dict_valuenextline_last_line
+    nts = <<~NT
+      one:
+      two: 2
       three:
     NT
     assert_equal({ "one" => "", "two" => "2", "three" => "" }, NestedText.load(nts))
