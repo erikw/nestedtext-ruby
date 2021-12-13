@@ -123,4 +123,9 @@ class DecodeFileTest < Minitest::Test
   def test_top_hash_dict_nested
     assert_equal({ "one" => { "two" => "3" } }, NestedText.load_file(FIXTURE_PATH + "/1.nt", top_class: Hash))
   end
+
+  def test_dict_nested_multiple
+    assert_equal({ "a" => { "b" => "1" }, "c" => "2", "d" => { "e" => "3" }, "f" => "" },
+                 NestedText.load_file(FIXTURE_PATH + "/2.nt", top_class: Hash))
+  end
 end
