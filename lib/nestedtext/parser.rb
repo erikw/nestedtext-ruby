@@ -20,9 +20,8 @@ module NestedText
       result = _parse_any(0)
       case @top_class.object_id
       when Object.object_id
-        # raise "better error here" unless result.instance_of?(Object)
-        # TODO test that result is Hash, Array, String, or nil
-
+        raise Errors::UnsupportedTopLevelTypeError, @top_class unless
+                  result.nil? || [Hash, Array, String].include?(result.class)
       when Hash.object_id
         result = {} if result.nil?
         raise Errors::TopLevelTypeMismatchParsedType.new(@top_class, result) unless result.instance_of?(Hash)
