@@ -4,9 +4,6 @@ require "nestedtext/errors"
 
 module NestedText
   class LineScanner
-    # TODO: input should IO or StringIO
-    # Need to set IO.autoclose=(true)?
-    #
     def initialize(io)
       @io = io
       @next_line = nil
@@ -56,15 +53,13 @@ module NestedText
     # inline_list        [value1, value2]
     ALLOWED_LINE_TAGS = %i[comment blank list_item dict_item string_item key_item inline_dict inline_list]
 
-    attr_reader :tag, :line_content, :indentation
-    attr_accessor :key, :value
+    attr_reader :tag, :line_content, :indentation, :attribs
 
     def initialize(line_content, lineno)
       @line_content = line_content
       @lineno = lineno
       # TODO: key value should be stored in some parse_attribs dict?
-      @key = nil
-      @value = nil
+      @attribs = Hash.new(nil)
       @tag = nil
       @indentation = 0
       _detect_line_tag_and_indentation
@@ -111,8 +106,8 @@ module NestedText
       elsif /^(?<key>.*?) *:(?: (?<value>.*))?$/.match @line_content
         # TODO: this regex must be tested. What are the constraints of the value?
         @tag = :dict_item
-        @key = Regexp.last_match(:key)
-        @value = Regexp.last_match(:value)
+        @attribs["key"] = Regexp.last_match(:key)
+        @attribs["value"] = Regexp.last_match(:value)
       else
         raise Errors::LineTagNotDetected, @line_content
       end

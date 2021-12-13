@@ -68,7 +68,7 @@ module NestedText
 
         raise Errors::LineTypeNotExpected.new(:dict_item, cur_line.tag) if cur_line.tag != :dict_item
 
-        value = cur_line.value
+        value = cur_line.attribs["value"]
         if value.nil?
           if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
             value = _parse_any(@line_scanner.peek&.indentation)
@@ -78,7 +78,7 @@ module NestedText
             raise "Dict item value could not be found"
           end
         end
-        result[cur_line.key] = value
+        result[cur_line.attribs["key"]] = value
       end
       result
     end
