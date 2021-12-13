@@ -35,8 +35,9 @@ module NestedText
 
     private
 
-    PARSER_INPUT_TYPES = [IO, StringIO]
+    PARSER_INPUT_TYPES = [IO, File, StringIO]
 
+    # TODO: better way to detect the "interface" or sublcass of IO?
     def _assert_valid_input_type(input)
       # raise Errors::WrongInputTypeError.new([IO, StringIO], raw_input) unless [IO, StringIO].include? top.class
       unless input.nil? || PARSER_INPUT_TYPES.map(&:object_id).include?(input.class.object_id)

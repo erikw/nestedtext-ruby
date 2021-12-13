@@ -24,4 +24,14 @@ module NestedText
   end
 
   # TODO: def load_file() like YAML.load_file
+  def load_file(filename, top_class: Object)
+    raise Errors::WrongInputTypeError.new([String], filename) unless filename.nil? || filename.is_a?(String)
+
+    assert_valid_top_level_type top_class
+
+    File.open(filename, mode = "r") do |file|
+      parser = Parser.new(file, top_class)
+      parser.parse
+    end
+  end
 end
