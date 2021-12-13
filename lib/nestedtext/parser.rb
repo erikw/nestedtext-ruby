@@ -15,8 +15,6 @@ module NestedText
       NestedText.assert_valid_top_level_type top_class
       @top_class = top_class
       @line_scanner = LineScanner.new(raw_input)
-      @cur_line = nil
-      @line_col = 0
     end
 
     def parse
@@ -67,16 +65,23 @@ module NestedText
 
     def _parse_dict_item(indentation)
       result = {}
-      # @cur_line = @line_scanner.next
-      # while @line_scanner.peek&.tag == :dict_item # just while hasNext pattern instead of peek?
-
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
-        @cur_line = @line_scanner.read_next
-        raise Errors::InvalidIndentation.new(indentation, @cur_line.indentation) if @cur_line.indentation != indentation
+        cur_line = @line_scanner.read_next
+        raise Errors::InvalidIndentation.new(indentation, cur_line.indentation) if cur_line.indentation != indentation
 
-        raise Errors::LineTypeNotExpected.new(:dict_item, @cur_line.tag) if @cur_line.tag != :dict_item
+        raise Errors::LineTypeNotExpected.new(:dict_item, cur_line.tag) if cur_line.tag != :dict_item
 
-        result[@cur_line.key] = (@cur_line.value || _parse_any(@line_scanner.peek&.indentation))
+        value = cur_line.value
+        if value.nil? # TODO: !value?
+          if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
+            value = _parse_any(@line_scanner.peek&.indentation)
+          elsif @line_scanner.peek&.tag == :dict_item
+            value = ""
+          else
+            raise "Dict item value could not be found"
+          end
+        end
+        result[cur_line.key] = value
       end
       result
     end
