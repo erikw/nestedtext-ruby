@@ -78,6 +78,16 @@ class DecodeStringTopAnyTest < Minitest::Test
       NestedText.load(nts)
     end
   end
+
+  def test_dict_invalid_type
+    nts = <<~NT
+      one: two
+      - list instead of dict
+    NT
+    assert_raises(NestedText::Errors::LineTypeNotExpected) do
+      NestedText.load(nts)
+    end
+  end
 end
 
 class DecodeStringTopHashTest < Minitest::Test

@@ -34,5 +34,9 @@ module NestedText
     class InvalidIndentation < StandardError
       def initialize(ind_exp, ind_act) = super("The indentation of the current line is not valid. Expected indentation of #{ind_exp} but was #{ind_act}.")
     end
+
+    class LineTypeNotExpected < StandardError
+      def initialize(type_exp, type_act) = super("The current line was detected to be #{type_act}, but we expected to see #{type_exp} here.")
+    end
   end
 end

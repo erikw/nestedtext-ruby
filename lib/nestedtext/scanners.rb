@@ -48,8 +48,8 @@ module NestedText
     # Reference: https://nestedtext.org/en/latest/file_format.html
     # :comment            # a comment
     # :blank
-    # :list_item         -item
-    # :dict_item   key: value (or value on next line)
+    # :list_item         - item
+    # :dict_item          key: value (or value on next line)
     # :string_item       > a string
     # :key_item          : key on a line
     # inline_dict        {key1: value1, key2: value2}

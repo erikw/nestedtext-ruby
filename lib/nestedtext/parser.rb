@@ -69,9 +69,12 @@ module NestedText
       result = {}
       # @cur_line = @line_scanner.next
       # while @line_scanner.peek&.tag == :dict_item # just while hasNext pattern instead of peek?
+
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         @cur_line = @line_scanner.read_next
         raise Errors::InvalidIndentation.new(indentation, @cur_line.indentation) if @cur_line.indentation != indentation
+
+        raise Errors::LineTypeNotExpected.new(:dict_item, @cur_line.tag) if @cur_line.tag != :dict_item
 
         result[@cur_line.key] = (@cur_line.value || _parse_any(@line_scanner.peek&.indentation))
       end
