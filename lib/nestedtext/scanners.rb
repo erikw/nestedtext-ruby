@@ -58,7 +58,6 @@ module NestedText
     def initialize(line_content, lineno)
       @line_content = line_content
       @lineno = lineno
-      # TODO: key value should be stored in some parse_attribs dict?
       @attribs = Hash.new(nil)
       @tag = nil
       @indentation = 0
@@ -75,7 +74,6 @@ module NestedText
 
     def tag=(tag)
       @tag = tag
-      # TODO: unit test this
       raise Errors::LineTagUnknown, type unless ALLOWED_LINE_TAGS.include?(@tag)
     end
 
@@ -104,14 +102,13 @@ module NestedText
       elsif @line_content[0] == "["
         @tag = :inline_list
       elsif /^(?<key>.*?) *:(?: (?<value>.*))?$/.match @line_content
-        # TODO: this regex must be tested. What are the constraints of the value?
+        # TODO: this regex must be extracted and unit tested. What are the constraints of the value?
         @tag = :dict_item
         @attribs["key"] = Regexp.last_match(:key)
         @attribs["value"] = Regexp.last_match(:value)
       else
         raise Errors::LineTagNotDetected, @line_content
       end
-      # TODO: handle the rest of the cases in if-else, and set Line.value to be rest of string depending on the line tag.
     end
   end
 end
