@@ -115,6 +115,19 @@ class DecodeStringTopAnyTest < Minitest::Test
     NT
     assert_equal({ "key:here\n     still\nhere" => { "regular" => "dict" } }, NestedText.load(nts))
   end
+
+  def test_dict_two_multiline_keys
+    nts = <<~NT
+      : key
+      :  one
+        key-one: value1
+      : key
+      : \ttwo
+        key-two: value2
+    NT
+    assert_equal({ "key\n one" => { "key-one" => "value1" }, "key\n\ttwo" => { "key-two" => "value2" } },
+                 NestedText.load(nts))
+  end
 end
 
 class DecodeStringTopHashTest < Minitest::Test
