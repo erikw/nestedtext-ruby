@@ -93,6 +93,7 @@ module NestedText
         @tag = :comment
       elsif /^:(?: |$)/.match @line_content
         @tag = :key_item
+        @attribs["key"] = @line_content[2..]
       elsif /-(?: |$)/.match @line_content
         @tag = :list_item
       elsif />(?: |$)/.match @line_content

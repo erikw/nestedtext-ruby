@@ -110,10 +110,10 @@ class DecodeStringTopAnyTest < Minitest::Test
     nts = <<~NT
       : key:here
       :      still
-      :here
-          > value
+      : here
+          regular: dict
     NT
-    assert_equal({ "key:here\n      still\nhere" => "value" }, NestedText.load(nts))
+    assert_equal({ "key:here\n     still\nhere" => { "regular" => "dict" } }, NestedText.load(nts))
   end
 end
 

@@ -45,11 +45,9 @@ module NestedText
       case @line_scanner.peek.tag # TODO: Use Null Pattern instead with a EndOfInput tag?
       when :list_item
         raise NotImplementedError
-      when :dict_item
+      when :dict_item, :key_item
         _parse_dict_item(indentation)
       when :string_item
-        raise NotImplementedError
-      when :key_item
         raise NotImplementedError
       when :inline
         raise NotImplementedError
@@ -64,19 +62,40 @@ module NestedText
         cur_line = @line_scanner.read_next
         raise Errors::InvalidIndentation.new(indentation, cur_line.indentation) if cur_line.indentation != indentation
 
-        raise Errors::LineTypeNotExpected.new(:dict_item, cur_line.tag) if cur_line.tag != :dict_item
-
-        value = cur_line.attribs["value"]
-        if value.nil?
-          if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
-            value = _parse_any(@line_scanner.peek&.indentation)
-          elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :dict_item
+        value = nil
+        key = nil
+        if cur_line.tag == :dict_item
+          key = cur_line.attribs["key"]
+          value = cur_line.attribs["value"]
+          if value.nil?
+            if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
+              value = _parse_any(@line_scanner.peek&.indentation)
+            elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :dict_item
+              value = ""
+            else
+              raise "Dict item value could not be found"
+            end
+          end
+        elsif cur_line.tag == :key_item
+          key = cur_line.attribs["key"]
+          while @line_scanner.peek&.tag == :key_item && @line_scanner.peek.indentation == indentation
+            cur_line = @line_scanner.read_next
+            key += "\n" + cur_line.attribs["key"]
+          end
+          exp_types = %i[dict_item key_item list_item string_item]
+          if @line_scanner.peek.nil?
             value = ""
           else
-            raise "Dict item value could not be found"
+            unless exp_types.member?(@line_scanner.peek&.tag)
+              raise Errors::LineTypeNotExpected.new(exp_types, cur_line.tag)
+            end
+
+            value = _parse_any(@line_scanner.peek&.indentation)
           end
+        else
+          raise Errors::LineTypeNotExpected.new(%i[dict_item key_item], cur_line.tag)
         end
-        result[cur_line.attribs["key"]] = value
+        result[key] = value
       end
       result
     end
