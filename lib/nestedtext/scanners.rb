@@ -26,10 +26,6 @@ module NestedText
       @next_line
     end
 
-    def next_peek
-      @next_line
-    end
-
     private
 
     def prepare_next_line

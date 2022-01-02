@@ -31,6 +31,10 @@ class DecodeStringTopAnyTest < Minitest::Test
     assert_nil NestedText.load("")
   end
 
+  def test_empty_comment
+    assert_nil NestedText.load("#just some\n#comments")
+  end
+
   def test_empty_top_any
     assert_nil NestedText.load("", top_class: Object)
   end
@@ -104,7 +108,10 @@ class DecodeStringTopAnyTest < Minitest::Test
   def test_dict_valuenextline_last_line
     nts = <<~NT
       one:
+      # a comment in between here does not hurt! (or empty lines between next)
       two: 2
+
+
       three:
     NT
     assert_equal({ "one" => "", "two" => "2", "three" => "" }, NestedText.load(nts))
