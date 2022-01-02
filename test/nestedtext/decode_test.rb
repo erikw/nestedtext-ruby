@@ -220,6 +220,15 @@ class DecodeStringTopHashTest < Minitest::Test
   def test_top_hash_empty_whitespace
     assert_equal({}, NestedText.load("  ", top_class: Hash))
   end
+
+  def test_top_hash_invalid_actual
+    nts = <<~NT
+      - it's a list!
+    NT
+    assert_raises(NestedText::Errors::TopLevelTypeMismatchParsedType) do
+      NestedText.load(nts, top_class: Hash)
+    end
+  end
 end
 
 class DecodeFileTest < Minitest::Test
