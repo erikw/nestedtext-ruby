@@ -91,18 +91,18 @@ module NestedText
         @tag = :blank
       elsif @line_content[0] == "#"
         @tag = :comment
-      elsif /^:(?: |$)/.match @line_content
+      elsif @line_content =~ /^:(?: |$)/
         @tag = :key_item
         @attribs["key"] = @line_content[2..]
-      elsif /-(?: |$)/.match @line_content
+      elsif @line_content =~ /-(?: |$)/
         @tag = :list_item
-      elsif />(?: |$)/.match @line_content
+      elsif @line_content =~ />(?: |$)/
         @tag = :string_item
       elsif @line_content[0] == "{"
         @tag = :inline_dict
       elsif @line_content[0] == "["
         @tag = :inline_list
-      elsif /^(?<key>.*?) *:(?: (?<value>.*))?$/.match @line_content
+      elsif @line_content =~ /^(?<key>.*?) *:(?: (?<value>.*))?$/
         # TODO: this regex must be extracted and unit tested. What are the constraints of the value?
         @tag = :dict_item
         @attribs["key"] = Regexp.last_match(:key)
