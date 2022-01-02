@@ -128,6 +128,13 @@ class DecodeStringTopAnyTest < Minitest::Test
     assert_equal({ "key\n one" => { "key-one" => "value1" }, "key\n\ttwo" => { "key-two" => "value2" } },
                  NestedText.load(nts))
   end
+
+  def test_list_single_item
+    nts = <<~NT
+      - List  Item\t
+    NT
+    assert_equal(["List  Item\t"], NestedText.load(nts))
+  end
 end
 
 class DecodeStringTopHashTest < Minitest::Test
