@@ -67,11 +67,11 @@ module NestedText
         if value.nil?
           if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
             value = _parse_any(@line_scanner.peek.indentation)
-          elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :dict_item
+          elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :list_item
             # TODO: what
             value = ""
           else
-            raise "Dict item value could not be found"
+            raise "List item value could not be found"
           end
         end
 

@@ -61,6 +61,10 @@ class DecodeStringTopAnyTest < Minitest::Test
     assert_equal({ "a" => "" }, NestedText.load("a: "))
   end
 
+  def test_dict_empty_value_two
+    assert_equal({ "a" => "", "b" => "" }, NestedText.load("a: \nb:"))
+  end
+
   def test_dict_nested
     nts = <<~NT
       one:
@@ -129,6 +133,21 @@ class DecodeStringTopAnyTest < Minitest::Test
                  NestedText.load(nts))
   end
 
+  def test_list_empty
+    nts = <<~NT
+      -
+    NT
+    assert_equal([""], NestedText.load(nts))
+  end
+
+  def test_list_empty_two
+    nts = <<~NT
+      -
+      -
+    NT
+    assert_equal(["", ""], NestedText.load(nts))
+  end
+
   def test_list_single_item
     nts = <<~NT
       - List  Item\t
@@ -169,6 +188,8 @@ class DecodeStringTopAnyTest < Minitest::Test
     assert_equal(exp, NestedText.load(nts))
   end
 
+  # TODO: test nested multiline string in list
+
   def test_list_nested_multiple
     nts = <<~NT
       -
@@ -182,8 +203,6 @@ class DecodeStringTopAnyTest < Minitest::Test
     exp = [%w[litem1 litem2], { "key1" => "value1", "key2" => "value2" }, "litem3"]
     assert_equal(exp, NestedText.load(nts))
   end
-
-  # TODO: test nested multiline string in list
 end
 
 class DecodeStringTopHashTest < Minitest::Test
