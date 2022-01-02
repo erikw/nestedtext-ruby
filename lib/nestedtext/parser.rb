@@ -44,7 +44,7 @@ module NestedText
 
       case @line_scanner.peek.tag # TODO: Use Null Pattern instead with a EndOfInput tag?
       when :list_item
-        raise NotImplementedError
+        _parse_list_item(indentation)
       when :dict_item, :key_item
         _parse_dict_item(indentation)
       when :string_item
@@ -54,6 +54,32 @@ module NestedText
       else
         raise "Unexpected line tag!"
       end
+    end
+
+    def _parse_list_item(indentation)
+      result = []
+      while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
+        cur_line = @line_scanner.read_next
+        raise Errors::InvalidIndentation.new(indentation, cur_line.indentation) if cur_line.indentation != indentation
+        raise Errors::LineTypeNotExpected.new(%i[list_item], cur_line.tag) unless cur_line.tag == :list_item
+
+        value = cur_line.attribs["value"]
+        if value.nil?
+          if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
+            value = _parse_any(@line_scanner.peek.indentation)
+            puts "parsed any value list"
+            pp value
+          elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :dict_item
+            # TODO: what
+            value = ""
+          else
+            raise "Dict item value could not be found"
+          end
+        end
+
+        result <<  value
+      end
+      result
     end
 
     def _parse_dict_item(indentation)
@@ -69,7 +95,7 @@ module NestedText
           value = cur_line.attribs["value"]
           if value.nil?
             if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
-              value = _parse_any(@line_scanner.peek&.indentation)
+              value = _parse_any(@line_scanner.peek.indentation)
             elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :dict_item
               value = ""
             else
@@ -80,7 +106,7 @@ module NestedText
           key = cur_line.attribs["key"]
           while @line_scanner.peek&.tag == :key_item && @line_scanner.peek.indentation == indentation
             cur_line = @line_scanner.read_next
-            key += "\n" + cur_line.attribs["key"]
+            key += "\n" + cur_line.attribs["key"]  # TODO: what is the original linebreak was e.g. \r\n ?
           end
           exp_types = %i[dict_item key_item list_item string_item]
           if @line_scanner.peek.nil?

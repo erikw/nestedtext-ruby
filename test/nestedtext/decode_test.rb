@@ -135,6 +135,39 @@ class DecodeStringTopAnyTest < Minitest::Test
     NT
     assert_equal(["List  Item\t"], NestedText.load(nts))
   end
+
+  def test_list_multiple_items
+    nts = <<~NT
+      - List  Item\t
+      - item2
+      -  \t
+      - item three
+    NT
+    exp = ["List  Item\t", "item2", " \t", "item three"]
+    assert_equal(exp, NestedText.load(nts))
+  end
+
+  def test_list_nested_list
+    nts = <<~NT
+      - item1
+      -
+        - item2
+        - item3
+    NT
+    exp = ["item1", %w[item2 item3]]
+    assert_equal(exp, NestedText.load(nts))
+  end
+
+  def test_list_nested_dict
+    nts = <<~NT
+      - item1
+      -
+        key1 : value1
+        key2 : value2
+    NT
+    exp = ["item1", { "key1" => "value1", "key2" => "value2" }]
+    assert_equal(exp, NestedText.load(nts))
+  end
 end
 
 class DecodeStringTopHashTest < Minitest::Test

@@ -96,6 +96,7 @@ module NestedText
         @attribs["key"] = @line_content[2..]
       elsif @line_content =~ /-(?: |$)/
         @tag = :list_item
+        @attribs["value"] = @line_content[2..]
       elsif @line_content =~ />(?: |$)/
         @tag = :string_item
       elsif @line_content[0] == "{"
