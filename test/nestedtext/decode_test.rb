@@ -127,6 +127,21 @@ class DecodeStringTopAnyTest < Minitest::Test
     assert_equal({ "key:here\n     still\nhere" => { "regular" => "dict" } }, NestedText.load(nts))
   end
 
+  def test_dict_single_multiline_key_oneline
+    nts = <<~NT
+      : key but on one line only
+          regular: dict
+    NT
+    assert_equal({ "key but on one line only" => { "regular" => "dict" } }, NestedText.load(nts))
+  end
+
+  def test_dict_single_multiline_key_oneline2
+    nts = <<~NT
+      : oneline
+    NT
+    assert_equal({ "oneline" => "" }, NestedText.load(nts))
+  end
+
   def test_dict_two_multiline_keys
     nts = <<~NT
       : key
