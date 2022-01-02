@@ -67,8 +67,6 @@ module NestedText
         if value.nil?
           if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
             value = _parse_any(@line_scanner.peek.indentation)
-            puts "parsed any value list"
-            pp value
           elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :dict_item
             # TODO: what
             value = ""

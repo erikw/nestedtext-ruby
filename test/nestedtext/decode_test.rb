@@ -168,6 +168,22 @@ class DecodeStringTopAnyTest < Minitest::Test
     exp = ["item1", { "key1" => "value1", "key2" => "value2" }]
     assert_equal(exp, NestedText.load(nts))
   end
+
+  def test_list_nested_multiple
+    nts = <<~NT
+      -
+        - litem1
+        - litem2
+      -
+        key1 : value1
+        key2 : value2
+      - litem3
+    NT
+    exp = [%w[litem1 litem2], { "key1" => "value1", "key2" => "value2" }, "litem3"]
+    assert_equal(exp, NestedText.load(nts))
+  end
+
+  # TODO: test nested multiline string in list
 end
 
 class DecodeStringTopHashTest < Minitest::Test
