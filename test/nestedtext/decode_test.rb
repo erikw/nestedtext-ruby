@@ -69,6 +69,15 @@ class DecodeStringTopAnyTest < Minitest::Test
     assert_equal({ "a" => "", "b" => "" }, NestedText.load("a: \nb:"))
   end
 
+  def test_dict_key_alignment
+    nts = <<~NT
+      one        : 1
+      twotwo     : 2
+      threethree : 3
+    NT
+    assert_equal({ "one" => "1", "twotwo" => "2", "threethree" => "3" }, NestedText.load(nts))
+  end
+
   def test_dict_nested
     nts = <<~NT
       one:
