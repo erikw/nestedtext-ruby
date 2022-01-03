@@ -258,6 +258,26 @@ class DecodeTopAnyMultilineStringTest < Minitest::Test
     NT
     assert_equal("L1\n\nL3\n\n\nL6", NestedText.load(nts))
   end
+
+  def test_multistring_invalid_indentation
+    nts = <<~NT
+      > L1
+        > L2
+    NT
+    assert_raises(NestedText::Errors::InvalidIndentation) do
+      NestedText.load(nts)
+    end
+  end
+
+  def test_multistring_invalid_line_type
+    nts = <<~NT
+      > multiline here
+      : but suddently key item here
+    NT
+    assert_raises(NestedText::Errors::LineTypeNotExpected) do
+      NestedText.load(nts)
+    end
+  end
 end
 
 class DecodeTopTest < Minitest::Test
