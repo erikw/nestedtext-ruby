@@ -1,32 +1,6 @@
 require "test_helper"
 
-class DecodeTopTest < Minitest::Test
-  def test_top_invalid_enumerable
-    assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
-      NestedText.load("", top_class: Enumerable)
-    end
-  end
-
-  def test_top_invalid_nil
-    assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
-      NestedText.load("", top_class: nil)
-    end
-  end
-
-  def test_input_invalid_array
-    assert_raises(NestedText::Errors::WrongInputTypeError) do
-      NestedText.load([])
-    end
-  end
-
-  def test_input_invalid_hash
-    assert_raises(NestedText::Errors::WrongInputTypeError) do
-      NestedText.load({})
-    end
-  end
-end
-
-class DecodeStringTopAnyTest < Minitest::Test
+class DecodeTopAnyTest < Minitest::Test
   def test_empty
     assert_nil NestedText.load("")
   end
@@ -48,7 +22,9 @@ class DecodeStringTopAnyTest < Minitest::Test
       NestedText.load(" a: b")
     end
   end
+end
 
+class DecodeTopAnyDictTest < Minitest::Test
   def test_dict_single_entry
     assert_equal({ "a" => "b" }, NestedText.load("a: b"))
   end
@@ -163,7 +139,9 @@ class DecodeStringTopAnyTest < Minitest::Test
     assert_equal({ "key\n one" => { "key-one" => "value1" }, "key\n\ttwo" => { "key-two" => "value2" } },
                  NestedText.load(nts))
   end
+end
 
+class DecodeTopAnyListTest < Minitest::Test
   def test_list_empty
     nts = <<~NT
       -
@@ -233,6 +211,32 @@ class DecodeStringTopAnyTest < Minitest::Test
     NT
     exp = [%w[litem1 litem2], { "key1" => "value1", "key2" => "value2" }, "litem3"]
     assert_equal(exp, NestedText.load(nts))
+  end
+end
+
+class DecodeTopTest < Minitest::Test
+  def test_top_invalid_enumerable
+    assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
+      NestedText.load("", top_class: Enumerable)
+    end
+  end
+
+  def test_top_invalid_nil
+    assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
+      NestedText.load("", top_class: nil)
+    end
+  end
+
+  def test_input_invalid_array
+    assert_raises(NestedText::Errors::WrongInputTypeError) do
+      NestedText.load([])
+    end
+  end
+
+  def test_input_invalid_hash
+    assert_raises(NestedText::Errors::WrongInputTypeError) do
+      NestedText.load({})
+    end
   end
 end
 
