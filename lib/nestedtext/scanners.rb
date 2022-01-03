@@ -90,11 +90,12 @@ module NestedText
       elsif @line_content =~ /^:(?: |$)/
         @tag = :key_item
         @attribs["key"] = @line_content[2..]
-      elsif @line_content =~ /-(?: |$)/
+      elsif @line_content =~ /^-(?: |$)/
         @tag = :list_item
         @attribs["value"] = @line_content[2..]
-      elsif @line_content =~ />(?: |$)/
+      elsif @line_content =~ /^>(?: |$)/
         @tag = :string_item
+        @attribs["value"] = @line_content[2..]
       elsif @line_content[0] == "{"
         @tag = :inline_dict
       elsif @line_content[0] == "["

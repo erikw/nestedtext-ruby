@@ -214,6 +214,24 @@ class DecodeTopAnyListTest < Minitest::Test
   end
 end
 
+class DecodeTopAnyMultilineStringTest < Minitest::Test
+  def test_multistring_single_line
+    nts = <<~NT
+      > just this line
+    NT
+    assert_equal("just this line", NestedText.load(nts))
+  end
+
+  def test_multistring_multiple_line
+    nts = <<~NT
+      > L1
+      > \tL2
+      >   L3
+    NT
+    assert_equal("L1\n\tL2\n  L3", NestedText.load(nts))
+  end
+end
+
 class DecodeTopTest < Minitest::Test
   def test_top_invalid_enumerable
     assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do

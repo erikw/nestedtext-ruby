@@ -51,7 +51,7 @@ module NestedText
       when :dict_item, :key_item
         _parse_dict_item(indentation)
       when :string_item
-        raise NotImplementedError
+        _parse_string_item(indentation)
       when :inline
         raise NotImplementedError
       else
@@ -124,6 +124,27 @@ module NestedText
         result[key] = value
       end
       result
+    end
+
+    def _parse_string_item(indentation)
+      result = []
+      while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
+        cur_line = @line_scanner.read_next
+        raise Errors::InvalidIndentation.new(indentation, cur_line.indentation) if cur_line.indentation != indentation
+        raise Errors::LineTypeNotExpected.new(%i[string_item], cur_line.tag) unless cur_line.tag == :string_item
+
+        value = cur_line.attribs["value"]
+        if value.nil?
+          if @line_scanner.peek.nil? || @line_scanner.peek.tag == :string_item
+            value = ""
+          else
+            raise "String item value could not be found"
+          end
+        end
+
+        result << value
+      end
+      result.join("\n")
     end
   end
 end
