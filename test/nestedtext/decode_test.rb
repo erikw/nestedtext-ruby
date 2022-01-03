@@ -322,6 +322,16 @@ class DecodeStringTopAnyMultilineStringTest < Minitest::Test
   end
 end
 
+class DecodeStringTopAnyInlineListTest < Minitest::Test
+  def test_inline_list_empty
+    assert_equal([], NestedText.load("[]"))
+  end
+
+  def test_inline_list_empty_empty_string
+    assert_equal([" "], NestedText.load("[  ]"))
+  end
+end
+
 class DecodeStringTopTest < Minitest::Test
   def test_top_invalid_enumerable
     assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do

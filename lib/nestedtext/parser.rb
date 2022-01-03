@@ -55,10 +55,12 @@ module NestedText
         _parse_dict_item(indentation)
       when :string_item
         _parse_string_item(indentation)
-      when :inline
+      when :inline_dict
+        raise NotImplementedError
+      when :inline_list
         raise NotImplementedError
       else
-        raise "Unexpected line tag!"
+        raise "Unexpected line tag! #{@line_scanner.peek.tag}"
       end
     end
 
