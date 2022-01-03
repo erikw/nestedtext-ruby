@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DecodeTopAnyTest < Minitest::Test
+class DecodeStringTopAnyTest < Minitest::Test
   def test_empty
     assert_nil NestedText.load("")
   end
@@ -24,7 +24,7 @@ class DecodeTopAnyTest < Minitest::Test
   end
 end
 
-class DecodeTopAnyDictTest < Minitest::Test
+class DecodeStringTopAnyDictTest < Minitest::Test
   def test_dict_single_entry
     assert_equal({ "a" => "b" }, NestedText.load("a: b"))
   end
@@ -141,7 +141,7 @@ class DecodeTopAnyDictTest < Minitest::Test
   end
 end
 
-class DecodeTopAnyListTest < Minitest::Test
+class DecodeStringTopAnyListTest < Minitest::Test
   def test_list_empty
     nts = <<~NT
       -
@@ -214,7 +214,7 @@ class DecodeTopAnyListTest < Minitest::Test
   end
 end
 
-class DecodeTopAnyMultilineStringTest < Minitest::Test
+class DecodeStringTopAnyMultilineStringTest < Minitest::Test
   def test_multistring_single_line
     nts = <<~NT
       > just this line\t
@@ -280,7 +280,7 @@ class DecodeTopAnyMultilineStringTest < Minitest::Test
   end
 end
 
-class DecodeTopTest < Minitest::Test
+class DecodeStringTopTest < Minitest::Test
   def test_top_invalid_enumerable
     assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
       NestedText.load("", top_class: Enumerable)
@@ -325,7 +325,6 @@ class DecodeStringTopHashTest < Minitest::Test
   end
 end
 
-# TODO: test top level string as well
 class DecodeStringTopArrayTest < Minitest::Test
   def test_top_array_empty
     assert_equal([], NestedText.load("", top_class: Array))
@@ -341,6 +340,25 @@ class DecodeStringTopArrayTest < Minitest::Test
     NT
     assert_raises(NestedText::Errors::TopLevelTypeMismatchParsedType) do
       NestedText.load(nts, top_class: Array)
+    end
+  end
+end
+
+class DecodeStringTopArrayTest < Minitest::Test
+  def test_top_multilinestring_empty
+    assert_equal("", NestedText.load("      ", top_class: String))
+  end
+
+  def test_top_multilinestring_multiline
+    assert_equal("line 1\nline 2", NestedText.load("> line 1\n> line 2", top_class: String))
+  end
+
+  def test_top_multilinestring_invalid_actual
+    nts = <<~NT
+      - this list item will not be expected
+    NT
+    assert_raises(NestedText::Errors::TopLevelTypeMismatchParsedType) do
+      NestedText.load(nts, top_class: String)
     end
   end
 end
