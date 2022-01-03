@@ -231,6 +231,26 @@ class DecodeStringTopAnyListTest < Minitest::Test
     exp = [%w[litem1 litem2], { "key1" => "value1", "key2" => "value2" }, "some multi-line\nstring here", "litem3"]
     assert_equal(exp, NestedText.load(nts))
   end
+
+  def test_list_invalid_indentation
+    nts = <<~NT
+      - L1
+        - L2
+    NT
+    assert_raises(NestedText::Errors::InvalidIndentation) do
+      NestedText.load(nts)
+    end
+  end
+
+  def test_list_invalid_line_type
+    nts = <<~NT
+      - item here
+      : but suddently key item here
+    NT
+    assert_raises(NestedText::Errors::LineTypeNotExpected) do
+      NestedText.load(nts)
+    end
+  end
 end
 
 class DecodeStringTopAnyMultilineStringTest < Minitest::Test
@@ -269,7 +289,10 @@ class DecodeStringTopAnyMultilineStringTest < Minitest::Test
   def test_multistring_multiple_line_with_empty_between
     nts = <<~NT
       > L1
+
       >
+
+
       > L3
       >
       >
