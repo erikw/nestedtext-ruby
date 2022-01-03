@@ -197,8 +197,6 @@ class DecodeStringTopAnyListTest < Minitest::Test
     assert_equal(exp, NestedText.load(nts))
   end
 
-  # TODO: test nested multiline string in list
-
   def test_list_nested_multiple
     nts = <<~NT
       -
@@ -207,9 +205,12 @@ class DecodeStringTopAnyListTest < Minitest::Test
       -
         key1 : value1
         key2 : value2
+      -
+        > some multi-line
+        > string here
       - litem3
     NT
-    exp = [%w[litem1 litem2], { "key1" => "value1", "key2" => "value2" }, "litem3"]
+    exp = [%w[litem1 litem2], { "key1" => "value1", "key2" => "value2" }, "some multi-line\nstring here", "litem3"]
     assert_equal(exp, NestedText.load(nts))
   end
 end
