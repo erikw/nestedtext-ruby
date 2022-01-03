@@ -25,6 +25,9 @@ module NestedText
       when Hash.object_id
         result = {} if result.nil?
         raise Errors::TopLevelTypeMismatchParsedType.new(@top_class, result) unless result.instance_of?(Hash)
+      when Array.object_id
+        result = [] if result.nil?
+        raise Errors::TopLevelTypeMismatchParsedType.new(@top_class, result) unless result.instance_of?(Array)
       else
         raise Errors::UnsupportedTopLevelTypeError, @top_class
       end

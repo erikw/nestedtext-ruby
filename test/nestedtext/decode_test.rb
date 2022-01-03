@@ -237,7 +237,7 @@ class DecodeStringTopAnyTest < Minitest::Test
 end
 
 class DecodeStringTopHashTest < Minitest::Test
-  def test_top_hash_dict_empty
+  def test_top_hash_empty
     assert_equal({}, NestedText.load("", top_class: Hash))
   end
 
@@ -251,6 +251,26 @@ class DecodeStringTopHashTest < Minitest::Test
     NT
     assert_raises(NestedText::Errors::TopLevelTypeMismatchParsedType) do
       NestedText.load(nts, top_class: Hash)
+    end
+  end
+end
+
+# TODO: test top level string as well
+class DecodeStringTopArrayTest < Minitest::Test
+  def test_top_array_empty
+    assert_equal([], NestedText.load("", top_class: Array))
+  end
+
+  def test_top_array_empty_whitespace
+    assert_equal([], NestedText.load("  ", top_class: Array))
+  end
+
+  def test_top_array_invalid_actual
+    nts = <<~NT
+      this is a : dict
+    NT
+    assert_raises(NestedText::Errors::TopLevelTypeMismatchParsedType) do
+      NestedText.load(nts, top_class: Array)
     end
   end
 end
