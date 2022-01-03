@@ -72,6 +72,24 @@ class DecodeStringTopAnyDictTest < Minitest::Test
     end
   end
 
+  def test_dict_value_of_list
+    nts = <<~NT
+      key:
+          - L1
+          - L2
+    NT
+    assert_equal({ "key" => %w[L1 L2] }, NestedText.load(nts))
+  end
+
+  def test_dict_value_of_multiline_string
+    nts = <<~NT
+      key:
+          > S1
+          > S2
+    NT
+    assert_equal({ "key" => "S1\nS2" }, NestedText.load(nts))
+  end
+
   def test_dict_invalid_type
     nts = <<~NT
       one: two
