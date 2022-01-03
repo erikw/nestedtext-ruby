@@ -217,9 +217,9 @@ end
 class DecodeTopAnyMultilineStringTest < Minitest::Test
   def test_multistring_single_line
     nts = <<~NT
-      > just this line
+      > just this line\t
     NT
-    assert_equal("just this line", NestedText.load(nts))
+    assert_equal("just this line\t", NestedText.load(nts))
   end
 
   def test_multistring_multiple_line
@@ -229,6 +229,18 @@ class DecodeTopAnyMultilineStringTest < Minitest::Test
       >   L3
     NT
     assert_equal("L1\n\tL2\n  L3", NestedText.load(nts))
+  end
+
+  def test_multistring_multiple_line_with_empty_between
+    nts = <<~NT
+      > L1
+      >
+      > L3
+      >
+      >
+      > L6
+    NT
+    assert_equal("L1\n\nL3\n\n\nL6", NestedText.load(nts))
   end
 end
 
