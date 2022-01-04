@@ -379,10 +379,16 @@ class DecodeStringTopAnyInlineListTest < Minitest::Test
       NestedText.load("[1, 2")
     end
   end
+end
 
-  # def test_inline_dict_empty
-  # assert_equal({}, NestedText.load("{}"))
-  # end
+class DecodeStringTopAnyInlineListTest < Minitest::Test
+  def test_inline_dict_empty
+    assert_equal({}, NestedText.load("{}"))
+  end
+
+  def test_inline_dict_empty_string
+    assert_equal({}, NestedText.load("{ }"))
+  end
 end
 
 class DecodeStringTopTest < Minitest::Test
