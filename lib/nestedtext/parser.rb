@@ -201,8 +201,6 @@ module NestedText
     def parse_inline_list
       @inline_scanner = InlineScanner.new(@line_scanner.read_next.line_content)
       result = parse_inline
-
-      pp result
       raise "Better errors please!" unless result.is_a? Array
 
       result
