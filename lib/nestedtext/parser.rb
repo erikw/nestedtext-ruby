@@ -188,7 +188,6 @@ module NestedText
 
           first = false
           value = parse_inline
-          puts "Parsed inline: #{value}"
           result << value unless value.nil?
           break unless @inline_scanner.peek == ","
         end
@@ -200,7 +199,7 @@ module NestedText
         until @inline_scanner.empty? || ["{", "}", "[", "]", ","].include?(@inline_scanner.peek)
           inline_string << @inline_scanner.read_next
         end
-        result = inline_string.join.strip
+        result = inline_string.join.rstrip
       end
       result
     end

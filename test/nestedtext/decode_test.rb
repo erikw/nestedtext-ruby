@@ -350,12 +350,19 @@ class DecodeStringTopAnyInlineListTest < Minitest::Test
   def test_inline_list_nested_first
     assert_equal([%w[1 2], "3"], NestedText.load("[[1, 2], 3]"))
   end
+  # TODO: more nested list tests.
 
   def test_inline_list_nested_second
     assert_equal(["1", %w[2 3]], NestedText.load("[1, [2, 3]]"))
   end
 
-  # TODO: test nested lists
+  def test_inline_list_nested_multiple_singles
+    assert_equal([["1"], ["2"], ["3"]], NestedText.load("[[1], [2], [3]]"))
+  end
+
+  def test_inline_list_nested_multiple_mixed
+    assert_equal([%w[1 2], "3", %w[4 5], "6"], NestedText.load("[[1, 2], 3, [4, 5], 6]"))
+  end
 
   # def test_inline_dict_empty
   # assert_equal({}, NestedText.load("{}"))
