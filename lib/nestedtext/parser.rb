@@ -155,8 +155,8 @@ module NestedText
 
     def parse_inline_key
       key = []
-      key << @inline_scanner.read_next while @inline_scanner.peek != ","
-      key.join
+      key << @inline_scanner.read_next until @inline_scanner.empty? || @inline_scanner.peek == ":"
+      key.join.strip
     end
 
     def parse_inline
@@ -179,8 +179,12 @@ module NestedText
         @inline.read_next
       when "["
         result = []
+        first = true
         loop do
           @inline_scanner.read_next
+          break if first && @inline_scanner.peek == "]"
+
+          first = false
           value = parse_inline
           result << value unless value.nil?
           break unless @inline_scanner.peek == ","
@@ -193,7 +197,7 @@ module NestedText
         until @inline_scanner.empty? || ["{", "}", "[", "]", ","].include?(@inline_scanner.peek)
           inline_string << @inline_scanner.read_next
         end
-        result = inline_string.empty? ? nil : inline_string.join
+        result = inline_string.join.strip
       end
       result
     end
