@@ -328,16 +328,28 @@ class DecodeStringTopAnyInlineListTest < Minitest::Test
   end
 
   def test_inline_list_empty_string
-    assert_equal([" "], NestedText.load("[ ]"))
+    assert_equal([""], NestedText.load("[ ]"))
   end
 
   def test_inline_list_single_item
     assert_equal(["item"], NestedText.load("[item]"))
   end
 
+  def test_inline_list_single_plus_empty_item
+    assert_equal(["item", ""], NestedText.load("[item,]"))
+  end
+
+  def test_inline_list_single_plus_empty_items
+    assert_equal(["item", "", ""], NestedText.load("[item,,]"))
+  end
+
   def test_inline_list_multiple_item
     assert_equal(%w[1 2 3 a b], NestedText.load("[1,2 ,3, a  ,  b]"))
   end
+
+  # def test_inline_list_missing_element
+  # assert_equal(%w[1 2 3 a b], NestedText.load("[1,2 ,3, a  ,  b]"))
+  # end
 
   # def test_inline_dict_empty
   # assert_equal({}, NestedText.load("{}"))
