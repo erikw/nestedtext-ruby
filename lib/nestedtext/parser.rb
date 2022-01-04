@@ -163,6 +163,7 @@ module NestedText
       return nil if @inline_scanner.peek.nil?
 
       result = nil
+      @inline_scanner.read_next while !@inline_scanner.empty? && @inline_scanner.peek == " "
       case @inline_scanner.peek
       when "{"
         result = {}
@@ -176,7 +177,8 @@ module NestedText
         last_char = @inline_scanner.read_next
         raise "Better syntax error here" unless last_char == "}"
 
-        @inline.read_next
+        @inline_scanner.read_next
+
       when "["
         result = []
         first = true
@@ -186,11 +188,12 @@ module NestedText
 
           first = false
           value = parse_inline
+          puts "Parsed inline: #{value}"
           result << value unless value.nil?
           break unless @inline_scanner.peek == ","
         end
         last_char = @inline_scanner.read_next
-        raise "Better syntax error here2" unless last_char == "]"
+        raise "Better syntax error here2: #{last_char}" unless last_char == "]"
       else # inline string
         # TODO: if we're inside dict, string can't have colon, but already handled as we we have parse_inline_key?
         inline_string = []
