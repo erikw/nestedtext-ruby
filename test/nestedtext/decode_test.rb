@@ -5,16 +5,16 @@ class DecodeStringTopAnyTest < Minitest::Test
     assert_nil NestedText.load("")
   end
 
+  def test_empty_whitespace
+    assert_nil NestedText.load("  ")
+  end
+
   def test_empty_comment
     assert_nil NestedText.load("#just some\n#comments")
   end
 
   def test_empty_top_any
     assert_nil NestedText.load("", top_class: Object)
-  end
-
-  def test_empty_whitespace
-    assert_nil NestedText.load("  ")
   end
 
   def test_invalid_indentation_first_entry_col0
@@ -366,6 +366,18 @@ class DecodeStringTopAnyInlineListTest < Minitest::Test
 
   def test_inline_list_nested_nested
     assert_equal([[["1"], "2"], "3"], NestedText.load("[[[1], 2], 3]"))
+  end
+
+  def test_inline_list_invalid_wrong_closing_bracket
+    assert_raises(NestedText::Errors::InlineListSyntaxError) do
+      NestedText.load("[1, 2}")
+    end
+  end
+
+  def test_inline_list_invalid_missing_closing_bracket
+    assert_raises(NestedText::Error) do
+      NestedText.load("[1, 2")
+    end
   end
 
   # def test_inline_dict_empty
