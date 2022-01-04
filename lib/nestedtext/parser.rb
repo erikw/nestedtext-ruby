@@ -14,6 +14,7 @@ module NestedText
       NestedText.assert_valid_top_level_type(top_class)
       @top_class = top_class
       @line_scanner = LineScanner.new(io)
+      @inline_scanner = nil
     end
 
     def parse
@@ -58,7 +59,7 @@ module NestedText
       when :inline_dict
         raise NotImplementedError
       when :inline_list
-        raise NotImplementedError
+        parse_inline_list
       else
         raise "Unexpected line tag! #{@line_scanner.peek.tag}"
       end
@@ -111,7 +112,7 @@ module NestedText
           key = cur_line.attribs["key"]
           while @line_scanner.peek&.tag == :key_item && @line_scanner.peek.indentation == indentation
             cur_line = @line_scanner.read_next
-            key += "\n" + cur_line.attribs["key"]  # TODO: what is the original linebreak was e.g. \r\n ?
+            key += "\n" + cur_line.attribs["key"] # TODO: what is the original linebreak was e.g. \r\n ?
           end
           exp_types = %i[dict_item key_item list_item string_item]
           if @line_scanner.peek.nil?
@@ -150,6 +151,61 @@ module NestedText
         result << value
       end
       result.join("\n")
+    end
+
+    def parse_inline_key
+      key = []
+      key << @inline_scanner.read_next while @inline_scanner.peek != ","
+      key.join
+    end
+
+    def parse_inline
+      return nil if @inline_scanner.peek.nil?
+
+      result = nil
+      case @inline_scanner.peek
+      when "{"
+        result = {}
+        loop do
+          @inline_scanner.read_next
+          key = parse_inline_key
+          value = parse_inline
+          result[key] = value
+          break unless @inline_scanner.peek == ","
+        end
+        last_char = @inline_scanner.read_next
+        raise "Better syntax error here" unless last_char == "}"
+
+        @inline.read_next
+      when "["
+        result = []
+        loop do
+          @inline_scanner.read_next
+          value = parse_inline
+          result << value unless value.nil?
+          break unless @inline_scanner.peek == ","
+        end
+        last_char = @inline_scanner.read_next
+        raise "Better syntax error here2" unless last_char == "]"
+      else # inline string
+        # TODO: if we're inside dict, string can't have colon, but already handled as we we have parse_inline_key?
+        inline_string = []
+        until @inline_scanner.empty? || ["{", "}", "[", "]", ","].include?(@inline_scanner.peek)
+          inline_string << @inline_scanner.read_next
+        end
+        result = inline_string.empty? ? nil : inline_string.join
+      end
+      result
+    end
+
+    def parse_inline_list
+      @inline_scanner = InlineScanner.new(@line_scanner.read_next.line_content)
+      result = parse_inline
+
+      pp result
+      raise "Better errors please!" unless result.is_a? Array
+
+      result
     end
   end
 end

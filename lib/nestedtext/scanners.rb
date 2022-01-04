@@ -37,6 +37,28 @@ module NestedText
     end
   end
 
+  class InlineScanner
+    def initialize(line)
+      @line = line
+      @pos = 0
+    end
+
+    def empty?
+      @pos >= @line.length
+    end
+
+    def read_next
+      raise Errors::InlineScannerIsEmpty if empty?
+
+      @pos += 1
+      @line[@pos - 1]
+    end
+
+    def peek
+      empty? ? nil : @line[@pos]
+    end
+  end
+
   class Line
     # Reference: https://nestedtext.org/en/latest/file_format.html
     # :comment            # a comment
@@ -99,6 +121,7 @@ module NestedText
       elsif @line_content[0] == "{"
         @tag = :inline_dict
       elsif @line_content[0] == "["
+        # TODO: merge path of inline dict and list and just set :inline?
         @tag = :inline_list
       elsif @line_content =~ /^(?<key>.*?) *:(?: (?<value>.*))?$/
         # TODO: this regex must be extracted and unit tested. What are the constraints of the value?

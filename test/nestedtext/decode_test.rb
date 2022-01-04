@@ -328,8 +328,12 @@ class DecodeStringTopAnyInlineListTest < Minitest::Test
   end
 
   def test_inline_list_empty_empty_string
-    assert_equal([" "], NestedText.load("[  ]"))
+    assert_equal([" "], NestedText.load("[ ]"))
   end
+
+  # def test_inline_dict_empty
+  # assert_equal({}, NestedText.load("{}"))
+  # end
 end
 
 class DecodeStringTopTest < Minitest::Test
