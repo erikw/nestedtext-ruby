@@ -57,7 +57,7 @@ module NestedText
       @attribs = Hash.new(nil)
       @tag = nil
       @indentation = 0
-      _detect_line_tag_and_indentation
+      detect_line_tag_and_indentation
     end
 
     def length
@@ -79,7 +79,7 @@ module NestedText
 
     private
 
-    def _detect_line_tag_and_indentation
+    def detect_line_tag_and_indentation
       @indentation += 1 while @indentation < @line_content.length && @line_content[@indentation] == " "
       @line_content = @line_content[@indentation..]
 

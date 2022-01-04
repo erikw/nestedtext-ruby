@@ -10,14 +10,14 @@ module NestedText
   class Parser
     # Doc: caller is responsible for closing IO after done with Parser.
     def initialize(io, top_class)
-      _assert_valid_input_type io
+      assert_valid_input_type io
       NestedText.assert_valid_top_level_type(top_class)
       @top_class = top_class
       @line_scanner = LineScanner.new(io)
     end
 
     def parse
-      result = _parse_any(0)
+      result = parse_any(0)
       case @top_class.object_id
       when Object.object_id
         raise Errors::UnsupportedTopLevelTypeError, @top_class unless
@@ -39,22 +39,22 @@ module NestedText
 
     private
 
-    def _assert_valid_input_type(input)
+    def assert_valid_input_type(input)
       unless input.nil? || input.is_a?(IO) || input.is_a?(StringIO)
         raise Errors::WrongInputTypeError.new([IO, StringIO], input)
       end
     end
 
-    def _parse_any(indentation)
+    def parse_any(indentation)
       return nil if @line_scanner.peek.nil?
 
       case @line_scanner.peek.tag # TODO: Use Null Pattern instead with a EndOfInput tag?
       when :list_item
-        _parse_list_item(indentation)
+        parse_list_item(indentation)
       when :dict_item, :key_item
-        _parse_dict_item(indentation)
+        parse_dict_item(indentation)
       when :string_item
-        _parse_string_item(indentation)
+        parse_string_item(indentation)
       when :inline_dict
         raise NotImplementedError
       when :inline_list
@@ -64,7 +64,7 @@ module NestedText
       end
     end
 
-    def _parse_list_item(indentation)
+    def parse_list_item(indentation)
       result = []
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         cur_line = @line_scanner.read_next
@@ -74,7 +74,7 @@ module NestedText
         value = cur_line.attribs["value"]
         if value.nil?
           if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
-            value = _parse_any(@line_scanner.peek.indentation)
+            value = parse_any(@line_scanner.peek.indentation)
           elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :list_item
             value = ""
           else
@@ -87,7 +87,7 @@ module NestedText
       result
     end
 
-    def _parse_dict_item(indentation)
+    def parse_dict_item(indentation)
       result = {}
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         cur_line = @line_scanner.read_next
@@ -100,7 +100,7 @@ module NestedText
           value = cur_line.attribs["value"]
           if value.nil?
             if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
-              value = _parse_any(@line_scanner.peek.indentation)
+              value = parse_any(@line_scanner.peek.indentation)
             elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :dict_item
               value = ""
             else
@@ -121,7 +121,7 @@ module NestedText
               raise Errors::LineTypeNotExpected.new(exp_types, cur_line.tag)
             end
 
-            value = _parse_any(@line_scanner.peek&.indentation)
+            value = parse_any(@line_scanner.peek&.indentation)
           end
         else
           raise Errors::LineTypeNotExpected.new(%i[dict_item key_item], cur_line.tag)
@@ -131,7 +131,7 @@ module NestedText
       result
     end
 
-    def _parse_string_item(indentation)
+    def parse_string_item(indentation)
       result = []
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         cur_line = @line_scanner.read_next
