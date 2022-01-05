@@ -157,6 +157,38 @@ class DecodeStringTopAnyDictTest < Minitest::Test
     assert_equal({ "key\n one" => { "key-one" => "value1" }, "key\n\ttwo" => { "key-two" => "value2" } },
                  NestedText.load(nts))
   end
+
+  def test_dict_single_multiline_key_list_values
+    nts = <<~NT
+      : keypt1
+      : keypt2
+           - l1
+           - l2
+    NT
+    assert_equal({ "keypt1\nkeypt2" => %w[l1 l2] }, NestedText.load(nts))
+  end
+
+  def test_dict_single_multiline_key_invalid_value
+    nts = <<~NT
+      : keypt1
+      : keypt2
+           [inline list here]
+    NT
+    assert_raises(NestedText::Errors::LineTypeNotExpected) do
+      NestedText.load(nts)
+    end
+  end
+
+  def test_dict_single_multiline_key_invalid_value_indentation
+    nts = <<~NT
+      : keypt1
+      : keypt2
+      - list value, but not further indented
+    NT
+    assert_raises(NestedText::Errors::InvalidIndentation) do
+      NestedText.load(nts)
+    end
+  end
 end
 
 class DecodeStringTopAnyListTest < Minitest::Test
