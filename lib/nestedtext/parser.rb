@@ -118,11 +118,12 @@ module NestedText
           if @line_scanner.peek.nil?
             value = ""
           else
-            unless exp_types.member?(@line_scanner.peek&.tag)
+            unless exp_types.member?(@line_scanner.peek.tag)
               raise Errors::LineTypeNotExpected.new(exp_types, cur_line.tag)
             end
 
-            value = parse_any(@line_scanner.peek&.indentation)
+            value = parse_any(@line_scanner.peek.indentation)
+            # value = parse_any(@line_scanner.peek&.indentation + 1)
           end
         else
           raise Errors::LineTypeNotExpected.new(%i[dict_item key_item], cur_line.tag)
