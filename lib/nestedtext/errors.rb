@@ -55,7 +55,7 @@ module NestedText
     end
 
     class LineTypeNotExpected < Error
-      def initialize(type_exps, type_act) = super("The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join}] here.")
+      def initialize(type_exps, type_act) = super("The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(", ")}] here.")
     end
   end
 end
