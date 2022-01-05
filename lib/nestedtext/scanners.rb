@@ -82,13 +82,13 @@ module NestedText
       detect_line_tag_and_indentation
     end
 
-    def length
-      @line_content.length
-    end
+    # def length
+    # @line_content.length
+    # end
 
-    def [](index)
-      @line_content[index]
-    end
+    # def [](index)
+    # @line_content[index]
+    # end
 
     def tag=(tag)
       @tag = tag
