@@ -384,6 +384,18 @@ class DecodeStringTopAnyInlineDictTest < Minitest::Test
   def test_inline_dict_nested_list
     assert_equal({ "a" => "1", "b" => %w[l1 l2] }, NestedText.load("{a:1, b: [l1, l2] }"))
   end
+
+  def test_inline_dict_invalid_wrong_closing_bracket
+    assert_raises(NestedText::Errors::InlineDictSyntaxError) do
+      NestedText.load("{a: 1, b: 2]")
+    end
+  end
+
+  def test_inline_dict_invalid_missing_closing_bracket
+    assert_raises(NestedText::Error) do
+      NestedText.load("{a: 1, b: 2")
+    end
+  end
 end
 
 class DecodeStringTopAnyInlineListTest < Minitest::Test
