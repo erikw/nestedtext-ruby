@@ -9,4 +9,6 @@
 [![OSS Lifecycle](https://img.shields.io/osslifecycle/erikw/nestedtext-ruby)](https://github.com/Netflix/osstracker)
 
 
-(On-going development at branch [**dev**](https://github.com/erikw/nestedtext-ruby/tree/dev))
+This project will soon be released! :tada:
+
+On-going development is at branch [**dev**](https://github.com/erikw/nestedtext-ruby/tree/dev).
