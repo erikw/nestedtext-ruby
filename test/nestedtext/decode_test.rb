@@ -386,8 +386,42 @@ class DecodeStringTopAnyInlineListTest < Minitest::Test
     assert_equal({}, NestedText.load("{}"))
   end
 
-  def test_inline_dict_empty_string
-    assert_equal({}, NestedText.load("{ }"))
+  def test_inline_dict_invalid_empty_whitespace
+    assert_raises(NestedText::Errors::InlineDictKeySyntaxError) do
+      NestedText.load("{ }")
+    end
+  end
+
+  def test_inline_dict_invalid_empty_values
+    assert_raises(NestedText::Errors::InlineDictKeySyntaxError) do
+      NestedText.load("{,}")
+    end
+  end
+
+  def test_inline_dict_invalid_missing_value
+    assert_raises(NestedText::Errors::InlineDictKeySyntaxError) do
+      NestedText.load("{a:1,}")
+    end
+  end
+
+  def test_inline_dict_single_entry
+    assert_equal({ "a" => "1" }, NestedText.load("{a:1}"))
+  end
+
+  def test_inline_dict_multiple_entry
+    assert_equal({ "a" => "1", "b" => "2", "c" => "3" }, NestedText.load("{a:1, b : 2, c :3}"))
+  end
+
+  def test_inline_dict_nested_dict_first
+    assert_equal({ "a" => { "b" => "1" }, "c" => "2" }, NestedText.load("{a: {b : 1}, c: 2}"))
+  end
+
+  def test_inline_dict_nested_dict_between
+    assert_equal({ "a" => "1",  "b" => { "c" => "2" }, "d" => "3" }, NestedText.load("{a: 1, b: {c : 2}, d: 3}"))
+  end
+
+  def test_inline_dict_nested_dict_last
+    assert_equal({ "a" => "1", "b" => { "c" => "2" } }, NestedText.load("{a:1, b: {c : 2}}"))
   end
 end
 

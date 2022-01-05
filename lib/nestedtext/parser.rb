@@ -57,7 +57,7 @@ module NestedText
       when :string_item
         parse_string_item(indentation)
       when :inline_dict
-        raise NotImplementedError
+        parse_inline_dict
       when :inline_list
         parse_inline_list
       else
@@ -155,7 +155,12 @@ module NestedText
 
     def parse_inline_key
       key = []
-      key << @inline_scanner.read_next until @inline_scanner.empty? || @inline_scanner.peek == ":"
+      until @inline_scanner.empty? || [":", "{", "}", "[", "]", ","].include?(@inline_scanner.peek)
+        key << @inline_scanner.read_next
+      end
+      last_char = @inline_scanner.read_next
+      raise Errors::InlineDictKeySyntaxError unless last_char == ":"
+
       key.join.strip
     end
 
@@ -167,17 +172,18 @@ module NestedText
       case @inline_scanner.peek
       when "{"
         result = {}
+        first = true
         loop do
           @inline_scanner.read_next
+          break if first && @inline_scanner.peek == "}"
+
           key = parse_inline_key
           value = parse_inline
           result[key] = value
           break unless @inline_scanner.peek == ","
         end
         last_char = @inline_scanner.read_next
-        raise "Better syntax error here" unless last_char == "}"
-
-        @inline_scanner.read_next
+        raise Errors::InlineDictSyntaxError unless last_char == "}"
       when "["
         result = []
         first = true
@@ -202,10 +208,18 @@ module NestedText
       result
     end
 
+    def parse_inline_dict
+      @inline_scanner = InlineScanner.new(@line_scanner.read_next.line_content)
+      result = parse_inline
+      raise "Better errors please3" unless result.is_a? Hash
+
+      result
+    end
+
     def parse_inline_list
       @inline_scanner = InlineScanner.new(@line_scanner.read_next.line_content)
       result = parse_inline
-      raise "Better errors please!" unless result.is_a? Array
+      raise "Better errors please1" unless result.is_a? Array
 
       result
     end

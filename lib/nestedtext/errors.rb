@@ -26,6 +26,14 @@ module NestedText
       def initialize = super("There is no more input to consume. You should have checked this with #empty? before calling.")
     end
 
+    class InlineDictSyntaxError < Error
+      def initialize = super("Inline dict could not be parsed.")
+    end
+
+    class InlineDictKeySyntaxError < Error
+      def initialize = super("Inline dict key could not be parsed.")
+    end
+
     class InlineListSyntaxError < Error
       def initialize = super("Inline list could not be parsed.")
     end
