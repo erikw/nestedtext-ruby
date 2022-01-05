@@ -18,6 +18,7 @@ end
 Rake::TestTask.new do |t|
   ENV["TEST"] = ENV["F"] if ENV.key? "F"
   ENV["TESTOPTS"] = "-n='/#{ENV["M"]}/'" if ENV.key? "M"
+  t.description = "Run all tests"
   t.libs << "test"
   t.test_files = FileList["test/**/*_test.rb"]
   # t.verbose = true
@@ -25,7 +26,7 @@ end
 
 Rake::TestTask.new do |t|
   t.name = "test_official"
-  t.description = "Run tests, official only"
+  t.description = "Run official tests only"
   t.libs << "test"
   t.test_files = FileList["test/official_test.rb"]
 end
