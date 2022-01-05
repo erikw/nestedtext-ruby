@@ -22,6 +22,10 @@ module NestedText
       def initialize(line) = super("The type tag for the line could not be detected, using wrong syntax?\n#{line}")
     end
 
+    class MultilineKeyNoValue < Error
+      def initialize() = super("A multiline key needs to have an indented value after it starting on the row after the key.")
+    end
+
     class InlineScannerIsEmpty < Error
       def initialize = super("There is no more input to consume. You should have checked this with #empty? before calling.")
     end

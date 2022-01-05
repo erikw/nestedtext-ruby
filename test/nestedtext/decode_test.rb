@@ -185,7 +185,7 @@ class DecodeStringTopAnyDictTest < Minitest::Test
       : keypt2
       - list value, but not further indented
     NT
-    assert_raises(NestedText::Errors::InvalidIndentation) do
+    assert_raises(NestedText::Errors::MultilineKeyNoValue) do
       NestedText.load(nts)
     end
   end
