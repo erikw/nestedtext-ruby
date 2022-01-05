@@ -22,14 +22,13 @@ Rake::TestTask.new do |t|
   t.test_files = FileList["test/**/*_test.rb"]
   # t.verbose = true
 end
-desc "Run tests"
 
 Rake::TestTask.new do |t|
   t.name = "test_official"
+  t.description = "Run tests, official only"
   t.libs << "test"
   t.test_files = FileList["test/official_test.rb"]
 end
-desc "Run only official tests"
 
 # default task: Add spec and rubocop to default tasks.
 task default: %i[test rubocop]
