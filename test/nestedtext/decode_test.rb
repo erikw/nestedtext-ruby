@@ -396,6 +396,12 @@ class DecodeStringTopAnyInlineDictTest < Minitest::Test
       NestedText.load("{a: 1, b: 2")
     end
   end
+
+  def test_inline_dict_invalid_inline_string
+    assert_raises(NestedText::Error) do
+      NestedText.load("{a: 1:b")
+    end
+  end
 end
 
 class DecodeStringTopAnyInlineListTest < Minitest::Test
