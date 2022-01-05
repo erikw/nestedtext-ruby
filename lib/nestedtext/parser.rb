@@ -79,7 +79,7 @@ module NestedText
           elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :list_item
             value = ""
           else
-            raise "List item value could not be found"
+            raise Errors::ListItemNoValue
           end
         end
 

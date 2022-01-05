@@ -207,6 +207,16 @@ class DecodeStringTopAnyListTest < Minitest::Test
     assert_equal(["", ""], NestedText.load(nts))
   end
 
+  def test_list_xyz
+    nts = <<~NT
+      -
+      [not indented]
+    NT
+    assert_raises(NestedText::Errors::ListItemNoValue) do
+      NestedText.load(nts)
+    end
+  end
+
   def test_list_single_item
     nts = <<~NT
       - List  Item\t

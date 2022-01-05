@@ -22,6 +22,10 @@ module NestedText
       def initialize(line) = super("The type tag for the line could not be detected, using wrong syntax?\n#{line}")
     end
 
+    class ListItemNoValue < Error
+      def initialize() = super("A list item must have a value.")
+    end
+
     class MultilineKeyNoValue < Error
       def initialize() = super("A multiline key needs to have an indented value after it starting on the row after the key.")
     end
