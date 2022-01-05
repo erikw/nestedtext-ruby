@@ -423,6 +423,10 @@ class DecodeStringTopAnyInlineListTest < Minitest::Test
   def test_inline_dict_nested_dict_last
     assert_equal({ "a" => "1", "b" => { "c" => "2" } }, NestedText.load("{a:1, b: {c : 2}}"))
   end
+
+  def test_inline_dict_nested_list
+    assert_equal({ "a" => "1", "b" => %w[l1 l2] }, NestedText.load("{a:1, b: [l1, l2] }"))
+  end
 end
 
 class DecodeStringTopTest < Minitest::Test

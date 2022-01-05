@@ -168,6 +168,7 @@ module NestedText
       return nil if @inline_scanner.peek.nil?
 
       result = nil
+      # Trim leading whitespaces
       @inline_scanner.read_next while !@inline_scanner.empty? && @inline_scanner.peek == " "
       case @inline_scanner.peek
       when "{"
@@ -179,10 +180,15 @@ module NestedText
 
           key = parse_inline_key
           value = parse_inline
+          puts ">>>>> parsed key: #{key}"
+          puts ">>>>> parsed value: #{value}"
           result[key] = value
           break unless @inline_scanner.peek == ","
         end
+        # Trim trailing whitespaces
+        @inline_scanner.read_next while !@inline_scanner.empty? && @inline_scanner.peek == " "
         last_char = @inline_scanner.read_next
+        puts "last char: #{last_char}"
         raise Errors::InlineDictSyntaxError unless last_char == "}"
       when "["
         result = []
@@ -195,15 +201,16 @@ module NestedText
           result << parse_inline
           break unless @inline_scanner.peek == ","
         end
+        # Trim trailing whitespaces
+        @inline_scanner.read_next while !@inline_scanner.empty? && @inline_scanner.peek == " "
         last_char = @inline_scanner.read_next
         raise Errors::InlineListSyntaxError unless last_char == "]"
       else # inline string
-        # TODO: if we're inside dict, string can't have colon, but already handled as we we have parse_inline_key?
         inline_string = []
         until @inline_scanner.empty? || ["{", "}", "[", "]", ","].include?(@inline_scanner.peek)
           inline_string << @inline_scanner.read_next
         end
-        result = inline_string.join.rstrip
+        result = inline_string.join.rstrip  # Trim trailing whitespaces that lead up to next break point.
       end
       result
     end
