@@ -112,7 +112,7 @@ module NestedText
           key = cur_line.attribs["key"]
           while @line_scanner.peek&.tag == :key_item && @line_scanner.peek.indentation == indentation
             cur_line = @line_scanner.read_next
-            key += "\n" + cur_line.attribs["key"] # TODO: what is the original linebreak was e.g. \r\n ?
+            key += "\n" + cur_line.attribs["key"]
           end
           exp_types = %i[dict_item key_item list_item string_item]
           if @line_scanner.peek.nil?
