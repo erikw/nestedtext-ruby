@@ -178,17 +178,15 @@ module NestedText
           @inline_scanner.read_next
           break if first && @inline_scanner.peek == "}"
 
+          first = false
           key = parse_inline_key
           value = parse_inline
-          puts ">>>>> parsed key: #{key}"
-          puts ">>>>> parsed value: #{value}"
           result[key] = value
           break unless @inline_scanner.peek == ","
         end
         # Trim trailing whitespaces
         @inline_scanner.read_next while !@inline_scanner.empty? && @inline_scanner.peek == " "
         last_char = @inline_scanner.read_next
-        puts "last char: #{last_char}"
         raise Errors::InlineDictSyntaxError unless last_char == "}"
       when "["
         result = []

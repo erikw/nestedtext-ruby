@@ -349,8 +349,24 @@ class DecodeStringTopAnyInlineDictTest < Minitest::Test
     assert_equal({ "a" => "1" }, NestedText.load("{a:1}"))
   end
 
+  def test_inline_dict_single_entry_empty_key
+    assert_equal({ "" => "1" }, NestedText.load("{:1}"))
+  end
+
+  def test_inline_dict_single_entry_empty_valuue
+    assert_equal({ "1" => "" }, NestedText.load("{1:}"))
+  end
+
+  def test_inline_dict_single_entry_empty_key_value
+    assert_equal({ "" => "" }, NestedText.load("{:}"))
+  end
+
   def test_inline_dict_multiple_entry
     assert_equal({ "a" => "1", "b" => "2", "c" => "3" }, NestedText.load("{a:1, b : 2, c :3}"))
+  end
+
+  def test_inline_dict_multiple_entry_empty_values
+    assert_equal({ "a" => "", "b" => "", "c" => "" }, NestedText.load("{a:, b : , c:}"))
   end
 
   def test_inline_dict_nested_dict_first
