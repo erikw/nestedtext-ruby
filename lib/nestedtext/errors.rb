@@ -26,6 +26,10 @@ module NestedText
       def initialize() = super("A list item must have a value.")
     end
 
+    class DictItemNoValue < Error
+      def initialize() = super("A dict item must have a value.")
+    end
+
     class MultilineKeyNoValue < Error
       def initialize() = super("A multiline key needs to have an indented value after it starting on the row after the key.")
     end

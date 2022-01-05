@@ -105,7 +105,7 @@ module NestedText
             elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :dict_item
               value = ""
             else
-              raise "Dict item value could not be found"
+              raise Errors::DictItemNoValue
             end
           end
         elsif cur_line.tag == :key_item

@@ -189,6 +189,16 @@ class DecodeStringTopAnyDictTest < Minitest::Test
       NestedText.load(nts)
     end
   end
+
+  def test_dict_value_not_indented
+    nts = <<~NT
+      dict key:
+      - list value
+    NT
+    assert_raises(NestedText::Errors::DictItemNoValue) do
+      NestedText.load(nts)
+    end
+  end
 end
 
 class DecodeStringTopAnyListTest < Minitest::Test
@@ -207,7 +217,7 @@ class DecodeStringTopAnyListTest < Minitest::Test
     assert_equal(["", ""], NestedText.load(nts))
   end
 
-  def test_list_xyz
+  def test_list_value_not_indented
     nts = <<~NT
       -
       [not indented]
