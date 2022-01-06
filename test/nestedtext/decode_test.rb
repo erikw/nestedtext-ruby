@@ -158,7 +158,7 @@ class DecodeStringTopAnyDictTest < Minitest::Test
                  NestedText.load(nts))
   end
 
-  def test_dict_single_multiline_key_list_values
+  def test_dict_multiline_key_list_values
     nts = <<~NT
       : keypt1
       : keypt2
@@ -168,7 +168,7 @@ class DecodeStringTopAnyDictTest < Minitest::Test
     assert_equal({ "keypt1\nkeypt2" => %w[l1 l2] }, NestedText.load(nts))
   end
 
-  def test_dict_single_multiline_key_invalid_value
+  def test_dict_multiline_key_invalid_value
     nts = <<~NT
       : keypt1
       : keypt2
@@ -179,7 +179,7 @@ class DecodeStringTopAnyDictTest < Minitest::Test
     end
   end
 
-  def test_dict_single_multiline_key_invalid_value_indentation
+  def test_dict_multiline_key_invalid_value_indentation
     nts = <<~NT
       : keypt1
       : keypt2
@@ -188,6 +188,14 @@ class DecodeStringTopAnyDictTest < Minitest::Test
     assert_raises(NestedText::Errors::MultilineKeyNoValue) do
       NestedText.load(nts)
     end
+  end
+
+  def test_multiline_key_empyt_with_value_multiline_string_empty
+    nts = <<~NT
+      :
+        >
+    NT
+    assert_equal({ "" => "" }, NestedText.load(nts))
   end
 
   def test_dict_value_not_indented

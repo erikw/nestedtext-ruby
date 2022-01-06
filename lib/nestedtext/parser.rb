@@ -145,7 +145,7 @@ module NestedText
           if @line_scanner.peek.nil? || @line_scanner.peek.tag == :string_item
             value = ""
           else
-            raise "String item value could not be found"
+            raise "String item value could not be found at line: #{cur_line}"
           end
         end
 
