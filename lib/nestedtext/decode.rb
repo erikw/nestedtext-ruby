@@ -19,8 +19,7 @@ module NestedText
 
     assert_valid_top_level_type top_class
 
-    parser = Parser.new(StringIO.new(ntstring), top_class)
-    parser.parse
+    Parser.new(StringIO.new(ntstring), top_class).parse
   end
 
   def load_file(filename, top_class: Object)
@@ -29,8 +28,7 @@ module NestedText
     assert_valid_top_level_type top_class
 
     File.open(filename, mode = "r") do |file|
-      parser = Parser.new(file, top_class)
-      parser.parse
+      Parser.new(file, top_class).parse
     end
   end
 end
