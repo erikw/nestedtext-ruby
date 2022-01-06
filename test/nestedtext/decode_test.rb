@@ -190,12 +190,21 @@ class DecodeStringTopAnyDictTest < Minitest::Test
     end
   end
 
-  def test_multiline_key_empyt_with_value_multiline_string_empty
+  def test_multiline_key_empty_with_value_multiline_string_empty
     nts = <<~NT
       :
         >
     NT
     assert_equal({ "" => "" }, NestedText.load(nts))
+  end
+
+  def test_multiline_key_empty_with_value_multiline_string_empty_item_after
+    nts = <<~NT
+      :
+        >
+      key: value
+    NT
+    assert_equal({ "" => "", "key" => "value" }, NestedText.load(nts))
   end
 
   def test_dict_value_not_indented
