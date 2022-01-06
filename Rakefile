@@ -18,18 +18,23 @@ end
 Rake::TestTask.new do |t|
   ENV["TEST"] = ENV["F"] if ENV.key? "F"
   ENV["TESTOPTS"] = "-n='/#{ENV["M"]}/'" if ENV.key? "M"
-  t.description = "Run all tests"
+  t.name = "test_internal"
+  t.description = "Run internal tests"
   t.libs << "test"
-  t.test_files = FileList["test/**/*_test.rb"]
+  t.test_files = FileList["test/**/*_test.rb"].reject { |t| t == "test/official_test.rb" }
   # t.verbose = true
 end
 
 Rake::TestTask.new do |t|
   t.name = "test_official"
-  t.description = "Run official tests only"
+  t.description = "Run official tests"
   t.libs << "test"
   t.test_files = FileList["test/official_test.rb"]
 end
+
+task :test
+desc "Run all tests"
+task test: %i[test_internal test_official]
 
 # default task: Add spec and rubocop to default tasks.
 task default: %i[test rubocop]
