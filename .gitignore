@@ -17,3 +17,6 @@ pkg/
 
 # simplecov
 /coverage/
+
+# byebug
+/.byebug_history

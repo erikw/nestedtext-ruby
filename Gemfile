@@ -14,6 +14,7 @@ gemspec
 group :development, :test do
   gem "appraisal", "~> 2.4", require: false
   gem "gem-release", "~> 2.0", require: false
+  gem "pry-byebug", "~> 3.9"
   gem "rake", "~> 13.0", require: false
   gem "solargraph", require: false
 end
