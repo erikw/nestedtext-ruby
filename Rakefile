@@ -26,10 +26,9 @@ Rake::TestTask.new do |t|
   t.test_files = FileList["test/official_test.rb"]
 end
 
-# Can be called like
-# rake test TEST=path/to/some_test.rb TESTOPTS="-n='/test_method_pattern/'"
-# or hacked together a bit shorter like
-# rake test F=path/to/some_test.rb M=test_method_pattern
+# Can be called like:
+# $ rake test TEST=path/to/some_test.rb TESTOPTS="-n='/test_method_pattern/'"
+# $ rake test F=path/to/some_test.rb M=test_method_pattern
 ENV["TEST"] = ENV["F"] if ENV.key? "F"
 ENV["TESTOPTS"] = "-n='/#{ENV["M"]}/'" if ENV.key? "M"
 task :test
