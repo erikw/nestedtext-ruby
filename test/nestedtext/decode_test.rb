@@ -221,7 +221,7 @@ class DecodeStringTopAnyDictTest < Minitest::Test
     end
   end
 
-  def test_multiline_key_empty_with_value_multiline_string_empty
+  def test_multiline_empty_key_value
     nts = <<~NT
       :
         >
@@ -230,7 +230,7 @@ class DecodeStringTopAnyDictTest < Minitest::Test
     assert_equal(exp, NestedText.load(nts))
   end
 
-  def test_multiline_key_empty_with_value_multiline_string_empty_item_after
+  def test_multiline_empty_key_value_plus_item_after
     nts = <<~NT
       :
         >
