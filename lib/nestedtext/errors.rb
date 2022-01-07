@@ -14,8 +14,8 @@ module NestedText
       attr_reader :lineno, :colno
 
       def initialize(lineno, colno, message)
-        @lineno = lineno
-        @colno = colno
+        @lineno = lineno - 1  # TODO: official test seems to have 0-based line counting?
+        @colno = colno || 0
         @message_raw = message
         colstr = colno.nil? ? "" : ", #{colno}"
         prefix = "#{lineno}#{colstr}: "

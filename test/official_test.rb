@@ -26,4 +26,20 @@ class OfficialTest < Minitest::Test
       end
     end
   end
+
+  NestedTextOfficialTests.select_load_error(cases).each do |caze|
+    define_method("test_load_error_#{caze.name}") do
+      expected = caze[:load][:err][:data]
+
+      begin
+        NestedText.load_file(caze[:load][:in][:path])
+      rescue NestedText::Error => e
+        assert_equal(expected["lineno"], e.lineno, msg = "lineno is wrong")
+        assert_equal(expected["colno"], e.colno, msg = "colno is wrong")
+        assert_equal(expected["message"], e.message, msg = "message is wrong")
+      else
+        raise "No error was thrown like exepcted."
+      end
+    end
+  end
 end
