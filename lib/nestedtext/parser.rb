@@ -186,9 +186,6 @@ module NestedText
           break unless @inline_scanner.peek == ","
         end
         last_char = @inline_scanner.read_next
-        pp @inline_scanner
-        puts last_char
-        pp result
         raise Errors::InlineDictSyntaxError unless last_char == "}"
 
       when "["
