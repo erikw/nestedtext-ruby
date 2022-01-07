@@ -23,44 +23,44 @@ module NestedText
       end
     end
 
-    class LineTagUnknown < ParseError
-      def initialize(lineno, tag) = super(lineno, nil, "The Line tag #{tag} is not among the allowed ones #{Line::ALLOWED_LINE_TAGS}")
-    end
-
     class LineScannerIsEmpty < Error
       def initialize = super("There is no more input to consume. You should have checked this with #empty? before calling.")
-    end
-
-    class LineTagNotDetected < ParseError
-      def initialize(lineno) = super(lineno, nil, "The type tag for the line could not be detected, using wrong syntax?")
-    end
-
-    class ListItemNoValue < Error
-      def initialize() = super("A list item must have a value.")
-    end
-
-    class DictItemNoValue < Error
-      def initialize() = super("A dict item must have a value.")
-    end
-
-    class MultilineKeyNoValue < Error
-      def initialize() = super("A multiline key needs to have an indented value after it starting on the row after the key.")
     end
 
     class InlineScannerIsEmpty < Error
       def initialize = super("There is no more input to consume. You should have checked this with #empty? before calling.")
     end
 
-    class InlineDictSyntaxError < Error
-      def initialize = super("Inline dict could not be parsed.")
+    class LineTagUnknown < ParseError
+      def initialize(lineno, tag) = super(lineno, nil, "The Line tag #{tag} is not among the allowed ones #{Line::ALLOWED_LINE_TAGS}")
     end
 
-    class InlineDictKeySyntaxError < Error
-      def initialize = super("Inline dict key could not be parsed.")
+    class LineTagNotDetected < ParseError
+      def initialize(lineno) = super(lineno, nil, "The type tag for the line could not be detected, using wrong syntax?")
     end
 
-    class InlineListSyntaxError < Error
-      def initialize = super("Inline list could not be parsed.")
+    class ListItemNoValue < ParseError
+      def initialize(lineno) = super(lineno, nil, "A list item must have a value.")
+    end
+
+    class DictItemNoValue < ParseError
+      def initialize(lineno) = super(lineno, nil, "A dict item must have a value.")
+    end
+
+    class MultilineKeyNoValue < ParseError
+      def initialize(lineno) = super(lineno, nil, "A multiline key needs to have an indented value after it starting on the row after the key.")
+    end
+
+    class InlineDictSyntaxError < ParseError
+      def initialize(lineno) = super(lineno, nil, "Inline dict could not be parsed.")
+    end
+
+    class InlineDictKeySyntaxError < ParseError
+      def initialize(lineno) = super(lineno, nil, "Inline dict key could not be parsed.")
+    end
+
+    class InlineListSyntaxError < ParseError
+      def initialize(lineno) = super(lineno, nil, "Inline list could not be parsed.")
     end
 
     class UnsupportedTopLevelTypeError < Error
@@ -75,12 +75,12 @@ module NestedText
       def initialize(class_exp, class_act) = super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act&.class&.name || "nil"}.")
     end
 
-    class InvalidIndentation < Error
-      def initialize(ind_exp, ind_act) = super("The indentation of the current line is not valid. Expected indentation of #{ind_exp} but was #{ind_act}.")
+    class InvalidIndentation < ParseError
+      def initialize(lineno, ind_exp, ind_act) = super(lineno, nil, "The indentation of the current line is not valid. Expected indentation of #{ind_exp} but was #{ind_act}.")
     end
 
-    class LineTypeNotExpected < Error
-      def initialize(type_exps, type_act) = super("The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(", ")}] here.")
+    class LineTypeNotExpected < ParseError
+      def initialize(lineno, type_exps, type_act) = super(lineno, nil, "The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(", ")}] here.")
     end
   end
 end

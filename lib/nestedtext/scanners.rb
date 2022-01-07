@@ -44,18 +44,22 @@ module NestedText
     end
 
     def empty?
-      @pos >= @line.length
+      @pos >= @line.line_content.length
+    end
+
+    def lineno
+      @line.lineno
     end
 
     def read_next
       raise Errors::InlineScannerIsEmpty if empty?
 
       @pos += 1
-      @line[@pos - 1]
+      @line.line_content[@pos - 1]
     end
 
     def peek
-      empty? ? nil : @line[@pos]
+      empty? ? nil : @line.line_content[@pos]
     end
   end
 
@@ -71,7 +75,7 @@ module NestedText
     # inline_list        [value1, value2]
     ALLOWED_LINE_TAGS = %i[comment blank list_item dict_item string_item key_item inline_dict inline_list]
 
-    attr_reader :tag, :line_content, :indentation, :attribs
+    attr_reader :tag, :line_content, :indentation, :attribs, :lineno
 
     def initialize(line_content, lineno)
       @line_content = line_content
