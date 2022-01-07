@@ -92,7 +92,7 @@ module NestedText
 
     def tag=(tag)
       @tag = tag
-      raise Errors::LineTagUnknown, type unless ALLOWED_LINE_TAGS.include?(@tag)
+      raise Errors::LineTagUnknown.new(@lineno, tag) unless ALLOWED_LINE_TAGS.include?(@tag)
     end
 
     def to_s
@@ -106,30 +106,30 @@ module NestedText
       @line_content = @line_content[@indentation..]
 
       if @line_content.length == 0
-        @tag = :blank
+        self.tag = :blank
       elsif @line_content[0] == "#"
-        @tag = :comment
+        self.tag = :comment
       elsif @line_content =~ /^:(?: |$)/
-        @tag = :key_item
+        self.tag = :key_item
         @attribs["key"] = @line_content[2..] || ""
       elsif @line_content =~ /^-(?: |$)/
-        @tag = :list_item
+        self.tag = :list_item
         @attribs["value"] = @line_content[2..]
       elsif @line_content =~ /^>(?: |$)/
-        @tag = :string_item
+        self.tag = :string_item
         @attribs["value"] = @line_content[2..] || ""
       elsif @line_content[0] == "{"
-        @tag = :inline_dict
+        self.tag = :inline_dict
       elsif @line_content[0] == "["
         # TODO: merge path of inline dict and list and just set :inline?
-        @tag = :inline_list
+        self.tag = :inline_list
       elsif @line_content =~ /^(?<key>.*?)\s*:(?: (?<value>.*))?$/
         # TODO: this regex must be extracted and unit tested. What are the constraints of the value?
-        @tag = :dict_item
+        self.tag = :dict_item
         @attribs["key"] = Regexp.last_match(:key)
         @attribs["value"] = Regexp.last_match(:value)
       else
-        raise Errors::LineTagNotDetected, @line_content
+        raise Errors::LineTagNotDetected, @lineno
       end
     end
   end

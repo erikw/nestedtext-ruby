@@ -10,16 +10,29 @@ module NestedText
   class Error < StandardError; end
 
   module Errors
-    class LineTagUnknown < Error
-      def initialize(tag) = super("The Line tag #{tag} is not among the allowed ones #{Line::ALLOWED_LINE_TAGS}")
+    class ParseError < Error
+      attr_reader :lineno, :colno
+
+      def initialize(lineno, colno, message)
+        @lineno = lineno
+        @colno = colno
+        @message_raw = message
+        colstr = colno.nil? ? "" : ", #{colno}"
+        prefix = "#{lineno}#{colstr}: "
+        super(prefix + message)
+      end
+    end
+
+    class LineTagUnknown < ParseError
+      def initialize(lineno, tag) = super(lineno, nil, "The Line tag #{tag} is not among the allowed ones #{Line::ALLOWED_LINE_TAGS}")
     end
 
     class LineScannerIsEmpty < Error
       def initialize = super("There is no more input to consume. You should have checked this with #empty? before calling.")
     end
 
-    class LineTagNotDetected < Error
-      def initialize(line) = super("The type tag for the line could not be detected, using wrong syntax?\n#{line}")
+    class LineTagNotDetected < ParseError
+      def initialize(lineno) = super(lineno, nil, "The type tag for the line could not be detected, using wrong syntax?")
     end
 
     class ListItemNoValue < Error
