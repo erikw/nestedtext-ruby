@@ -10,7 +10,8 @@ class DecodeStringTopAnyTest < Minitest::Test
   end
 
   def test_empty_comment
-    assert_nil NestedText.load("#just some\n#comments")
+    nts = "#just some\n#comments"
+    assert_nil NestedText.load(nts)
   end
 
   def test_empty_top_any
@@ -26,23 +27,33 @@ end
 
 class DecodeStringTopAnyDictTest < Minitest::Test
   def test_dict_single_entry
-    assert_equal({ "a" => "b" }, NestedText.load("a: b"))
+    nts = "a: b"
+    exp = { "a" => "b" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_two_entries
-    assert_equal({ "a" => "b", "5" => "7" }, NestedText.load("a: b\n5: 7"))
+    nts = "a: b\n5: 7"
+    exp = { "a" => "b", "5" => "7" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_three_entries_empty_lines
-    assert_equal({ "g" => "f", "5" => "7", "a" => "b" }, NestedText.load("a: b\n5: 7\n  \n\ng: f\n"))
+    nts = "a: b\n5: 7\n  \n\ng: f\n"
+    exp = { "g" => "f", "5" => "7", "a" => "b" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_empty_value
-    assert_equal({ "a" => "" }, NestedText.load("a: "))
+    nts = "a: "
+    exp = { "a" => "" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_empty_value_two
-    assert_equal({ "a" => "", "b" => "" }, NestedText.load("a: \nb:"))
+    nts = "a: \nb:"
+    exp = { "a" => "", "b" => "" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_key_alignment
@@ -51,7 +62,8 @@ class DecodeStringTopAnyDictTest < Minitest::Test
       twotwo     : 2
       threethree : 3
     NT
-    assert_equal({ "one" => "1", "twotwo" => "2", "threethree" => "3" }, NestedText.load(nts))
+    exp = { "one" => "1", "twotwo" => "2", "threethree" => "3" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_nested
@@ -59,7 +71,8 @@ class DecodeStringTopAnyDictTest < Minitest::Test
       one:
         two: 3
     NT
-    assert_equal({ "one" => { "two" => "3" } }, NestedText.load(nts))
+    exp = { "one" => { "two" => "3" } }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_nested_invalid_indentation
@@ -78,7 +91,8 @@ class DecodeStringTopAnyDictTest < Minitest::Test
           - L1
           - L2
     NT
-    assert_equal({ "key" => %w[L1 L2] }, NestedText.load(nts))
+    exp = { "key" => %w[L1 L2] }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_value_of_multiline_string
@@ -87,7 +101,8 @@ class DecodeStringTopAnyDictTest < Minitest::Test
           > S1
           > S2
     NT
-    assert_equal({ "key" => "S1\nS2" }, NestedText.load(nts))
+    exp = { "key" => "S1\nS2" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_invalid_type
@@ -105,7 +120,8 @@ class DecodeStringTopAnyDictTest < Minitest::Test
       one:
       two: 2
     NT
-    assert_equal({ "one" => "", "two" => "2" }, NestedText.load(nts))
+    exp = { "one" => "", "two" => "2" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_valuenextline_last_line
@@ -117,7 +133,8 @@ class DecodeStringTopAnyDictTest < Minitest::Test
 
       three:
     NT
-    assert_equal({ "one" => "", "two" => "2", "three" => "" }, NestedText.load(nts))
+    exp = { "one" => "", "two" => "2", "three" => "" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_single_multiline_key
@@ -127,7 +144,8 @@ class DecodeStringTopAnyDictTest < Minitest::Test
       : here
           regular: dict
     NT
-    assert_equal({ "key:here\n     still\nhere" => { "regular" => "dict" } }, NestedText.load(nts))
+    exp = { "key:here\n     still\nhere" => { "regular" => "dict" } }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_single_multiline_key_oneline
@@ -135,14 +153,16 @@ class DecodeStringTopAnyDictTest < Minitest::Test
       : key but on one line only
           regular: dict
     NT
-    assert_equal({ "key but on one line only" => { "regular" => "dict" } }, NestedText.load(nts))
+    exp = { "key but on one line only" => { "regular" => "dict" } }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_single_multiline_key_oneline2
     nts = <<~NT
       : oneline
     NT
-    assert_equal({ "oneline" => "" }, NestedText.load(nts))
+    exp = { "oneline" => "" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_legal_spaces
@@ -164,8 +184,8 @@ class DecodeStringTopAnyDictTest < Minitest::Test
       : \ttwo
         key-two: value2
     NT
-    assert_equal({ "key\n one" => { "key-one" => "value1" }, "key\n\ttwo" => { "key-two" => "value2" } },
-                 NestedText.load(nts))
+    exp = { "key\n one" => { "key-one" => "value1" }, "key\n\ttwo" => { "key-two" => "value2" } }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_multiline_key_list_values
@@ -175,7 +195,8 @@ class DecodeStringTopAnyDictTest < Minitest::Test
            - l1
            - l2
     NT
-    assert_equal({ "keypt1\nkeypt2" => %w[l1 l2] }, NestedText.load(nts))
+    exp = { "keypt1\nkeypt2" => %w[l1 l2] }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_multiline_key_invalid_value
@@ -205,7 +226,8 @@ class DecodeStringTopAnyDictTest < Minitest::Test
       :
         >
     NT
-    assert_equal({ "" => "" }, NestedText.load(nts))
+    exp = { "" => "" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_multiline_key_empty_with_value_multiline_string_empty_item_after
@@ -214,7 +236,8 @@ class DecodeStringTopAnyDictTest < Minitest::Test
         >
       key: value
     NT
-    assert_equal({ "" => "", "key" => "value" }, NestedText.load(nts))
+    exp = { "" => "", "key" => "value" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_multiline_after_emtpy_dict_value
@@ -223,7 +246,8 @@ class DecodeStringTopAnyDictTest < Minitest::Test
       : key2
          > value2
     NT
-    assert_equal({ "key" => "", "key2" => "value2" }, NestedText.load(nts))
+    exp = { "key" => "", "key2" => "value2" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_dict_value_not_indented
@@ -242,7 +266,8 @@ class DecodeStringTopAnyListTest < Minitest::Test
     nts = <<~NT
       -
     NT
-    assert_equal([""], NestedText.load(nts))
+    exp = [""]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_list_empty_two
@@ -250,7 +275,8 @@ class DecodeStringTopAnyListTest < Minitest::Test
       -
       -
     NT
-    assert_equal(["", ""], NestedText.load(nts))
+    exp = ["", ""]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_list_value_not_indented
@@ -267,7 +293,8 @@ class DecodeStringTopAnyListTest < Minitest::Test
     nts = <<~NT
       - List  Item\t
     NT
-    assert_equal(["List  Item\t"], NestedText.load(nts))
+    exp = ["List  Item\t"]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_list_multiple_items
@@ -346,14 +373,16 @@ class DecodeStringTopAnyMultilineStringTest < Minitest::Test
     nts = <<~NT
       > just this line\t
     NT
-    assert_equal("just this line\t", NestedText.load(nts))
+    exp = "just this line\t"
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_multistring_single_line_empty
     nts = <<~NT
       >
     NT
-    assert_equal("", NestedText.load(nts))
+    exp = ""
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_multistring_multiple_line
@@ -362,7 +391,8 @@ class DecodeStringTopAnyMultilineStringTest < Minitest::Test
       > \tL2
       >   L3
     NT
-    assert_equal("L1\n\tL2\n  L3", NestedText.load(nts))
+    exp = "L1\n\tL2\n  L3"
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_multistring_multiple_line_empty
@@ -371,7 +401,8 @@ class DecodeStringTopAnyMultilineStringTest < Minitest::Test
       >
       >
     NT
-    assert_equal("\n\n", NestedText.load(nts))
+    exp = "\n\n"
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_multistring_multiple_line_with_empty_between
@@ -386,7 +417,8 @@ class DecodeStringTopAnyMultilineStringTest < Minitest::Test
       >
       > L6
     NT
-    assert_equal("L1\n\nL3\n\n\nL6", NestedText.load(nts))
+    exp = "L1\n\nL3\n\n\nL6"
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_multistring_invalid_indentation
@@ -434,11 +466,15 @@ class DecodeStringTopAnyInlineDictTest < Minitest::Test
   end
 
   def test_inline_dict_single_entry
-    assert_equal({ "a" => "1" }, NestedText.load("{a:1}"))
+    nts = "{a:1}"
+    exp = { "a" => "1" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_dict_single_entry_empty_key
-    assert_equal({ "" => "1" }, NestedText.load("{:1}"))
+    nts = "{:1}"
+    exp = { "" => "1" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_dict_single_entry_empty_valuue
@@ -446,114 +482,159 @@ class DecodeStringTopAnyInlineDictTest < Minitest::Test
   end
 
   def test_inline_dict_single_entry_empty_key_value
-    assert_equal({ "" => "" }, NestedText.load("{:}"))
+    nts = "{:}"
+    exp = { "" => "" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_dict_multiple_entry
-    assert_equal({ "a" => "1", "b" => "2", "c" => "3" }, NestedText.load("{a:1, b : 2, c :3}"))
+    nts = "{a:1, b : 2, c :3}"
+    exp = { "a" => "1", "b" => "2", "c" => "3" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_dict_multiple_entry_empty_values
-    assert_equal({ "a" => "", "b" => "", "c" => "" }, NestedText.load("{a:, b : , c:}"))
+    nts = "{a:, b : , c:}"
+    exp = { "a" => "", "b" => "", "c" => "" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_dict_nested_dict_first
-    assert_equal({ "a" => { "b" => "1" }, "c" => "2" }, NestedText.load("{a: {b : 1}, c: 2}"))
+    nts = "{a: {b : 1}, c: 2}"
+    exp = { "a" => { "b" => "1" }, "c" => "2" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_dict_nested_dict_between
-    assert_equal({ "a" => "1",  "b" => { "c" => "2" }, "d" => "3" }, NestedText.load("{a: 1, b: {c : 2}, d: 3}"))
+    nts = "{a: 1, b: {c : 2}, d: 3}"
+    exp = { "a" => "1", "b" => { "c" => "2" }, "d" => "3" }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_dict_nested_dict_last
-    assert_equal({ "a" => "1", "b" => { "c" => "2" } }, NestedText.load("{a:1, b: {c : 2}}"))
+    nts = "{a:1, b: {c : 2}}"
+    exp = { "a" => "1", "b" => { "c" => "2" } }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_dict_nested_list
-    assert_equal({ "a" => "1", "b" => %w[l1 l2] }, NestedText.load("{a:1, b: [l1, l2] }"))
+    nts = "{a:1, b: [l1, l2] }"
+    exp = { "a" => "1", "b" => %w[l1 l2] }
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_dict_invalid_wrong_closing_bracket
+    nts = "{a: 1, b: 2]"
     assert_raises(NestedText::Errors::InlineDictSyntaxError) do
-      NestedText.load("{a: 1, b: 2]")
+      NestedText.load(nts)
     end
   end
 
   def test_inline_dict_invalid_missing_closing_bracket
+    nts = "{a: 1, b: 2"
     assert_raises(NestedText::Error) do
-      NestedText.load("{a: 1, b: 2")
+      NestedText.load(nts)
     end
   end
 
   def test_inline_dict_invalid_inline_string
+    nts = "{a: 1:b"
     assert_raises(NestedText::Error) do
-      NestedText.load("{a: 1:b")
+      NestedText.load(nts)
     end
   end
 end
 
 class DecodeStringTopAnyInlineListTest < Minitest::Test
   def test_inline_list_empty
-    assert_equal([], NestedText.load("[]"))
+    nts = "[]"
+    exp = []
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_empty_string
-    assert_equal([""], NestedText.load("[ ]"))
+    nts = "[ ]"
+    exp = [""]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_single_item
-    assert_equal(["item"], NestedText.load("[item]"))
+    nts = "[item]"
+    exp = ["item"]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_single_plus_empty_item
-    assert_equal(["item", ""], NestedText.load("[item,]"))
+    nts = "[item,]"
+    exp = ["item", ""]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_single_plus_empty_items
-    assert_equal(["item", "", ""], NestedText.load("[item,,]"))
+    nts = "[item,,]"
+    exp = ["item", "", ""]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_multiple_item
-    assert_equal(%w[1 2 3 a b], NestedText.load("[1,2 ,3, a  ,  b]"))
+    nts = "[1,2 ,3, a  ,  b]"
+    exp = %w[1 2 3 a b]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_nested_first
-    assert_equal([%w[1 2], "3"], NestedText.load("[[1, 2], 3]"))
+    nts = "[[1, 2], 3]"
+    exp = [%w[1 2], "3"]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_nested_second
-    assert_equal(["1", %w[2 3]], NestedText.load("[1, [2, 3]]"))
+    nts = "[1, [2, 3]]"
+    exp = ["1", %w[2 3]]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_nested_multiple_singles
-    assert_equal([["1"], ["2"], ["3"]], NestedText.load("[[1], [2], [3]]"))
+    nts = "[[1], [2], [3]]"
+    exp = [["1"], ["2"], ["3"]]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_nested_multiple_mixed
-    assert_equal([%w[1 2], "3", %w[4 5], "6"], NestedText.load("[[1, 2], 3, [4, 5], 6]"))
+    nts = "[[1, 2], 3, [4, 5], 6]"
+    exp = [%w[1 2], "3", %w[4 5], "6"]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_nested_nested
-    assert_equal([[["1"], "2"], "3"], NestedText.load("[[[1], 2], 3]"))
+    nts =
+      exp =
+        assert_equal([[["1"], "2"], "3"], NestedText.load("[[[1], 2], 3]"))
   end
 
   def test_inline_list_nested_dict
-    assert_equal(["1", { "a" => "2", "b" => "3" }], NestedText.load("[1, {a: 2, b: 3}]"))
+    nts = "[1, {a: 2, b: 3}]"
+    exp = ["1", { "a" => "2", "b" => "3" }]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_nested_dict_nested_list
-    assert_equal(["1", { "a" => %w[2 3] }], NestedText.load("[1, {a: [ 2, 3 ] } ]"))
+    nts = "[1, {a: [ 2, 3 ] } ]"
+    exp = ["1", { "a" => %w[2 3] }]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_invalid_wrong_closing_bracket
+    nts = "[1, 2}"
     assert_raises(NestedText::Errors::InlineListSyntaxError) do
-      NestedText.load("[1, 2}")
+      NestedText.load(nts)
     end
   end
 
   def test_inline_list_invalid_missing_closing_bracket
+    nts = "[1, 2"
     assert_raises(NestedText::Error) do
-      NestedText.load("[1, 2")
+      NestedText.load(nts)
     end
   end
 end
@@ -624,11 +705,15 @@ end
 
 class DecodeStringTopArrayTest < Minitest::Test
   def test_top_multilinestring_empty
-    assert_equal("", NestedText.load("      ", top_class: String))
+    nts = "      "
+    exp = ""
+    assert_equal(exp, NestedText.load(nts, top_class: String))
   end
 
   def test_top_multilinestring_multiline
-    assert_equal("line 1\nline 2", NestedText.load("> line 1\n> line 2", top_class: String))
+    nts = "> line 1\n> line 2"
+    exp = "line 1\nline 2"
+    assert_equal(exp, NestedText.load(nts, top_class: String))
   end
 
   def test_top_multilinestring_invalid_actual
@@ -645,11 +730,14 @@ class DecodeFileTest < Minitest::Test
   FIXTURE_PATH = "test/fixtures"
 
   def test_top_hash_dict_nested
-    assert_equal({ "one" => { "two" => "3" } }, NestedText.load_file(FIXTURE_PATH + "/1.nt", top_class: Hash))
+    ntf = FIXTURE_PATH + "/1.nt"
+    exp = { "one" => { "two" => "3" } }
+    assert_equal(exp, NestedText.load_file(ntf, top_class: Hash))
   end
 
   def test_dict_nested_multiple
-    assert_equal({ "a" => { "b" => "1" }, "c" => "2", "d" => { "e" => "3" }, "f" => "" },
-                 NestedText.load_file(FIXTURE_PATH + "/2.nt", top_class: Hash))
+    ntf = FIXTURE_PATH + "/2.nt"
+    exp = { "a" => { "b" => "1" }, "c" => "2", "d" => { "e" => "3" }, "f" => "" }
+    assert_equal(exp, NestedText.load_file(ntf, top_class: Hash))
   end
 end
