@@ -523,6 +523,12 @@ class DecodeStringTopAnyInlineDictTest < Minitest::Test
     assert_equal(exp, NestedText.load(nts))
   end
 
+  def test_inline_dict_space_between_dict_and_comma
+    nts = "{ a : { b : 1 } , c : 2 }   "
+    exp = { "a" => { "b" => "1" }, "c" => "2" }
+    assert_equal(exp, NestedText.load(nts))
+  end
+
   def test_inline_dict_invalid_wrong_closing_bracket
     nts = "{a: 1, b: 2]"
     assert_raises(NestedText::Errors::InlineDictSyntaxError) do

@@ -185,10 +185,12 @@ module NestedText
           result[key] = value
           break unless @inline_scanner.peek == ","
         end
-        # Trim trailing whitespaces
-        @inline_scanner.read_next while !@inline_scanner.empty? && @inline_scanner.peek == " "
         last_char = @inline_scanner.read_next
+        pp @inline_scanner
+        puts last_char
+        pp result
         raise Errors::InlineDictSyntaxError unless last_char == "}"
+
       when "["
         result = []
         first = true
@@ -200,17 +202,17 @@ module NestedText
           result << parse_inline
           break unless @inline_scanner.peek == ","
         end
-        # Trim trailing whitespaces
-        @inline_scanner.read_next while !@inline_scanner.empty? && @inline_scanner.peek == " "
         last_char = @inline_scanner.read_next
         raise Errors::InlineListSyntaxError unless last_char == "]"
-      else # inline string
+      else # Inline string
         inline_string = []
         until @inline_scanner.empty? || ["{", "}", "[", "]", ","].include?(@inline_scanner.peek)
           inline_string << @inline_scanner.read_next
         end
-        result = inline_string.join.rstrip  # Trim trailing whitespaces that lead up to next break point.
+        result = inline_string.join.rstrip # Trim trailing whitespaces that lead up to next break point.
       end
+      # Trim trailing whitespaces
+      @inline_scanner.read_next while !@inline_scanner.empty? && @inline_scanner.peek == " "
       result
     end
 
