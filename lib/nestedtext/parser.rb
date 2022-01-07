@@ -102,7 +102,7 @@ module NestedText
           if value.nil?
             if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
               value = parse_any(@line_scanner.peek.indentation)
-            elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :dict_item
+            elsif @line_scanner.peek.nil? || %i[dict_item key_item].include?(@line_scanner.peek.tag)
               value = ""
             else
               raise Errors::DictItemNoValue

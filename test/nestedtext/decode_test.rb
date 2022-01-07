@@ -207,6 +207,15 @@ class DecodeStringTopAnyDictTest < Minitest::Test
     assert_equal({ "" => "", "key" => "value" }, NestedText.load(nts))
   end
 
+  def test_multiline_after_emtpy_dict_value
+    nts = <<~NT
+      key:
+      : key2
+         > value2
+    NT
+    assert_equal({ "key" => "", "key2" => "value2" }, NestedText.load(nts))
+  end
+
   def test_dict_value_not_indented
     nts = <<~NT
       dict key:
