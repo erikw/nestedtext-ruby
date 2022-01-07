@@ -25,7 +25,8 @@ module NestedText
 
     assert_valid_top_level_type top_class
 
-    File.open(filename, mode = "r") do |file|
+    # Open explicitly in text mode to detect \r as line ending.
+    File.open(filename, mode = "rt") do |file|
       Parser.new(file, top_class).parse
     end
   end
