@@ -582,6 +582,12 @@ class DecodeStringTopAnyInlineListTest < Minitest::Test
     assert_equal(exp, NestedText.load(nts))
   end
 
+  def test_inline_list_whitespace_tabs
+    nts = "[1, 2 ,\t3\t, \t 4,\t 5]"
+    exp = %w[1 2 3 4 5]
+    assert_equal(exp, NestedText.load(nts))
+  end
+
   def test_inline_list_multiple_item
     nts = "[1,2 ,3, a  ,  b]"
     exp = %w[1 2 3 a b]

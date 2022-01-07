@@ -170,7 +170,7 @@ module NestedText
 
       result = nil
       # Trim leading whitespaces
-      @inline_scanner.read_next while !@inline_scanner.empty? && @inline_scanner.peek == " "
+      @inline_scanner.read_next while !@inline_scanner.empty? && [" ", "\t"].include?(@inline_scanner.peek)
       case @inline_scanner.peek
       when "{"
         result = {}
@@ -209,7 +209,7 @@ module NestedText
         result = inline_string.join.rstrip # Trim trailing whitespaces that lead up to next break point.
       end
       # Trim trailing whitespaces
-      @inline_scanner.read_next while !@inline_scanner.empty? && @inline_scanner.peek == " "
+      @inline_scanner.read_next while !@inline_scanner.empty? && [" ", "\t"].include?(@inline_scanner.peek)
       result
     end
 
