@@ -8,8 +8,7 @@ require_relative "official_tests/api/nestedtext_official_tests"
 # SimpleCov.command_name "test:integration"
 SimpleCov.command_name "test:official"
 
-# class OfficialTest < Minitest::Test
-class OfficialTest < Minitest::Unit::TestCase
+class OfficialTest < Minitest::Test
   cases = NestedTextOfficialTests.load_test_cases
   # TODO: define tests for: load_error, dump_success, dump_error
 
@@ -20,7 +19,11 @@ class OfficialTest < Minitest::Unit::TestCase
     define_method("test_load_success_#{caze.name}") do
       actual = NestedText.load_file(caze[:load][:in][:path])
       expected = caze[:load][:out][:data]
-      assert_equal(expected, actual)
+      if expected.nil?
+        assert_nil actual
+      else
+        assert_equal(expected, actual)
+      end
     end
   end
 end

@@ -619,9 +619,9 @@ class DecodeStringTopAnyInlineListTest < Minitest::Test
   end
 
   def test_inline_list_nested_nested
-    nts =
-      exp =
-        assert_equal([[["1"], "2"], "3"], NestedText.load("[[[1], 2], 3]"))
+    nts = "[[[1], 2], 3]"
+    exp = [[["1"], "2"], "3"]
+    assert_equal(exp, NestedText.load(nts))
   end
 
   def test_inline_list_nested_dict
