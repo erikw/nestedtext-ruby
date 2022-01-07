@@ -123,7 +123,7 @@ module NestedText
       elsif @line_content[0] == "["
         # TODO: merge path of inline dict and list and just set :inline?
         @tag = :inline_list
-      elsif @line_content =~ /^(?<key>.*?) *:(?: (?<value>.*))?$/
+      elsif @line_content =~ /^(?<key>.*?)\s*:(?: (?<value>.*))?$/
         # TODO: this regex must be extracted and unit tested. What are the constraints of the value?
         @tag = :dict_item
         @attribs["key"] = Regexp.last_match(:key)

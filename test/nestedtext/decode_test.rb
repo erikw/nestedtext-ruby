@@ -145,6 +145,16 @@ class DecodeStringTopAnyDictTest < Minitest::Test
     assert_equal({ "oneline" => "" }, NestedText.load(nts))
   end
 
+  def test_dict_legal_spaces
+    nts = <<~NT
+      k1 : v1
+      k2 \t : \tv2
+      k3\t:  \tv3
+    NT
+    exp = { "k1" => "v1", "k2" => "\tv2", "k3" => " \tv3" }
+    assert_equal(exp, NestedText.load(nts))
+  end
+
   def test_dict_two_multiline_keys
     nts = <<~NT
       : key
