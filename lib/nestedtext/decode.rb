@@ -8,9 +8,7 @@ require "logger"
 require "stringio"
 
 module NestedText
-  extend self # to make methods module public.
-
-  def load(ntstring, top_class: Object)
+  def self.load(ntstring, top_class: Object)
     # logger = Logger.new(STDOUT) # TODO: make this available to other classes in module. How avoid singleton?
     # logger.info "input=#{raw_input_string}"
     # logger.info "top=#{top}"
@@ -22,7 +20,7 @@ module NestedText
     Parser.new(StringIO.new(ntstring), top_class).parse
   end
 
-  def load_file(filename, top_class: Object)
+  def self.load_file(filename, top_class: Object)
     raise Errors::WrongInputTypeError.new([String], filename) unless filename.nil? || filename.is_a?(String)
 
     assert_valid_top_level_type top_class
