@@ -7,6 +7,7 @@ module NestedText
   class Error < StandardError; end
 
   module Errors
+    # TODO: should make this the top base error instead. ntpy has one error for everything. Should work to have linenumber for all errors. Maybe not dump errors though.
     class ParseError < Error
       attr_reader :lineno, :colno, :message_raw
 
