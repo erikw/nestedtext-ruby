@@ -95,7 +95,11 @@ module NestedText
     end
 
     class InvalidIndentation < ParseError
-      def initialize(line, ind_exp, ind_act) = super(line, 0, "The indentation of the current line is not valid. Expected indentation of #{ind_exp} but was #{ind_act}.")
+      def initialize(line, ind_exp, ind_act)
+        message = "The indentation of the current line is not valid. Expected indentation of #{ind_exp} but was #{ind_act}."
+        message = "top-level content must start in column 1." if line.prev_line.nil? && ind_exp == 0
+        super(line, 0, message)
+      end
     end
 
     class LineTypeNotExpected < ParseError
