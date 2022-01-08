@@ -34,7 +34,9 @@ class OfficialTest < Minitest::Test
       begin
         NestedText.load_file(caze[:load][:in][:path])
       rescue NestedText::Error => e
-        puts e.backtrace.join("\n")  # TODO: remove, for development only
+        # TODO: remove, for development only
+        puts e.message
+        puts e.backtrace.join("\n")
 
         assert_equal(expected["lineno"], e.lineno, msg = "lineno is wrong")
         assert_equal(expected["colno"], e.colno, msg = "colno is wrong")

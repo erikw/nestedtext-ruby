@@ -2,9 +2,6 @@
 
 require "nestedtext/constants"
 
-# TODO: extend IOError, EncodingError?
-# TODO move errors to be in respective class who raise them?
-# TODO attach column + read line and print out fancy arrow pointing at location where error was detected, similar to ntpy?
 module NestedText
   # Top level Error for clients to rescue.
   class Error < StandardError; end
@@ -17,10 +14,24 @@ module NestedText
         @lineno = line.lineno - 1  # TODO: official test seems to have 0-based line counting?
         @colno = colno || 0
         @message_raw = message
+        super(pretty_message(line, colno, message))
+      end
 
-        colstr = colno.nil? ? "" : ", #{colno}"
-        prefix = "#{lineno}#{colstr}: "
-        super(prefix + message)
+      private
+
+      def pretty_message(line, colno, message)
+        colstr = colno.nil? ? "" : ", column #{colno}"
+        prefix = "\nParse Error (line #{line.lineno}#{colstr}): "
+
+        last_lines = "\n"
+        unless line.prev_line.nil?
+          last_lines += "\t#{line.prev_line.lineno.to_s.ljust(2)}| #{line.prev_line.line_content}\n"
+        end
+        last_lines += "\t#{line.lineno.to_s.ljust(2)}| #{line.line_content}"
+
+        marker = "\n\t    " + " " * (colno.nil? ? 0 : colno) + "^"
+
+        prefix + message + last_lines + marker
       end
     end
 

@@ -133,7 +133,7 @@ module NestedText
         @attribs["key"] = Regexp.last_match(:key)
         @attribs["value"] = Regexp.last_match(:value)
       else
-        raise Errors::LineTagNotDetected, @lineno
+        raise Errors::LineTagNotDetected, self
       end
     end
   end
