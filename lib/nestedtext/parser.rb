@@ -70,11 +70,11 @@ module NestedText
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         cur_line = @line_scanner.read_next
         if cur_line.indentation != indentation
-          raise Errors::InvalidIndentation.new(cur_line.lineno, indentation,
+          raise Errors::InvalidIndentation.new(cur_line, indentation,
                                                cur_line.indentation)
         end
         unless cur_line.tag == :list_item
-          raise Errors::LineTypeNotExpected.new(cur_line.lineno, %i[list_item],
+          raise Errors::LineTypeNotExpected.new(cur_line, %i[list_item],
                                                 cur_line.tag)
         end
 
@@ -85,7 +85,7 @@ module NestedText
           elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :list_item
             value = ""
           else
-            raise Errors::ListItemNoValue, cur_line.lineno
+            raise Errors::ListItemNoValue, cur_line
           end
         end
 
@@ -99,7 +99,7 @@ module NestedText
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         cur_line = @line_scanner.read_next
         if cur_line.indentation != indentation
-          raise Errors::InvalidIndentation.new(cur_line.lineno, indentation,
+          raise Errors::InvalidIndentation.new(cur_line, indentation,
                                                cur_line.indentation)
         end
 
@@ -114,7 +114,7 @@ module NestedText
             elsif @line_scanner.peek.nil? || %i[dict_item key_item].include?(@line_scanner.peek.tag)
               value = ""
             else
-              raise Errors::DictItemNoValue, cur_line.lineno
+              raise Errors::DictItemNoValue, cur_line
             end
           end
         elsif cur_line.tag == :key_item
@@ -128,14 +128,14 @@ module NestedText
             value = ""
           else
             unless exp_types.member?(@line_scanner.peek.tag)
-              raise Errors::LineTypeNotExpected.new(cur_line.lineno, exp_types, cur_line.tag)
+              raise Errors::LineTypeNotExpected.new(cur_line, exp_types, cur_line.tag)
             end
-            raise Errors::MultilineKeyNoValue, cur_line.lineno unless @line_scanner.peek.indentation > indentation
+            raise Errors::MultilineKeyNoValue, cur_line unless @line_scanner.peek.indentation > indentation
 
             value = parse_any(@line_scanner.peek.indentation)
           end
         else
-          raise Errors::LineTypeNotExpected.new(cur_line.lineno, %i[dict_item key_item], cur_line.tag)
+          raise Errors::LineTypeNotExpected.new(cur_line, %i[dict_item key_item], cur_line.tag)
         end
         result[key] = value
       end
@@ -147,11 +147,11 @@ module NestedText
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         cur_line = @line_scanner.read_next
         if cur_line.indentation != indentation
-          raise Errors::InvalidIndentation.new(cur_line.lineno, indentation,
+          raise Errors::InvalidIndentation.new(cur_line, indentation,
                                                cur_line.indentation)
         end
         unless cur_line.tag == :string_item
-          raise Errors::LineTypeNotExpected.new(cur_line.lineno, %i[string_item],
+          raise Errors::LineTypeNotExpected.new(cur_line, %i[string_item],
                                                 cur_line.tag)
         end
 
@@ -175,7 +175,7 @@ module NestedText
         key << @inline_scanner.read_next
       end
       last_char = @inline_scanner.read_next
-      raise Errors::InlineDictKeySyntaxError, @inline_scanner.lineno unless last_char == ":"
+      raise Errors::InlineDictKeySyntaxError, @inline_scanner.line unless last_char == ":"
 
       key.join.strip
     end
@@ -201,7 +201,7 @@ module NestedText
           break unless @inline_scanner.peek == ","
         end
         last_char = @inline_scanner.read_next
-        raise Errors::InlineDictSyntaxError, @inline_scanner.lineno unless last_char == "}"
+        raise Errors::InlineDictSyntaxError, @inline_scanner.line unless last_char == "}"
 
       when "["
         result = []
@@ -215,7 +215,7 @@ module NestedText
           break unless @inline_scanner.peek == ","
         end
         last_char = @inline_scanner.read_next
-        raise Errors::InlineListSyntaxError, @inline_scanner.lineno unless last_char == "]"
+        raise Errors::InlineListSyntaxError, @inline_scanner.line unless last_char == "]"
       else # Inline string
         inline_string = []
         until @inline_scanner.empty? || ["{", "}", "[", "]", ","].include?(@inline_scanner.peek)

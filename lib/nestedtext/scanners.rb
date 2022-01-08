@@ -31,13 +31,15 @@ module NestedText
     def prepare_next_line
       loop do
         linestr = @io.gets&.chomp
-        @next_line = linestr.nil? ? nil : Line.new(linestr, @io.lineno)
+        @next_line = linestr.nil? ? nil : Line.new(linestr, @io.lineno, @next_line)
         break if @next_line.nil? || !%i[blank comment].include?(@next_line.tag)
       end
     end
   end
 
   class InlineScanner
+    attr_reader :line
+
     def initialize(line)
       @line = line
       @pos = 0
@@ -45,10 +47,6 @@ module NestedText
 
     def empty?
       @pos >= @line.line_content.length
-    end
-
-    def lineno
-      @line.lineno
     end
 
     def read_next
@@ -75,11 +73,12 @@ module NestedText
     # inline_list        [value1, value2]
     ALLOWED_LINE_TAGS = %i[comment blank list_item dict_item string_item key_item inline_dict inline_list]
 
-    attr_reader :tag, :line_content, :indentation, :attribs, :lineno
+    attr_reader :tag, :line_content, :indentation, :attribs, :lineno, :prev_line
 
-    def initialize(line_content, lineno)
+    def initialize(line_content, lineno, prev_line)
       @line_content = line_content
       @lineno = lineno
+      @prev_line = prev_line
       @attribs = Hash.new(nil)
       @tag = nil
       @indentation = 0
@@ -129,6 +128,7 @@ module NestedText
         self.tag = :inline_list
       elsif @line_content =~ /^(?<key>.*?)\s*:(?: (?<value>.*))?$/
         # TODO: this regex must be extracted and unit tested. What are the constraints of the value?
+        # TODO use frespace mode to add comments
         self.tag = :dict_item
         @attribs["key"] = Regexp.last_match(:key)
         @attribs["value"] = Regexp.last_match(:value)
