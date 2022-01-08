@@ -11,17 +11,16 @@ module NestedText
       attr_reader :lineno, :colno, :message_raw
 
       def initialize(line, colno, message)
-        @lineno = line.lineno - 1  # TODO: official test seems to have 0-based line counting?
+        @lineno = line.lineno
         @colno = colno || 0
         @message_raw = message
-        super(pretty_message(line, colno, message))
+        super(pretty_message(line))
       end
 
       private
 
-      def pretty_message(line, colno, message)
-        colstr = colno.nil? ? "" : ", column #{colno}"
-        prefix = "\nParse Error (line #{line.lineno}#{colstr}): "
+      def pretty_message(line)
+        prefix = "\nParse Error (line #{@lineno}, column #{@colno}): "
 
         last_lines = "\n"
         unless line.prev_line.nil?
@@ -29,9 +28,9 @@ module NestedText
         end
         last_lines += "\t#{line.lineno.to_s.ljust(2)}| #{line.line_content}"
 
-        marker = "\n\t    " + " " * (colno.nil? ? 0 : colno) + "^"
+        marker = "\n\t    " + " " * @colno + "^"
 
-        prefix + message + last_lines + marker
+        prefix + @message_raw + last_lines + marker
       end
     end
 

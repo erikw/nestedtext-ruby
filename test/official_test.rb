@@ -38,7 +38,8 @@ class OfficialTest < Minitest::Test
         puts e.message
         puts e.backtrace.join("\n")
 
-        assert_equal(expected["lineno"], e.lineno, msg = "lineno is wrong")
+        # Offical test line numbers are 0-based, which is strange.
+        assert_equal(expected["lineno"], e.lineno - 1, msg = "lineno is wrong")
         assert_equal(expected["colno"], e.colno, msg = "colno is wrong")
         assert_equal(expected["message"], e.message_raw, msg = "message is wrong")
       else
