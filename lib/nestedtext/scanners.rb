@@ -29,12 +29,13 @@ module NestedText
     private
 
     def prepare_next_line
+      line = nil
       loop do
         linestr = @io.gets&.chomp
-        # puts "lineno=#{@io.lineno}: #{linestr}"
-        @next_line = linestr.nil? ? nil : Line.new(linestr, @io.lineno, @next_line)
-        break if @next_line.nil? || !%i[blank comment].include?(@next_line.tag)
+        line = linestr.nil? ? nil : Line.new(linestr, @io.lineno, @next_line)
+        break if line.nil? || !%i[blank comment].include?(line.tag)
       end
+      @next_line = line
     end
   end
 

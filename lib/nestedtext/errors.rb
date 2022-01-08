@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "word_wrap"
+
 require "nestedtext/constants"
 
 module NestedText
@@ -94,11 +96,24 @@ module NestedText
       def initialize(class_exp, class_act) = super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act&.class&.name || "nil"}.")
     end
 
+    # TODO: s/prev_line/prev/
     class InvalidIndentation < ParseError
       def initialize(line, ind_exp, ind_act)
         message = "The indentation of the current line is not valid. Expected indentation of #{ind_exp} but was #{ind_act}."
-        message = "top-level content must start in column 1." if line.prev_line.nil? && ind_exp == 0
-        super(line, 0, message)
+        prev_line = line.prev_line
+        if prev_line.nil? && ind_exp == 0
+          message = "top-level content must start in column 1."
+        elsif !prev_line.nil? &&
+              prev_line.attribs.key?("value") &&
+              prev_line.indentation < line.indentation &&
+              %i[dict_item list_item].member?(prev_line.tag)
+          cond = ""
+          cond = ", which in this case consists only of whitespace" if prev_line.attribs["value"].strip.empty?
+          message = "invalid indentation. An indent may only follow a dictionary or list item that does not already have a value#{cond}."
+        end
+        # Need to wrap like official tests. #ww always add an extra \n we need to chop off.
+        message_wrapped = WordWrap.ww(message, 70).chop
+        super(line, 0, message_wrapped)
       end
     end
 
