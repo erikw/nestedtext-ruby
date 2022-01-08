@@ -108,7 +108,9 @@ module NestedText
               %i[dict_item list_item].member?(prev_line.tag)
           cond = ""
           cond = ", which in this case consists only of whitespace" if prev_line.attribs["value"].strip.empty?
-          message = "invalid indentation. An indent may only follow a dictionary or list item that does not already have a value#{cond}."
+          message = "invalid indentation. " \
+                    "An indent may only follow a dictionary or list item that " \
+                    "does not already have a value#{cond}."
         end
         # Need to wrap like official tests. #ww always add an extra \n we need to chop off.
         message_wrapped = WordWrap.ww(message, 70).chop
