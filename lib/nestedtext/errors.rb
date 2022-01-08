@@ -29,9 +29,9 @@ module NestedText
         last_lines = ""
         # From one line to another, we can at most have 1 digits length difference.
         digits = line.lineno.to_s.length
-        unless line.prev_line.nil?
-          lline_indent = " " * line.prev_line.indentation
-          last_lines += "\n\t#{line.prev_line.lineno.to_s.rjust(digits)}| #{lline_indent}#{line.prev_line.line_content}"
+        unless line.prev.nil?
+          lline_indent = " " * line.prev.indentation
+          last_lines += "\n\t#{line.prev.lineno.to_s.rjust(digits)}| #{lline_indent}#{line.prev.line_content}"
         end
         line_indent = " " * line.indentation
         last_lines += "\n\t#{line.lineno}| #{line_indent}#{line.line_content}"
@@ -96,11 +96,10 @@ module NestedText
       def initialize(class_exp, class_act) = super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act&.class&.name || "nil"}.")
     end
 
-    # TODO: s/prev_line/prev/
     class InvalidIndentation < ParseError
       def initialize(line, ind_exp, ind_act)
         message = "The indentation of the current line is not valid. Expected indentation of #{ind_exp} but was #{ind_act}."
-        prev_line = line.prev_line
+        prev_line = line.prev
         if prev_line.nil? && ind_exp == 0
           message = "top-level content must start in column 1."
         elsif !prev_line.nil? &&

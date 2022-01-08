@@ -75,12 +75,12 @@ module NestedText
     # inline_list        [value1, value2]
     ALLOWED_LINE_TAGS = %i[comment blank list_item dict_item string_item key_item inline_dict inline_list]
 
-    attr_reader :tag, :line_content, :indentation, :attribs, :lineno, :prev_line
+    attr_reader :tag, :line_content, :indentation, :attribs, :lineno, :prev
 
     def initialize(line_content, lineno, prev_line)
       @line_content = line_content
       @lineno = lineno
-      @prev_line = prev_line
+      @prev = prev_line
       @attribs = Hash.new(nil)
       @tag = nil
       @indentation = 0
