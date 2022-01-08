@@ -11,8 +11,9 @@ module NestedText
       attr_reader :lineno, :colno, :message_raw
 
       def initialize(line, colno, message)
+        # Note, both line and column number is 1-indexed. column 0 means "nil"; the problem is on the whole line.
         @lineno = line.lineno
-        @colno = colno || 0
+        @colno = colno
         @message_raw = message
         super(pretty_message(line))
       end
@@ -22,13 +23,19 @@ module NestedText
       def pretty_message(line)
         prefix = "\nParse Error (line #{@lineno}, column #{@colno}): "
 
-        last_lines = "\n"
+        last_lines = ""
+        # From one line to another, we can at most have 1 digits length difference.
+        digits = line.lineno.to_s.length
         unless line.prev_line.nil?
-          last_lines += "\t#{line.prev_line.lineno.to_s.ljust(2)}| #{line.prev_line.line_content}\n"
+          lline_indent = " " * line.prev_line.indentation
+          last_lines += "\n\t#{line.prev_line.lineno.to_s.rjust(digits)}| #{lline_indent}#{line.prev_line.line_content}"
         end
-        last_lines += "\t#{line.lineno.to_s.ljust(2)}| #{line.line_content}"
+        line_indent = " " * line.indentation
+        last_lines += "\n\t#{line.lineno}| #{line_indent}#{line.line_content}"
 
-        marker = "\n\t    " + " " * @colno + "^"
+        # +1 for the "\", but not for the space after so that col=0 will be before text starts.
+        marker_indent = @colno + digits + 1
+        marker = "\n\t" + " " * marker_indent + "^"
 
         prefix + @message_raw + last_lines + marker
       end
@@ -43,35 +50,35 @@ module NestedText
     end
 
     class LineTagUnknown < ParseError
-      def initialize(line, tag) = super(line, nil, "The Line tag #{tag} is not among the allowed ones #{Line::ALLOWED_LINE_TAGS}")
+      def initialize(line, tag) = super(line, 0, "The Line tag #{tag} is not among the allowed ones #{Line::ALLOWED_LINE_TAGS}")
     end
 
     class LineTagNotDetected < ParseError
-      def initialize(line) = super(line, nil, "The type tag for the line could not be detected, using wrong syntax?")
+      def initialize(line) = super(line, 0, "The type tag for the line could not be detected, using wrong syntax?")
     end
 
     class ListItemNoValue < ParseError
-      def initialize(line) = super(line, nil, "A list item must have a value.")
+      def initialize(line) = super(line, 0, "A list item must have a value.")
     end
 
     class DictItemNoValue < ParseError
-      def initialize(line) = super(line, nil, "A dict item must have a value.")
+      def initialize(line) = super(line, 0, "A dict item must have a value.")
     end
 
     class MultilineKeyNoValue < ParseError
-      def initialize(line) = super(line, nil, "A multiline key needs to have an indented value after it starting on the row after the key.")
+      def initialize(line) = super(line, 0, "A multiline key needs to have an indented value after it starting on the row after the key.")
     end
 
     class InlineDictSyntaxError < ParseError
-      def initialize(line) = super(line, nil, "Inline dict could not be parsed.")
+      def initialize(line) = super(line, 0, "Inline dict could not be parsed.")
     end
 
     class InlineDictKeySyntaxError < ParseError
-      def initialize(line) = super(line, nil, "Inline dict key could not be parsed.")
+      def initialize(line) = super(line, 0, "Inline dict key could not be parsed.")
     end
 
     class InlineListSyntaxError < ParseError
-      def initialize(line) = super(line, nil, "Inline list could not be parsed.")
+      def initialize(line) = super(line, 0, "Inline list could not be parsed.")
     end
 
     class UnsupportedTopLevelTypeError < Error
@@ -87,11 +94,11 @@ module NestedText
     end
 
     class InvalidIndentation < ParseError
-      def initialize(line, ind_exp, ind_act) = super(line, nil, "The indentation of the current line is not valid. Expected indentation of #{ind_exp} but was #{ind_act}.")
+      def initialize(line, ind_exp, ind_act) = super(line, 0, "The indentation of the current line is not valid. Expected indentation of #{ind_exp} but was #{ind_act}.")
     end
 
     class LineTypeNotExpected < ParseError
-      def initialize(line, type_exps, type_act) = super(line, nil, "The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(", ")}] here.")
+      def initialize(line, type_exps, type_act) = super(line, 0, "The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(", ")}] here.")
     end
   end
 end
