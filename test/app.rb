@@ -5,7 +5,4 @@ require("nestedtext")
 
 raise "Provide path to nestedtext file to parse as argument." if ARGV.length != 1
 
-ntfile = ARGV[0]
-
-parsed = NestedText.load_file(ntfile)
-pp parsed
+pp NestedText.load_file(ARGV[0])
