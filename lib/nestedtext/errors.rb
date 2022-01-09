@@ -5,7 +5,6 @@ require "word_wrap/core_ext"
 
 require "nestedtext/constants"
 
-# TODO: remove special syntax for error init, makes code navigation hard in vim
 module NestedText
   # Top level Error for clients to rescue.
   class Error < StandardError; end
@@ -47,55 +46,81 @@ module NestedText
     end
 
     class LineScannerIsEmpty < Error
-      def initialize = super("There is no more input to consume. You should have checked this with #empty? before calling.")
+      def initialize
+        super("There is no more input to consume. You should have checked this with #empty? before calling.")
+      end
     end
 
     class InlineScannerIsEmpty < Error
-      def initialize = super("There is no more input to consume. You should have checked this with #empty? before calling.")
+      def initialize
+        super("There is no more input to consume. You should have checked this with #empty? before calling.")
+      end
     end
 
     class LineTagUnknown < ParseError
-      def initialize(line, tag) = super(line, 0, "The Line tag #{tag} is not among the allowed ones #{Line::ALLOWED_LINE_TAGS}")
+      def initialize(line, tag)
+        super(line, 0, "The Line tag #{tag} is not among the allowed ones #{Line::ALLOWED_LINE_TAGS}")
+      end
     end
 
     class LineTagNotDetected < ParseError
-      def initialize(line) = super(line, 0, "The type tag for the line could not be detected, using wrong syntax?")
+      def initialize(line)
+        super(line, 0, "The type tag for the line could not be detected, using wrong syntax?")
+      end
     end
 
     class ListItemNoValue < ParseError
-      def initialize(line) = super(line, 0, "A list item must have a value.")
+      def initialize(line)
+        super(line, 0, "A list item must have a value.")
+      end
     end
 
     class DictItemNoValue < ParseError
-      def initialize(line) = super(line, 0, "A dict item must have a value.")
+      def initialize(line)
+        super(line, 0, "A dict item must have a value.")
+      end
     end
 
     class MultilineKeyNoValue < ParseError
-      def initialize(line) = super(line, 0, "A multiline key needs to have an indented value after it starting on the row after the key.")
+      def initialize(line)
+        super(line, 0, "A multiline key needs to have an indented value after it starting on the row after the key.")
+      end
     end
 
     class InlineDictSyntaxError < ParseError
-      def initialize(line) = super(line, 0, "Inline dict could not be parsed.")
+      def initialize(line)
+        super(line, 0, "Inline dict could not be parsed.")
+      end
     end
 
     class InlineDictKeySyntaxError < ParseError
-      def initialize(line) = super(line, 0, "Inline dict key could not be parsed.")
+      def initialize(line)
+        super(line, 0, "Inline dict key could not be parsed.")
+      end
     end
 
     class InlineListSyntaxError < ParseError
-      def initialize(line) = super(line, 0, "Inline list could not be parsed.")
+      def initialize(line)
+        super(line, 0, "Inline list could not be parsed.")
+      end
     end
 
     class UnsupportedTopLevelTypeError < Error
-      def initialize(type_class) = super("The given top level type #{type_class&.name} is unsupported. Chose between #{TOP_LEVEL_TYPES.join(", ")}.")
+      def initialize(type_class)
+        super("The given top level type #{type_class&.name} is unsupported. Chose between #{TOP_LEVEL_TYPES.join(", ")}.")
+      end
     end
 
     class WrongInputTypeError < Error
-      def initialize(class_exps, class_act) = super("The given input type #{class_act.class.name} is unsupported. Expected to be of types #{class_exps.map(&:name).join(", ")}")
+      def initialize(class_exps, class_act)
+        super("The given input type #{class_act.class.name} is unsupported. Expected to be of types #{class_exps.map(&:name).join(", ")}")
+      end
     end
 
     class TopLevelTypeMismatchParsedType < Error
-      def initialize(class_exp, class_act) = super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act&.class&.name || "nil"}.")
+      def initialize(class_exp, class_act)
+        super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act&.class&.name || "nil"}.")
+      end
     end
 
     class InvalidIndentation < ParseError
