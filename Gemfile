@@ -26,4 +26,5 @@ group :test do
   gem "simplecov", "~> 0.21", require: false
 end
 
+gem "warning", "~> 1.2"
 gem "word_wrap", "~> 1.0"
