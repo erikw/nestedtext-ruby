@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require "word_wrap"
-# TODO: try if requiring core_ext expclitly works
-# require "word_wrap/core_ext"
+require "word_wrap/core_ext"
 
 require "nestedtext/constants"
 
@@ -116,8 +115,7 @@ module NestedText
                     "does not already have a value#{cond}."
         end
         # Need to wrap like official tests. #wrap always add an extra \n we need to chop off.
-        message_wrapped = WordWrap.ww(message, 70).chop
-        # message_wrapped = message.wrap(70).chop
+        message_wrapped = message.wrap(70).chop
         super(line, 0, message_wrapped)
       end
     end
