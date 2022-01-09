@@ -60,6 +60,8 @@ module NestedText
         parse_inline_dict
       when :inline_list
         parse_inline_list
+      when :unrecognized
+        Errors.raise_unrecognized_line(@line_scanner.peek)
       else
         raise "Unexpected line tag! #{@line_scanner.peek.tag}"
       end

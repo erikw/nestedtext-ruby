@@ -43,7 +43,7 @@ class OfficialTest < Minitest::Test
         assert_equal(expected["colno"], e.colno, msg = "colno is wrong")
         assert_equal(expected["message"], e.message_raw, msg = "message is wrong")
       else
-        raise "No error was thrown like exepcted."
+        raise "Expected an exception to be thrown with message:\n#{expected["message"]}"
       end
     end
   end

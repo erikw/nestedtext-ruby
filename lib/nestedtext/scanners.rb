@@ -65,18 +65,21 @@ module NestedText
 
   class Line
     # Reference: https://nestedtext.org/en/latest/file_format.html
-    # :comment            # a comment
-    # :blank
-    # :list_item         - item
-    # :dict_item          key: value (or value on next line)
-    # :string_item       > a string
-    # :key_item          : key on a line
-    # inline_dict        {key1: value1, key2: value2}
-    # inline_list        [value1, value2]
-    ALLOWED_LINE_TAGS = %i[comment blank list_item dict_item string_item key_item inline_dict inline_list]
+    ALLOWED_LINE_TAGS = [
+      :comment, # a comment
+      :blank,
+      :list_item,  # - item
+      :dict_item,  # key: value (or value on next line)
+      :string_item, # > a string, can continue next line
+      :key_item,    # : key on a line
+      :inline_dict, # {key1: value1, key2: value2}
+      :inline_list, # [value1, value2]
+      :unrecognized # could not be determined
+    ]
 
     attr_reader :tag, :line_content, :indentation, :attribs, :lineno, :prev
 
+    # TODO: s/line_content/content/
     def initialize(line_content, lineno, prev_line)
       @line_content = line_content
       @lineno = lineno
@@ -106,6 +109,16 @@ module NestedText
 
     private
 
+    # TODO: this regex must  unit tested.
+    PATTERN_DICT_ITEM = /^
+             (?<key>[^\s].*?)   # Key must start with a non-whitespace character, and goes until first
+              \s*:              # first optional space, or :-separator
+              (?:               # Value part is optional
+                \p{Space}       # Must have a space after :-separator
+                (?<value>.*)    # Value is everything to the end of the line
+              )?
+              $/x
+
     def detect_line_tag_and_indentation
       @indentation += 1 while @indentation < @line_content.length && @line_content[@indentation] == " "
       @line_content = @line_content[@indentation..]
@@ -128,14 +141,14 @@ module NestedText
       elsif @line_content[0] == "["
         # TODO: merge path of inline dict and list and just set :inline?
         self.tag = :inline_list
-      elsif @line_content =~ /^(?<key>.*?)\s*:(?: (?<value>.*))?$/
-        # TODO: this regex must be extracted and unit tested. What are the constraints of the value?
-        # TODO use frespace mode to add comments
+      elsif @line_content =~ PATTERN_DICT_ITEM
         self.tag = :dict_item
         @attribs["key"] = Regexp.last_match(:key)
         @attribs["value"] = Regexp.last_match(:value)
       else
-        raise Errors::LineTagNotDetected, self
+        # Don't raise error here, as this line might not have been consumed yet,
+        # thus could hide an error that we detect when parsing the previous line.
+        self.tag = :unrecognized
       end
     end
   end

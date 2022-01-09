@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 require "word_wrap"
+# TODO: try if requiring core_ext expclitly works
+# require "word_wrap/core_ext"
 
 require "nestedtext/constants"
 
+# TODO: remove special syntax for error init, makes code navigation hard in vim
 module NestedText
   # Top level Error for clients to rescue.
   class Error < StandardError; end
@@ -112,14 +115,31 @@ module NestedText
                     "An indent may only follow a dictionary or list item that " \
                     "does not already have a value#{cond}."
         end
-        # Need to wrap like official tests. #ww always add an extra \n we need to chop off.
+        # Need to wrap like official tests. #wrap always add an extra \n we need to chop off.
         message_wrapped = WordWrap.ww(message, 70).chop
+        # message_wrapped = message.wrap(70).chop
         super(line, 0, message_wrapped)
       end
     end
 
     class LineTypeNotExpected < ParseError
-      def initialize(line, type_exps, type_act) = super(line, 0, "The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(", ")}] here.")
+      def initialize(line, type_exps, type_act)
+        super(line, 0, "The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(", ")}] here.")
+      end
+    end
+
+    class InvalidIndentationChar < ParseError
+      def initialize(line)
+        printable_char = line.line_content[0].dump.gsub(/"/, "")
+        message = "invalid character in indentation: '#{printable_char}'."
+        super(line, line.indentation, message)
+      end
+    end
+
+    def self.raise_unrecognized_line(line)
+      raise InvalidIndentationChar, line if line.line_content.chr =~ /\s/
+
+      raise LineTagNotDetected, line
     end
   end
 end

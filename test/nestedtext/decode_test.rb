@@ -85,6 +85,16 @@ class DecodeStringTopAnyDictTest < Minitest::Test
     end
   end
 
+  def test_dict_nested_invalid_indentation_tab
+    nts = <<~NT
+      key 1:
+          	    key2: this line has tab indentation
+    NT
+    assert_raises(NestedText::Errors::InvalidIndentationChar) do
+      NestedText.load(nts)
+    end
+  end
+
   def test_dict_value_of_list
     nts = <<~NT
       key:
