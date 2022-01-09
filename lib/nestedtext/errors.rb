@@ -33,10 +33,10 @@ module NestedText
         digits = line.lineno.to_s.length
         unless line.prev.nil?
           lline_indent = " " * line.prev.indentation
-          last_lines += "\n\t#{line.prev.lineno.to_s.rjust(digits)}| #{lline_indent}#{line.prev.line_content}"
+          last_lines += "\n\t#{line.prev.lineno.to_s.rjust(digits)}| #{lline_indent}#{line.prev.content}"
         end
         line_indent = " " * line.indentation
-        last_lines += "\n\t#{line.lineno}| #{line_indent}#{line.line_content}"
+        last_lines += "\n\t#{line.lineno}| #{line_indent}#{line.content}"
 
         # +1 for the "\", but not for the space after so that col=0 will be before text starts.
         marker_indent = @colno + digits + 1
@@ -128,14 +128,14 @@ module NestedText
 
     class InvalidIndentationChar < ParseError
       def initialize(line)
-        printable_char = line.line_content[0].dump.gsub(/"/, "")
+        printable_char = line.content[0].dump.gsub(/"/, "")
         message = "invalid character in indentation: '#{printable_char}'."
         super(line, line.indentation, message)
       end
     end
 
     def self.raise_unrecognized_line(line)
-      raise InvalidIndentationChar, line if line.line_content.chr =~ /\s/
+      raise InvalidIndentationChar, line if line.content.chr =~ /\s/
 
       raise LineTagNotDetected, line
     end

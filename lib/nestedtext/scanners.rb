@@ -48,18 +48,18 @@ module NestedText
     end
 
     def empty?
-      @pos >= @line.line_content.length
+      @pos >= @line.content.length
     end
 
     def read_next
       raise Errors::InlineScannerIsEmpty if empty?
 
       @pos += 1
-      @line.line_content[@pos - 1]
+      @line.content[@pos - 1]
     end
 
     def peek
-      empty? ? nil : @line.line_content[@pos]
+      empty? ? nil : @line.content[@pos]
     end
   end
 
@@ -77,11 +77,10 @@ module NestedText
       :unrecognized # could not be determined
     ]
 
-    attr_reader :tag, :line_content, :indentation, :attribs, :lineno, :prev
+    attr_reader :tag, :content, :indentation, :attribs, :lineno, :prev
 
-    # TODO: s/line_content/content/
-    def initialize(line_content, lineno, prev_line)
-      @line_content = line_content
+    def initialize(content, lineno, prev_line)
+      @content = content
       @lineno = lineno
       @prev = prev_line
       @attribs = Hash.new(nil)
@@ -91,11 +90,11 @@ module NestedText
     end
 
     # def length
-    # @line_content.length
+    # @content.length
     # end
 
     # def [](index)
-    # @line_content[index]
+    # @content[index]
     # end
 
     def tag=(tag)
@@ -104,7 +103,7 @@ module NestedText
     end
 
     def to_s
-      "[##{@lineno}] #{" " * @indentation}#{@line_content}"
+      "[##{@lineno}] #{" " * @indentation}#{@content}"
     end
 
     private
@@ -120,28 +119,28 @@ module NestedText
               $/x
 
     def detect_line_tag_and_indentation
-      @indentation += 1 while @indentation < @line_content.length && @line_content[@indentation] == " "
-      @line_content = @line_content[@indentation..]
+      @indentation += 1 while @indentation < @content.length && @content[@indentation] == " "
+      @content = @content[@indentation..]
 
-      if @line_content.length == 0
+      if @content.length == 0
         self.tag = :blank
-      elsif @line_content[0] == "#"
+      elsif @content[0] == "#"
         self.tag = :comment
-      elsif @line_content =~ /^:(?: |$)/
+      elsif @content =~ /^:(?: |$)/
         self.tag = :key_item
-        @attribs["key"] = @line_content[2..] || ""
-      elsif @line_content =~ /^-(?: |$)/
+        @attribs["key"] = @content[2..] || ""
+      elsif @content =~ /^-(?: |$)/
         self.tag = :list_item
-        @attribs["value"] = @line_content[2..]
-      elsif @line_content =~ /^>(?: |$)/
+        @attribs["value"] = @content[2..]
+      elsif @content =~ /^>(?: |$)/
         self.tag = :string_item
-        @attribs["value"] = @line_content[2..] || ""
-      elsif @line_content[0] == "{"
+        @attribs["value"] = @content[2..] || ""
+      elsif @content[0] == "{"
         self.tag = :inline_dict
-      elsif @line_content[0] == "["
+      elsif @content[0] == "["
         # TODO: merge path of inline dict and list and just set :inline?
         self.tag = :inline_list
-      elsif @line_content =~ PATTERN_DICT_ITEM
+      elsif @content =~ PATTERN_DICT_ITEM
         self.tag = :dict_item
         @attribs["key"] = Regexp.last_match(:key)
         @attribs["value"] = Regexp.last_match(:value)
