@@ -15,7 +15,8 @@ module NestedText
       attr_reader :lineno, :colno, :message_raw
 
       def initialize(line, colno, message)
-        # Note, both line and column number is 1-indexed. column 0 means "nil"; the problem is on the whole line.
+        # Note, both line and column number are 0-indexed.
+        # But for human display we make them 1-indexed.
         @lineno = line.lineno
         @colno = colno
         @message_raw = message
@@ -25,20 +26,23 @@ module NestedText
       private
 
       def pretty_message(line)
-        prefix = "\nParse Error (line #{@lineno}, column #{@colno}): "
+        lineno_disp = @lineno + 1
+        colno_disp = @colno + 1
+        prefix = "\nParse Error (line #{lineno_disp}, column #{colno_disp}): "
 
         last_lines = ""
         # From one line to another, we can at most have 1 digits length difference.
-        digits = line.lineno.to_s.length
+        digits = lineno_disp.to_s.length
         unless line.prev.nil?
           lline_indent = " " * line.prev.indentation
-          last_lines += "\n\t#{line.prev.lineno.to_s.rjust(digits)}| #{lline_indent}#{line.prev.content}"
+          prev_lineno_disp = line.prev.lineno + 1
+          last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(digits)}| #{lline_indent}#{line.prev.content}"
         end
         line_indent = " " * line.indentation
-        last_lines += "\n\t#{line.lineno}| #{line_indent}#{line.content}"
+        last_lines += "\n\t#{lineno_disp}| #{line_indent}#{line.content}"
 
         # +1 for the "\", but not for the space after so that col=0 will be before text starts.
-        marker_indent = @colno + digits + 1
+        marker_indent = colno_disp + digits + 1
         marker = "\n\t" + " " * marker_indent + "^"
 
         prefix + @message_raw + last_lines + marker
@@ -59,48 +63,56 @@ module NestedText
 
     class LineTagUnknown < ParseError
       def initialize(line, tag)
+        # TODO: should not pass colno=0 probably??
         super(line, 0, "The Line tag #{tag} is not among the allowed ones #{Line::ALLOWED_LINE_TAGS}")
       end
     end
 
     class LineTagNotDetected < ParseError
       def initialize(line)
+        # TODO: should this pass colno=0?
         super(line, 0, "The type tag for the line could not be detected, using wrong syntax?")
       end
     end
 
     class ListItemNoValue < ParseError
       def initialize(line)
+        # TODO: should this pass colno=0?
         super(line, 0, "A list item must have a value.")
       end
     end
 
     class DictItemNoValue < ParseError
       def initialize(line)
+        # TODO: should this pass colno=0?
         super(line, 0, "A dict item must have a value.")
       end
     end
 
     class MultilineKeyNoValue < ParseError
       def initialize(line)
+        # TODO: should this pass colno=0?
         super(line, 0, "A multiline key needs to have an indented value after it starting on the row after the key.")
       end
     end
 
     class InlineDictSyntaxError < ParseError
       def initialize(line)
+        # TODO: should this pass colno=0?
         super(line, 0, "Inline dict could not be parsed.")
       end
     end
 
     class InlineDictKeySyntaxError < ParseError
       def initialize(line)
+        # TODO: should this pass colno=0?
         super(line, 0, "Inline dict key could not be parsed.")
       end
     end
 
     class InlineListSyntaxError < ParseError
       def initialize(line)
+        # TODO: should this pass colno=0?
         super(line, 0, "Inline list could not be parsed.")
       end
     end
@@ -150,12 +162,14 @@ module NestedText
 
     class LineTypeNotExpected < ParseError
       def initialize(line, type_exps, type_act)
+        # TODO: should this pass colno=0?
         super(line, 0, "The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(", ")}] here.")
       end
     end
 
     class LineTypeExpectedDictItem < ParseError
       def initialize(line)
+        # TODO: should this pass colno=0?
         super(line, 0, "expected dictionary item.")
       end
     end

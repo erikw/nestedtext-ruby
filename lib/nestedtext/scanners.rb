@@ -32,7 +32,8 @@ module NestedText
       line = nil
       loop do
         linestr = @io.gets&.chomp
-        line = linestr.nil? ? nil : Line.new(linestr, @io.lineno, @next_line)
+        lineno = @io.lineno - 1 # Be 0-based
+        line = linestr.nil? ? nil : Line.new(linestr, lineno, @next_line)
         break if line.nil? || !%i[blank comment].include?(line.tag)
       end
       @next_line = line
