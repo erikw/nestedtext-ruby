@@ -198,13 +198,22 @@ module NestedText
     class InvalidIndentationChar < ParseError
       def initialize(line)
         printable_char = line.content[0].dump.gsub(/"/, "")
-        message = "invalid character in indentation: '#{printable_char}'."
+
+        # Looking for non-breaking space is just to be compatialbe with official tests.
+        explanation = ""
+        if printable_char == '\\u00A0'
+          printable_char = '\\xa0'
+          explanation = " (NO-BREAK SPACE)"
+        end
+
+        message = "invalid character in indentation: '#{printable_char}'#{explanation}."
         super(line, line.indentation, message)
       end
     end
 
     def self.raise_unrecognized_line(line)
-      raise InvalidIndentationChar, line if line.content.chr =~ /\s/
+      # [[:space:]] include all Unicode spaces e.g. non-breakable space which \s does not.
+      raise InvalidIndentationChar, line if line.content.chr =~ /[[:space:]]/
 
       raise LineTagNotDetected, line
     end

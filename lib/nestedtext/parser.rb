@@ -71,10 +71,10 @@ module NestedText
       result = []
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         line = @line_scanner.read_next
-        raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
 
         Errors.raise_unrecognized_line(line) if line.tag == :unrecognized
         raise Errors::LineTypeExpectedListItem, line unless line.tag == :list_item
+        raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
 
         value = line.attribs["value"]
         if value.nil?
@@ -96,7 +96,13 @@ module NestedText
       result = {}
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         line = @line_scanner.read_next
+        Errors.raise_unrecognized_line(line) if line.tag == :unrecognized
         raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
+        raise Errors::LineTypeExpectedDictItem, line unless %i[dict_item key_item].include? line.tag
+
+        # Errors.raise_unrecognized_line(line) if line.tag == :unrecognized
+        # raise Errors::LineTypeExpectedListItem, line unless line.tag == :list_item
+        # raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
 
         value = nil
         key = nil
@@ -109,7 +115,7 @@ module NestedText
               value = parse_any(@line_scanner.peek.indentation)
             end
           end
-        elsif line.tag == :key_item
+        else # :key_item
           key = line.attribs["key"]
           while @line_scanner.peek&.tag == :key_item && @line_scanner.peek.indentation == indentation
             line = @line_scanner.read_next
@@ -126,10 +132,6 @@ module NestedText
 
             value = parse_any(@line_scanner.peek.indentation)
           end
-        elsif line.tag == :unrecognized
-          Errors.raise_unrecognized_line(line)
-        else
-          raise Errors::LineTypeExpectedDictItem, line
         end
         raise Errors::DictDuplicateKey, line if result.key? key
 
