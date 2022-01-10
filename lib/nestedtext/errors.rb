@@ -184,7 +184,13 @@ module NestedText
     class LineTypeExpectedDictItem < ParseError
       def initialize(line)
         # TODO: should this pass colno=0?
-        super(line, 0, "expected dictionary item.")
+        super(line, line.indentation, "expected dictionary item.")
+      end
+    end
+
+    class LineTypeExpectedListItem < ParseError
+      def initialize(line)
+        super(line, line.indentation, "expected list item.")
       end
     end
 

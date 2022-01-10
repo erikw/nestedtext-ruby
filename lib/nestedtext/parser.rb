@@ -73,10 +73,7 @@ module NestedText
         line = @line_scanner.read_next
         raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
 
-        unless line.tag == :list_item
-          raise Errors::LineTypeNotExpected.new(line, %i[list_item],
-                                                line.tag)
-        end
+        raise Errors::LineTypeExpectedListItem, line unless line.tag == :list_item
 
         value = line.attribs["value"]
         if value.nil?

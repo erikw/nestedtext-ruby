@@ -372,7 +372,7 @@ class DecodeStringTopAnyListTest < Minitest::Test
       - item here
       : but suddently key item here
     NT
-    assert_raises(NestedText::Errors::LineTypeNotExpected) do
+    assert_raises(NestedText::Errors::LineTypeExpectedListItem) do
       NestedText.load(nts)
     end
   end
