@@ -480,7 +480,7 @@ class DecodeStringTopAnyInlineDictTest < Minitest::Test
   end
 
   def test_inline_dict_invalid_missing_value
-    assert_raises(NestedText::Errors::InlineDictMissingValue) do
+    assert_raises(NestedText::Errors::InlineMissingValue) do
       NestedText.load("{a:1,}")
     end
   end

@@ -175,7 +175,7 @@ module NestedText
 
       last_char = @inline_scanner.read_next
       if last_char == "}" && key.empty?
-        raise Errors::InlineDictMissingValue.new(@inline_scanner.line, @inline_scanner.pos - 1)
+        raise Errors::InlineMissingValue.new(@inline_scanner.line, @inline_scanner.pos - 1)
       end
       unless last_char == ":"
         raise Errors::InlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
@@ -226,9 +226,14 @@ module NestedText
                                                      @inline_scanner.pos)
         end
         last_char = @inline_scanner.read_next
-        unless last_char == "]"
-          raise Errors::InlineListSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
-                                                  last_char)
+
+        if last_char != "]"
+          if result[-1] == ""
+            raise Errors::InlineMissingValue.new(@inline_scanner.line, @inline_scanner.pos - 1)
+          else
+            raise Errors::InlineListSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
+                                                    last_char)
+          end
         end
       else # Inline string
         inline_string = []
