@@ -138,6 +138,9 @@ module NestedText
           message = "invalid indentation. " \
                     "An indent may only follow a dictionary or list item that " \
                     "does not already have a value#{cond}."
+        elsif !prev_line.nil? && line.indentation < prev_line.indentation
+          # Can't use ind_exp here, because it's a difference if the previous line was further indented. See test_load_error_dict_10
+          message = "invalid indentation, partial dedent."
         end
         # Need to wrap like official tests. #wrap always add an extra \n we need to chop off.
         message_wrapped = message.wrap(70).chop

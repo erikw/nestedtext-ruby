@@ -38,12 +38,13 @@ class OfficialTest < Minitest::Test
         puts e.message
         puts e.backtrace.join("\n")
 
+        # TODO: after development, revert order to lineno, colno, message
         # Offical test line numbers are 0-based, which is strange.
         assert_equal(expected["lineno"], e.lineno - 1, msg = "lineno is wrong")
         assert_equal(expected["message"], e.message_raw, msg = "message is wrong")
         assert_equal(expected["colno"], e.colno, msg = "colno is wrong")
       else
-        raise "Expected an exception to be thrown with message:\n#{expected["message"]}"
+        raise "No exception raised, but expected one with with message:\n#{expected["message"]}"
       end
     end
   end
