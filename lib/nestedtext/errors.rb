@@ -154,6 +154,12 @@ module NestedText
       end
     end
 
+    class LineTypeExpectedDictItem < ParseError
+      def initialize(line)
+        super(line, 0, "expected dictionary item.")
+      end
+    end
+
     class InvalidIndentationChar < ParseError
       def initialize(line)
         printable_char = line.content[0].dump.gsub(/"/, "")

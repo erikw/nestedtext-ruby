@@ -106,12 +106,9 @@ module NestedText
           key = cur_line.attribs["key"]
           value = cur_line.attribs["value"]
           if value.nil?
+            value = ""
             if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
               value = parse_any(@line_scanner.peek.indentation)
-            elsif @line_scanner.peek.nil? || %i[dict_item key_item].include?(@line_scanner.peek.tag)
-              value = ""
-            else
-              raise Errors::DictItemNoValue, cur_line
             end
           end
         elsif cur_line.tag == :key_item
@@ -132,7 +129,7 @@ module NestedText
             value = parse_any(@line_scanner.peek.indentation)
           end
         else
-          raise Errors::LineTypeNotExpected.new(cur_line, %i[dict_item key_item], cur_line.tag)
+          raise Errors::LineTypeExpectedDictItem, cur_line
         end
         result[key] = value
       end

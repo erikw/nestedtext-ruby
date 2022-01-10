@@ -120,7 +120,7 @@ class DecodeStringTopAnyDictTest < Minitest::Test
       one: two
       - list instead of dict
     NT
-    assert_raises(NestedText::Errors::LineTypeNotExpected) do
+    assert_raises(NestedText::Errors::LineTypeExpectedDictItem) do
       NestedText.load(nts)
     end
   end
@@ -265,7 +265,7 @@ class DecodeStringTopAnyDictTest < Minitest::Test
       dict key:
       - list value
     NT
-    assert_raises(NestedText::Errors::DictItemNoValue) do
+    assert_raises(NestedText::Errors::LineTypeExpectedDictItem) do
       NestedText.load(nts)
     end
   end
