@@ -41,7 +41,7 @@ module NestedText
   end
 
   class InlineScanner
-    attr_reader :line, :pos
+    attr_reader :line
 
     def initialize(line)
       @line = line
@@ -50,6 +50,12 @@ module NestedText
 
     def empty?
       @pos >= @line.content.length
+    end
+
+    # The column that we're currently on.
+    # TODO revert to just expose @pos?
+    def colno
+      @pos - 1
     end
 
     def read_next

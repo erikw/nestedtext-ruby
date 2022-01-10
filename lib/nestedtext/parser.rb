@@ -168,9 +168,14 @@ module NestedText
       until @inline_scanner.empty? || [":", "{", "}", "[", "]", ","].include?(@inline_scanner.peek)
         key << @inline_scanner.read_next
       end
+      if @inline_scanner.empty?
+        raise Errors::InlineNoClosingDelimiter.new(@inline_scanner.line,
+                                                   @inline_scanner.colno + 1)
+      end
+
       last_char = @inline_scanner.read_next
       unless last_char == ":"
-        raise Errors::InlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
+        raise Errors::InlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.colno,
                                                    last_char)
       end
 

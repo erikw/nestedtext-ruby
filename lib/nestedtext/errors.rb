@@ -107,6 +107,12 @@ module NestedText
       end
     end
 
+    class InlineNoClosingDelimiter < ParseError
+      def initialize(line, colno)
+        super(line, line.indentation + colno, "line ended without closing delimiter.")
+      end
+    end
+
     class InlineListSyntaxError < ParseError
       def initialize(line)
         # TODO: should this pass colno=0?
