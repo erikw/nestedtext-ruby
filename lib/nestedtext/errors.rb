@@ -6,55 +6,56 @@ require "word_wrap/core_ext"
 require "nestedtext/constants"
 
 module NestedText
-  # Top level Error for clients to rescue.
-  class Error < StandardError; end
+  # TODO: migrate these ones to ParseError (if possible)
+  class ErrorTODODeprecated < StandardError; end
 
-  module Errors
-    # TODO: should make this the top base error instead. ntpy has one error for everything. Should work to have linenumber for all errors. Maybe not dump errors though.
-    class ParseError < Error
-      attr_reader :lineno, :colno, :message_raw
+  # TODO: Does dump() need separate error hierarchy? If so, create top level Error that both inherit. And move Parse/DumpError down to Errors module.
+  class ParseError < StandardError
+    # Top level ParseError for clients to rescue.
+    attr_reader :lineno, :colno, :message_raw
 
-      def initialize(line, colno, message)
-        # Note, both line and column number are 0-indexed.
-        # But for human display we make them 1-indexed.
-        @lineno = line.lineno
-        @colno = colno
-        @message_raw = message
-        super(pretty_message(line))
-      end
-
-      private
-
-      def pretty_message(line)
-        lineno_disp = @lineno + 1
-        colno_disp = @colno + 1
-        prefix = "\nParse Error (line #{lineno_disp}, column #{colno_disp}): "
-
-        last_lines = ""
-        # From one line to another, we can at most have 1 digits length difference.
-        digits = lineno_disp.to_s.length
-        unless line.prev.nil?
-          lline_indent = " " * line.prev.indentation
-          prev_lineno_disp = line.prev.lineno + 1
-          last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(digits)}|#{lline_indent}#{line.prev.content}"
-        end
-        line_indent = " " * line.indentation
-        last_lines += "\n\t#{lineno_disp}|#{line_indent}#{line.content}"
-
-        marker_indent = colno_disp + digits # +1 for the "|"
-        marker = "\n\t" + " " * marker_indent + "^"
-
-        prefix + @message_raw + last_lines + marker
-      end
+    def initialize(line, colno, message)
+      # Note, both line and column number are 0-indexed.
+      # But for human display we make them 1-indexed.
+      @lineno = line.lineno
+      @colno = colno
+      @message_raw = message
+      super(pretty_message(line))
     end
 
-    class LineScannerIsEmpty < Error
+    private
+
+    def pretty_message(line)
+      lineno_disp = @lineno + 1
+      colno_disp = @colno + 1
+      prefix = "\nParse ParseError (line #{lineno_disp}, column #{colno_disp}): "
+
+      last_lines = ""
+      # From one line to another, we can at most have 1 digits length difference.
+      digits = lineno_disp.to_s.length
+      unless line.prev.nil?
+        lline_indent = " " * line.prev.indentation
+        prev_lineno_disp = line.prev.lineno + 1
+        last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(digits)}|#{lline_indent}#{line.prev.content}"
+      end
+      line_indent = " " * line.indentation
+      last_lines += "\n\t#{lineno_disp}|#{line_indent}#{line.content}"
+
+      marker_indent = colno_disp + digits # +1 for the "|"
+      marker = "\n\t" + " " * marker_indent + "^"
+
+      prefix + @message_raw + last_lines + marker
+    end
+  end
+
+  module Errors
+    class LineScannerIsEmpty < ErrorTODODeprecated
       def initialize
         super("There is no more input to consume. You should have checked this with #empty? before calling.")
       end
     end
 
-    class InlineScannerIsEmpty < Error
+    class InlineScannerIsEmpty < ErrorTODODeprecated
       def initialize
         super("There is no more input to consume. You should have checked this with #empty? before calling.")
       end
@@ -113,19 +114,19 @@ module NestedText
       end
     end
 
-    class UnsupportedTopLevelTypeError < Error
+    class UnsupportedTopLevelTypeError < ErrorTODODeprecated
       def initialize(type_class)
         super("The given top level type #{type_class&.name} is unsupported. Chose between #{TOP_LEVEL_TYPES.join(", ")}.")
       end
     end
 
-    class WrongInputTypeError < Error
+    class WrongInputTypeError < ErrorTODODeprecated
       def initialize(class_exps, class_act)
         super("The given input type #{class_act.class.name} is unsupported. Expected to be of types #{class_exps.map(&:name).join(", ")}")
       end
     end
 
-    class TopLevelTypeMismatchParsedType < Error
+    class TopLevelTypeMismatchParsedType < ErrorTODODeprecated
       def initialize(class_exp, class_act)
         super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act&.class&.name || "nil"}.")
       end

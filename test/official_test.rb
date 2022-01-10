@@ -33,7 +33,7 @@ class OfficialTest < Minitest::Test
 
       begin
         NestedText.load_file(caze[:load][:in][:path])
-      rescue NestedText::Error => e
+      rescue NestedText::ParseError => e
         # TODO: remove, for development only
         puts e.message
         puts e.backtrace.join("\n")
