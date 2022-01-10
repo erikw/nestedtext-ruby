@@ -113,9 +113,8 @@ module NestedText
     end
 
     class InlineListSyntaxError < ParseError
-      def initialize(line)
-        # TODO: should this pass colno=0?
-        super(line, 0, "Inline list could not be parsed.")
+      def initialize(line, colno, wrong_char)
+        super(line, line.indentation + colno, "expected ‘,’ or ‘]’, found ‘#{wrong_char}’.")
       end
     end
 

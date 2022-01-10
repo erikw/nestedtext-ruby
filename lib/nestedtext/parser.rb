@@ -226,7 +226,10 @@ module NestedText
                                                      @inline_scanner.pos)
         end
         last_char = @inline_scanner.read_next
-        raise Errors::InlineListSyntaxError, @inline_scanner.line unless last_char == "]"
+        unless last_char == "]"
+          raise Errors::InlineListSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
+                                                  last_char)
+        end
       else # Inline string
         inline_string = []
         until @inline_scanner.empty? || ["{", "}", "[", "]", ","].include?(@inline_scanner.peek)
