@@ -70,26 +70,26 @@ module NestedText
     def parse_list_item(indentation)
       result = []
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
-        cur_line = @line_scanner.read_next
-        raise Errors::InvalidIndentation.new(cur_line, indentation) if cur_line.indentation != indentation
+        line = @line_scanner.read_next
+        raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
 
-        unless cur_line.tag == :list_item
-          raise Errors::LineTypeNotExpected.new(cur_line, %i[list_item],
-                                                cur_line.tag)
+        unless line.tag == :list_item
+          raise Errors::LineTypeNotExpected.new(line, %i[list_item],
+                                                line.tag)
         end
 
-        value = cur_line.attribs["value"]
+        value = line.attribs["value"]
         if value.nil?
           if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
             value = parse_any(@line_scanner.peek.indentation)
           elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :list_item
             value = ""
           else
-            raise Errors::ListItemNoValue, cur_line
+            raise Errors::ListItemNoValue, line
           end
         end
 
-        result <<  value
+        result << value
       end
       result
     end
@@ -97,39 +97,39 @@ module NestedText
     def parse_dict_item(indentation)
       result = {}
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
-        cur_line = @line_scanner.read_next
-        raise Errors::InvalidIndentation.new(cur_line, indentation) if cur_line.indentation != indentation
+        line = @line_scanner.read_next
+        raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
 
         value = nil
         key = nil
-        if cur_line.tag == :dict_item
-          key = cur_line.attribs["key"]
-          value = cur_line.attribs["value"]
+        if line.tag == :dict_item
+          key = line.attribs["key"]
+          value = line.attribs["value"]
           if value.nil?
             value = ""
             if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
               value = parse_any(@line_scanner.peek.indentation)
             end
           end
-        elsif cur_line.tag == :key_item
-          key = cur_line.attribs["key"]
+        elsif line.tag == :key_item
+          key = line.attribs["key"]
           while @line_scanner.peek&.tag == :key_item && @line_scanner.peek.indentation == indentation
-            cur_line = @line_scanner.read_next
-            key += "\n" + cur_line.attribs["key"]
+            line = @line_scanner.read_next
+            key += "\n" + line.attribs["key"]
           end
           exp_types = %i[dict_item key_item list_item string_item]
           if @line_scanner.peek.nil?
             value = ""
           else
             unless exp_types.member?(@line_scanner.peek.tag)
-              raise Errors::LineTypeNotExpected.new(cur_line, exp_types, cur_line.tag)
+              raise Errors::LineTypeNotExpected.new(line, exp_types, line.tag)
             end
-            raise Errors::MultilineKeyNoValue, cur_line unless @line_scanner.peek.indentation > indentation
+            raise Errors::MultilineKeyNoValue, line unless @line_scanner.peek.indentation > indentation
 
             value = parse_any(@line_scanner.peek.indentation)
           end
         else
-          raise Errors::LineTypeExpectedDictItem, cur_line
+          raise Errors::LineTypeExpectedDictItem, line
         end
         result[key] = value
       end
@@ -139,20 +139,20 @@ module NestedText
     def parse_string_item(indentation)
       result = []
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
-        cur_line = @line_scanner.read_next
-        raise Errors::InvalidIndentation.new(cur_line, indentation) if cur_line.indentation != indentation
+        line = @line_scanner.read_next
+        raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
 
-        unless cur_line.tag == :string_item
-          raise Errors::LineTypeNotExpected.new(cur_line, %i[string_item],
-                                                cur_line.tag)
+        unless line.tag == :string_item
+          raise Errors::LineTypeNotExpected.new(line, %i[string_item],
+                                                line.tag)
         end
 
-        value = cur_line.attribs["value"]
+        value = line.attribs["value"]
         if value.nil?
           if @line_scanner.peek.nil? || @line_scanner.peek.tag == :string_item
             value = ""
           else
-            raise "String item value could not be found at line: #{cur_line}"
+            raise "String item value could not be found at line: #{line}"
           end
         end
 
