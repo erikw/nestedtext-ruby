@@ -90,8 +90,7 @@ module NestedText
 
     class MultilineKeyNoValue < ParseError
       def initialize(line)
-        # TODO: should this pass colno=0?
-        super(line, 0, "A multiline key needs to have an indented value after it starting on the row after the key.")
+        super(line, line.indentation, "multiline key requires a value.")
       end
     end
 
