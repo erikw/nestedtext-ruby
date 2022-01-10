@@ -126,6 +126,8 @@ module NestedText
 
             value = parse_any(@line_scanner.peek.indentation)
           end
+        elsif line.tag == :unrecognized
+          Errors.raise_unrecognized_line(line)
         else
           raise Errors::LineTypeExpectedDictItem, line
         end
