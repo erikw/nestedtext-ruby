@@ -187,5 +187,11 @@ module NestedText
 
       raise LineTagNotDetected, line
     end
+
+    class DictDuplicateKey < ParseError
+      def initialize(line)
+        super(line, line.indentation, "duplicate key: #{line.attribs["key"]}.")
+      end
+    end
   end
 end

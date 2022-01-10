@@ -376,6 +376,16 @@ class DecodeStringTopAnyListTest < Minitest::Test
       NestedText.load(nts)
     end
   end
+
+  def test_list_error_duplicate_key
+    nts = <<~NT
+      key: value1
+      key: value2
+    NT
+    assert_raises(NestedText::Errors::DictDuplicateKey) do
+      NestedText.load(nts)
+    end
+  end
 end
 
 class DecodeStringTopAnyMultilineStringTest < Minitest::Test

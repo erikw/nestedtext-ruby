@@ -131,6 +131,8 @@ module NestedText
         else
           raise Errors::LineTypeExpectedDictItem, line
         end
+        raise Errors::DictDuplicateKey, line if result.key? key
+
         result[key] = value
       end
       result
