@@ -203,7 +203,10 @@ module NestedText
           break unless @inline_scanner.peek == ","
         end
         last_char = @inline_scanner.read_next
-        raise Errors::InlineDictSyntaxError, @inline_scanner.line unless last_char == "}"
+        unless last_char == "}"
+          raise Errors::InlineDictSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
+                                                  last_char)
+        end
 
       when "["
         result = []
