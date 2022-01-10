@@ -107,16 +107,23 @@ module NestedText
       end
     end
 
+    class InlineListSyntaxError < ParseError
+      def initialize(line)
+        # TODO: should this pass colno=0?
+        super(line, 0, "Inline list could not be parsed.")
+      end
+    end
+
     class InlineNoClosingDelimiter < ParseError
       def initialize(line, colno)
         super(line, line.indentation + colno, "line ended without closing delimiter.")
       end
     end
 
-    class InlineListSyntaxError < ParseError
-      def initialize(line)
-        # TODO: should this pass colno=0?
-        super(line, 0, "Inline list could not be parsed.")
+    class InlineExtraCharactersAfterDelimiter < ParseError
+      def initialize(line, colno, extra_chars)
+        character_str = extra_chars.length > 1 ? "characters" : "character"
+        super(line, line.indentation + colno, "extra #{character_str} after closing delimiter: ‘#{extra_chars}’.")
       end
     end
 

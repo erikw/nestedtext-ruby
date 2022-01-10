@@ -170,12 +170,12 @@ module NestedText
       end
       if @inline_scanner.empty?
         raise Errors::InlineNoClosingDelimiter.new(@inline_scanner.line,
-                                                   @inline_scanner.colno + 1)
+                                                   @inline_scanner.pos)
       end
 
       last_char = @inline_scanner.read_next
       unless last_char == ":"
-        raise Errors::InlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.colno,
+        raise Errors::InlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
                                                    last_char)
       end
 
@@ -233,6 +233,10 @@ module NestedText
     def parse_inline_dict
       @inline_scanner = InlineScanner.new(@line_scanner.read_next)
       result = parse_inline
+      unless @inline_scanner.empty?
+        raise Errors::InlineExtraCharactersAfterDelimiter.new(@inline_scanner.line, @inline_scanner.pos,
+                                                              @inline_scanner.remaining)
+      end
       raise "Better errors please3" unless result.is_a? Hash
 
       result
