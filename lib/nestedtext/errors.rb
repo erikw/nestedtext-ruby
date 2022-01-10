@@ -151,7 +151,6 @@ module NestedText
 
     class InvalidIndentation < ParseError
       def initialize(line, ind_exp)
-        message = "The indentation of the current line is not valid. Expected indentation of #{ind_exp} but was #{line.indentation}"
         prev_line = line.prev
         if prev_line.nil? && ind_exp == 0
           message = "top-level content must start in column 1."
@@ -167,6 +166,8 @@ module NestedText
         elsif !prev_line.nil? && line.indentation < prev_line.indentation
           # Can't use ind_exp here, because it's a difference if the previous line was further indented. See test_load_error_dict_10
           message = "invalid indentation, partial dedent."
+        else
+          message = "invalid indentation."
         end
         # Need to wrap like official tests. #wrap always add an extra \n we need to chop off.
         message_wrapped = message.wrap(70).chop
