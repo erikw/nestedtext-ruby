@@ -106,6 +106,12 @@ module NestedText
       end
     end
 
+    class InlineDictMissingValue < ParseError
+      def initialize(line, colno)
+        super(line, line.indentation + colno, "expected value.")
+      end
+    end
+
     class InlineListSyntaxError < ParseError
       def initialize(line)
         # TODO: should this pass colno=0?
