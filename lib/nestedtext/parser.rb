@@ -254,6 +254,10 @@ module NestedText
     def parse_inline_list
       @inline_scanner = InlineScanner.new(@line_scanner.read_next)
       result = parse_inline
+      unless @inline_scanner.empty?
+        raise Errors::InlineExtraCharactersAfterDelimiter.new(@inline_scanner.line, @inline_scanner.pos,
+                                                              @inline_scanner.remaining)
+      end
       raise "Better errors please1" unless result.is_a? Array
 
       result

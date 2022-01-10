@@ -569,6 +569,13 @@ class DecodeStringTopAnyInlineDictTest < Minitest::Test
       NestedText.load(nts)
     end
   end
+
+  def test_inline_dict_extra_chars
+    nts = "{a: 1}extra"
+    assert_raises(NestedText::Errors::InlineExtraCharactersAfterDelimiter) do
+      NestedText.load(nts)
+    end
+  end
 end
 
 class DecodeStringTopAnyInlineListTest < Minitest::Test
@@ -666,6 +673,13 @@ class DecodeStringTopAnyInlineListTest < Minitest::Test
   def test_inline_list_invalid_missing_closing_bracket
     nts = "[1, 2"
     assert_raises(NestedText::Errors::InlineNoClosingDelimiter) do
+      NestedText.load(nts)
+    end
+  end
+
+  def test_inline_list_extra_chars
+    nts = "[a, b]extra"
+    assert_raises(NestedText::Errors::InlineExtraCharactersAfterDelimiter) do
       NestedText.load(nts)
     end
   end
