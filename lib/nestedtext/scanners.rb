@@ -41,7 +41,7 @@ module NestedText
   end
 
   class InlineScanner
-    attr_reader :line
+    attr_reader :line, :pos
 
     def initialize(line)
       @line = line

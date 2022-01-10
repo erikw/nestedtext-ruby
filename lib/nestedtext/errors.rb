@@ -36,13 +36,12 @@ module NestedText
         unless line.prev.nil?
           lline_indent = " " * line.prev.indentation
           prev_lineno_disp = line.prev.lineno + 1
-          last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(digits)}| #{lline_indent}#{line.prev.content}"
+          last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(digits)}|#{lline_indent}#{line.prev.content}"
         end
         line_indent = " " * line.indentation
-        last_lines += "\n\t#{lineno_disp}| #{line_indent}#{line.content}"
+        last_lines += "\n\t#{lineno_disp}|#{line_indent}#{line.content}"
 
-        # +1 for the "\", but not for the space after so that col=0 will be before text starts.
-        marker_indent = colno_disp + digits + 1
+        marker_indent = colno_disp + digits # +1 for the "|"
         marker = "\n\t" + " " * marker_indent + "^"
 
         prefix + @message_raw + last_lines + marker
@@ -102,9 +101,8 @@ module NestedText
     end
 
     class InlineDictKeySyntaxError < ParseError
-      def initialize(line)
-        # TODO: should this pass colno=0?
-        super(line, 0, "Inline dict key could not be parsed.")
+      def initialize(line, colno, wrong_char)
+        super(line, line.indentation + colno, "expected ‘:’, found ‘#{wrong_char}’.")
       end
     end
 

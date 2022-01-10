@@ -169,7 +169,10 @@ module NestedText
         key << @inline_scanner.read_next
       end
       last_char = @inline_scanner.read_next
-      raise Errors::InlineDictKeySyntaxError, @inline_scanner.line unless last_char == ":"
+      unless last_char == ":"
+        raise Errors::InlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
+                                                   last_char)
+      end
 
       key.join.strip
     end
