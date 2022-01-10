@@ -71,10 +71,8 @@ module NestedText
       result = []
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         cur_line = @line_scanner.read_next
-        if cur_line.indentation != indentation
-          raise Errors::InvalidIndentation.new(cur_line, indentation,
-                                               cur_line.indentation)
-        end
+        raise Errors::InvalidIndentation.new(cur_line, indentation) if cur_line.indentation != indentation
+
         unless cur_line.tag == :list_item
           raise Errors::LineTypeNotExpected.new(cur_line, %i[list_item],
                                                 cur_line.tag)
@@ -100,10 +98,7 @@ module NestedText
       result = {}
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         cur_line = @line_scanner.read_next
-        if cur_line.indentation != indentation
-          raise Errors::InvalidIndentation.new(cur_line, indentation,
-                                               cur_line.indentation)
-        end
+        raise Errors::InvalidIndentation.new(cur_line, indentation) if cur_line.indentation != indentation
 
         value = nil
         key = nil
@@ -148,10 +143,8 @@ module NestedText
       result = []
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         cur_line = @line_scanner.read_next
-        if cur_line.indentation != indentation
-          raise Errors::InvalidIndentation.new(cur_line, indentation,
-                                               cur_line.indentation)
-        end
+        raise Errors::InvalidIndentation.new(cur_line, indentation) if cur_line.indentation != indentation
+
         unless cur_line.tag == :string_item
           raise Errors::LineTypeNotExpected.new(cur_line, %i[string_item],
                                                 cur_line.tag)
