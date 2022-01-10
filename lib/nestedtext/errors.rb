@@ -70,8 +70,7 @@ module NestedText
 
     class LineTagNotDetected < ParseError
       def initialize(line)
-        # TODO: should this pass colno=0?
-        super(line, 0, "The type tag for the line could not be detected, using wrong syntax?")
+        super(line, line.indentation, "unrecognized line.")
       end
     end
 
