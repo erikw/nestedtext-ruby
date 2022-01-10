@@ -34,14 +34,9 @@ class OfficialTest < Minitest::Test
       begin
         NestedText.load_file(caze[:load][:in][:path])
       rescue NestedText::ParseError => e
-        # TODO: remove, for development only
-        puts e.message
-        puts e.backtrace.join("\n")
-
-        # TODO: after development, revert order to lineno, colno, message
         assert_equal(expected["lineno"], e.lineno, msg = "lineno is wrong")
-        assert_equal(expected["message"], e.message_raw, msg = "message is wrong")
         assert_equal(expected["colno"], e.colno, msg = "colno is wrong")
+        assert_equal(expected["message"], e.message_raw, msg = "message is wrong")
       rescue Exception => e
         raise "Unexpected exception #{e.class.name} with message:\n#{e.message}\n, but expected one with with message:\n#{expected["message"]}\nBacktrace:\n#{e.backtrace.join("\n")}"
       else
