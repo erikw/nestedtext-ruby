@@ -665,7 +665,7 @@ class DecodeStringTopAnyInlineListTest < Minitest::Test
 
   def test_inline_list_invalid_missing_closing_bracket
     nts = "[1, 2"
-    assert_raises(NestedText::ErrorTODODeprecated) do
+    assert_raises(NestedText::Errors::InlineNoClosingDelimiter) do
       NestedText.load(nts)
     end
   end

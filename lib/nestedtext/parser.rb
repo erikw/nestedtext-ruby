@@ -221,6 +221,10 @@ module NestedText
           result << parse_inline
           break unless @inline_scanner.peek == ","
         end
+        if @inline_scanner.empty?
+          raise Errors::InlineNoClosingDelimiter.new(@inline_scanner.line,
+                                                     @inline_scanner.pos)
+        end
         last_char = @inline_scanner.read_next
         raise Errors::InlineListSyntaxError, @inline_scanner.line unless last_char == "]"
       else # Inline string
