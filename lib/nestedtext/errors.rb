@@ -136,14 +136,12 @@ module NestedText
 
     class LineTypeNotExpected < ParseError
       def initialize(line, type_exps, type_act)
-        # TODO: should this pass colno=0?
-        super(line, 0, "The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(", ")}] here.")
+        super(line, line.indentation, "The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(", ")}] here.")
       end
     end
 
     class LineTypeExpectedDictItem < ParseError
       def initialize(line)
-        # TODO: should this pass colno=0?
         super(line, line.indentation, "expected dictionary item.")
       end
     end
