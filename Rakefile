@@ -4,6 +4,9 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
 
+# default task: Add spec and rubocop to default tasks.
+task default: %i[test rubocop]
+
 # rubocop: Linting. Adds 'rubocop' rake task.
 require "rubocop/rake_task"
 RuboCop::RakeTask.new(:rubocop) do |t|
@@ -35,8 +38,11 @@ task :test
 desc "Run all tests"
 task test: %i[test_internal test_official]
 
-# default task: Add spec and rubocop to default tasks.
-task default: %i[test rubocop]
+desc "run :test with DEBUG=1 set"
+task :testd do
+  ENV["DEBUG"] = "1"
+  Rake::Task["test"].invoke
+end
 
 # Call like:
 # $ rake parse_file F=path/to/file.nt
