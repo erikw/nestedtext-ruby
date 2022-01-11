@@ -35,10 +35,10 @@ module NestedText
         unless line.prev.nil?
           lline_indent = " " * line.prev.indentation
           prev_lineno_disp = line.prev.lineno + 1
-          last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(digits)}|#{lline_indent}#{line.prev.content}"
+          last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(digits)}│#{lline_indent}#{line.prev.content}"
         end
         line_indent = " " * line.indentation
-        last_lines += "\n\t#{lineno_disp}|#{line_indent}#{line.content}"
+        last_lines += "\n\t#{lineno_disp}│#{line_indent}#{line.content}"
 
         marker_indent = colno_disp + digits # +1 for the "|"
         marker = "\n\t" + " " * marker_indent + "^"
