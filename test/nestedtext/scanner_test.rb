@@ -42,3 +42,12 @@ class InlineScannerTest < Minitest::Test
     end
   end
 end
+
+class LineTest < Minitest::Test
+  def test_invalid_tag
+    line = NestedText::Line.new("", 0, nil)
+    assert_raises(NestedText::Errors::LineTagUnknown) do
+      line.tag = :not_allowed
+    end
+  end
+end

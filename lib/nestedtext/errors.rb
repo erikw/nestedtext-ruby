@@ -49,8 +49,7 @@ module NestedText
 
     class LineTagUnknown < ParseError
       def initialize(line, tag)
-        # TODO: should not pass colno=0 probably??
-        super(line, 0, "The Line tag #{tag} is not among the allowed ones #{Line::ALLOWED_LINE_TAGS}")
+        super(line, line.indentation, "The Line tag #{tag} is not among the allowed ones #{Line::ALLOWED_LINE_TAGS}")
       end
     end
 
