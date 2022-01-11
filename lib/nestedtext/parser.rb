@@ -82,8 +82,6 @@ module NestedText
             value = parse_any(@line_scanner.peek.indentation)
           elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :list_item
             value = ""
-          else
-            raise Errors::ListItemNoValue, line
           end
         end
 

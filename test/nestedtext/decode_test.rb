@@ -304,7 +304,7 @@ class DecodeStringTopAnyListTest < Minitest::Test
       -
       [not indented]
     NT
-    assert_raises(NestedText::Errors::ListItemNoValue) do
+    assert_raises(NestedText::Errors::LineTypeExpectedListItem) do
       NestedText.load(nts)
     end
   end
