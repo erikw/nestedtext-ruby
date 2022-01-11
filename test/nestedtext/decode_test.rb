@@ -719,6 +719,20 @@ class DecodeStringTopTest < Minitest::Test
       NestedText.load({})
     end
   end
+
+  def test_top_hash_but_is_array
+    nts = "- l1"
+    assert_raises(NestedText::Errors::TopLevelTypeMismatchParsedType) do
+      NestedText.load(nts, top_class: Hash)
+    end
+  end
+
+  def test_top_array_but_is_hash
+    nts = "k: v"
+    assert_raises(NestedText::Errors::TopLevelTypeMismatchParsedType) do
+      NestedText.load(nts, top_class: Array)
+    end
+  end
 end
 
 class DecodeStringTopHashTest < Minitest::Test

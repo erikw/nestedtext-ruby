@@ -205,7 +205,7 @@ module NestedText
 
     class TopLevelTypeMismatchParsedType < Error
       def initialize(class_exp, class_act)
-        super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act&.class&.name || "nil"}.")
+        super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act}.")
       end
     end
 
