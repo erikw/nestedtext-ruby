@@ -70,4 +70,21 @@ class ParserTest < Minitest::Test
       end
     end
   end
+
+  def test_inline_list_invalid_parsed_type
+    scan_mock = Minitest::Mock.new
+    def scan_mock.empty?
+      true
+    end
+
+    parser = NestedText::Parser.new(StringIO.new("[i1, i2]"), Object)
+
+    NestedText::InlineScanner.stub :new, scan_mock do
+      parser.stub :parse_inline, {} do
+        assert_raises(NestedText::Errors::AssertionError) do
+          parser.parse
+        end
+      end
+    end
+  end
 end
