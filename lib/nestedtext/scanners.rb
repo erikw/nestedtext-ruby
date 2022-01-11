@@ -19,6 +19,7 @@ module NestedText
 
       line = @next_line
       prepare_next_line
+      line.prev.prev = nil unless line.prev.nil? # GC: break the chain
       line
     end
 
@@ -82,7 +83,8 @@ module NestedText
       :unrecognized # could not be determined
     ]
 
-    attr_reader :tag, :content, :indentation, :attribs, :lineno, :prev
+    attr_accessor :prev
+    attr_reader :tag, :content, :indentation, :attribs, :lineno
 
     def initialize(content, lineno, prev_line)
       @content = content
