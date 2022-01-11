@@ -11,7 +11,7 @@ class ParserTest < Minitest::Test
 
   def test_invalid_top_type_parse
     parser = NestedText::Parser.new(StringIO.new("- dummy"), Object)
-    parser.instance_variable_set(:@top_class, Enumerable)
+    parser.instance_variable_set :@top_class, Enumerable
     assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
       parser.parse
     end
@@ -30,6 +30,27 @@ class ParserTest < Minitest::Test
       assert_raises(NestedText::Errors::AssertionError) do
         parser.parse
       end
+    end
+  end
+
+  def test_invalid_line_tag
+    scan_mock = Minitest::Mock.new
+    def scan_mock.peek
+      line_mock = Minitest::Mock.new
+      def line_mock.tag
+        :invalid
+      end
+
+      def line_mock.nil?
+        false
+      end
+      line_mock
+    end
+
+    parser = NestedText::Parser.new(StringIO.new("dummy"), Object)
+    parser.instance_variable_set :@line_scanner, scan_mock
+    assert_raises(NestedText::Errors::AssertionError) do
+      parser.parse
     end
   end
 end
