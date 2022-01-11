@@ -63,7 +63,7 @@ module NestedText
       when :unrecognized
         Errors.raise_unrecognized_line(@line_scanner.peek)
       else
-        raise "Unexpected line tag! #{@line_scanner.peek.tag}"
+        raise Errors::AssertionError, "Unexpected line tag! #{@line_scanner.peek.tag}"
       end
     end
 
@@ -97,10 +97,6 @@ module NestedText
         Errors.raise_unrecognized_line(line) if line.tag == :unrecognized
         raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
         raise Errors::LineTypeExpectedDictItem, line unless %i[dict_item key_item].include? line.tag
-
-        # Errors.raise_unrecognized_line(line) if line.tag == :unrecognized
-        # raise Errors::LineTypeExpectedListItem, line unless line.tag == :list_item
-        # raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
 
         value = nil
         key = nil
@@ -258,7 +254,10 @@ module NestedText
         raise Errors::InlineExtraCharactersAfterDelimiter.new(@inline_scanner.line, @inline_scanner.pos,
                                                               @inline_scanner.remaining)
       end
-      raise "Better errors please3" unless result.is_a? Hash
+      unless result.is_a? Hash
+        raise Errors::AssertionError,
+              "Expected inline value to be Hash but is #{result.class.name}"
+      end
 
       result
     end
@@ -270,7 +269,10 @@ module NestedText
         raise Errors::InlineExtraCharactersAfterDelimiter.new(@inline_scanner.line, @inline_scanner.pos,
                                                               @inline_scanner.remaining)
       end
-      raise "Better errors please1" unless result.is_a? Array
+      unless result.is_a? Array
+        raise Errors::AssertionError,
+              "Expected inline value to be Array but is #{result.class.name}"
+      end
 
       result
     end
