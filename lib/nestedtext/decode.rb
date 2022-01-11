@@ -8,6 +8,7 @@ require "logger"
 require "stringio"
 
 module NestedText
+  # TODO: allow optional io=nil that can be written to? Similar to JSON module
   def self.load(ntstring, top_class: Object)
     # logger = Logger.new(STDOUT) # TODO: make this available to other classes in module. How avoid singleton?
     # logger.info "input=#{raw_input_string}"
