@@ -66,13 +66,6 @@ module NestedText
       end
     end
 
-    class DictItemNoValue < ParseError
-      def initialize(line)
-        # TODO: should this pass colno=0?
-        super(line, 0, "A dict item must have a value.")
-      end
-    end
-
     class MultilineKeyNoValue < ParseError
       def initialize(line)
         super(line, line.indentation, "multiline key requires a value.")
