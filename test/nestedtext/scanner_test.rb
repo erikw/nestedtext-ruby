@@ -44,6 +44,13 @@ class InlineScannerTest < Minitest::Test
 end
 
 class LineTest < Minitest::Test
+  def test_to_s
+    content = "string content"
+    line = NestedText::Line.new(content, 0, nil)
+    repr = line.to_s
+    assert repr.include? content
+  end
+
   def test_invalid_tag
     line = NestedText::Line.new("", 0, nil)
     assert_raises(NestedText::Errors::LineTagUnknown) do
