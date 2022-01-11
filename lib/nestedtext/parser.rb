@@ -8,7 +8,7 @@ require "nestedtext/helpers"
 
 module NestedText
   class Parser
-    # Doc: caller is responsible for closing IO after done with Parser.
+    # TODO: document that caller is responsible for closing IO after done with Parser.
     def initialize(io, top_class)
       assert_valid_input_type io
       NestedText.assert_valid_top_level_type(top_class)
@@ -32,8 +32,6 @@ module NestedText
       when String.object_id
         result = "" if result.nil?
         raise Errors::TopLevelTypeMismatchParsedType.new(@top_class, result) unless result.instance_of?(String)
-      else
-        raise Errors::UnsupportedTopLevelTypeError, @top_class
       end
       result
     end

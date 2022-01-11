@@ -15,12 +15,6 @@ class ParserTest < Minitest::Test
     end
   end
 
-  def test_invalid_top_type
-    assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
-      parser = NestedText::Parser.new(StringIO.new("dummy"), Exception)
-    end
-  end
-
   def test_invalid_parsed_type
     parser = NestedText::Parser.new(StringIO.new("dummy"), Object)
     # Float is not a valid result type from #parse_any.
