@@ -17,6 +17,7 @@ class ParserTest < Minitest::Test
 
   def test_invalid_parsed_type
     parser = NestedText::Parser.new(StringIO.new("dummy"), Object)
+    # Float is not a valid result type from #parse_any.
     parser.stub :parse_any, 1.99 do
       assert_raises(NestedText::Errors::AssertionError) do
         parser.parse
