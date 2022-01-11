@@ -3,9 +3,17 @@ require "stringio"
 require "test_helper"
 
 class ParserTest < Minitest::Test
-  def test_top_invalid_enumerable
+  def test_invalid_top_type_initialize
     assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
       NestedText::Parser.new(StringIO.new, Enumerable)
+    end
+  end
+
+  def test_invalid_top_type_parse
+    parser = NestedText::Parser.new(StringIO.new("- dummy"), Object)
+    parser.instance_variable_set(:@top_class, Enumerable)
+    assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
+      parser.parse
     end
   end
 

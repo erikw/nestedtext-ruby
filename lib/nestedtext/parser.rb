@@ -32,6 +32,8 @@ module NestedText
       when String.object_id
         result = "" if result.nil?
         raise Errors::TopLevelTypeMismatchParsedType.new(@top_class, result) unless result.instance_of?(String)
+      else
+        raise Errors::UnsupportedTopLevelTypeError, @top_class
       end
       result
     end
