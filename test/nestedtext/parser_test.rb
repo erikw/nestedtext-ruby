@@ -14,4 +14,13 @@ class ParserTest < Minitest::Test
       NestedText::Parser.new("", Hash)
     end
   end
+
+  def test_invalid_parsed_type
+    parser = NestedText::Parser.new(StringIO.new("dummy"), Object)
+    parser.stub :parse_any, 1.99 do
+      assert_raises(NestedText::Errors::AssertionError) do
+        parser.parse
+      end
+    end
+  end
 end
