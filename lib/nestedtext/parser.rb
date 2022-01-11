@@ -21,7 +21,7 @@ module NestedText
       result = parse_any(0)
       case @top_class.object_id
       when Object.object_id
-        raise Errors::AssertionError("Parsed result is of unexpected type.") unless
+        raise Errors::AssertionError, "Parsed result is of unexpected type." unless
                   result.nil? || [Hash, Array, String].include?(result.class)
       when Hash.object_id
         result = {} if result.nil?
@@ -205,6 +205,10 @@ module NestedText
           value = parse_inline
           result[key] = value
           break unless @inline_scanner.peek == ","
+        end
+        if @inline_scanner.empty?
+          raise Errors::InlineNoClosingDelimiter.new(@inline_scanner.line,
+                                                     @inline_scanner.pos)
         end
         last_char = @inline_scanner.read_next
         unless last_char == "}"

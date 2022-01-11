@@ -8,9 +8,6 @@ require "nestedtext/constants"
 module NestedText
   class Error < StandardError; end
 
-  # TODO: migrate these ones to ParseError (if possible)
-  class ErrorTODODeprecated < Error; end
-
   module Errors
     class ParseError < Error
       # Top level ParseError for clients to rescue.
@@ -195,38 +192,36 @@ module NestedText
       end
     end
 
-    class UnsupportedTopLevelTypeError < ErrorTODODeprecated
+    class UnsupportedTopLevelTypeError < Error
       def initialize(type_class)
         super("The given top level type #{type_class&.name} is unsupported. Chose between #{TOP_LEVEL_TYPES.join(", ")}.")
       end
     end
 
-    class WrongInputTypeError < ErrorTODODeprecated
+    class WrongInputTypeError < Error
       def initialize(class_exps, class_act)
         super("The given input type #{class_act.class.name} is unsupported. Expected to be of types #{class_exps.map(&:name).join(", ")}")
       end
     end
 
-    class TopLevelTypeMismatchParsedType < ErrorTODODeprecated
+    class TopLevelTypeMismatchParsedType < Error
       def initialize(class_exp, class_act)
         super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act&.class&.name || "nil"}.")
       end
     end
 
-    # TODO: What error does ntpy throw for the input that raises this in my code?
-    class LineScannerIsEmpty < Error
-      def initialize
-        super("There is no more input to consume. You should have checked this with #empty? before calling.")
-      end
-    end
-
-    # TODO: What error does ntpy throw for the input that raises this in my code?
-    class InlineScannerIsEmpty < Error
-      def initialize
-        super("There is no more input to consume. You should have checked this with #empty? before calling.")
-      end
-    end
-
     class AssertionError < Error; end
+
+    class LineScannerIsEmpty < AssertionError
+      def initialize
+        super("There is no more input to consume. You should have checked this with #empty? before calling.")
+      end
+    end
+
+    class InlineScannerIsEmpty < AssertionError
+      def initialize
+        super("There is no more input to consume. You should have checked this with #empty? before calling.")
+      end
+    end
   end
 end
