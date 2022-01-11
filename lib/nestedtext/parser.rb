@@ -21,7 +21,7 @@ module NestedText
       result = parse_any(0)
       case @top_class.object_id
       when Object.object_id
-        raise Errors::UnsupportedTopLevelTypeError, @top_class unless
+        raise Errors::AssertionError("Parsed result is of unexpected type.") unless
                   result.nil? || [Hash, Array, String].include?(result.class)
       when Hash.object_id
         result = {} if result.nil?

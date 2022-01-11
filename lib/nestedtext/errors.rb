@@ -6,49 +6,50 @@ require "word_wrap/core_ext"
 require "nestedtext/constants"
 
 module NestedText
+  class Error < StandardError; end
+
   # TODO: migrate these ones to ParseError (if possible)
-  class ErrorTODODeprecated < StandardError; end
-
-  # TODO: Does dump() need separate error hierarchy? If so, create top level Error that both inherit. And move Parse/DumpError down to Errors module.
-  class ParseError < StandardError
-    # Top level ParseError for clients to rescue.
-    attr_reader :lineno, :colno, :message_raw
-
-    def initialize(line, colno, message)
-      # Note, both line and column number are 0-indexed.
-      # But for human display we make them 1-indexed.
-      @lineno = line.lineno
-      @colno = colno
-      @message_raw = message
-      super(pretty_message(line))
-    end
-
-    private
-
-    def pretty_message(line)
-      lineno_disp = @lineno + 1
-      colno_disp = @colno + 1
-      prefix = "\nParse ParseError (line #{lineno_disp}, column #{colno_disp}): "
-
-      last_lines = ""
-      # From one line to another, we can at most have 1 digits length difference.
-      digits = lineno_disp.to_s.length
-      unless line.prev.nil?
-        lline_indent = " " * line.prev.indentation
-        prev_lineno_disp = line.prev.lineno + 1
-        last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(digits)}|#{lline_indent}#{line.prev.content}"
-      end
-      line_indent = " " * line.indentation
-      last_lines += "\n\t#{lineno_disp}|#{line_indent}#{line.content}"
-
-      marker_indent = colno_disp + digits # +1 for the "|"
-      marker = "\n\t" + " " * marker_indent + "^"
-
-      prefix + @message_raw + last_lines + marker
-    end
-  end
+  class ErrorTODODeprecated < Error; end
 
   module Errors
+    class ParseError < Error
+      # Top level ParseError for clients to rescue.
+      attr_reader :lineno, :colno, :message_raw
+
+      def initialize(line, colno, message)
+        # Note, both line and column number are 0-indexed.
+        # But for human display we make them 1-indexed.
+        @lineno = line.lineno
+        @colno = colno
+        @message_raw = message
+        super(pretty_message(line))
+      end
+
+      private
+
+      def pretty_message(line)
+        lineno_disp = @lineno + 1
+        colno_disp = @colno + 1
+        prefix = "\nParse ParseError (line #{lineno_disp}, column #{colno_disp}): "
+
+        last_lines = ""
+        # From one line to another, we can at most have 1 digits length difference.
+        digits = lineno_disp.to_s.length
+        unless line.prev.nil?
+          lline_indent = " " * line.prev.indentation
+          prev_lineno_disp = line.prev.lineno + 1
+          last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(digits)}|#{lline_indent}#{line.prev.content}"
+        end
+        line_indent = " " * line.indentation
+        last_lines += "\n\t#{lineno_disp}|#{line_indent}#{line.content}"
+
+        marker_indent = colno_disp + digits # +1 for the "|"
+        marker = "\n\t" + " " * marker_indent + "^"
+
+        prefix + @message_raw + last_lines + marker
+      end
+    end
+
     class LineScannerIsEmpty < ErrorTODODeprecated
       def initialize
         super("There is no more input to consume. You should have checked this with #empty? before calling.")
