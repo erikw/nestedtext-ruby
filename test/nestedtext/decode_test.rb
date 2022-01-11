@@ -568,14 +568,14 @@ class DecodeStringTopAnyInlineDictTest < Minitest::Test
 
   def test_inline_dict_invalid_missing_closing_bracket
     nts = "{a: 1, b: 2"
-    assert_raises(NestedText::ErrorTODODeprecated) do
+    assert_raises(NestedText::Errors::InlineScannerIsEmpty) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_dict_invalid_inline_string
     nts = "{a: 1:b"
-    assert_raises(NestedText::ErrorTODODeprecated) do
+    assert_raises(NestedText::Errors::InlineScannerIsEmpty) do
       NestedText.load(nts)
     end
   end
