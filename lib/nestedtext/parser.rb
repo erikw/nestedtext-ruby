@@ -139,21 +139,9 @@ module NestedText
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         line = @line_scanner.read_next
         raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
-
-        unless line.tag == :string_item
-          raise Errors::LineTypeNotExpected.new(line, %i[string_item],
-                                                line.tag)
-        end
+        raise Errors::LineTypeNotExpected.new(line, %i[string_item], line.tag) unless line.tag == :string_item
 
         value = line.attribs["value"]
-        if value.nil?
-          if @line_scanner.peek.nil? || @line_scanner.peek.tag == :string_item
-            value = ""
-          else
-            raise "String item value could not be found at line: #{line}"
-          end
-        end
-
         result << value
       end
       result.join("\n")
