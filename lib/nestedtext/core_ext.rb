@@ -7,8 +7,6 @@ class String
 end
 
 class Array
-  # TODO: how pass level & indentatin with default values? and make it easy for developers to make their own to_nt?
-  # Better to do like psych's #encode_with?
   def to_nt(level: 0, indentation: 4, **kwargs)
     indent = " " * indentation * level
     rep = each.map do |e|
