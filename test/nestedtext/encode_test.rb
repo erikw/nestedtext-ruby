@@ -88,14 +88,15 @@ class EncodeToString < Minitest::Test
 
   def test_custom_object
     outer = Outer.new("a", "b", "c")
-    obj = [outer]
+    obj = [[outer]]
     exp = <<~NT.chomp
       -
-          - class__Outer
           -
-              - a
-              - b
-              - c
+              - class__Outer
+              -
+                  - a
+                  - b
+                  - c
     NT
     dumped = NestedText.dump(obj)
     assert_equal exp, dumped
