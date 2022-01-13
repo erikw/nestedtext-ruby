@@ -27,8 +27,7 @@ module NestedText
     # Parser.new(StringIO.new(ntstring), top_class).parse
     #
 
-    # obj.to_nt(indentation: 0) if obj.respond_to? :to_nt
-    obj.to_nt if obj.respond_to? :to_nt
+    obj.to_nt(indentation: 0) if obj.respond_to? :to_nt
   end
 
   # def self.load_file(filename, top_class: Object)
