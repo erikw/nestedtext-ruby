@@ -87,6 +87,10 @@ module NestedText
 
         result << value
       end
+      if result.length == 2 && result[0] =~ /^class__(.*)$/
+        clazz = Object.const_get Regexp.last_match(1)
+        result = clazz.new(*result[1])
+      end
       result
     end
 
