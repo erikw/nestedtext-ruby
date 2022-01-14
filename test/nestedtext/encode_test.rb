@@ -118,8 +118,37 @@ class EncodeToStringHash < Minitest::Test
 end
 
 class EncodeToStringString < Minitest::Test
-  def test_array_empty
-    assert_equal "> ", NestedText.dump("")
+  def test_string_empty
+    assert_equal ">", NestedText.dump("")
+  end
+
+  def test_string_simple
+    obj = "  a string with\twords"
+    exp = <<~NT.chomp
+      > #{obj}
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_string_multiline
+    obj = "  a string\t\n\twith multiple\nlines"
+    exp = <<~NT.chomp
+      >   a string\t
+      > \twith multiple
+      > lines
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  # TODO: test trailing double line feed, and \n\t\n \n
+  def test_string_multiline_trailing_linefeed
+    obj = "multi-line\nwith trailing line\n"
+    exp = <<~NT.chomp
+      > multi-line
+      > with trailing line
+      >
+    NT
+    assert_equal exp, NestedText.dump(obj)
   end
 end
 
