@@ -1,3 +1,5 @@
+" vi: ft=vim:
+
 " NOPE disabled:  can use #{" "} in heredoc instead.
 " Disable whitespace trimming in encode_test.rb as we need to test trailing whitespaces there.
 "autocmd BufRead test/nestedtext/encode_test.rb DisableStripWhitespaceOnSave
