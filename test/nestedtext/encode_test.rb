@@ -140,12 +140,34 @@ class EncodeToStringString < Minitest::Test
     assert_equal exp, NestedText.dump(obj)
   end
 
-  # TODO: test trailing double line feed, and \n\t\n \n
   def test_string_multiline_trailing_linefeed
     obj = "multi-line\nwith trailing line\n"
     exp = <<~NT.chomp
       > multi-line
       > with trailing line
+      >
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_string_multiline_multi_trailing_linefeed
+    obj = "multi-line\nwith trailing line\n\t\n \n\n"
+    exp = <<~NT.chomp
+      > multi-line
+      > with trailing line
+      > \t
+      >#{"  "}
+      >
+      >
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_string_multiline_preceeding_linefeed
+    obj = "\nempty line before and after\n"
+    exp = <<~NT.chomp
+      >
+      > empty line before and after
       >
     NT
     assert_equal exp, NestedText.dump(obj)
