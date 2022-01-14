@@ -119,7 +119,7 @@ end
 
 class EncodeToStringString < Minitest::Test
   def test_array_empty
-    assert_equal "", NestedText.dump([])
+    assert_equal "> ", NestedText.dump("")
   end
 end
 

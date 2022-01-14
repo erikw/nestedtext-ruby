@@ -28,7 +28,7 @@ module NestedText
     #
 
     opts_default = {
-      level: 0,
+      depth: 0,
       indentation: 4
     }
     obj.to_nt(**opts_default) if obj.respond_to? :to_nt
