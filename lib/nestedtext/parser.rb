@@ -89,7 +89,7 @@ module NestedText
       end
       if result.length == 2 && result[0] =~ /^class__(.*)$/
         clazz = Object.const_get Regexp.last_match(1)
-        result = clazz.new(*result[1])
+        result = clazz.nt_create(result) if clazz.respond_to? :nt_create
       end
       result
     end

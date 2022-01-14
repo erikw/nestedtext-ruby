@@ -29,11 +29,12 @@ class Outer
   end
 
   def to_nt(**kwargs)
+    # TODO: create helper method NestedText.ClassEncoderKey(klass) to generate key name
     ["class__Outer", @data + [@inner]].to_nt(**kwargs)
   end
 
   def self.nt_create(object)
-    new(*object[2])
+    new(*object[1])
   end
 
   def ==(other)
