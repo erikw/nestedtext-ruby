@@ -2,7 +2,7 @@ require "simplecov" # Must be before any application code. See conf in .simpleco
 
 require "minitest/autorun"
 require "minitest/reporters"
-require "minitest/byebug" if ENV["DEBUG"] # Start as: $ DEBUG=1 rake test
+require "minitest/byebug" if ENV["DEBUG"] || ENV["D"] # Start as: $ DEBUG=1 rake test
 
 # Must be before we require 'nextedtex', so that the gems are ignore before loading them.
 require "warning"
