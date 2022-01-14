@@ -29,7 +29,8 @@ class Outer
   end
 
   def to_nt(**kwargs)
-    # TODO: create helper method NestedText.ClassEncoderKey(klass) to generate key name
+    # TODO: create helper method NestedText.EncodeClassKey(klass) to generate key name
+    # See https://github.com/ruby/psych/blob/master/lib/psych/visitors/visitor.rb#L14
     ["class__Outer", @data + [@inner]].to_nt(**kwargs)
   end
 
@@ -49,12 +50,13 @@ class Outer
   end
 end
 
-# TODO: test symbols in array/hash: how encode them?
 class EncodeToString < Minitest::Test
   def test_empty
     assert_nil NestedText.load("")
   end
+end
 
+class EncodeToStringArray < Minitest::Test
   def test_array_empty
     assert_equal "", NestedText.dump([])
   end
@@ -76,7 +78,18 @@ class EncodeToString < Minitest::Test
     assert_equal exp, NestedText.dump(obj)
   end
 
-  def test_array_nested_array
+  def test_array_nested_array_first
+    obj = [%w[a b], "c"]
+    exp = <<~NT.chomp
+      -
+          - a
+          - b
+      - c
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_array_nested_array_last
     obj = ["a", %w[b c]]
     exp = <<~NT.chomp
       - a
@@ -87,7 +100,31 @@ class EncodeToString < Minitest::Test
     assert_equal exp, NestedText.dump(obj)
   end
 
-  def test_custom_object
+  def test_array_nested_array_middle
+    obj = ["a", %w[b c], "d"]
+    exp = <<~NT.chomp
+      - a
+      -
+          - b
+          - c
+      - d
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+end
+
+# TODO: test symbols in array/hash: how encode them?
+class EncodeToStringHash < Minitest::Test
+end
+
+class EncodeToStringString < Minitest::Test
+  def test_array_empty
+    assert_equal "", NestedText.dump([])
+  end
+end
+
+class EncodeToStingCustomClass
+  def test_custom_class_nested
     outer = Outer.new("a", "b", "c")
     obj = [[outer]]
     exp = <<~NT.chomp
