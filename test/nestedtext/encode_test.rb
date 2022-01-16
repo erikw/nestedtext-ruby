@@ -127,9 +127,19 @@ class EncodeStringTest < Minitest::Test
     NT
     assert_equal exp, NestedText.dump(obj)
   end
+
+  # TODO: test cycle detection.
+  # def test_cyclic_references
+  # a = []
+  # b = [a]
+  # a << b
+  # assert_raises(NestedText::Errors::EncodingCyclicReferencesDetected) do
+  # NestedText.dump(a)
+  # end
+  # end
 end
 
-class EncodeToStingCustomClassTest < Minitest::Test
+class EncodeCustomClassTest < Minitest::Test
   def test_custom_class_nested
     outer = Outer.new("a", "b", "c")
     obj = [[outer]]
