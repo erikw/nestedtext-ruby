@@ -18,3 +18,7 @@ indent_size = 2
 
 [*.yml]
 indent_size = 2
+
+[test/nestedtext/encode_test.rb]
+# So we can test trailing whitespace strings.
+trim_trailing_whitespace = unset

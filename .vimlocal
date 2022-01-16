@@ -1,10 +1,5 @@
 " vi: ft=vim:
 
-" NOPE disabled:  can use #{" "} in heredoc instead.
+" NOTE can use #{" "} in heredoc instead.
 " Disable whitespace trimming in encode_test.rb as we need to test trailing whitespaces there.
-"autocmd BufRead test/nestedtext/encode_test.rb DisableStripWhitespaceOnSave
-" Have to disable on whole file.
-"let g:EditorConfig_exclude_patterns = ['test/nestedtext/encode_test.rb']
-
-" Wishful thinking: https://github.com/editorconfig/editorconfig-vim/issues/185
-"autocmd BufRead test/nestedtext/encode_test.rb let b:EditorConfig_disable_rules = ['trim_trailing_whitespace']
+autocmd BufRead test/nestedtext/encode_test.rb DisableStripWhitespaceOnSave
