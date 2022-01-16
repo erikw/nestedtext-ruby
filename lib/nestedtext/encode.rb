@@ -7,7 +7,6 @@ require "nestedtext/encode_helpers"
 # NestedText.dump(obj, io=nil) => dumps to string, or to IO if given
 # NestedText.dump_file(obj, filename)
 
-# TODO: Need to check for circular dependencies! See JSON.fast_generate
 module NestedText
   def self.dump(obj, io: nil, indentation: 4)
     # Idea #1
