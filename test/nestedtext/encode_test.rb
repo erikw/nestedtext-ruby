@@ -8,6 +8,7 @@ class EncodeTest < Minitest::Test
   end
 end
 
+# TODO: test nil values
 class EncodeArrayTest < Minitest::Test
   def test_array_empty
     assert_equal "", NestedText.dump([])
@@ -161,24 +162,26 @@ class EncodeToStingCustomClassTest < Minitest::Test
     assert_equal exp, dumped
   end
 
-  # def test_custom_class_linked_list
-  # llist = Node.from_enum(%w[a b c]) # TODO: what if containting integers?
-  # require "pry"
-  # binding.pry
-  # obj = [[outer]]
-  # exp = <<~NT.chomp
-  #-
-  #-
-  #- class__Outer
-  #-
-  #- a
-  #- b
-  #- c
-  # NT
-  # dumped = NestedText.dump(obj)
-  # assert_equal exp, dumped
+  def test_custom_class_linked_list
+    obj = Node.from_enum(%w[a b c]) # TODO: what if containing integers?
+    exp = <<~NT.chomp
+      - class__Node
+      -
+          - a
+          -
+              - class__Node
+              -
+                  - b
+                  -
+                      - class__Node
+                      -
+                          - c
+                          -#{"  "}
+    NT
+    dumped = NestedText.dump(obj)
+    assert_equal exp, dumped
 
-  ## loaded = NestedText.load(dumped)
-  ## assert_equal obj, loaded
-  # end
+    # loaded = NestedText.load(dumped)
+    # assert_equal obj, loaded
+  end
 end

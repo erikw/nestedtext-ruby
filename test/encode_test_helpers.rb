@@ -60,10 +60,15 @@ class Node
       node.nxt = nnode unless node.nil?
       node = nnode
     end
+    head
   end
 
   def initialize(data, _nxt = nil)
     @data = data
     @nxt = nil
+  end
+
+  def to_nt(*args, **kwargs)
+    ["class__Node", [@data, @nxt]].to_nt(*args, **kwargs)
   end
 end

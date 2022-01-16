@@ -21,7 +21,12 @@ class Array
   def to_nt(opts: NestedText::EncodeOptions.new, depth: 0)
     indent = " " * opts.indentation * depth
     rep = each.map do |e|
-      NestedText.add_prefix("#{indent}-", e.to_nt(opts: opts, depth: depth + 1))
+      e_rep = if e.nil?
+                " "
+              else
+                e.to_nt(opts: opts, depth: depth + 1)
+              end
+      NestedText.add_prefix("#{indent}-", e_rep)
     end.join("\n")
     rep.prepend("\n") if length > 0 && depth > 0
     rep
