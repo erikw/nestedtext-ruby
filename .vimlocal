@@ -2,4 +2,5 @@
 
 " NOTE can use #{" "} in heredoc instead.
 " Disable whitespace trimming in encode_test.rb as we need to test trailing whitespaces there.
+" See also exclusion in .editorconfig
 autocmd BufRead test/nestedtext/encode_test.rb DisableStripWhitespaceOnSave
