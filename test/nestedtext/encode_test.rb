@@ -163,25 +163,29 @@ class EncodeToStingCustomClassTest < Minitest::Test
   end
 
   def test_custom_class_linked_list
-    obj = Node.from_enum(%w[a b c]) # TODO: what if containing integers?
+    # TODO: remove array wrapping and allow decode at root level. This reqires relax of check in parser that checks that top type is only Array, Hash or String. Maybe if not strict mode.
+    obj = [Node.from_enum(%w[a b c])]
     exp = <<~NT.chomp
-      - class__Node
       -
-          - a
+          - class__Node
           -
-              - class__Node
+              - a
               -
-                  - b
+                  - class__Node
                   -
-                      - class__Node
+                      - b
                       -
-                          - c
-                          -#{"  "}
+                          - class__Node
+                          -
+                              - c
+                              -
+                                  - class__nil
+                                  -#{" "}
     NT
     dumped = NestedText.dump(obj)
     assert_equal exp, dumped
 
-    # loaded = NestedText.load(dumped)
-    # assert_equal obj, loaded
+    loaded = NestedText.load(dumped)
+    assert_equal obj, loaded
   end
 end

@@ -3,6 +3,7 @@ class Inner
     @val = val
   end
 
+  # TODO: need to create self.nt_create to encode this properly
   def to_nt(*args, **kwargs)
     @val.to_nt(*args, **kwargs)
   end
@@ -63,12 +64,29 @@ class Node
     head
   end
 
-  def initialize(data, _nxt = nil)
+  def initialize(data, nxt = nil)
     @data = data
-    @nxt = nil
+    @nxt = nxt
+  end
+
+  def ==(other)
+    other.class == self.class && other.state == state
+  end
+  alias eql? ==
+
+  def self.nt_create(object)
+    data = object[1][0]
+    nxt = object[1][1]
+    new(data, nxt)
   end
 
   def to_nt(*args, **kwargs)
     ["class__Node", [@data, @nxt]].to_nt(*args, **kwargs)
+  end
+
+  protected
+
+  def state
+    [@data, @nxt]
   end
 end
