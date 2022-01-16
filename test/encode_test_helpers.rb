@@ -29,6 +29,7 @@ class Outer
   def to_nt(*args, **kwargs)
     # TODO: create helper method NestedText.EncodeClassKey(klass) to generate key name
     # See https://github.com/ruby/psych/blob/master/lib/psych/visitors/visitor.rb#L14
+    # TODO document that if no deserialization is needed, it can be enough to do: alias to_nt to_s
     ["class__Outer", @data + [@inner]].to_nt(*args, **kwargs)
   end
 
