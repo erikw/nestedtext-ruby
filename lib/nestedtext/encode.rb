@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "nestedtext/errors"
+require "nestedtext/encode_helpers"
 
 # Model after JSON
 # NestedText.dump(obj, io=nil) => dumps to string, or to IO if given
@@ -27,11 +28,7 @@ module NestedText
     # Parser.new(StringIO.new(ntstring), top_class).parse
     #
 
-    opts_default = {
-      depth: 0,
-      indentation: 4
-    }
-    obj.to_nt(**opts_default) if obj.respond_to? :to_nt
+    obj.to_nt(opts: EncodeOptions.new) if obj.respond_to? :to_nt
   end
 
   # def self.load_file(filename, top_class: Object)

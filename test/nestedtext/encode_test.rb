@@ -1,14 +1,14 @@
 require "test_helper"
 
-require_relative "../encode_helpers"
+require_relative "../encode_test_helpers"
 
-class EncodeToString < Minitest::Test
+class EncodeTest < Minitest::Test
   def test_empty
     assert_nil NestedText.load("")
   end
 end
 
-class EncodeToStringArray < Minitest::Test
+class EncodeArrayTest < Minitest::Test
   def test_array_empty
     assert_equal "", NestedText.dump([])
   end
@@ -66,10 +66,10 @@ class EncodeToStringArray < Minitest::Test
 end
 
 # TODO: test symbols in array/hash: how encode them?
-class EncodeToStringHash < Minitest::Test
+class EncodeHashTest < Minitest::Test
 end
 
-class EncodeToStringString < Minitest::Test
+class EncodeStringTest < Minitest::Test
   def test_string_empty
     assert_equal ">", NestedText.dump("")
   end
@@ -126,7 +126,8 @@ class EncodeToStringString < Minitest::Test
   end
 end
 
-class EncodeToStingCustomClass
+# TODO: test custom object and with custom indentation
+class EncodeToStingCustomClassTest < Minitest::Test
   def test_custom_class_nested
     outer = Outer.new("a", "b", "c")
     obj = [[outer]]
@@ -145,4 +146,25 @@ class EncodeToStingCustomClass
     loaded = NestedText.load(dumped)
     assert_equal obj, loaded
   end
+
+  # def test_custom_class_linked_list
+  # llist = Node.from_enum(%w[a b c]) # TODO: what if containting integers?
+  # require "pry"
+  # binding.pry
+  # obj = [[outer]]
+  # exp = <<~NT.chomp
+  #-
+  #-
+  #- class__Outer
+  #-
+  #- a
+  #- b
+  #- c
+  # NT
+  # dumped = NestedText.dump(obj)
+  # assert_equal exp, dumped
+
+  ## loaded = NestedText.load(dumped)
+  ## assert_equal obj, loaded
+  # end
 end
