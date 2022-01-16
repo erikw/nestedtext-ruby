@@ -126,7 +126,6 @@ class EncodeStringTest < Minitest::Test
   end
 end
 
-# TODO: test custom object and with custom indentation
 class EncodeToStingCustomClassTest < Minitest::Test
   def test_custom_class_nested
     outer = Outer.new("a", "b", "c")
@@ -145,6 +144,21 @@ class EncodeToStingCustomClassTest < Minitest::Test
 
     loaded = NestedText.load(dumped)
     assert_equal obj, loaded
+  end
+
+  def test_custom_class_nested_indented
+    outer = Outer.new("a", "b", "c")
+    obj = [outer]
+    exp = <<~NT.chomp
+      -
+        - class__Outer
+        -
+          - a
+          - b
+          - c
+    NT
+    dumped = NestedText.dump(obj, indentation: 2)
+    assert_equal exp, dumped
   end
 
   # def test_custom_class_linked_list

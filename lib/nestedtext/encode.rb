@@ -9,7 +9,7 @@ require "nestedtext/encode_helpers"
 
 # TODO: Need to check for circular dependencies! See JSON.fast_generate
 module NestedText
-  def self.dump(obj, _io = nil)
+  def self.dump(obj, io: nil, indentation: 4)
     # Idea #1
     # * core_ext.rb adds accept(visitor) to Array, Hash, Enumarable etc like https://medium.com/kkempin/visitor-design-pattern-in-ruby-bc07395c4abc
     # * Visitor base class has dynamic dispatch built-in based on class of visited object like in https://github.com/ruby/psych/blob/master/lib/psych/visitors/visitor.rb#L14
@@ -28,7 +28,8 @@ module NestedText
     # Parser.new(StringIO.new(ntstring), top_class).parse
     #
 
-    obj.to_nt(opts: EncodeOptions.new) if obj.respond_to? :to_nt
+    opts = EncodeOptions.new(indentation)
+    obj.to_nt(opts: opts) if obj.respond_to? :to_nt
   end
 
   # def self.load_file(filename, top_class: Object)
