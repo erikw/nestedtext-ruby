@@ -3,8 +3,10 @@ require "test_helper"
 require_relative "../encode_test_helpers"
 
 class EncodeTest < Minitest::Test
-  def test_empty
-    assert_nil NestedText.load("")
+  def test_nil
+    obj = nil
+    exp = ""
+    assert_equal exp, NestedText.dump(obj)
   end
 end
 

@@ -28,6 +28,8 @@ module NestedText
     # Parser.new(StringIO.new(ntstring), top_class).parse
     #
 
+    return "" if obj.nil?
+
     opts = EncodeOptions.new(indentation)
     obj.to_nt(opts: opts) if obj.respond_to? :to_nt
   end
