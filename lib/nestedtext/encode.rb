@@ -17,15 +17,21 @@ module NestedText
     #     * encode_with like psych? https://stackoverflow.com/questions/18178098/how-do-i-have-ruby-yaml-dump-a-hash-subclass-as-a-simple-hash#18178935
     #   * Need to store as hash with class name as one value as in JSON, https://ruby-doc.org/stdlib-3.1.0/libdoc/json/rdoc/JSON.html#module-JSON-label-Custom+JSON+Additions
     #
-    # TODO question: how carry state with us in visitor like current indentation depth? A state in the visitor, or data/state/options hash that goes in both visit() and accept()?
+    # Question: how carry state with us in visitor like current indentation depth? A state in the visitor, or data/state/options hash that goes in both visit() and accept()?
     #
     #  Idea #2
     #  * Simply to_nt(*args) on each object and no visitor. state like indentation passed down in args. to_nt returns the final nt representation
     #  * To support serialization/deserialization, add class name like in to_json()
     #
-
-    # Parser.new(StringIO.new(ntstring), top_class).parse
-    #
+    # Problem: to detect cyclic references, it becomes too burdensome in custom #to_nt to add self to call list and then remove after
+    # Solution:
+    #  * let #to_nt on
+    #     - NT supported types simply call NestedText.dump(self)
+    #     - custom objects call self.encode_nt_with.to_nt
+    #        - #encode_nt_with returns the ["class__", data]
+    #     - NestedText#dump will work recursively and switching on object type
+    #        - NT supported types handled directly
+    #        - custom objects: check respond_to? encode_nt_with and continue recursing on the returned array
 
     return "" if obj.nil?
 
