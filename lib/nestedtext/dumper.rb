@@ -20,8 +20,8 @@ module NestedText
 
     def dump_any(obj, depth: 0)
       case obj
-      when Array then dump_array(obj, depth: depth)
       when Hash then dump_hash(obj, depth: depth)
+      when Array then dump_array(obj, depth: depth)
       when String then dump_string(obj, depth: depth)
       when nil
         if depth == 0
@@ -36,6 +36,12 @@ module NestedText
           raise "unsupported type (#{obj.class.name})."
         end
       end
+    end
+
+    def dump_hash(obj, depth: 0)
+      indent = " " * @indentation * depth
+      rep = "{}" if depth == 0 && obj.empty?
+      rep
     end
 
     def dump_array(obj, depth: 0)
