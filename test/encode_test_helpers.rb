@@ -1,4 +1,7 @@
+require "nestedtext/to_nt_mixin"
+
 class Inner
+  include NestedText::NTEncodeMixing
   def initialize(val)
     @val = val
   end
@@ -9,10 +12,6 @@ class Inner
 
   def encode_nt_with
     ["class__Inner", [@val]]
-  end
-
-  def to_nt(indentation: 4)
-    NestedText::Dumper.new(NestedText::EncodeOptions.new(indentation)).dump self
   end
 
   def ==(other)
