@@ -9,12 +9,12 @@ require "nestedtext/encode_helpers"
 class String
   # TODO: move this generic implementation to a mixin.
   def to_nt(indentation: 4)
-    Dumper.new(EncodingOptions.new(indentation)).dump self
+    NestedText::Dumper.new(NestedText::EncodeOptions.new(indentation)).dump self
   end
 end
 
 class Array
   def to_nt(indentation: 4)
-    Dumper.new(EncodingOptions.new(indentation)).dump self
+    NestedText::Dumper.new(NestedText::EncodeOptions.new(indentation)).dump self
   end
 end

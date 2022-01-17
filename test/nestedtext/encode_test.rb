@@ -66,6 +66,14 @@ class EncodeArrayTest < Minitest::Test
     NT
     assert_equal exp, NestedText.dump(obj)
   end
+
+  def test_array_method_to_nt
+    obj = ["an item here"]
+    exp = <<~NT.chomp
+      - an item here
+    NT
+    assert_equal exp, obj.to_nt
+  end
 end
 
 # TODO: test symbols in array/hash: how encode them?
@@ -128,6 +136,15 @@ class EncodeStringTest < Minitest::Test
     assert_equal exp, NestedText.dump(obj)
   end
 
+  def test_string_method_to_nt
+    obj = "multi-line\nstring"
+    exp = <<~NT.chomp
+      > multi-line
+      > string
+    NT
+    assert_equal exp, obj.to_nt
+  end
+
   # TODO: test cycle detection.
   # Using scopes like nypy's "with Keys()", but Ruby's blocks with ensure? https://stackoverflow.com/a/3875832/265508
   # def test_cyclic_references
@@ -178,6 +195,19 @@ class EncodeCustomClassTest < Minitest::Test
               - c
     NT
     dumped = NestedText.dump(obj, indentation: 2)
+    assert_equal exp, dumped
+  end
+
+  def test_custom_class_method_to_nt
+    inner = Inner.new("a")
+    obj = [inner]
+    exp = <<~NT.chomp
+      -
+        - class__Inner
+        -
+          - a
+    NT
+    dumped = obj.to_nt(indentation: 2)
     assert_equal exp, dumped
   end
 
