@@ -2,6 +2,7 @@
 
 require "nestedtext/errors"
 require "nestedtext/encode_helpers"
+require "nestedtext/dumper"
 
 # Model after JSON
 # NestedText.dump(obj, io=nil) => dumps to string, or to IO if given
@@ -11,6 +12,7 @@ module NestedText
   def self.dump(obj, io: nil, indentation: 4)
     # Idea #1
     # * core_ext.rb adds accept(visitor) to Array, Hash, Enumarable etc like https://medium.com/kkempin/visitor-design-pattern-in-ruby-bc07395c4abc
+    #    * https://refactoring.guru/design-patterns/visitor/ruby/example
     # * Visitor base class has dynamic dispatch built-in based on class of visited object like in https://github.com/ruby/psych/blob/master/lib/psych/visitors/visitor.rb#L14
     # Release 2: * Check object with #respond_to "to_nt" for custom representation ? Otherwise use #to_s, or #inspect?
     #   * and #nt_create like #json_create to read back! https://www.py4u.net/discuss/2207640
@@ -33,10 +35,9 @@ module NestedText
     #        - NT supported types handled directly
     #        - custom objects: check respond_to? encode_nt_with and continue recursing on the returned array
 
-    return "" if obj.nil?
-
     opts = EncodeOptions.new(indentation)
-    obj.to_nt(opts: opts) if obj.respond_to? :to_nt
+    dumper = Dumper.new(opts)
+    dumper.dump obj
   end
 
   # def self.load_file(filename, top_class: Object)
