@@ -26,10 +26,10 @@ module NestedText
     # Problem: to detect cyclic references, it becomes too burdensome in custom #to_nt to add self to call list and then remove after
     # Solution:
     #  * let #to_nt on
-    #     - NT supported types simply call NestedText.dump(self)
-    #     - custom objects call self.encode_nt_with.to_nt
+    #     - NT supported types simply call NestedText.dump(self).
+    #     - custom objects call self.encode_nt_with.to_nt. This method can be a mixin as it's generic!
     #        - #encode_nt_with returns the ["class__", data]
-    #     - NestedText#dump will work recursively and switching on object type
+    #  * NestedText#dump will work recursively and switching on object type
     #        - NT supported types handled directly
     #        - custom objects: check respond_to? encode_nt_with and continue recursing on the returned array
 
