@@ -3,9 +3,12 @@ class Inner
     @val = val
   end
 
-  # TODO: need to create self.nt_create to encode this properly
-  def to_nt(*args, **kwargs)
-    @val.to_nt(*args, **kwargs)
+  def self.nt_create(object)
+    new(*object[1])
+  end
+
+  def encode_nt_with
+    ["class__Inner", [@val]]
   end
 
   def ==(other)
@@ -21,20 +24,20 @@ class Inner
 end
 
 class Outer
-  def initialize(a, b, c)
+  def initialize(a, b, inner)
     @data = [a, b]
-    @inner = Inner.new(c)
-  end
-
-  def to_nt(*args, **kwargs)
-    # TODO: create helper method NestedText.EncodeClassKey(klass) to generate key name
-    # See https://github.com/ruby/psych/blob/master/lib/psych/visitors/visitor.rb#L14
-    # TODO document that if no deserialization is needed, it can be enough to do: alias to_nt to_s
-    ["class__Outer", @data + [@inner]].to_nt(*args, **kwargs)
+    @inner = inner
   end
 
   def self.nt_create(object)
     new(*object[1])
+  end
+
+  def encode_nt_with
+    # TODO: create helper method NestedText.EncodeClassKey(klass) to generate key name
+    # See https://github.com/ruby/psych/blob/master/lib/psych/visitors/visitor.rb#L14
+    # TODO document that if no deserialization is needed, it can be enough to do: alias to_nt to_s
+    ["class__Outer", @data + [@inner]]
   end
 
   def ==(other)
@@ -81,8 +84,8 @@ class Node
     new(data, nxt)
   end
 
-  def to_nt(*args, **kwargs)
-    ["class__Node", [@data, @nxt]].to_nt(*args, **kwargs)
+  def encode_nt_with
+    ["class__Node", [@data, @nxt]]
   end
 
   protected

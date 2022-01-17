@@ -27,11 +27,11 @@ module NestedText
         if depth == 0
           ""
         else
-          dump_any(["class__nil", []], depth: depth + 1)
+          dump_any(["class__nil", []], depth: depth)
         end
       else
         if obj.respond_to? :encode_nt_with
-          dump_any(obj.encode_nt_with, depth: depth + 1)
+          dump_any(obj.encode_nt_with, depth: depth)
         else
           raise "unsupported type (#{obj.class.name})."
         end
