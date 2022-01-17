@@ -40,8 +40,14 @@ module NestedText
 
     def dump_hash(obj, depth: 0)
       indent = " " * @indentation * depth
-      rep = "{}" if depth == 0 && obj.empty?
-      rep
+      if depth == 0 && obj.empty?
+        "{}"
+      else
+        obj.map do |key, value|
+          rep_value = dump_any(value, depth: depth + 1)
+          "#{indent}#{key}: #{rep_value}"
+        end.join("\n")
+      end
     end
 
     def dump_array(obj, depth: 0)

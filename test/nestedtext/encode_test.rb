@@ -87,6 +87,7 @@ end
 # TODO: test symbols in array/hash: how encode them?
 # TODO test arrays combined with hash
 # TODO test multi-line key variations according to the spec
+# TODO test nested dicts (with indentation)
 class EncodeHashTest < Minitest::Test
   def test_hash_empty
     assert_equal "{}", NestedText.dump({})
