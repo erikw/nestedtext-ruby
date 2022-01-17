@@ -11,7 +11,7 @@ module NestedText
     private
 
     def self.add_prefix(prefix, target)
-      if target[0] == "\n"
+      if target.empty? || target[0] == "\n"
         target.prepend(prefix)
       else
         target.prepend(prefix, " ")
@@ -40,10 +40,15 @@ module NestedText
 
     def dump_array(obj, depth: 0)
       indent = " " * @indentation * depth
-      rep = obj.each.map do |e|
-        e_rep = dump_any(e, depth: depth + 1)
-        Dumper.add_prefix("#{indent}-", e_rep)
-      end.join("\n")
+      rep = if depth == 0 && obj.empty?
+              # TODO: replace this special case with simply general inline rendering detection.
+              "[]"
+            else
+              obj.each.map do |e|
+                e_rep = dump_any(e, depth: depth + 1)
+                Dumper.add_prefix("#{indent}-", e_rep)
+              end.join("\n")
+            end
       rep.prepend("\n") if obj.length > 0 && depth > 0
       rep
     end
@@ -58,7 +63,7 @@ module NestedText
       end
 
       # Case of empty input string. No space after '>'
-      lines << ">" if lines.empty?
+      lines << ">" if lines.empty? && depth == 0
 
       lines.join.chomp
     end

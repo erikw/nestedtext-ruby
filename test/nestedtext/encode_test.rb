@@ -13,7 +13,15 @@ end
 # TODO: test nil values
 class EncodeArrayTest < Minitest::Test
   def test_array_empty
-    assert_equal "", NestedText.dump([])
+    assert_equal "[]", NestedText.dump([])
+  end
+
+  def test_array_empty_string
+    assert_equal "-", NestedText.dump([""])
+  end
+
+  def test_array_whitespace_string
+    assert_equal "-  ", NestedText.dump([" "])
   end
 
   def test_array_one
@@ -78,11 +86,26 @@ end
 
 # TODO: test symbols in array/hash: how encode them?
 class EncodeHashTest < Minitest::Test
+  # def test_hash_empty
+  # assert_equal "{}", NestedText.dump({})
+  # end
+
+  # def test_array_one
+  # obj = ["an item here"]
+  # exp = <<~NT.chomp
+  #- an item here
+  # NT
+  # assert_equal exp, NestedText.dump(obj)
+  # end
 end
 
 class EncodeStringTest < Minitest::Test
   def test_string_empty
     assert_equal ">", NestedText.dump("")
+  end
+
+  def test_string_whitespace
+    assert_equal ">  ", NestedText.dump(" ")
   end
 
   def test_string_simple
@@ -225,7 +248,7 @@ class EncodeCustomClassTest < Minitest::Test
                           - c
                           -
                               - class__nil
-                              -#{" "}
+                              -
     NT
     dumped = NestedText.dump(obj)
     assert_equal exp, dumped
