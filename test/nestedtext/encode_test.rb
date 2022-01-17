@@ -199,13 +199,11 @@ class EncodeCustomClassTest < Minitest::Test
   end
 
   def test_custom_class_method_to_nt
-    inner = Inner.new("a")
-    obj = [inner]
+    obj = Inner.new("a")
     exp = <<~NT.chomp
+      - class__Inner
       -
-        - class__Inner
-        -
-          - a
+        - a
     NT
     dumped = obj.to_nt(indentation: 2)
     assert_equal exp, dumped

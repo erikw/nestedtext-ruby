@@ -11,6 +11,10 @@ class Inner
     ["class__Inner", [@val]]
   end
 
+  def to_nt(indentation: 4)
+    NestedText::Dumper.new(NestedText::EncodeOptions.new(indentation)).dump self
+  end
+
   def ==(other)
     other.class == self.class && other.state == state
   end
