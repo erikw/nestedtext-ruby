@@ -85,18 +85,63 @@ class EncodeArrayTest < Minitest::Test
 end
 
 # TODO: test symbols in array/hash: how encode them?
+# TODO test arrays combined with hash
+# TODO test multi-line key variations according to the spec
 class EncodeHashTest < Minitest::Test
   def test_hash_empty
     assert_equal "{}", NestedText.dump({})
   end
 
-  # def test_array_one
-  # obj = ["an item here"]
-  # exp = <<~NT.chomp
-  #- an item here
-  # NT
-  # assert_equal exp, NestedText.dump(obj)
-  # end
+  def test_hash_single_nil_value
+    obj = { "key" => nil }
+    exp = <<~NT.chomp
+      key:
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_single_empty_value
+    obj = { "key" => "" }
+    exp = <<~NT.chomp
+      key:
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_single_whitespace_value
+    obj = { "key" => " " }
+    exp = <<~NT.chomp
+      key:#{"  "}
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  # TODO: test empty key variations
+  def test_hash_single_empty_key_and_value
+    obj = { "" => "" }
+    exp = <<~NT.chomp
+      :
+          >
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_single_whitespace_key_and_value
+    obj = { " " => " " }
+    exp = <<~NT.chomp
+      :#{" "}
+          >#{" "}
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_single_item
+    obj = { "key" => "value" }
+    exp = <<~NT.chomp
+      key: value
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
 end
 
 class EncodeStringTest < Minitest::Test
