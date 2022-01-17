@@ -23,15 +23,16 @@ class ParserTest < Minitest::Test
     end
   end
 
-  def test_invalid_parsed_type
-    parser = NestedText::Parser.new(StringIO.new("dummy"), Object)
-    # Float is not a valid result type from #parse_any.
-    parser.stub :parse_any, 1.99 do
-      assert_raises(NestedText::Errors::AssertionError) do
-        parser.parse
-      end
-    end
-  end
+  # TODO: enable this again when implementing strict mode. Currently disabled as we want to allow parsing up custom objects.
+  # def test_invalid_parsed_type
+  # parser = NestedText::Parser.new(StringIO.new("dummy"), Object)
+  ## Float is not a valid result type from #parse_any.
+  # parser.stub :parse_any, 1.99 do
+  # assert_raises(NestedText::Errors::AssertionError) do
+  # parser.parse
+  # end
+  # end
+  # end
 
   def test_invalid_line_tag
     scan_mock = Minitest::Mock.new

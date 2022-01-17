@@ -160,18 +160,17 @@ end
 class EncodeCustomClassTest < Minitest::Test
   def test_custom_class_nested
     outer = Outer.new("a", "b", Inner.new("c"))
-    obj = [[outer]]
+    obj = [outer]
     exp = <<~NT.chomp
       -
+          - class__Outer
           -
-              - class__Outer
+              - a
+              - b
               -
-                  - a
-                  - b
+                  - class__Inner
                   -
-                      - class__Inner
-                      -
-                          - c
+                      - c
     NT
     dumped = NestedText.dump(obj)
     assert_equal exp, dumped
@@ -181,21 +180,22 @@ class EncodeCustomClassTest < Minitest::Test
   end
 
   def test_custom_class_nested_indented
-    outer = Outer.new("a", "b", Inner.new("c"))
-    obj = [outer]
+    obj = Outer.new("a", "b", Inner.new("c"))
     exp = <<~NT.chomp
+      - class__Outer
       -
-        - class__Outer
+        - a
+        - b
         -
-          - a
-          - b
+          - class__Inner
           -
-            - class__Inner
-            -
-              - c
+            - c
     NT
     dumped = NestedText.dump(obj, indentation: 2)
     assert_equal exp, dumped
+
+    loaded = NestedText.load(dumped)
+    assert_equal obj, loaded
   end
 
   def test_custom_class_method_to_nt

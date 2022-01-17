@@ -21,8 +21,9 @@ module NestedText
       result = parse_any(0)
       case @top_class.object_id
       when Object.object_id
-        raise Errors::AssertionError, "Parsed result is of unexpected type." unless
-                  result.nil? || [Hash, Array, String].include?(result.class)
+        # raise Errors::AssertionError, "Parsed result is of unexpected type." unless
+        # result.nil? || [Hash, Array, String].include?(result.class)
+        # TODO disabled this so that we can parse up custom objects. Something else to do here? Maybe implement strict mode! and fail only if strict mode.
       when Hash.object_id
         result = {} if result.nil?
         raise Errors::TopLevelTypeMismatchParsedType.new(@top_class, result) unless result.instance_of?(Hash)
