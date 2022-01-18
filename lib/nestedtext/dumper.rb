@@ -46,23 +46,24 @@ module NestedText
     end
 
     def dump_hash(obj, depth: 0, **kwargs)
-      indent = " " * @indentation * depth
-      if depth == 0 && obj.empty?
-        "{}"
-      else
-        obj.map do |key, value|
-          if key.empty? || key.include?("\n") || key =~ /^\s+$/
-            key_lines = key.empty? ? [""] : key.lines(chomp: true)
-            rep_key = key_lines.map { |line| Dumper.add_prefix("#{indent}:", line) }.join("\n")
-            rep_value = "\n" + dump_any(value, depth: depth + 1, force_multiline: true, **kwargs)
-          else
-            rep_key = "#{indent}#{key}:"
-            rep_value = dump_any(value, depth: depth + 1, **kwargs)
-            rep_key += " " unless rep_value.empty?
-          end
-          "#{rep_key}#{rep_value}"
-        end.join("\n")
-      end
+      rep = if depth == 0 && obj.empty?
+              "{}"
+            else
+              obj.map do |key, value|
+                if key.empty? || key.include?("\n") || key =~ /^\s+$/
+                  key_lines = key.empty? ? [""] : key.lines(chomp: true)
+                  rep_key = key_lines.map { |line| Dumper.add_prefix(":", line) }.join("\n")
+                  rep_value = dump_any(value, depth: depth + 1, force_multiline: true, **kwargs)
+                else
+                  rep_key = "#{key}:"
+                  rep_value = dump_any(value, depth: depth + 1, **kwargs)
+                  rep_key += " " unless rep_value.empty? || rep_value.include?("\n")
+                end
+                "#{rep_key}#{rep_value}"
+              end.join("\n")
+            end
+      rep = indent2(rep) if !obj.empty? && depth > 0
+      rep
     end
 
     def dump_array(obj, depth: 0, **kwargs)
@@ -93,7 +94,6 @@ module NestedText
       lines << ">" if lines.empty? && (depth == 0 || force_multiline)
 
       rep = lines.join.chomp
-      # rep = indent2(rep) if !obj.empty? && (depth > 0 || rep.include?("\n") || force_multiline)
       rep = indent2(rep) if !rep.empty? && depth > 0 && (rep.include?("\n") || force_multiline)
       rep
     end
