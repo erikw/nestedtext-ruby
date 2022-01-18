@@ -117,6 +117,15 @@ class EncodeHashTest < Minitest::Test
     assert_equal exp, NestedText.dump(obj)
   end
 
+  def test_hash_single_empty_key
+    obj = { "" => "value" }
+    exp = <<~NT.chomp
+      :
+          > value
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
   # TODO: test empty key variations
   def test_hash_single_empty_key_and_value
     obj = { "" => "" }
