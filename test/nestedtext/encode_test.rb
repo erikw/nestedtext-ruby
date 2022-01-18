@@ -143,6 +143,16 @@ class EncodeHashTest < Minitest::Test
     NT
     assert_equal exp, NestedText.dump(obj)
   end
+
+  def test_hash_multiline_key
+    obj = { "two line\n key" => "value" }
+    exp = <<~NT.chomp
+      : two line
+      :  key
+          > value
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
 end
 
 class EncodeStringTest < Minitest::Test
