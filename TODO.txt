@@ -1,2 +1,0 @@
-* Convert all raise to proper error objects.
-* More precise errors telling exactly what character was expected, rather than e.g. just ParserEmpy  (see test_inline_dict_invalid_inline_string)
