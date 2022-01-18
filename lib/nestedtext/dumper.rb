@@ -25,7 +25,7 @@ module NestedText
       when Array then dump_array(obj, depth: depth, **kwargs)
       when String then dump_string(obj, depth: depth, **kwargs)
       when nil
-        if depth == 0
+        if @strict
           ""
         else
           dump_any(["class__nil", []], depth: depth, **kwargs)
