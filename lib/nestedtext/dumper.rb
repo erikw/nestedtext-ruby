@@ -19,6 +19,16 @@ module NestedText
       end
     end
 
+    # TODO: rename once not using indent variable
+    def indent2(obj, target, depth)
+      if !obj.empty? && depth > 0
+        indentstr = " " * @indentation
+        "\n" + target.lines.map { |line| indentstr + line }.join
+      else
+        target
+      end
+    end
+
     def dump_any(obj, depth: 0, **kwargs)
       case obj
       when Hash then dump_hash(obj, depth: depth, **kwargs)
@@ -60,18 +70,16 @@ module NestedText
     end
 
     def dump_array(obj, depth: 0, **kwargs)
-      indent = " " * @indentation * depth
       rep = if depth == 0 && obj.empty?
               # TODO: replace this special case with simply general inline rendering detection.
               "[]"
             else
               obj.each.map do |e|
                 e_rep = dump_any(e, depth: depth + 1, **kwargs)
-                Dumper.add_prefix("#{indent}-", e_rep)
+                Dumper.add_prefix("-", e_rep)
               end.join("\n")
             end
-      rep.prepend("\n") if obj.length > 0 && depth > 0
-      rep
+      indent2(obj, rep, depth)
     end
 
     def dump_string(obj, depth: 0, force_multiline: false)
