@@ -44,7 +44,7 @@ module NestedText
         "{}"
       else
         obj.map do |key, value|
-          if key.include? "\n"
+          if key.include?("\n") || key =~ /^\s+$/
             rep_key = key.lines(chomp: true).map { |line| "#{indent}: #{line}" }.join("\n")
             rep_value = "\n" + dump_any(value, depth: depth + 1, force_multiline: true, **kwargs)
           else

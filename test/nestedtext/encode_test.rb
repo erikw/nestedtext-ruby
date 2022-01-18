@@ -130,8 +130,8 @@ class EncodeHashTest < Minitest::Test
   def test_hash_single_whitespace_key_and_value
     obj = { " " => " " }
     exp = <<~NT.chomp
-      :#{" "}
-          >#{" "}
+      :#{"  "}
+          >#{"  "}
     NT
     assert_equal exp, NestedText.dump(obj)
   end
@@ -153,6 +153,7 @@ class EncodeHashTest < Minitest::Test
     NT
     assert_equal exp, NestedText.dump(obj)
   end
+  # TODO: more advanced multiline key test
 end
 
 class EncodeStringTest < Minitest::Test
