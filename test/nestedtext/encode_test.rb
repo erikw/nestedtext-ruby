@@ -153,6 +153,26 @@ class EncodeHashTest < Minitest::Test
     NT
     assert_equal exp, NestedText.dump(obj)
   end
+
+  def test_hash_multiline_key_empty_value
+    obj = { "k1\nk2" => "" }
+    exp = <<~NT.chomp
+      : k1
+      : k2
+          >
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_multiline_key_whitespace_value
+    obj = { "k1\nk2" => " " }
+    exp = <<~NT.chomp
+      : k1
+      : k2
+          >#{"  "}
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
   # TODO: more advanced multiline key test
 end
 

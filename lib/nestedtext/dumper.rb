@@ -48,8 +48,9 @@ module NestedText
             rep_key = key.lines(chomp: true).map { |line| "#{indent}: #{line}" }.join("\n")
             rep_value = "\n" + dump_any(value, depth: depth + 1, force_multiline: true, **kwargs)
           else
-            rep_key = "#{indent}#{key}: "
+            rep_key = "#{indent}#{key}:"
             rep_value = dump_any(value, depth: depth + 1, **kwargs)
+            rep_key += " " unless rep_value.empty?
           end
           "#{rep_key}#{rep_value}"
         end.join("\n")
@@ -82,7 +83,7 @@ module NestedText
       end
 
       # Case of empty input string. No space after '>'
-      lines << ">" if lines.empty? && depth == 0
+      lines << "#{indent}>" if lines.empty? && (depth == 0 || force_multiline)
 
       lines.join.chomp
     end
