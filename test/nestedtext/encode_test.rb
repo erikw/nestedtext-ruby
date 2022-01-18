@@ -270,6 +270,46 @@ class EncodeHashTest < Minitest::Test
     NT
     assert_equal exp, NestedText.dump(obj)
   end
+
+  def test_hash_nested_empty_key
+    obj = { "key" => { "" => "value" } }
+    exp = <<~NT.chomp
+      key:
+          :
+              > value
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_nested_empty_and_value
+    obj = { "key" => { "" => "" } }
+    exp = <<~NT.chomp
+      key:
+          :
+              >
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_nested_whitespace_key
+    obj = { "key" => { " " => "value" } }
+    exp = <<~NT.chomp
+      key:
+          :#{"  "}
+              > value
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_nested_whitespace_key_and_value
+    obj = { "key" => { " " => " " } }
+    exp = <<~NT.chomp
+      key:
+          :#{"  "}
+              >#{"  "}
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
 end
 
 class EncodeStringTest < Minitest::Test
