@@ -20,13 +20,9 @@ module NestedText
     end
 
     # TODO: rename once not using indent variable
-    def indent2(obj, target, depth)
-      if !obj.empty? && depth > 0
-        indentstr = " " * @indentation
-        "\n" + target.lines.map { |line| indentstr + line }.join
-      else
-        target
-      end
+    def indent2(target)
+      indentstr = " " * @indentation
+      "\n" + target.lines.map { |line| indentstr + line }.join
     end
 
     def dump_any(obj, depth: 0, **kwargs)
@@ -79,23 +75,27 @@ module NestedText
                 Dumper.add_prefix("-", e_rep)
               end.join("\n")
             end
-      indent2(obj, rep, depth)
+
+      rep = indent2(rep) if !obj.empty? && depth > 0
+      rep
     end
 
     def dump_string(obj, depth: 0, force_multiline: false)
-      indent = " " * @indentation * depth
       lines = obj.lines
       lines << "\n" if !lines.empty? && lines[-1][-1] == "\n"
       if lines.length > 1 || depth == 0 || force_multiline
         lines.each do |line|
-          Dumper.add_prefix("#{indent}>", line)
+          Dumper.add_prefix(">", line)
         end
       end
 
       # Case of empty input string. No space after '>'
-      lines << "#{indent}>" if lines.empty? && (depth == 0 || force_multiline)
+      lines << ">" if lines.empty? && (depth == 0 || force_multiline)
 
-      lines.join.chomp
+      rep = lines.join.chomp
+      # rep = indent2(rep) if !obj.empty? && (depth > 0 || rep.include?("\n") || force_multiline)
+      rep = indent2(rep) if !rep.empty? && depth > 0 && (rep.include?("\n") || force_multiline)
+      rep
     end
   end
 end
