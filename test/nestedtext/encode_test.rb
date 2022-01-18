@@ -272,10 +272,10 @@ class EncodeCustomClassTest < Minitest::Test
                   -
                       - c
     NT
-    dumped = NestedText.dump(obj)
+    dumped = NestedText.dump(obj, strict: false)
     assert_equal exp, dumped
 
-    loaded = NestedText.load(dumped)
+    loaded = NestedText.load(dumped, strict: false)
     assert_equal obj, loaded
   end
 
@@ -291,10 +291,10 @@ class EncodeCustomClassTest < Minitest::Test
           -
             - c
     NT
-    dumped = NestedText.dump(obj, indentation: 2)
+    dumped = NestedText.dump(obj, indentation: 2, strict: false)
     assert_equal exp, dumped
 
-    loaded = NestedText.load(dumped)
+    loaded = NestedText.load(dumped, strict: false)
     assert_equal obj, loaded
   end
 
@@ -327,10 +327,10 @@ class EncodeCustomClassTest < Minitest::Test
                               - class__nil
                               -
     NT
-    dumped = NestedText.dump(obj)
+    dumped = NestedText.dump(obj, strict: false)
     assert_equal exp, dumped
 
-    loaded = NestedText.load(dumped)
+    loaded = NestedText.load(dumped, strict: false)
     assert_equal obj, loaded
   end
 end

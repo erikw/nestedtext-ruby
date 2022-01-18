@@ -2,6 +2,7 @@ module NestedText
   class Dumper
     def initialize(opts = EncodeOptions.new)
       @indentation = opts.indentation
+      @strict = opts.strict
     end
 
     def dump(obj)

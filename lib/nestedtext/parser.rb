@@ -9,10 +9,11 @@ require "nestedtext/helpers"
 module NestedText
   class Parser
     # TODO: document that caller is responsible for closing IO after done with Parser.
-    def initialize(io, top_class)
+    def initialize(io, top_class, strict: true)
       assert_valid_input_type io
       NestedText.assert_valid_top_level_type(top_class)
       @top_class = top_class
+      @strict = strict
       @line_scanner = LineScanner.new(io)
       @inline_scanner = nil
     end
@@ -21,9 +22,10 @@ module NestedText
       result = parse_any(0)
       case @top_class.object_id
       when Object.object_id
-        # raise Errors::AssertionError, "Parsed result is of unexpected type." unless
-        # result.nil? || [Hash, Array, String].include?(result.class)
-        # TODO disabled this so that we can parse up custom objects. Something else to do here? Maybe implement strict mode! and fail only if strict mode.
+        raise Errors::AssertionError, "Parsed result is of unexpected type." if
+        !result.nil? && ![Hash, Array, String].include?(result.class) && @strict
+        # raise Errors::AssertionError, "Parsed result is of unexpected type." if
+        # !@strict || !result.nil? && ![Hash, Array, String].include?(result.class))
       when Hash.object_id
         result = {} if result.nil?
         raise Errors::TopLevelTypeMismatchParsedType.new(@top_class, result) unless result.instance_of?(Hash)
@@ -88,7 +90,7 @@ module NestedText
 
         result << value
       end
-      if result.length == 2 && result[0] =~ /^class__(.*)$/
+      if !@strict && result.length == 2 && result[0] =~ /^class__(.*)$/
         class_name = Regexp.last_match(1) # TODO: use named capture?
         if class_name == "nil"
           result = nil

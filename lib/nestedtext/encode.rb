@@ -9,7 +9,7 @@ require "nestedtext/dumper"
 # NestedText.dump_file(obj, filename)
 
 module NestedText
-  def self.dump(obj, io: nil, indentation: 4)
+  def self.dump(obj, io: nil, indentation: 4, strict: true)
     # Idea #1
     # * core_ext.rb adds accept(visitor) to Array, Hash, Enumarable etc like https://medium.com/kkempin/visitor-design-pattern-in-ruby-bc07395c4abc
     #    * https://refactoring.guru/design-patterns/visitor/ruby/example
@@ -35,7 +35,7 @@ module NestedText
     #        - NT supported types handled directly
     #        - custom objects: check respond_to? encode_nt_with and continue recursing on the returned array
 
-    opts = EncodeOptions.new(indentation)
+    opts = EncodeOptions.new(indentation, strict)
     dumper = Dumper.new(opts)
     dumper.dump obj
   end

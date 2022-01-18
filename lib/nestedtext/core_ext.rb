@@ -5,5 +5,5 @@ require "nestedtext/to_nt_mixin"
 # Or both: add encoding/decoding of more native classes, and allow decoding + applying a schema with 3rd party.
 # Or encourage using Marshal from core?
 
-class String include NestedText::NTEncodeMixing end
-class Array include NestedText::NTEncodeMixing end
+class String include NestedText::NTEncodeStrictMixing end
+class Array include NestedText::NTEncodeStrictMixing end
