@@ -237,6 +237,39 @@ class EncodeHashTest < Minitest::Test
     NT
     assert_equal exp, NestedText.dump(obj)
   end
+
+  def test_hash_nested
+    obj = { "key1" => { "key2" => "value" } }
+    exp = <<~NT.chomp
+      key1:
+          key2: value
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_nested_multiline_value
+    obj = { "key1" => { "key2" => "value\nhere" } }
+    exp = <<~NT.chomp
+      key1:
+          key2:
+              > value
+              > here
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_nested_multiline_key_and_value
+    obj = { "key\n1" => { "key\n2" => "value\nhere" } }
+    exp = <<~NT.chomp
+      : key
+      : 1
+          : key
+          : 2
+              > value
+              > here
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
 end
 
 class EncodeStringTest < Minitest::Test
