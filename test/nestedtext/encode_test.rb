@@ -117,6 +117,15 @@ class EncodeHashTest < Minitest::Test
     assert_equal "{}", NestedText.dump({})
   end
 
+  # TODO: what is expected outcome of nil as key?
+  # def test_hash_single_nil_key
+  # obj = { nil => "value" }
+  # exp = <<~NT.chomp
+  # key:
+  # NT
+  # assert_equal exp, NestedText.dump(obj)
+  # end
+
   def test_hash_single_nil_value
     obj = { "key" => nil }
     exp = <<~NT.chomp
@@ -150,7 +159,6 @@ class EncodeHashTest < Minitest::Test
     assert_equal exp, NestedText.dump(obj)
   end
 
-  # TODO: test empty key variations
   def test_hash_single_empty_key_and_value
     obj = { "" => "" }
     exp = <<~NT.chomp

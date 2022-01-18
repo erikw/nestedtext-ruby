@@ -19,8 +19,7 @@ module NestedText
       end
     end
 
-    # TODO: rename once not using indent variable
-    def indent2(target)
+    def indent(target)
       indentstr = " " * @indentation
       "\n" + target.lines.map { |line| indentstr + line }.join
     end
@@ -62,7 +61,7 @@ module NestedText
                 "#{rep_key}#{rep_value}"
               end.join("\n")
             end
-      rep = indent2(rep) if !obj.empty? && depth > 0
+      rep = indent(rep) if !obj.empty? && depth > 0
       rep
     end
 
@@ -77,7 +76,7 @@ module NestedText
               end.join("\n")
             end
 
-      rep = indent2(rep) if !obj.empty? && depth > 0
+      rep = indent(rep) if !obj.empty? && depth > 0
       rep
     end
 
@@ -94,7 +93,7 @@ module NestedText
       lines << ">" if lines.empty? && (depth == 0 || force_multiline)
 
       rep = lines.join.chomp
-      rep = indent2(rep) if !rep.empty? && depth > 0 && (rep.include?("\n") || force_multiline)
+      rep = indent(rep) if !rep.empty? && depth > 0 && (rep.include?("\n") || force_multiline)
       rep
     end
   end
