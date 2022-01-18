@@ -112,7 +112,6 @@ end
 # TODO test arrays combined with hash
 # TODO test multi-line key variations according to the spec
 # TODO test nested dicts (with indentation)
-# TODO test multiple items, and with multiline keys and multiline values
 class EncodeHashTest < Minitest::Test
   def test_hash_empty
     assert_equal "{}", NestedText.dump({})
@@ -207,7 +206,37 @@ class EncodeHashTest < Minitest::Test
     NT
     assert_equal exp, NestedText.dump(obj)
   end
-  # TODO: more advanced multiline key test
+
+  def test_hash_multiline_key_many_lines
+    obj = { "\na \n b\n\tc\n " => "value" }
+    exp = <<~NT.chomp
+      :
+      : a#{" "}
+      :  b
+      : \tc
+      :#{"  "}
+          > value
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_multiline_keys_multiline_values
+    obj = {
+      "k11\nk12" => "v11\nv12",
+      "k21\nk22" => "v21\nv22"
+    }
+    exp = <<~NT.chomp
+      : k11
+      : k12
+          > v11
+          > v12
+      : k21
+      : k22
+          > v21
+          > v22
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
 end
 
 class EncodeStringTest < Minitest::Test
