@@ -106,12 +106,40 @@ class EncodeArrayTest < Minitest::Test
     NT
     assert_equal exp, obj.to_nt
   end
+
+  def test_array_with_single_hash
+    obj = [{ "key" => "value" }]
+    exp = <<~NT.chomp
+      -
+          key: value
+    NT
+    assert_equal exp, obj.to_nt
+  end
+
+  def test_array_with_multiple_hash
+    obj = [
+      { "key1" => "value1" },
+      { "key2\nmultiline" => "value2" },
+      { "key3" => "value3\nmultiline" }
+    ]
+    exp = <<~NT.chomp
+      -
+          key1: value1
+      -
+          : key2
+          : multiline
+              > value2
+      -
+          key3:
+              > value3
+              > multiline
+    NT
+    assert_equal exp, obj.to_nt
+  end
 end
 
 # TODO: test symbols in array/hash: how encode them?
-# TODO test arrays combined with hash
 # TODO test multi-line key variations according to the spec
-# TODO test nested dicts (with indentation)
 class EncodeHashTest < Minitest::Test
   def test_hash_empty
     assert_equal "{}", NestedText.dump({})
@@ -315,6 +343,39 @@ class EncodeHashTest < Minitest::Test
       key:
           :#{"  "}
               >#{"  "}
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_array_value
+    obj = { "key" => %w[i1 i2] }
+    exp = <<~NT.chomp
+      key:
+          - i1
+          - i2
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  # TODO: to get this to work, can't force multiline recursively, have to deal with it directly
+  def test_hash_multiline_key_array_value
+    obj = { "key\nline" => %w[i1 i2] }
+    exp = <<~NT.chomp
+      : key
+      : line
+          - i1
+          - i2
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_multiline_key_multiline_string_value
+    obj = { "key\nline" => "string\nline" }
+    exp = <<~NT.chomp
+      : key
+      : line
+          > string
+          > line
     NT
     assert_equal exp, NestedText.dump(obj)
   end
