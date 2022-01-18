@@ -21,10 +21,13 @@ class EncodeTest < Minitest::Test
   # end
 end
 
-# TODO: test nil values
 class EncodeArrayTest < Minitest::Test
   def test_array_empty
     assert_equal "[]", NestedText.dump([])
+  end
+
+  def test_array_nil
+    assert_equal "-", NestedText.dump([nil])
   end
 
   def test_array_empty_string
@@ -48,6 +51,16 @@ class EncodeArrayTest < Minitest::Test
     exp = <<~NT.chomp
       - a
       - b
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_array_multiple_nil
+    obj = [nil, "a", nil]
+    exp = <<~NT.chomp
+      -
+      - a
+      -
     NT
     assert_equal exp, NestedText.dump(obj)
   end
@@ -99,6 +112,7 @@ end
 # TODO test arrays combined with hash
 # TODO test multi-line key variations according to the spec
 # TODO test nested dicts (with indentation)
+# TODO test multiple items, and with multiline keys and multiline values
 class EncodeHashTest < Minitest::Test
   def test_hash_empty
     assert_equal "{}", NestedText.dump({})
