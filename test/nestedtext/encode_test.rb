@@ -117,7 +117,7 @@ class EncodeHashTest < Minitest::Test
     assert_equal "{}", NestedText.dump({})
   end
 
-  # TODO: what is expected outcome of nil as key?
+  # TODO: what is expected outcome of nil as key? https://github.com/KenKundert/nestedtext/issues/31
   # def test_hash_single_nil_key
   # obj = { nil => "value" }
   # exp = <<~NT.chomp
