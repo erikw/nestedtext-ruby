@@ -34,7 +34,7 @@ module NestedText
         if obj.respond_to? :encode_nt_with
           dump_any(obj.encode_nt_with, depth: depth, **kwargs)
         else
-          raise "unsupported type (#{obj.class.name})."
+          raise Errors::DumpUnsupportedTypeError, obj
         end
       end
     end

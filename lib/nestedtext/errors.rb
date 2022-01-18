@@ -6,11 +6,11 @@ require "word_wrap/core_ext"
 require "nestedtext/constants"
 
 module NestedText
+  # Top level ParseError for clients to rescue.
   class Error < StandardError; end
 
   module Errors
     class ParseError < Error
-      # Top level ParseError for clients to rescue.
       attr_reader :lineno, :colno, :message_raw
 
       def initialize(line, colno, message)
@@ -204,6 +204,14 @@ module NestedText
     class InlineScannerIsEmpty < AssertionError
       def initialize
         super("There is no more input to consume. You should have checked this with #empty? before calling.")
+      end
+    end
+
+    class DumpError < Error; end
+
+    class DumpUnsupportedTypeError < DumpError
+      def initialize(obj)
+        super("unsupported type (#{obj.class.name}).")
       end
     end
   end

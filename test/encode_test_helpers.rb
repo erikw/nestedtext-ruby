@@ -98,3 +98,5 @@ class Node
     [@data, @nxt]
   end
 end
+
+class NotNTEncodable; end

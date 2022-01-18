@@ -342,4 +342,11 @@ class EncodeCustomClassTest < Minitest::Test
     loaded = NestedText.load(dumped, strict: false)
     assert_equal obj, loaded
   end
+
+  def test_custom_class_no_to_nt
+    obj = NotNTEncodable.new
+    assert_raises(NestedText::Errors::DumpUnsupportedTypeError) do
+      NestedText.dump(obj)
+    end
+  end
 end
