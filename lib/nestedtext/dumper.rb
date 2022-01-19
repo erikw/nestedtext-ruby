@@ -19,6 +19,17 @@ module NestedText
       end
     end
 
+    def self.multiline_key?(key)
+      syntax1 = "{[#"
+      syntax2 = ":->"
+
+      key.empty? ||
+        key.include?("\n") ||
+        key =~ /^\s+$/ ||
+        syntax1.include?(key.lstrip[0]) ||
+        syntax2.include?(key.lstrip[0]) && key.lstrip[1] == " "
+    end
+
     def indent(target)
       indentstr = " " * @indentation
       "\n" + target.lines.map { |line| indentstr + line }.join
@@ -50,7 +61,7 @@ module NestedText
             else
               obj.map do |key, value|
                 key = "" if key.nil?
-                if key.empty? || key.include?("\n") || key =~ /^\s+$/
+                if Dumper.multiline_key?(key)
                   key_lines = key.empty? ? [""] : key.lines(chomp: true)
                   rep_key = key_lines.map { |line| Dumper.add_prefix(":", line) }.join("\n")
                   force_multiline = value.is_a? String

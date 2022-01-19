@@ -137,7 +137,6 @@ class EncodeArrayTest < Minitest::Test
 end
 
 # TODO: test symbols in array/hash: how encode them?
-# TODO test multi-line key variations according to the spec
 class EncodeHashTest < Minitest::Test
   def test_hash_empty
     assert_equal "{}", NestedText.dump({})
@@ -387,6 +386,42 @@ class EncodeHashTest < Minitest::Test
                   > multiline
                   > string
               - item
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_multiline_key_all_cases
+    obj = {
+      "" => "empty key",
+      "key\nline" => "linefeed",
+      " " => "whitespace key",
+      "[a, b]" => "looks like inline list",
+      "{a: b}" => "looks like inline dict",
+      ": key" => "looks like multiline key",
+      "#key" => "looks like comment",
+      "- key" => "looks like list item",
+      "> key" => "looks like multiline string"
+    }
+    exp = <<~NT.chomp
+      :
+          > empty key
+      : key
+      : line
+          > linefeed
+      :#{"  "}
+          > whitespace key
+      : [a, b]
+          > looks like inline list
+      : {a: b}
+          > looks like inline dict
+      : : key
+          > looks like multiline key
+      : #key
+          > looks like comment
+      : - key
+          > looks like list item
+      : > key
+          > looks like multiline string
     NT
     assert_equal exp, NestedText.dump(obj)
   end
