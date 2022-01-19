@@ -3,9 +3,11 @@ module NestedText
     def initialize(opts = EncodeOptions.new)
       @indentation = opts.indentation
       @strict = opts.strict
+      @trace = nil
     end
 
     def dump(obj)
+      @trace = []
       dump_any obj
     end
 
@@ -36,23 +38,34 @@ module NestedText
       target.replace indented
     end
 
+    def trace(obj)
+      raise Errors::DumpCyclicReferencesDetected if @trace.include?(obj)
+
+      @trace << obj
+      yield
+    ensure
+      @trace.pop
+    end
+
     def dump_any(obj, depth: 0, **kwargs)
-      case obj
-      when Hash then dump_hash(obj, depth: depth, **kwargs)
-      when Array then dump_array(obj, depth: depth, **kwargs)
-      when String then dump_string(obj, depth: depth, **kwargs)
-      when Symbol then dump_string(obj.id2name, depth: depth, **kwargs)
-      when nil
-        if @strict
-          ""
+      trace(obj) do
+        case obj
+        when Hash then dump_hash(obj, depth: depth, **kwargs)
+        when Array then dump_array(obj, depth: depth, **kwargs)
+        when String then dump_string(obj, depth: depth, **kwargs)
+        when Symbol then dump_string(obj.id2name, depth: depth, **kwargs)
+        when nil
+          if @strict
+            ""
+          else
+            dump_any(["class__nil", []], depth: depth, **kwargs)
+          end
         else
-          dump_any(["class__nil", []], depth: depth, **kwargs)
-        end
-      else
-        if obj.respond_to? :encode_nt_with
-          dump_any(obj.encode_nt_with, depth: depth, **kwargs)
-        else
-          raise Errors::DumpUnsupportedTypeError, obj
+          if obj.respond_to? :encode_nt_with
+            dump_any(obj.encode_nt_with, depth: depth, **kwargs)
+          else
+            raise Errors::DumpUnsupportedTypeError, obj
+          end
         end
       end
     end

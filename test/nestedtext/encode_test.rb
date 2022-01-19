@@ -7,16 +7,29 @@ class EncodeTest < Minitest::Test
     assert_equal "", NestedText.dump(nil)
   end
 
-  # TODO: test cycle detection.
-  # Using scopes like nypy's "with Keys()", but Ruby's blocks with ensure? https://stackoverflow.com/a/3875832/265508
-  # def test_cyclic_references
-  # a = []
-  # b = [a]
-  # a << b
-  # assert_raises(NestedText::Errors::EncodingCyclicReferencesDetected) do
-  # NestedText.dump(a)
-  # end
-  # end
+  def test_cyclic_references_no_cycle
+    a = []
+    b = [a, a]
+    NestedText.dump(b)
+  end
+
+  def test_cyclic_references_simple
+    a = []
+    b = [a]
+    a << b
+    assert_raises(NestedText::Errors::DumpCyclicReferencesDetected) do
+      NestedText.dump(a)
+    end
+  end
+
+  def test_cyclic_references_longer
+    a = []
+    b = ["i1", [a]]
+    a << b
+    assert_raises(NestedText::Errors::DumpCyclicReferencesDetected) do
+      NestedText.dump(a)
+    end
+  end
 end
 
 class EncodeArrayTest < Minitest::Test

@@ -214,5 +214,11 @@ module NestedText
         super("unsupported type (#{obj.class.name}).")
       end
     end
+
+    class DumpCyclicReferencesDetected < DumpError
+      def initialize
+        super("cyclic reference found: cannot be dumped.")
+      end
+    end
   end
 end
