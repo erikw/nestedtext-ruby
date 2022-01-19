@@ -58,7 +58,7 @@ module NestedText
           if @strict
             ""
           else
-            dump_any(["class__nil", []], depth: depth, **kwargs)
+            dump_any(nil.encode_nt_with, depth: depth, **kwargs)
           end
         else
           if obj.respond_to? :encode_nt_with

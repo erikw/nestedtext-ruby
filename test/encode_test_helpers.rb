@@ -7,11 +7,11 @@ class Inner
   end
 
   def self.nt_create(object)
-    new(*object[1])
+    new(*object["data"])
   end
 
   def encode_nt_with
-    ["class__Inner", [@val]]
+    { "__nestedtext_class__" => self.class.name, "data" => [@val] }
   end
 
   def ==(other)
@@ -33,7 +33,7 @@ class Outer
   end
 
   def self.nt_create(object)
-    new(*object[1])
+    new(*object["data"])
   end
 
   def encode_nt_with
@@ -41,7 +41,7 @@ class Outer
     # See https://github.com/ruby/psych/blob/master/lib/psych/visitors/visitor.rb#L14
     # TODO document that if no deserialization is needed, it can be enough to do: alias to_nt to_s
     # TODO convert this to a dict when dict is implemented
-    ["class__Outer", @data + [@inner]]
+    { "__nestedtext_class__" => self.class.name, "data" => [*@data, @inner] }
   end
 
   def ==(other)
@@ -83,13 +83,13 @@ class Node
   alias eql? ==
 
   def self.nt_create(object)
-    data = object[1][0]
-    nxt = object[1][1]
+    data = object["data"][0]
+    nxt = object["data"][1]
     new(data, nxt)
   end
 
   def encode_nt_with
-    ["class__Node", [@data, @nxt]]
+    { "__nestedtext_class__" => self.class.name, "data" => [@data, @nxt] }
   end
 
   protected

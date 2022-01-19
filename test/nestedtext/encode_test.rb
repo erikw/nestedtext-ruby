@@ -542,19 +542,20 @@ class EncodeStringTest < Minitest::Test
   end
 end
 
+# TODO: get full qualified class names when encoding! like yaml/json dump
 class EncodeCustomClassTest < Minitest::Test
   def test_custom_class_nested
     outer = Outer.new("a", "b", Inner.new("c"))
     obj = [outer]
     exp = <<~NT.chomp
       -
-          - class__Outer
-          -
+          __nestedtext_class__: Outer
+          data:
               - a
               - b
               -
-                  - class__Inner
-                  -
+                  __nestedtext_class__: Inner
+                  data:
                       - c
     NT
     dumped = NestedText.dump(obj, strict: false)
@@ -567,13 +568,13 @@ class EncodeCustomClassTest < Minitest::Test
   def test_custom_class_nested_indented
     obj = Outer.new("a", "b", Inner.new("c"))
     exp = <<~NT.chomp
-      - class__Outer
-      -
+      __nestedtext_class__: Outer
+      data:
         - a
         - b
         -
-          - class__Inner
-          -
+          __nestedtext_class__: Inner
+          data:
             - c
     NT
     dumped = NestedText.dump(obj, indentation: 2, strict: false)
@@ -586,8 +587,8 @@ class EncodeCustomClassTest < Minitest::Test
   def test_custom_class_method_to_nt
     obj = Inner.new("a")
     exp = <<~NT.chomp
-      - class__Inner
-      -
+      __nestedtext_class__: Inner
+      data:
         - a
     NT
     dumped = obj.to_nt(indentation: 2)
@@ -597,20 +598,20 @@ class EncodeCustomClassTest < Minitest::Test
   def test_custom_class_linked_list
     obj = Node.from_enum(%w[a b c])
     exp = <<~NT.chomp
-      - class__Node
-      -
+      __nestedtext_class__: Node
+      data:
           - a
           -
-              - class__Node
-              -
+              __nestedtext_class__: Node
+              data:
                   - b
                   -
-                      - class__Node
-                      -
+                      __nestedtext_class__: Node
+                      data:
                           - c
                           -
-                              - class__nil
-                              -
+                              __nestedtext_class__: nil
+                              data:
     NT
     dumped = NestedText.dump(obj, strict: false)
     assert_equal exp, dumped

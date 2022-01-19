@@ -24,8 +24,6 @@ module NestedText
       when Object.object_id
         raise Errors::AssertionError, "Parsed result is of unexpected type." if
         !result.nil? && ![Hash, Array, String].include?(result.class) && @strict
-        # raise Errors::AssertionError, "Parsed result is of unexpected type." if
-        # !@strict || !result.nil? && ![Hash, Array, String].include?(result.class))
       when Hash.object_id
         result = {} if result.nil?
         raise Errors::TopLevelTypeMismatchParsedType.new(@top_class, result) unless result.instance_of?(Hash)
@@ -90,15 +88,6 @@ module NestedText
 
         result << value
       end
-      if !@strict && result.length == 2 && result[0] =~ /^class__(.*)$/
-        class_name = Regexp.last_match(1) # TODO: use named capture?
-        if class_name == "nil"
-          result = nil
-        else
-          clazz = Object.const_get class_name
-          result = clazz.nt_create(result) if clazz.respond_to? :nt_create
-        end
-      end
       result
     end
 
@@ -143,6 +132,17 @@ module NestedText
 
         result[key] = value
       end
+
+      if !@strict && result.length == 2 && result.key?("__nestedtext_class__")
+        class_name = result["__nestedtext_class__"]
+        if class_name == "nil"
+          result = nil
+        else
+          clazz = Object.const_get class_name
+          result = clazz.nt_create(result) if clazz.respond_to? :nt_create
+        end
+      end
+
       result
     end
 

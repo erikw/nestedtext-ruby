@@ -7,3 +7,11 @@ require "nestedtext/to_nt_mixin"
 
 class String include NestedText::NTEncodeStrictMixing end
 class Array include NestedText::NTEncodeStrictMixing end
+
+class NilClass
+  include NestedText::NTEncodeStrictMixing
+
+  def encode_nt_with
+    { "__nestedtext_class__" => "nil", "data" => [] }
+  end
+end
