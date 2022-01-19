@@ -53,7 +53,8 @@ module NestedText
                 if key.empty? || key.include?("\n") || key =~ /^\s+$/
                   key_lines = key.empty? ? [""] : key.lines(chomp: true)
                   rep_key = key_lines.map { |line| Dumper.add_prefix(":", line) }.join("\n")
-                  rep_value = dump_any(value, depth: depth + 1, force_multiline: true, **kwargs)
+                  force_multiline = value.is_a? String
+                  rep_value = dump_any(value, depth: depth + 1, force_multiline: force_multiline, **kwargs)
                 else
                   rep_key = "#{key}:"
                   rep_value = dump_any(value, depth: depth + 1, **kwargs)

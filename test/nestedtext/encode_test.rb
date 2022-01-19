@@ -355,7 +355,6 @@ class EncodeHashTest < Minitest::Test
     assert_equal exp, NestedText.dump(obj)
   end
 
-  # TODO: to get this to work, can't force multiline recursively, have to deal with it directly
   def test_hash_multiline_key_array_value
     obj = { "key\nline" => %w[i1 i2] }
     exp = <<~NT.chomp
@@ -374,6 +373,20 @@ class EncodeHashTest < Minitest::Test
       : line
           > string
           > line
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_multiline_multi_nesting
+    obj = { "key\nline" => [%W[multiline\nstring item]] }
+    exp = <<~NT.chomp
+      : key
+      : line
+          -
+              -
+                  > multiline
+                  > string
+              - item
     NT
     assert_equal exp, NestedText.dump(obj)
   end
