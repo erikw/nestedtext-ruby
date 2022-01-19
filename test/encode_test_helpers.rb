@@ -11,7 +11,7 @@ class Inner
   end
 
   def encode_nt_with
-    { "__nestedtext_class__" => self.class.name, "data" => [@val] }
+    NestedText::EncodeWith self, [@val]
   end
 
   def ==(other)
@@ -37,11 +37,7 @@ class Outer
   end
 
   def encode_nt_with
-    # TODO: create helper method NestedText.EncodeClassKey(klass) to generate key name
-    # See https://github.com/ruby/psych/blob/master/lib/psych/visitors/visitor.rb#L14
-    # TODO document that if no deserialization is needed, it can be enough to do: alias to_nt to_s
-    # TODO convert this to a dict when dict is implemented
-    { "__nestedtext_class__" => self.class.name, "data" => [*@data, @inner] }
+    NestedText::EncodeWith self, [*@data, @inner]
   end
 
   def ==(other)
@@ -89,7 +85,7 @@ class Node
   end
 
   def encode_nt_with
-    { "__nestedtext_class__" => self.class.name, "data" => [@data, @nxt] }
+    NestedText::EncodeWith self, [@data, @nxt]
   end
 
   protected
