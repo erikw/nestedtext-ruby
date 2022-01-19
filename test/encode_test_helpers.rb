@@ -1,4 +1,4 @@
-require "nestedtext/to_nt_mixin"
+require "nestedtext/encode_helpers"
 
 class Inner
   include NestedText::NTEncodeMixing
