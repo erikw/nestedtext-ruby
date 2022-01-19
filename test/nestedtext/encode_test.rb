@@ -4,9 +4,7 @@ require_relative "../encode_test_helpers"
 
 class EncodeTest < Minitest::Test
   def test_nil
-    obj = nil
-    exp = ""
-    assert_equal exp, NestedText.dump(obj)
+    assert_equal "", NestedText.dump(nil)
   end
 
   # TODO: test cycle detection.
@@ -145,14 +143,14 @@ class EncodeHashTest < Minitest::Test
     assert_equal "{}", NestedText.dump({})
   end
 
-  # TODO: what is expected outcome of nil as key? https://github.com/KenKundert/nestedtext/issues/31
-  # def test_hash_single_nil_key
-  # obj = { nil => "value" }
-  # exp = <<~NT.chomp
-  # key:
-  # NT
-  # assert_equal exp, NestedText.dump(obj)
-  # end
+  def test_hash_single_nil_key
+    obj = { nil => "value" }
+    exp = <<~NT.chomp
+      :
+          > value
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
 
   def test_hash_single_nil_value
     obj = { "key" => nil }

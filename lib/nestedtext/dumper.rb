@@ -49,6 +49,7 @@ module NestedText
               "{}"
             else
               obj.map do |key, value|
+                key = "" if key.nil?
                 if key.empty? || key.include?("\n") || key =~ /^\s+$/
                   key_lines = key.empty? ? [""] : key.lines(chomp: true)
                   rep_key = key_lines.map { |line| Dumper.add_prefix(":", line) }.join("\n")
