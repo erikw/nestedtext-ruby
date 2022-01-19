@@ -134,9 +134,17 @@ class EncodeArrayTest < Minitest::Test
     NT
     assert_equal exp, obj.to_nt
   end
+
+  def test_array_with_symbols
+    obj = %i[sym1 sym2]
+    exp = <<~NT.chomp
+      - sym1
+      - sym2
+    NT
+    assert_equal exp, obj.to_nt
+  end
 end
 
-# TODO: test symbols in array/hash: how encode them?
 class EncodeHashTest < Minitest::Test
   def test_hash_empty
     assert_equal "{}", NestedText.dump({})
@@ -433,6 +441,14 @@ class EncodeHashTest < Minitest::Test
     NT
     assert_equal exp, NestedText.dump(obj)
   end
+
+  def test_hash_symbol_value
+    obj = { "key" => :value }
+    exp = <<~NT.chomp
+      key: value
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
 end
 
 class EncodeStringTest < Minitest::Test
@@ -448,6 +464,14 @@ class EncodeStringTest < Minitest::Test
     obj = "  a string with\twords"
     exp = <<~NT.chomp
       > #{obj}
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_string_symbol
+    obj = :sym
+    exp = <<~NT.chomp
+      > sym
     NT
     assert_equal exp, NestedText.dump(obj)
   end
