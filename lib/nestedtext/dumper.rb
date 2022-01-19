@@ -40,6 +40,7 @@ module NestedText
       when Hash then dump_hash(obj, depth: depth, **kwargs)
       when Array then dump_array(obj, depth: depth, **kwargs)
       when String then dump_string(obj, depth: depth, **kwargs)
+      when Symbol then dump_string(obj.id2name, depth: depth, **kwargs)
       when nil
         if @strict
           ""
@@ -61,6 +62,8 @@ module NestedText
             else
               obj.map do |key, value|
                 key = "" if key.nil?
+                key = key.id2name if key.is_a? Symbol
+
                 if Dumper.multiline_key?(key)
                   key_lines = key.empty? ? [""] : key.lines(chomp: true)
                   rep_key = key_lines.map { |line| Dumper.add_prefix(":", line) }.join("\n")

@@ -425,6 +425,14 @@ class EncodeHashTest < Minitest::Test
     NT
     assert_equal exp, NestedText.dump(obj)
   end
+
+  def test_hash_symbol_key
+    obj = { key: "value" }
+    exp = <<~NT.chomp
+      key: value
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
 end
 
 class EncodeStringTest < Minitest::Test
