@@ -32,7 +32,8 @@ module NestedText
 
     def indent(target)
       indentstr = " " * @indentation
-      "\n" + target.lines.map { |line| indentstr + line }.join
+      indented = "\n" + target.lines.map { |line| indentstr + line }.join
+      target.replace indented
     end
 
     def dump_any(obj, depth: 0, **kwargs)
@@ -77,7 +78,7 @@ module NestedText
                 "#{rep_key}#{rep_value}"
               end.join("\n")
             end
-      rep = indent(rep) if !obj.empty? && depth > 0
+      indent(rep) if !obj.empty? && depth > 0
       rep
     end
 
@@ -92,7 +93,7 @@ module NestedText
               end.join("\n")
             end
 
-      rep = indent(rep) if !obj.empty? && depth > 0
+      indent(rep) if !obj.empty? && depth > 0
       rep
     end
 
@@ -109,7 +110,7 @@ module NestedText
       lines << ">" if lines.empty? && (depth == 0 || force_multiline)
 
       rep = lines.join.chomp
-      rep = indent(rep) if !rep.empty? && depth > 0 && (rep.include?("\n") || force_multiline)
+      indent(rep) if !rep.empty? && depth > 0 && (rep.include?("\n") || force_multiline)
       rep
     end
   end
