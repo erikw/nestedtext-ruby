@@ -12,6 +12,6 @@ class NilClass
   include NestedText::NTEncodeStrictMixing
 
   def encode_nt_with
-    NestedText::EncodeWith self, [], "nil"
+    NestedText::EncodeWithData self, "", "nil"
   end
 end

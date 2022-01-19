@@ -555,8 +555,7 @@ class EncodeCustomClassTest < Minitest::Test
               - b
               -
                   __nestedtext_class__: Inner
-                  data:
-                      - c
+                  data: c
     NT
     dumped = NestedText.dump(obj, strict: false)
     assert_equal exp, dumped
@@ -574,8 +573,7 @@ class EncodeCustomClassTest < Minitest::Test
         - b
         -
           __nestedtext_class__: Inner
-          data:
-            - c
+          data: c
     NT
     dumped = NestedText.dump(obj, indentation: 2, strict: false)
     assert_equal exp, dumped
@@ -588,8 +586,7 @@ class EncodeCustomClassTest < Minitest::Test
     obj = Inner.new("a")
     exp = <<~NT.chomp
       __nestedtext_class__: Inner
-      data:
-        - a
+      data: a
     NT
     dumped = obj.to_nt(indentation: 2)
     assert_equal exp, dumped

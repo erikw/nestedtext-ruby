@@ -18,8 +18,8 @@ module NestedText
     end
   end
 
-  def self.EncodeWith(owner, data_array, name_override = nil)
+  def self.EncodeWithData(owner, data, name_override = nil)
     class_name = name_override.nil? ? owner.class.name : name_override
-    { "__nestedtext_class__" => class_name, "data" => data_array }
+    { "__nestedtext_class__" => class_name, "data" => data }
   end
 end

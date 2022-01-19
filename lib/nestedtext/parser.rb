@@ -139,7 +139,7 @@ module NestedText
           result = nil
         else
           clazz = Object.const_get class_name
-          result = clazz.nt_create(result) if clazz.respond_to? :nt_create
+          result = clazz.nt_create(result["data"]) if clazz.respond_to? :nt_create
         end
       end
 

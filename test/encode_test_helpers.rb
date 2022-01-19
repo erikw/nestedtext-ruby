@@ -6,12 +6,12 @@ class Inner
     @val = val
   end
 
-  def self.nt_create(object)
-    new(*object["data"])
+  def self.nt_create(data)
+    new(data)
   end
 
   def encode_nt_with
-    NestedText::EncodeWith self, [@val]
+    NestedText::EncodeWithData self, @val
   end
 
   def ==(other)
@@ -28,16 +28,16 @@ end
 
 class Outer
   def initialize(a, b, inner)
-    @data = [a, b]
+    @list = [a, b]
     @inner = inner
   end
 
-  def self.nt_create(object)
-    new(*object["data"])
+  def self.nt_create(data)
+    new(*data)
   end
 
   def encode_nt_with
-    NestedText::EncodeWith self, [*@data, @inner]
+    NestedText::EncodeWithData self, [*@list, @inner]
   end
 
   def ==(other)
@@ -48,12 +48,12 @@ class Outer
   protected
 
   def state
-    [@data, @inner]
+    [@list, @inner]
   end
 end
 
 class Node
-  attr_reader :data
+  attr_reader :value
   attr_accessor :nxt
 
   def self.from_enum(enum)
@@ -68,8 +68,8 @@ class Node
     head
   end
 
-  def initialize(data, nxt = nil)
-    @data = data
+  def initialize(value, nxt = nil)
+    @value = value
     @nxt = nxt
   end
 
@@ -78,20 +78,20 @@ class Node
   end
   alias eql? ==
 
-  def self.nt_create(object)
-    data = object["data"][0]
-    nxt = object["data"][1]
-    new(data, nxt)
+  def self.nt_create(data)
+    value = data[0]
+    nxt = data[1]
+    new(value, nxt)
   end
 
   def encode_nt_with
-    NestedText::EncodeWith self, [@data, @nxt]
+    NestedText::EncodeWithData self, [@value, @nxt]
   end
 
   protected
 
   def state
-    [@data, @nxt]
+    [@value, @nxt]
   end
 end
 
