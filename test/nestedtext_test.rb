@@ -1,6 +1,6 @@
 require "test_helper"
 
-class NestedTextTest < Minitest::Test
+class NestedTextTest < NTTest
   def test_has_version
     refute_nil NestedText::VERSION
   end

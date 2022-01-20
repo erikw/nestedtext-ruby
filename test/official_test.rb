@@ -8,11 +8,13 @@ require_relative "official_tests/api/nestedtext_official_tests"
 # SimpleCov.command_name "test:integration"
 SimpleCov.command_name "test:official"
 
+# class OfficialTest < NTTest
 class OfficialTest < Minitest::Test
   cases = NestedTextOfficialTests.load_test_cases
   # TODO: define tests for: load_error, dump_success, dump_error
 
   # Though in this case, it's nice to go though test cases in the same order as they have in the official suite.
+  # TODO remove this after development and insteade use parallelize_me by extendint NTTest
   i_suck_and_my_tests_are_order_dependent!
 
   NestedTextOfficialTests.select_load_success(cases).each do |caze|

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DecodeStringTopAnyTest < Minitest::Test
+class DecodeStringTopAnyTest < NTTest
   def test_empty
     assert_nil NestedText.load("")
   end
@@ -25,7 +25,7 @@ class DecodeStringTopAnyTest < Minitest::Test
   end
 end
 
-class DecodeStringTopAnyDictTest < Minitest::Test
+class DecodeStringTopAnyDictTest < NTTest
   def test_dict_single_entry
     nts = "a: b"
     exp = { "a" => "b" }
@@ -281,7 +281,7 @@ class DecodeStringTopAnyDictTest < Minitest::Test
   end
 end
 
-class DecodeStringTopAnyListTest < Minitest::Test
+class DecodeStringTopAnyListTest < NTTest
   def test_list_empty
     nts = <<~NT
       -
@@ -398,7 +398,7 @@ class DecodeStringTopAnyListTest < Minitest::Test
   end
 end
 
-class DecodeStringTopAnyMultilineStringTest < Minitest::Test
+class DecodeStringTopAnyMultilineStringTest < NTTest
   def test_multistring_single_line
     nts = <<~NT
       > just this line\t
@@ -472,7 +472,7 @@ class DecodeStringTopAnyMultilineStringTest < Minitest::Test
   end
 end
 
-class DecodeStringTopAnyInlineDictTest < Minitest::Test
+class DecodeStringTopAnyInlineDictTest < NTTest
   def test_inline_dict_empty
     assert_equal({}, NestedText.load("{}"))
   end
@@ -588,7 +588,7 @@ class DecodeStringTopAnyInlineDictTest < Minitest::Test
   end
 end
 
-class DecodeStringTopAnyInlineListTest < Minitest::Test
+class DecodeStringTopAnyInlineListTest < NTTest
   def test_inline_list_empty
     nts = "[]"
     exp = []
@@ -695,7 +695,7 @@ class DecodeStringTopAnyInlineListTest < Minitest::Test
   end
 end
 
-class DecodeStringTopTest < Minitest::Test
+class DecodeStringTopTest < NTTest
   def test_top_invalid_enumerable
     assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
       NestedText.load("", top_class: Enumerable)
@@ -735,7 +735,7 @@ class DecodeStringTopTest < Minitest::Test
   end
 end
 
-class DecodeStringTopHashTest < Minitest::Test
+class DecodeStringTopHashTest < NTTest
   def test_top_hash_empty
     assert_equal({}, NestedText.load("", top_class: Hash))
   end
@@ -754,7 +754,7 @@ class DecodeStringTopHashTest < Minitest::Test
   end
 end
 
-class DecodeStringTopArrayTest < Minitest::Test
+class DecodeStringTopArrayTest < NTTest
   def test_top_array_empty
     assert_equal([], NestedText.load("", top_class: Array))
   end
@@ -773,7 +773,7 @@ class DecodeStringTopArrayTest < Minitest::Test
   end
 end
 
-class DecodeStringTopArrayTest < Minitest::Test
+class DecodeStringTopArrayTest < NTTest
   def test_top_multilinestring_empty
     nts = "      "
     exp = ""
@@ -796,7 +796,7 @@ class DecodeStringTopArrayTest < Minitest::Test
   end
 end
 
-class DecodeFileTest < Minitest::Test
+class DecodeFileTest < NTTest
   FIXTURE_PATH = "test/fixtures"
 
   def test_top_hash_dict_nested

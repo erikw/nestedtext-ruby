@@ -21,3 +21,8 @@ require "nestedtext"
 # Colorized test reporter.
 # Minitest::Reporters.use! # Annoying progress bar which messes up stdout/logging.
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
+# Base class for unit tests.
+class NTTest < Minitest::Test
+  parallelize_me!
+end

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class EncodeTest < Minitest::Test
+class EncodeTest < NTTest
   def test_nil
     assert_equal "", NestedText.dump(nil)
   end
@@ -30,7 +30,7 @@ class EncodeTest < Minitest::Test
   end
 end
 
-class EncodeArrayTest < Minitest::Test
+class EncodeArrayTest < NTTest
   make_my_diffs_pretty!
   def test_array_empty
     assert_equal "[]", NestedText.dump([])
@@ -157,7 +157,7 @@ class EncodeArrayTest < Minitest::Test
   end
 end
 
-class EncodeHashTest < Minitest::Test
+class EncodeHashTest < NTTest
   def test_hash_empty
     assert_equal "{}", NestedText.dump({})
   end
@@ -463,7 +463,7 @@ class EncodeHashTest < Minitest::Test
   end
 end
 
-class EncodeStringTest < Minitest::Test
+class EncodeStringTest < NTTest
   def test_string_empty
     assert_equal ">", NestedText.dump("")
   end
@@ -541,7 +541,7 @@ class EncodeStringTest < Minitest::Test
   end
 end
 
-class EncodeToFile < Minitest::Test
+class EncodeToFile < NTTest
   # TODO: setup method that creates tmp file to dump to, and remove if after block?
   def test_to_file_dump
     obj = ["item"]

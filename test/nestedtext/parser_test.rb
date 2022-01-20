@@ -2,7 +2,7 @@ require "stringio"
 
 require "test_helper"
 
-class ParserTest < Minitest::Test
+class ParserTest < NTTest
   def test_invalid_top_type_initialize
     assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
       NestedText::Parser.new(StringIO.new, Enumerable)

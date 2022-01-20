@@ -2,7 +2,7 @@ require "stringio"
 
 require "test_helper"
 
-class LineScannerTest < Minitest::Test
+class LineScannerTest < NTTest
   def test_empty
     scanner = NestedText::LineScanner.new(StringIO.new("# comment\n#comment"))
     assert scanner.empty?
@@ -22,7 +22,7 @@ class LineScannerTest < Minitest::Test
   end
 end
 
-class InlineScannerTest < Minitest::Test
+class InlineScannerTest < NTTest
   def test_empty
     line = NestedText::Line.new("", 0, nil)
     scanner = NestedText::InlineScanner.new(line)
@@ -43,7 +43,7 @@ class InlineScannerTest < Minitest::Test
   end
 end
 
-class LineTest < Minitest::Test
+class LineTest < NTTest
   def test_to_s
     content = "string content"
     line = NestedText::Line.new(content, 0, nil)

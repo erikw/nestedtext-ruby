@@ -99,7 +99,7 @@ module CustomTestClasses
   class NotNTEncodable; end
 end
 
-class EncodeCustomClassTest < Minitest::Test
+class EncodeCustomClassTest < NTTest
   def test_custom_class_nested
     outer = CustomTestClasses::Outer.new("a", "b", CustomTestClasses::Inner.new("c"))
     obj = [outer]
