@@ -1,7 +1,5 @@
 require "test_helper"
 
-require_relative "../encode_test_helpers"
-
 class EncodeTest < Minitest::Test
   def test_nil
     assert_equal "", NestedText.dump(nil)
@@ -539,88 +537,5 @@ class EncodeStringTest < Minitest::Test
       > string
     NT
     assert_equal exp, obj.to_nt
-  end
-end
-
-# TODO: get full qualified class names when encoding! like yaml/json dump
-class EncodeCustomClassTest < Minitest::Test
-  def test_custom_class_nested
-    outer = Outer.new("a", "b", Inner.new("c"))
-    obj = [outer]
-    exp = <<~NT.chomp
-      -
-          __nestedtext_class__: Outer
-          data:
-              - a
-              - b
-              -
-                  __nestedtext_class__: Inner
-                  data: c
-    NT
-    dumped = NestedText.dump(obj, strict: false)
-    assert_equal exp, dumped
-
-    loaded = NestedText.load(dumped, strict: false)
-    assert_equal obj, loaded
-  end
-
-  def test_custom_class_nested_indented
-    obj = Outer.new("a", "b", Inner.new("c"))
-    exp = <<~NT.chomp
-      __nestedtext_class__: Outer
-      data:
-        - a
-        - b
-        -
-          __nestedtext_class__: Inner
-          data: c
-    NT
-    dumped = NestedText.dump(obj, indentation: 2, strict: false)
-    assert_equal exp, dumped
-
-    loaded = NestedText.load(dumped, strict: false)
-    assert_equal obj, loaded
-  end
-
-  def test_custom_class_method_to_nt
-    obj = Inner.new("a")
-    exp = <<~NT.chomp
-      __nestedtext_class__: Inner
-      data: a
-    NT
-    dumped = obj.to_nt(indentation: 2)
-    assert_equal exp, dumped
-  end
-
-  def test_custom_class_linked_list
-    obj = Node.from_enum(%w[a b c])
-    exp = <<~NT.chomp
-      __nestedtext_class__: Node
-      data:
-          - a
-          -
-              __nestedtext_class__: Node
-              data:
-                  - b
-                  -
-                      __nestedtext_class__: Node
-                      data:
-                          - c
-                          -
-                              __nestedtext_class__: nil
-                              data:
-    NT
-    dumped = NestedText.dump(obj, strict: false)
-    assert_equal exp, dumped
-
-    loaded = NestedText.load(dumped, strict: false)
-    assert_equal obj, loaded
-  end
-
-  def test_custom_class_not_encodeable
-    obj = NotNTEncodable.new
-    assert_raises(NestedText::Errors::DumpUnsupportedTypeError) do
-      NestedText.dump(obj)
-    end
   end
 end
