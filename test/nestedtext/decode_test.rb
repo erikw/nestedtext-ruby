@@ -295,6 +295,17 @@ class DecodeStringTopAnyDictTest < NTTest
       NestedText.load(nts)
     end
   end
+
+  def test_dict_value_partial_dedent
+    nts = <<~NT
+      key1:
+          key2: v2
+        key3: v3
+    NT
+    assert_raises(NestedText::Errors::InvalidIndentation) do
+      NestedText.load(nts)
+    end
+  end
 end
 
 class DecodeStringTopAnyListTest < NTTest
