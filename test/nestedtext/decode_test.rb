@@ -286,7 +286,7 @@ class DecodeStringTopAnyDictTest < NTTest
     assert_equal(exp, NestedText.load(nts))
   end
 
-  def test_dict_value_not_indented
+  def test_dict_value_invalid_indent_missing
     nts = <<~NT
       dict key:
       - list value
@@ -296,11 +296,21 @@ class DecodeStringTopAnyDictTest < NTTest
     end
   end
 
-  def test_dict_value_partial_dedent
+  def test_dict_value_invalid_indent_dedented
     nts = <<~NT
       key1:
           key2: v2
         key3: v3
+    NT
+    assert_raises(NestedText::Errors::InvalidIndentation) do
+      NestedText.load(nts)
+    end
+  end
+
+  def test_dict_value_invalid_indent_whitespace_value_above
+    nts = <<~NT
+      key1:#{" "}
+          key2: v2
     NT
     assert_raises(NestedText::Errors::InvalidIndentation) do
       NestedText.load(nts)
