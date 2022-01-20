@@ -638,6 +638,13 @@ class DecodeStringTopAnyInlineDictTest < NTTest
     end
   end
 
+  def test_inline_dict_extra_char
+    nts = "{a: 1}x"
+    assert_raises(NestedText::Errors::InlineExtraCharactersAfterDelimiter) do
+      NestedText.load(nts)
+    end
+  end
+
   def test_inline_dict_extra_chars
     nts = "{a: 1}extra"
     assert_raises(NestedText::Errors::InlineExtraCharactersAfterDelimiter) do
