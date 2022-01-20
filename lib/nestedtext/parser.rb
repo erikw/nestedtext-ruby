@@ -139,7 +139,11 @@ module NestedText
       # TODO extract __nestedtext_class__ to constant
       if !@strict && result.length == 2 && result.key?("__nestedtext_class__")
         class_name = result["__nestedtext_class__"]
-        clazz = class_name == "nil" ? NilClass : Object.const_get(class_name, false)
+        begin
+          clazz = class_name == "nil" ? NilClass : Object.const_get(class_name, false)
+        rescue NameError
+          raise Errors::ParseCustomClassNotFound.new(first_line, class_name)
+        end
         if clazz.respond_to? :nt_create
           result = clazz.nt_create(result["data"])
         else
