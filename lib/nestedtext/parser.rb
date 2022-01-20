@@ -219,7 +219,7 @@ module NestedText
 
       when "["
         result = []
-        first = true
+        first = true # TODO: can be replaced by checking result.empty? below?
         loop do
           @inline_scanner.read_next
           break if first && @inline_scanner.peek == "]"

@@ -775,6 +775,13 @@ class DecodeStringTopAnyInlineListTest < NTTest
       NestedText.load(nts)
     end
   end
+
+  def test_inline_list_missing_value
+    nts = "[a, }]"
+    assert_raises(NestedText::Errors::InlineMissingValue) do
+      NestedText.load(nts)
+    end
+  end
 end
 
 class DecodeStringTopTest < NTTest
