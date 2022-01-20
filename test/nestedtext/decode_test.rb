@@ -434,6 +434,16 @@ class DecodeStringTopAnyListTest < NTTest
     end
   end
 
+  def test_list_nested_invalid_linetag
+    nts = <<~NT
+      - valid line
+      $ invalid line
+    NT
+    assert_raises(NestedText::Errors::LineTagNotDetected) do
+      NestedText.load(nts)
+    end
+  end
+
   def test_list_error_duplicate_key
     nts = <<~NT
       key: value1
