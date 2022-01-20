@@ -762,7 +762,14 @@ class DecodeStringTopAnyInlineListTest < NTTest
     end
   end
 
-  def test_inline_list_invalid_missing_closing_bracket
+  def test_inline_list_no_closing_bracket_empty
+    nts = "[,"
+    assert_raises(NestedText::Errors::InlineNoClosingDelimiter) do
+      NestedText.load(nts)
+    end
+  end
+
+  def test_inline_list_no_closing_bracket_items
     nts = "[1, 2"
     assert_raises(NestedText::Errors::InlineNoClosingDelimiter) do
       NestedText.load(nts)
