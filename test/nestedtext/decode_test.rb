@@ -836,15 +836,27 @@ end
 class DecodeFileTest < NTTest
   FIXTURE_PATH = "test/fixtures"
 
-  def test_top_hash_dict_nested
+  def test_load_file_hash_dict_nested
     ntf = FIXTURE_PATH + "/1.nt"
     exp = { "one" => { "two" => "3" } }
     assert_equal(exp, NestedText.load_file(ntf, top_class: Hash))
   end
 
-  def test_dict_nested_multiple
+  def test_load_file_nested_multiple
     ntf = FIXTURE_PATH + "/2.nt"
     exp = { "a" => { "b" => "1" }, "c" => "2", "d" => { "e" => "3" }, "f" => "" }
     assert_equal(exp, NestedText.load_file(ntf, top_class: Hash))
+  end
+
+  def test_load_file_invalid_filename_nil
+    assert_raises(NestedText::Errors::WrongInputTypeError) do
+      NestedText.load_file(nil)
+    end
+  end
+
+  def test_load_file_invalid_filename_array
+    assert_raises(NestedText::Errors::WrongInputTypeError) do
+      NestedText.load_file([])
+    end
   end
 end

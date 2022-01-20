@@ -8,7 +8,6 @@ require "logger"
 require "stringio"
 
 module NestedText
-  # TODO: allow optional io=nil that can be written to? Similar to JSON module
   def self.load(ntstring, top_class: Object, strict: true)
     # logger = Logger.new(STDOUT) # TODO: make this available to other classes in module. How avoid singleton?
     # logger.info "input=#{raw_input_string}"
@@ -22,7 +21,7 @@ module NestedText
   end
 
   def self.load_file(filename, top_class: Object, strict: true)
-    raise Errors::WrongInputTypeError.new([String], filename) unless filename.nil? || filename.is_a?(String)
+    raise Errors::WrongInputTypeError.new([String], filename) unless !filename.nil? && filename.is_a?(String)
 
     assert_valid_top_level_type top_class
 
