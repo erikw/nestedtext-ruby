@@ -168,6 +168,12 @@ module NestedText
       end
     end
 
+    class ParseCustomClassNoCreateMethod < ParseError
+      def initialize(line, class_name)
+        super(line, line.indentation, "Detected an encode custom class #{class_name} but it does not have a #nt_create method, so it can't be deserialzied.")
+      end
+    end
+
     class UnsupportedTopLevelTypeError < Error
       def initialize(type_class)
         super("The given top level type #{type_class&.name} is unsupported. Chose between #{TOP_LEVEL_TYPES.join(", ")}.")

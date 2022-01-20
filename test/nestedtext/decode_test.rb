@@ -898,3 +898,18 @@ class DecodeFileTest < NTTest
     end
   end
 end
+
+class NoNTCreateClass; end
+
+class DecodeCustomClassTest < NTTest
+  def test_custom_class_no_nt_creat_method
+    nts = <<~NT
+      __nestedtext_class__: NoNTCreateClass
+      data: dummy
+    NT
+
+    assert_raises(NestedText::Errors::ParseCustomClassNoCreateMethod) do
+      NestedText.load(nts, strict: false)
+    end
+  end
+end

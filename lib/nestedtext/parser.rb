@@ -93,8 +93,10 @@ module NestedText
 
     def parse_dict_item(indentation)
       result = {}
+      first_line = nil
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         line = @line_scanner.read_next
+        first_line = line if first_line.nil?
         Errors.raise_unrecognized_line(line) if line.tag == :unrecognized
         raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
         raise Errors::LineTypeExpectedDictItem, line unless %i[dict_item key_item].include? line.tag
@@ -133,10 +135,16 @@ module NestedText
         result[key] = value
       end
 
+      # Custom class decoding.
+      # TODO extract __nestedtext_class__ to constant
       if !@strict && result.length == 2 && result.key?("__nestedtext_class__")
         class_name = result["__nestedtext_class__"]
         clazz = class_name == "nil" ? NilClass : Object.const_get(class_name, false)
-        result = clazz.nt_create(result["data"]) if clazz.respond_to? :nt_create
+        if clazz.respond_to? :nt_create
+          result = clazz.nt_create(result["data"])
+        else
+          raise Errors::ParseCustomClassNoCreateMethod.new(first_line, class_name)
+        end
       end
 
       result
