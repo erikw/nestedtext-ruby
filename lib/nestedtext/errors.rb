@@ -162,13 +162,6 @@ module NestedText
       end
     end
 
-    def self.raise_unrecognized_line(line)
-      # [[:space:]] include all Unicode spaces e.g. non-breakable space which \s does not.
-      raise InvalidIndentationChar, line if line.content.chr =~ /[[:space:]]/
-
-      raise LineTagNotDetected, line
-    end
-
     class DictDuplicateKey < ParseError
       def initialize(line)
         super(line, line.indentation, "duplicate key: #{line.attribs["key"]}.")
@@ -231,6 +224,13 @@ module NestedText
       def initialize(path)
         super("Must supply a string to a file path that can be written to. Given: #{path}")
       end
+    end
+
+    def self.raise_unrecognized_line(line)
+      # [[:space:]] include all Unicode spaces e.g. non-breakable space which \s does not.
+      raise InvalidIndentationChar, line if line.content.chr =~ /[[:space:]]/
+
+      raise LineTagNotDetected, line
     end
   end
 end

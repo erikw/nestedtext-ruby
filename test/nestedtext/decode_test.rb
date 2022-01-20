@@ -23,6 +23,12 @@ class DecodeStringTopAnyTest < NTTest
       NestedText.load(" a: b")
     end
   end
+
+  def test_invalid_line_tag
+    assert_raises(NestedText::Errors::LineTagNotDetected) do
+      NestedText.load("$ nothing starts with this char")
+    end
+  end
 end
 
 class DecodeStringTopAnyDictTest < NTTest
