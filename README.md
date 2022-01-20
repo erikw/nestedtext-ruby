@@ -14,3 +14,12 @@ Inspired by the `JSON` and `YAML` modules.
 This project will soon be released! :tada:
 
 On-going development is at branch [**dev**](https://github.com/erikw/nestedtext-ruby/tree/dev).
+
+
+
+# Decoding
+
+# Encoding
+
+# Custom classes
+See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.rb) for more real working examples.
