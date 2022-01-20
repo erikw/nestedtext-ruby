@@ -21,9 +21,4 @@ module NestedText
       @strict = strict
     end
   end
-
-  def self.EncodeWithData(owner, data, name_override = nil)
-    class_name = name_override.nil? ? owner.class.name : name_override
-    { "__nestedtext_class__" => class_name, "data" => data }
-  end
 end
