@@ -37,6 +37,8 @@ module NestedText
     #        - NT supported types handled directly
     #        - custom objects: check respond_to? encode_nt_with and continue recursing on the returned array
 
+    raise Errors::DumpBadIO, io unless io.nil? || io.respond_to?(:write) && io.respond_to?(:fsync)
+
     opts = EncodeOptions.new(indentation, strict)
     dumper = Dumper.new(opts)
     result = dumper.dump obj

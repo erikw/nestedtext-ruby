@@ -1,5 +1,7 @@
 require "test_helper"
 
+require "stringio"
+
 class EncodeTest < NTTest
   def test_nil
     assert_equal "", NestedText.dump(nil)
@@ -542,7 +544,7 @@ class EncodeStringTest < NTTest
 end
 
 # TODO: test io with .to_nt (should we support that? I guess so)
-class EncodeToFile < NTTest
+class EncodeToIO < NTTest
   # TODO: setup method that creates tmp file to dump to, and remove if after block?
 
   def setup
@@ -553,7 +555,7 @@ class EncodeToFile < NTTest
     File.read(@file)
   end
 
-  def test_file_dump
+  def test_io_dump_file
     obj = %w[a b]
     exp = "- a\n- b"
 
@@ -562,7 +564,7 @@ class EncodeToFile < NTTest
     assert_equal exp, file_content
   end
 
-  def test_file_dump_io_param
+  def test_io_dump_io_param_file
     obj = %w[a b]
     exp = "- a\n- b"
 
@@ -571,7 +573,23 @@ class EncodeToFile < NTTest
     assert_equal exp, file_content
   end
 
-  def test_file_dump_invalid_path_nil
+  def test_io_dump_io_param_stringio
+    obj = %w[a b]
+    exp = "- a\n- b"
+
+    sio = StringIO.new
+    dumped = NestedText.dump(obj, io: sio)
+    assert_equal exp, dumped
+    assert_equal exp, sio.string
+  end
+
+  def test_io_dump_invalid_io
+    assert_raises(NestedText::Errors::DumpBadIO) do
+      NestedText.dump("dummy", io: [])
+    end
+  end
+
+  def test_io_dump_invalid_path_nil
     assert_raises(NestedText::Errors::DumpFileBadPath) do
       NestedText.dump_file("dummy", nil)
     end

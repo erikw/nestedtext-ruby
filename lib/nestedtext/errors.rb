@@ -221,6 +221,12 @@ module NestedText
       end
     end
 
+    class DumpBadIO < DumpError
+      def initialize(io)
+        super("When giving the io argument, it must be of type IO (respond to #write, #fsync). Given: #{io.class.name}")
+      end
+    end
+
     class DumpFileBadPath < DumpError
       def initialize(path)
         super("Must supply a string to a file path that can be written to. Given: #{path}")
