@@ -10,6 +10,8 @@ require "nestedtext/dumper"
 
 module NestedText
   def self.dump(obj, io: nil, indentation: 4, strict: true)
+    # IO additionaly write the out result to IO and still return result.
+
     # Idea #1
     # * core_ext.rb adds accept(visitor) to Array, Hash, Enumarable etc like https://medium.com/kkempin/visitor-design-pattern-in-ruby-bc07395c4abc
     #    * https://refactoring.guru/design-patterns/visitor/ruby/example
@@ -37,17 +39,15 @@ module NestedText
 
     opts = EncodeOptions.new(indentation, strict)
     dumper = Dumper.new(opts)
-    dumper.dump obj
+    result = dumper.dump obj
+    io.write result unless io.nil?
+    result
   end
 
-  # def self.load_file(filename, top_class: Object)
-  # raise Errors::WrongInputTypeError.new([String], filename) unless filename.nil? || filename.is_a?(String)
-
-  # assert_valid_top_level_type top_class
-
-  ## Open explicitly in text mode to detect \r as line ending.
-  # File.open(filename, mode = "rt") do |file|
-  # Parser.new(file, top_class).parse
-  # end
-  # end
+  def self.dump_file(obj, filename, **kwargs)
+    # TODO: test that result is still returned. and for mormal dump.
+    File.open(filename, mode = "wt") do |file|
+      dump(obj, io: file, **kwargs)
+    end
+  end
 end

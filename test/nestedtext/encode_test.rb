@@ -31,6 +31,7 @@ class EncodeTest < Minitest::Test
 end
 
 class EncodeArrayTest < Minitest::Test
+  make_my_diffs_pretty!
   def test_array_empty
     assert_equal "[]", NestedText.dump([])
   end
@@ -535,6 +536,17 @@ class EncodeStringTest < Minitest::Test
     exp = <<~NT.chomp
       > multi-line
       > string
+    NT
+    assert_equal exp, obj.to_nt
+  end
+end
+
+class EncodeToFile < Minitest::Test
+  # TODO: setup method that creates tmp file to dump to, and remove if after block?
+  def test_to_file_dump
+    obj = ["item"]
+    exp = <<~NT.chomp
+      - item
     NT
     assert_equal exp, obj.to_nt
   end
