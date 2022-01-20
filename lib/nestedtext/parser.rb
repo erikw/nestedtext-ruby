@@ -136,9 +136,8 @@ module NestedText
       end
 
       # Custom class decoding.
-      # TODO extract __nestedtext_class__ to constant
-      if !@strict && result.length == 2 && result.key?("__nestedtext_class__")
-        class_name = result["__nestedtext_class__"]
+      if !@strict && result.length == 2 && result.key?(CUSTOM_CLASS_KEY)
+        class_name = result[CUSTOM_CLASS_KEY]
         begin
           clazz = class_name == "nil" ? NilClass : Object.const_get(class_name, false)
         rescue NameError

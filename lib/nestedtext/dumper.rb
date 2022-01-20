@@ -122,7 +122,7 @@ module NestedText
     def dump_custom_class(obj, **kwargs)
       if obj.respond_to? :encode_nt_with
         class_name = obj.nil? ? "nil" : obj.class.name
-        enc = { "__nestedtext_class__" => class_name, "data" => obj.encode_nt_with }
+        enc = { CUSTOM_CLASS_KEY => class_name, "data" => obj.encode_nt_with }
         dump_any(enc, **kwargs)
       else
         raise Errors::DumpUnsupportedTypeError, obj
