@@ -22,4 +22,5 @@ On-going development is at branch [**dev**](https://github.com/erikw/nestedtext-
 # Encoding
 
 # Custom classes
+`strict: false` flag needed
 See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.rb) for more real working examples.
