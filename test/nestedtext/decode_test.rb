@@ -94,7 +94,17 @@ class DecodeStringTopAnyDictTest < NTTest
   def test_dict_nested_invalid_indentation_tab
     nts = <<~NT
       key 1:
-          	    key2: this line has tab indentation
+          \t    key2: this line has tab indentation
+    NT
+    assert_raises(NestedText::Errors::InvalidIndentationChar) do
+      NestedText.load(nts)
+    end
+  end
+
+  def test_dict_nested_invalid_indentation_non_break_space
+    nts = <<~NT
+      key:
+       > this line has non-breaking space in indentation
     NT
     assert_raises(NestedText::Errors::InvalidIndentationChar) do
       NestedText.load(nts)
@@ -389,6 +399,16 @@ class DecodeStringTopAnyListTest < NTTest
       : but suddently key item here
     NT
     assert_raises(NestedText::Errors::LineTypeExpectedListItem) do
+      NestedText.load(nts)
+    end
+  end
+
+  def test_list_nested_invalid_indentation_tab
+    nts = <<~NT
+      key:
+       \t    - this line has tab indentation
+    NT
+    assert_raises(NestedText::Errors::InvalidIndentationChar) do
       NestedText.load(nts)
     end
   end
