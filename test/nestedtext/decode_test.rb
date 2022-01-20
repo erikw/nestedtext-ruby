@@ -661,6 +661,13 @@ class DecodeStringTopAnyInlineDictTest < NTTest
       NestedText.load(nts)
     end
   end
+
+  def test_inline_dict_incomplete_key
+    nts = "{key"
+    assert_raises(NestedText::Errors::InlineNoClosingDelimiter) do
+      NestedText.load(nts)
+    end
+  end
 end
 
 class DecodeStringTopAnyInlineListTest < NTTest
