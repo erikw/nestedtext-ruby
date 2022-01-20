@@ -12,7 +12,7 @@ module CustomTestClasses
     end
 
     def encode_nt_with
-      NestedText::EncodeWithData self, @val
+      @val
     end
 
     def ==(other)
@@ -38,7 +38,7 @@ module CustomTestClasses
     end
 
     def encode_nt_with
-      NestedText::EncodeWithData self, [*@list, @inner]
+      [*@list, @inner]
     end
 
     def ==(other)
@@ -86,7 +86,7 @@ module CustomTestClasses
     end
 
     def encode_nt_with
-      NestedText::EncodeWithData self, [@value, @nxt]
+      [@value, @nxt]
     end
 
     protected

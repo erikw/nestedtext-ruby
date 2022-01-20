@@ -11,11 +11,7 @@ class Array include NestedText::NTEncodeStrictMixing end
 class NilClass
   include NestedText::NTEncodeStrictMixing
 
-  def self.nt_create(_data)
-    nil
-  end
+  def self.nt_create(_data) = nil
 
-  def encode_nt_with
-    NestedText::EncodeWithData self, "", "nil"
-  end
+  def encode_nt_with() = ""
 end

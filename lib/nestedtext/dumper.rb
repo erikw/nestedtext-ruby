@@ -55,25 +55,12 @@ module NestedText
         when String then dump_string(obj, depth: depth, **kwargs)
         when Symbol then dump_string(obj.id2name, depth: depth, **kwargs)
         when nil
-          if @strict
-            ""
-          else
-            dump_any(nil.encode_nt_with, depth: depth, **kwargs)
-          end
+          @strict ? "" : dump_custom_class(obj, depth: depth, **kwargs)
         else
-          if obj.respond_to? :encode_nt_with
-            dump_any(obj.encode_nt_with, depth: depth, **kwargs)
-            # dump_custom_class(obj, depth: depth, **kwargs)
-          else
-            raise Errors::DumpUnsupportedTypeError, obj
-          end
+          dump_custom_class(obj, depth: depth, **kwargs)
         end
       end
     end
-
-    # def dump_custom_class
-    # dump_any(obj.encode_nt_with, depth: depth, **kwargs)
-    # end
 
     def dump_hash(obj, depth: 0, **kwargs)
       rep = if depth == 0 && obj.empty?
@@ -130,6 +117,16 @@ module NestedText
       rep = lines.join.chomp
       indent(rep) if !rep.empty? && depth > 0 && (rep.include?("\n") || force_multiline)
       rep
+    end
+
+    def dump_custom_class(obj, **kwargs)
+      if obj.respond_to? :encode_nt_with
+        class_name = obj.nil? ? "nil" : obj.class.name
+        enc = { "__nestedtext_class__" => class_name, "data" => obj.encode_nt_with }
+        dump_any(enc, **kwargs)
+      else
+        raise Errors::DumpUnsupportedTypeError, obj
+      end
     end
   end
 end
