@@ -135,12 +135,8 @@ module NestedText
 
       if !@strict && result.length == 2 && result.key?("__nestedtext_class__")
         class_name = result["__nestedtext_class__"]
-        if class_name == "nil"
-          result = nil
-        else
-          clazz = Object.const_get(class_name, false)
-          result = clazz.nt_create(result["data"]) if clazz.respond_to? :nt_create
-        end
+        clazz = class_name == "nil" ? NilClass : Object.const_get(class_name, false)
+        result = clazz.nt_create(result["data"]) if clazz.respond_to? :nt_create
       end
 
       result

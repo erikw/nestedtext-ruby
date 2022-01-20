@@ -63,12 +63,17 @@ module NestedText
         else
           if obj.respond_to? :encode_nt_with
             dump_any(obj.encode_nt_with, depth: depth, **kwargs)
+            # dump_custom_class(obj, depth: depth, **kwargs)
           else
             raise Errors::DumpUnsupportedTypeError, obj
           end
         end
       end
     end
+
+    # def dump_custom_class
+    # dump_any(obj.encode_nt_with, depth: depth, **kwargs)
+    # end
 
     def dump_hash(obj, depth: 0, **kwargs)
       rep = if depth == 0 && obj.empty?
