@@ -220,5 +220,11 @@ module NestedText
         super("cyclic reference found: cannot be dumped.")
       end
     end
+
+    class DumpFileBadPath < DumpError
+      def initialize(path)
+        super("Must supply a string to a file path that can be written to. Given: #{path}")
+      end
+    end
   end
 end

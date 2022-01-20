@@ -48,7 +48,8 @@ module NestedText
   end
 
   def self.dump_file(obj, filename, **kwargs)
-    # TODO: test that result is still returned. and for mormal dump.
+    raise Errors::DumpFileBadPath, filename unless filename.is_a? String
+
     File.open(filename, mode = "wt") do |file|
       dump(obj, io: file, **kwargs)
     end

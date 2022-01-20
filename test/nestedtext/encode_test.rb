@@ -570,4 +570,10 @@ class EncodeToFile < NTTest
     assert_equal exp, dumped
     assert_equal exp, file_content
   end
+
+  def test_file_dump_invalid_path_nil
+    assert_raises(NestedText::Errors::DumpFileBadPath) do
+      NestedText.dump_file("dummy", nil)
+    end
+  end
 end
