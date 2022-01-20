@@ -11,7 +11,7 @@ SimpleCov.command_name "test:official"
 # class OfficialTest < NTTest
 class OfficialTest < Minitest::Test
   cases = NestedTextOfficialTests.load_test_cases
-  # TODO: define tests for: load_error, dump_success, dump_error
+  # TODO: define tests for: dump_success, dump_error
 
   # Though in this case, it's nice to go though test cases in the same order as they have in the official suite.
   # TODO remove this after development and insteade use parallelize_me by extendint NTTest
