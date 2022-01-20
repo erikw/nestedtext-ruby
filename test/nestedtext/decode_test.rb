@@ -496,6 +496,17 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
       NestedText.load(nts)
     end
   end
+
+  def test_dict_nested_invalid_indentation_tab
+    nts = <<~NT
+      key:
+          \t    > multiline
+                > string
+    NT
+    assert_raises(NestedText::Errors::InvalidIndentationChar) do
+      NestedText.load(nts)
+    end
+  end
 end
 
 class DecodeStringTopAnyInlineDictTest < NTTest
