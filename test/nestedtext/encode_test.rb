@@ -541,13 +541,33 @@ class EncodeStringTest < NTTest
   end
 end
 
+# TODO: test io with .to_nt (should we support that? I guess so)
 class EncodeToFile < NTTest
   # TODO: setup method that creates tmp file to dump to, and remove if after block?
-  def test_to_file_dump
-    obj = ["item"]
-    exp = <<~NT.chomp
-      - item
-    NT
-    assert_equal exp, obj.to_nt
+
+  def setup
+    @file = Tempfile.new("nestedtext_test")
+  end
+
+  def file_content
+    File.read(@file)
+  end
+
+  def test_file_dump
+    obj = %w[a b]
+    exp = "- a\n- b"
+
+    dumped = NestedText.dump_file(obj, @file.path)
+    assert_equal exp, dumped
+    assert_equal exp, file_content
+  end
+
+  def test_file_dump_io_param
+    obj = %w[a b]
+    exp = "- a\n- b"
+
+    dumped = NestedText.dump(obj, io: @file)
+    assert_equal exp, dumped
+    assert_equal exp, file_content
   end
 end

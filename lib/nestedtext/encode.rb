@@ -40,7 +40,10 @@ module NestedText
     opts = EncodeOptions.new(indentation, strict)
     dumper = Dumper.new(opts)
     result = dumper.dump obj
-    io.write result unless io.nil?
+    unless io.nil?
+      io.write(result)
+      io.fsync
+    end
     result
   end
 
