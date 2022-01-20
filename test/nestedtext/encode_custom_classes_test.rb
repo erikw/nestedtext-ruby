@@ -99,7 +99,6 @@ module CustomTestClasses
   class NotNTEncodable; end
 end
 
-# TODO: get full qualified class names when encoding! like yaml/json dump
 class EncodeCustomClassTest < Minitest::Test
   def test_custom_class_nested
     outer = CustomTestClasses::Outer.new("a", "b", CustomTestClasses::Inner.new("c"))
