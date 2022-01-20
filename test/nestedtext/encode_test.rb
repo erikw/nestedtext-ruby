@@ -583,7 +583,7 @@ class EncodeToIO < NTTest
     assert_equal exp, sio.string
   end
 
-  def test_io_dump_invalid_io
+  def test_io_dump_invalid_io_array
     assert_raises(NestedText::Errors::DumpBadIO) do
       NestedText.dump("dummy", io: [])
     end
