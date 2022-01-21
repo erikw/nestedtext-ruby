@@ -456,6 +456,7 @@ class EncodeHashTest < NTTest
       "" => "empty key",
       "key\nline" => "linefeed",
       " " => "whitespace key",
+      " key" => "leading whitespace",
       "[a, b]" => "looks like inline list",
       "{a: b}" => "looks like inline dict",
       ": key" => "looks like multiline key",
@@ -472,6 +473,8 @@ class EncodeHashTest < NTTest
           > linefeed
       :#{"  "}
           > whitespace key
+      :  key
+          > leading whitespace
       : [a, b]
           > looks like inline list
       : {a: b}
