@@ -10,6 +10,7 @@ module NestedText
   class Error < StandardError; end
 
   module Errors
+    # TODO: rename all Subclasses to ParseXError, just like for Dump
     class ParseError < Error
       attr_reader :lineno, :colno, :message_raw
 
@@ -212,35 +213,44 @@ module NestedText
       end
     end
 
-    class DumpError < Error; end
-
-    class DumpUnsupportedTypeError < DumpError
-      def initialize(obj)
-        super("unsupported type (#{obj.class.name}).")
-      end
-    end
-
-    class DumpCyclicReferencesDetected < DumpError
-      def initialize
-        super("cyclic reference found: cannot be dumped.")
-      end
-    end
-
-    class DumpBadIO < DumpError
+    class DumpBadIO < Error
       def initialize(io)
         super("When giving the io argument, it must be of type IO (respond to #write, #fsync). Given: #{io.class.name}")
       end
     end
 
-    class DumpFileBadPath < DumpError
+    class DumpFileBadPath < Error
       def initialize(path)
         super("Must supply a string to a file path that can be written to. Given: #{path}")
       end
     end
 
-    class DumpCustomClassStrictMode < DumpError
+    class DumpError < Error
+      attr_reader :culprit
+
+      def initialize(_culprint, message)
+        # Note, both line and column number are 0-indexed.
+        # But for human display we make them 1-indexed.
+        @culprit = culprit
+        super(message)
+      end
+    end
+
+    class DumpUnsupportedTypeError < DumpError
       def initialize(obj)
-        super("Trying to dump an unsupported class #{obj.class.name} while in strict mode. To dump custom classes, set strict to false and implement #encode_nt_with.")
+        super(obj, "unsupported type (#{obj.class.name}).")
+      end
+    end
+
+    class DumpCyclicReferencesDetected < DumpError
+      def initialize
+        super(nil, "cyclic reference found: cannot be dumped.")
+      end
+    end
+
+    class DumpHashKeyStrictString < DumpError
+      def initialize(obj)
+        super(obj, "keys must be strings.")
       end
     end
 

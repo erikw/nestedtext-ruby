@@ -2,6 +2,7 @@ require "test_helper"
 
 require "stringio"
 
+# TODO: style is different from decode_test.rb: here uses "assert_equal a, b" but with spaces in other. Use this style.
 class EncodeTest < NTTest
   def test_nil
     assert_equal "", NestedText.dump(nil)
@@ -33,7 +34,6 @@ class EncodeTest < NTTest
 end
 
 class EncodeArrayTest < NTTest
-  make_my_diffs_pretty!
   def test_array_empty
     assert_equal "[]", NestedText.dump([])
   end
@@ -155,7 +155,7 @@ class EncodeArrayTest < NTTest
       - sym1
       - sym2
     NT
-    assert_equal exp, NestedText.dump(obj)
+    assert_equal exp, NestedText.dump(obj, strict: false)
   end
 end
 
@@ -513,28 +513,72 @@ class EncodeHashTest < NTTest
     assert_equal exp, NestedText.dump(obj)
   end
 
-  def test_hash_symbol_key
+  def test_hash_symbol_key_strict
+    obj = { key: "value" }
+    assert_raises(NestedText::Errors::DumpHashKeyStrictString) do
+      NestedText.dump(obj)
+    end
+  end
+
+  def test_hash_symbol_key_non_strict
     obj = { key: "value" }
     exp = <<~NT.chomp
       key: value
     NT
-    assert_equal exp, NestedText.dump(obj)
+    assert_equal exp, NestedText.dump(obj, strict: false)
   end
 
-  def test_hash_symbol_value
+  def test_hash_symbol_value_strict
+    obj = { "key" => :value }
+    assert_raises(NestedText::Errors::DumpUnsupportedTypeError) do
+      NestedText.dump(obj)
+    end
+  end
+
+  def test_hash_symbol_value_non_strict
     obj = { "key" => :value }
     exp = <<~NT.chomp
       key: value
     NT
-    assert_equal exp, NestedText.dump(obj)
+    assert_equal exp, NestedText.dump(obj, strict: false)
+  end
+
+  def test_hash_int_value_strict
+    obj = { "key" => 1 }
+    assert_raises(NestedText::Errors::DumpUnsupportedTypeError) do
+      NestedText.dump(obj)
+    end
+  end
+
+  def test_hash_int_value_non_strict
+    obj = { "key" => 1 }
+    exp = <<~NT.chomp
+      key: 1
+    NT
+    assert_equal exp, NestedText.dump(obj, strict: false)
   end
 
   def test_hash_method_to_nt
-    obj = { key: "value" }
+    obj = { "key" => "value" }
     exp = <<~NT.chomp
       key: value
     NT
     assert_equal exp, obj.to_nt
+  end
+
+  def test_hash_key_int_strict
+    obj = { 1 => "value" }
+    assert_raises(NestedText::Errors::DumpHashKeyStrictString) do
+      NestedText.dump(obj)
+    end
+  end
+
+  def test_hash_key_int_non_strict
+    obj = { 1 => "value" }
+    exp = <<~NT.chomp
+      1: value
+    NT
+    assert_equal exp, NestedText.dump(obj, strict: false)
   end
 end
 
@@ -560,7 +604,7 @@ class EncodeStringTest < NTTest
     exp = <<~NT.chomp
       > sym
     NT
-    assert_equal exp, NestedText.dump(obj)
+    assert_equal exp, NestedText.dump(obj, strict: false)
   end
 
   def test_string_multiline

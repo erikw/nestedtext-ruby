@@ -11,7 +11,6 @@ SimpleCov.command_name "test:official"
 # class OfficialTest < NTTest
 class OfficialTest < Minitest::Test
   cases = NestedTextOfficialTests.load_test_cases
-  # TODO: define tests for: dump_success, dump_error
 
   # Though in this case, it's nice to go though test cases in the same order as they have in the official suite.
   # TODO remove this after development and insteade use parallelize_me by extendint NTTest
@@ -52,6 +51,23 @@ class OfficialTest < Minitest::Test
       act = NestedText.dump(caze[:dump][:in][:data])
       exp = caze[:dump][:out][:data].sub(/[\n\r]+$/, "")
       assert_equal(exp, act)
+    end
+  end
+
+  NestedTextOfficialTests.select_dump_error(cases).each do |caze|
+    define_method("test_dump_error_#{caze.name}") do
+      exp = caze[:dump][:err][:data]
+
+      begin
+        NestedText.dump(caze[:dump][:in][:data])
+      rescue NestedText::Errors::DumpError => e
+        assert_equal(exp["culprit"], e.culprit, msg = "culprit is wrong")
+        assert_equal(exp["message"], e.message_raw, msg = "message is wrong")
+      rescue Exception => e
+        raise "Unexpected exception #{e.class.name} with message:\n#{e.message}\n, but expected one with with message:\n#{exp["message"]}\nBacktrace:\n#{e.backtrace.join("\n")}"
+      else
+        raise "No exception raised, but expected one with with message:\n#{exp["message"]}"
+      end
     end
   end
 end

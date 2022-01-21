@@ -41,6 +41,18 @@ module NestedText
         syntax2.include?(key.lstrip[0]) && key.lstrip[1] == " "
     end
 
+    def convert_key(key)
+      if key.nil?
+        ""
+      elsif key.is_a? String
+        key.normalize_line_endings
+      elsif !@strict
+        key.to_s
+      else
+        raise Errors::DumpHashKeyStrictString, key
+      end
+    end
+
     def indent(target)
       indentstr = " " * @indentation
       indented = "\n" + target.lines.map { |line| indentstr + line }.join
@@ -62,23 +74,25 @@ module NestedText
         when Hash then dump_hash(obj, depth: depth, **kwargs)
         when Array then dump_array(obj, depth: depth, **kwargs)
         when String then dump_string(obj, depth: depth, **kwargs)
-        when Symbol then dump_string(obj.id2name, depth: depth, **kwargs)
         when nil
-          @strict ? "" : dump_custom_class(obj, depth: depth, **kwargs)
+          @strict ? "" : dump_custom_class(nil, depth: depth, **kwargs)
         else
-          dump_custom_class(obj, depth: depth, **kwargs)
+          if @strict
+            raise Errors::DumpUnsupportedTypeError, obj
+          else
+            dump_custom_class(obj, depth: depth, **kwargs)
+          end
         end
       end
     end
 
+    # TODO: document that @strict: false allows to_s on key object
     def dump_hash(obj, depth: 0, **kwargs)
       rep = if obj.empty?
               "{}"
             else
               obj.map do |key, value|
-                key = "" if key.nil?
-                key = key.id2name if key.is_a? Symbol
-                key = key.normalize_line_endings
+                key = convert_key(key)
 
                 if Dumper.multiline_key?(key)
                   key_lines = key.empty? ? [""] : key.lines
@@ -132,14 +146,16 @@ module NestedText
     end
 
     def dump_custom_class(obj, **kwargs)
-      raise Errors::DumpCustomClassStrictMode, obj if @strict
+      raise Errors::DumpUnsupportedTypeError, obj if @strict
 
-      if obj.respond_to? :encode_nt_with
+      if obj.is_a? Symbol
+        dump_string(obj.id2name, **kwargs)
+      elsif obj.respond_to? :encode_nt_with
         class_name = obj.nil? ? "nil" : obj.class.name
         enc = { CUSTOM_CLASS_KEY => class_name, "data" => obj.encode_nt_with }
         dump_any(enc, **kwargs)
       else
-        raise Errors::DumpUnsupportedTypeError, obj
+        dump_string(obj.to_s, **kwargs)
       end
     end
   end

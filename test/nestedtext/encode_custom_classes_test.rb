@@ -1,5 +1,7 @@
 require "test_helper"
 
+# TODO: document that custom classes can't be keys in hash!
+# or implement this?
 module CustomTestClasses
   class Inner
     include NestedText::NTEncodeMixing
@@ -96,7 +98,11 @@ module CustomTestClasses
     end
   end
 
-  class NotNTEncodable; end
+  class NotNTEncodable
+    def to_s
+      "but it has an to_s method that will be called to represent the object"
+    end
+  end
 end
 
 class EncodeCustomClassTest < NTTest
@@ -175,15 +181,14 @@ class EncodeCustomClassTest < NTTest
 
   def test_custom_class_not_encodeable
     obj = CustomTestClasses::NotNTEncodable.new
-    assert_raises(NestedText::Errors::DumpUnsupportedTypeError) do
-      NestedText.dump(obj, strict: false)
-    end
+    exp = "> but it has an to_s method that will be called to represent the object"
+    assert_equal exp, NestedText.dump(obj, strict: false)
   end
 
   def test_custom_class_strict_true
     obj = CustomTestClasses::Inner.new("c")
-    assert_raises(NestedText::Errors::DumpCustomClassStrictMode) do
-      NestedText.dump(obj, strict: true)
+    assert_raises(NestedText::Errors::DumpUnsupportedTypeError) do
+      NestedText.dump(obj)
     end
   end
 end
