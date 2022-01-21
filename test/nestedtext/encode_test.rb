@@ -619,6 +619,17 @@ class EncodeStringTest < NTTest
   end
 end
 
+class EncodeInlineArrayTest < NTTest
+  def test_inline_array_simple
+    obj = [[]]
+    exp = <<~NT.chomp
+      -
+          []
+    NT
+    assert_equal exp, obj.to_nt
+  end
+end
+
 # TODO: test io with .to_nt (should we support that? I guess so)
 class EncodeToIO < NTTest
   # TODO: setup method that creates tmp file to dump to, and remove if after block?

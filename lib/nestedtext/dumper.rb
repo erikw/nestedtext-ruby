@@ -99,7 +99,7 @@ module NestedText
     end
 
     def dump_array(obj, depth: 0, **kwargs)
-      rep = if depth == 0 && obj.empty?
+      rep = if obj.empty?
               # TODO: replace this special case with simply general inline rendering detection.
               "[]"
             else
@@ -109,7 +109,7 @@ module NestedText
               end.join("\n")
             end
 
-      indent(rep) if !obj.empty? && depth > 0
+      indent(rep) if depth > 0
       rep
     end
 
