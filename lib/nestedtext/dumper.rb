@@ -1,3 +1,4 @@
+# TODO: need to deal with \r\n and \r as well
 module NestedText
   class Dumper
     def initialize(opts = EncodeOptions.new)
@@ -71,8 +72,9 @@ module NestedText
                 key = key.id2name if key.is_a? Symbol
 
                 if Dumper.multiline_key?(key)
-                  key_lines = key.empty? ? [""] : key.lines(chomp: true)
-                  rep_key = key_lines.map { |line| Dumper.add_prefix(":", line) }.join("\n")
+                  key_lines = key.empty? ? [""] : key.lines
+                  key_lines << "" if key_lines[-1][-1] =~ /\n|\r/
+                  rep_key = key_lines.map { |line| Dumper.add_prefix(":", line) }.join
                   force_multiline = value.is_a? String
                   rep_value = dump_any(value, depth: depth + 1, force_multiline: force_multiline, **kwargs)
                 else
