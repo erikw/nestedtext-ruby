@@ -125,7 +125,7 @@ class EncodeArrayTest < NTTest
       -
           key: value
     NT
-    assert_equal exp, obj.to_nt
+    assert_equal exp, NestedText.dump(obj)
   end
 
   def test_array_with_multiple_hash
@@ -146,7 +146,7 @@ class EncodeArrayTest < NTTest
               > value3
               > multiline
     NT
-    assert_equal exp, obj.to_nt
+    assert_equal exp, NestedText.dump(obj)
   end
 
   def test_array_with_symbols
@@ -155,7 +155,7 @@ class EncodeArrayTest < NTTest
       - sym1
       - sym2
     NT
-    assert_equal exp, obj.to_nt
+    assert_equal exp, NestedText.dump(obj)
   end
 end
 
@@ -633,7 +633,7 @@ class EncodeInlineArrayTest < NTTest
     exp = <<~NT.chomp
       []
     NT
-    assert_equal exp, obj.to_nt
+    assert_equal exp, NestedText.dump(obj)
   end
 
   def test_inline_array_simple
@@ -642,7 +642,7 @@ class EncodeInlineArrayTest < NTTest
       -
           []
     NT
-    assert_equal exp, obj.to_nt
+    assert_equal exp, NestedText.dump(obj)
   end
 
   def test_inline_array_with_dict
@@ -651,18 +651,17 @@ class EncodeInlineArrayTest < NTTest
       -
           {}
     NT
-    assert_equal exp, obj.to_nt
+    assert_equal exp, NestedText.dump(obj)
   end
 end
 
-# TODO: clena up propagated .to_nt
 class EncodeInlineHashTest < NTTest
   def test_inline_hash_empty
     obj = {}
     exp = <<~NT.chomp
       {}
     NT
-    assert_equal exp, obj.to_nt
+    assert_equal exp, NestedText.dump(obj)
   end
 end
 
