@@ -628,6 +628,14 @@ class EncodeStringTest < NTTest
 end
 
 class EncodeInlineArrayTest < NTTest
+  def test_inline_array_empty
+    obj = []
+    exp = <<~NT.chomp
+      []
+    NT
+    assert_equal exp, obj.to_nt
+  end
+
   def test_inline_array_simple
     obj = [[]]
     exp = <<~NT.chomp
@@ -647,8 +655,9 @@ class EncodeInlineArrayTest < NTTest
   end
 end
 
+# TODO: clena up propagated .to_nt
 class EncodeInlineHashTest < NTTest
-  def test_inline_array_empty
+  def test_inline_hash_empty
     obj = {}
     exp = <<~NT.chomp
       {}
