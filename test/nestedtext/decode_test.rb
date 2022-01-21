@@ -111,16 +111,6 @@ class DecodeStringTopAnyDictTest < NTTest
     end
   end
 
-  def test_dict_nested_invalid_indentation_non_break_space
-    nts = <<~NT
-      key:
-       > this line has non-breaking space in indentation
-    NT
-    assert_raises(NestedText::Errors::InvalidIndentationChar) do
-      NestedText.load(nts)
-    end
-  end
-
   def test_dict_value_of_list
     nts = <<~NT
       key:
