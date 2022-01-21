@@ -578,6 +578,17 @@ class EncodeStringTest < NTTest
     assert_equal exp, NestedText.dump(obj)
   end
 
+  def test_string_multiline_different_line_endings
+    obj = "cr/lf\r\ncr\rlf\n"
+    exp = <<~NT.chomp
+      > cr/lf
+      > cr
+      > lf
+      >
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
   def test_string_method_to_nt
     obj = "multi-line\nstring"
     exp = <<~NT.chomp

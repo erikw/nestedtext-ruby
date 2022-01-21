@@ -1,4 +1,11 @@
-# TODO: need to deal with \r\n and \r as well
+# TODO: is this exposed to client who import this file? If so, hide it!
+class String
+  def normalize_line_endings
+    # windows/mac -> unix
+    gsub(/\r\n?/, "\n")
+  end
+end
+
 module NestedText
   class Dumper
     def initialize(opts = EncodeOptions.new)
@@ -106,6 +113,7 @@ module NestedText
     end
 
     def dump_string(obj, depth: 0, force_multiline: false)
+      obj = obj.normalize_line_endings
       lines = obj.lines
       lines << "\n" if !lines.empty? && lines[-1][-1] == "\n"
       if lines.length > 1 || depth == 0 || force_multiline
