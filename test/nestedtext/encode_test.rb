@@ -528,6 +528,14 @@ class EncodeHashTest < NTTest
     NT
     assert_equal exp, NestedText.dump(obj)
   end
+
+  def test_hash_method_to_nt
+    obj = { key: "value" }
+    exp = <<~NT.chomp
+      key: value
+    NT
+    assert_equal exp, obj.to_nt
+  end
 end
 
 class EncodeStringTest < NTTest
@@ -634,6 +642,16 @@ class EncodeInlineArrayTest < NTTest
     exp = <<~NT.chomp
       -
           {}
+    NT
+    assert_equal exp, obj.to_nt
+  end
+end
+
+class EncodeInlineHashTest < NTTest
+  def test_inline_array_empty
+    obj = {}
+    exp = <<~NT.chomp
+      {}
     NT
     assert_equal exp, obj.to_nt
   end

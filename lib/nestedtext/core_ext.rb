@@ -7,6 +7,7 @@ require "nestedtext/encode_helpers"
 
 class String include NestedText::NTEncodeStrictMixing end
 class Array include NestedText::NTEncodeStrictMixing end
+class Hash include NestedText::NTEncodeStrictMixing end
 
 class NilClass
   include NestedText::NTEncodeStrictMixing
