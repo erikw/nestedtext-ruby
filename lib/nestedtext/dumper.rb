@@ -11,11 +11,13 @@ module NestedText
     def initialize(opts = EncodeOptions.new)
       @indentation = opts.indentation
       @strict = opts.strict
-      @trace = nil
+      @trace_cycles = nil
+      @trace_keys = nil
     end
 
     def dump(obj)
-      @trace = []
+      @trace_cycles = []
+      @trace_keys = []
       dump_any obj
     end
 
@@ -59,17 +61,30 @@ module NestedText
       target.replace indented
     end
 
-    def trace(obj)
-      raise Errors::DumpCyclicReferencesDetected if @trace.include?(obj)
+    # TODO: different name on method and instance var...
+    def trace_cycles(obj)
+      raise Errors::DumpCyclicReferencesDetected, traced_key if @trace_cycles.include?(obj)
 
-      @trace << obj
+      @trace_cycles << obj
       yield
     ensure
-      @trace.pop
+      @trace_cycles.pop
+    end
+
+    # TODO: different name on method and instance var...
+    def trace_keys(key)
+      @trace_keys << key
+      yield
+    ensure
+      @trace_keys.pop
+    end
+
+    def traced_key
+      @trace_keys.last
     end
 
     def dump_any(obj, depth: 0, **kwargs)
-      trace(obj) do
+      trace_cycles(obj) do
         case obj
         when Hash then dump_hash(obj, depth: depth, **kwargs)
         when Array then dump_array(obj, depth: depth, **kwargs)
@@ -88,20 +103,22 @@ module NestedText
               "{}"
             else
               obj.map do |key, value|
-                key = convert_key(key)
+                trace_keys(key) do
+                  key = convert_key(key)
 
-                if Dumper.multiline_key?(key)
-                  key_lines = key.empty? ? [""] : key.lines
-                  key_lines << "" if key_lines[-1][-1] =~ /\n|\r/
-                  rep_key = key_lines.map { |line| Dumper.add_prefix(":", line) }.join
-                  force_multiline = value.is_a? String
-                  rep_value = dump_any(value, depth: depth + 1, force_multiline: force_multiline, **kwargs)
-                else
-                  rep_key = "#{key}:"
-                  rep_value = dump_any(value, depth: depth + 1, **kwargs)
-                  rep_key += " " unless rep_value.empty? || rep_value.include?("\n")
+                  if Dumper.multiline_key?(key)
+                    key_lines = key.empty? ? [""] : key.lines
+                    key_lines << "" if key_lines[-1][-1] =~ /\n|\r/
+                    rep_key = key_lines.map { |line| Dumper.add_prefix(":", line) }.join
+                    force_multiline = value.is_a? String
+                    rep_value = dump_any(value, depth: depth + 1, force_multiline: force_multiline, **kwargs)
+                  else
+                    rep_key = "#{key}:"
+                    rep_value = dump_any(value, depth: depth + 1, **kwargs)
+                    rep_key += " " unless rep_value.empty? || rep_value.include?("\n")
+                  end
+                  "#{rep_key}#{rep_value}"
                 end
-                "#{rep_key}#{rep_value}"
               end.join("\n")
             end
       indent(rep) if depth > 0
@@ -113,9 +130,11 @@ module NestedText
               # TODO: replace this special case with simply general inline rendering detection.
               "[]"
             else
-              obj.each.map do |e|
-                e_rep = dump_any(e, depth: depth + 1, **kwargs)
-                Dumper.add_prefix("-", e_rep)
+              obj.each_with_index.map do |e, i|
+                trace_keys(i) do
+                  e_rep = dump_any(e, depth: depth + 1, **kwargs)
+                  Dumper.add_prefix("-", e_rep)
+                end
               end.join("\n")
             end
 
@@ -142,7 +161,7 @@ module NestedText
     end
 
     def dump_custom_class(obj, **kwargs)
-      raise Errors::DumpUnsupportedTypeError, obj if @strict
+      raise Errors::DumpUnsupportedTypeError.new(obj, traced_key) if @strict
 
       if obj.is_a? Symbol
         dump_string(obj.id2name, **kwargs)

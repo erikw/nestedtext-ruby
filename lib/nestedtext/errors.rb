@@ -228,7 +228,7 @@ module NestedText
     class DumpError < Error
       attr_reader :culprit
 
-      def initialize(_culprint, message)
+      def initialize(culprit, message)
         # Note, both line and column number are 0-indexed.
         # But for human display we make them 1-indexed.
         @culprit = culprit
@@ -237,14 +237,16 @@ module NestedText
     end
 
     class DumpUnsupportedTypeError < DumpError
-      def initialize(obj)
-        super(obj, "unsupported type (#{obj.class.name}).")
+      def initialize(obj, culprit)
+        # Needed to pass official test.
+        class_name = obj.is_a?(Integer) ? "int" : obj.class.name
+        super(culprit, "unsupported type (#{class_name}).")
       end
     end
 
     class DumpCyclicReferencesDetected < DumpError
-      def initialize
-        super(nil, "cyclic reference found: cannot be dumped.")
+      def initialize(culprit)
+        super(culprit, "cyclic reference found: cannot be dumped.")
       end
     end
 

@@ -62,7 +62,7 @@ class OfficialTest < Minitest::Test
         NestedText.dump(caze[:dump][:in][:data])
       rescue NestedText::Errors::DumpError => e
         assert_equal(exp["culprit"], e.culprit, msg = "culprit is wrong")
-        assert_equal(exp["message"], e.message_raw, msg = "message is wrong")
+        assert_equal(exp["message"], e.message, msg = "message is wrong")
       rescue Exception => e
         raise "Unexpected exception #{e.class.name} with message:\n#{e.message}\n, but expected one with with message:\n#{exp["message"]}\nBacktrace:\n#{e.backtrace.join("\n")}"
       else
