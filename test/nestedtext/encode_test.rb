@@ -415,6 +415,26 @@ class EncodeHashTest < NTTest
     assert_equal exp, NestedText.dump(obj)
   end
 
+  def test_hash_key_line_endings
+    obj = {
+      "key\r\n1" => "cr/lf",
+      "key\r2" => "cr",
+      "key\n3" => "lf"
+    }
+    exp = <<~NT.chomp
+      : key
+      : 1
+          > cr/lf
+      : key
+      : 2
+          > cr
+      : key
+      : 3
+          > lf
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
   def test_hash_multiline_key_array_value
     obj = { "key\nline" => %w[i1 i2] }
     exp = <<~NT.chomp

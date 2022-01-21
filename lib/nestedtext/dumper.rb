@@ -78,6 +78,7 @@ module NestedText
               obj.map do |key, value|
                 key = "" if key.nil?
                 key = key.id2name if key.is_a? Symbol
+                key = key.normalize_line_endings
 
                 if Dumper.multiline_key?(key)
                   key_lines = key.empty? ? [""] : key.lines
