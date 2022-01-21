@@ -451,6 +451,7 @@ class EncodeHashTest < NTTest
       "[a, b]" => "looks like inline list",
       "{a: b}" => "looks like inline dict",
       ": key" => "looks like multiline key",
+      "key1:key2" => "looks like multiline key, kind of...",
       "#key" => "looks like comment",
       "- key" => "looks like list item",
       "> key" => "looks like multiline string"
@@ -469,6 +470,8 @@ class EncodeHashTest < NTTest
           > looks like inline dict
       : : key
           > looks like multiline key
+      : key1:key2
+          > looks like multiline key, kind of...
       : #key
           > looks like comment
       : - key

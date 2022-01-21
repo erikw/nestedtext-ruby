@@ -24,10 +24,11 @@ module NestedText
 
     def self.multiline_key?(key)
       syntax1 = "{[#"
-      syntax2 = ":->"
+      syntax2 = "->"
 
       key.empty? ||
         key.include?("\n") ||
+        key.include?(":") ||
         key =~ /^\s+$/ ||
         syntax1.include?(key.lstrip[0]) ||
         syntax2.include?(key.lstrip[0]) && key.lstrip[1] == " "
