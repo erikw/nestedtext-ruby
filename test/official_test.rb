@@ -12,10 +12,6 @@ SimpleCov.command_name "test:official"
 class OfficialTest < Minitest::Test
   cases = NestedTextOfficialTests.load_test_cases
 
-  # Though in this case, it's nice to go though test cases in the same order as they have in the official suite.
-  # TODO remove this after development and insteade use parallelize_me by extendint NTTest
-  i_suck_and_my_tests_are_order_dependent!
-
   NestedTextOfficialTests.select_load_success(cases).each do |caze|
     define_method("test_load_success_#{caze.name}") do
       act = NestedText.load_file(caze[:load][:in][:path])
