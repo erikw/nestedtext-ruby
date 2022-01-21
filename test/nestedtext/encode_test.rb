@@ -407,6 +407,14 @@ class EncodeHashTest < NTTest
     assert_equal exp, NestedText.dump(obj)
   end
 
+  def test_hash_key_tailing_colon_empty_value
+    obj = { "key:" => "" }
+    exp = <<~NT.chomp
+      key::
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
   def test_hash_multiline_key_array_value
     obj = { "key\nline" => %w[i1 i2] }
     exp = <<~NT.chomp
@@ -451,7 +459,7 @@ class EncodeHashTest < NTTest
       "[a, b]" => "looks like inline list",
       "{a: b}" => "looks like inline dict",
       ": key" => "looks like multiline key",
-      "key1:key2" => "looks like multiline key, kind of...",
+      "key1: key2" => "looks like multiline key",
       "#key" => "looks like comment",
       "- key" => "looks like list item",
       "> key" => "looks like multiline string"
@@ -470,8 +478,8 @@ class EncodeHashTest < NTTest
           > looks like inline dict
       : : key
           > looks like multiline key
-      : key1:key2
-          > looks like multiline key, kind of...
+      : key1: key2
+          > looks like multiline key
       : #key
           > looks like comment
       : - key
