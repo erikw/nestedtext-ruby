@@ -947,4 +947,13 @@ class DecodeCustomClassTest < NTTest
       NestedText.load(nts, strict: false)
     end
   end
+
+  def test_custom_class_no_decode_strict_true
+    nts = <<~NT.chomp
+      __nestedtext_class__: DummyClass
+      data: dummydata
+    NT
+    exp = { "__nestedtext_class__" => "DummyClass", "data" => "dummydata" }
+    assert_equal(exp, NestedText.load(nts, strict: true))
+  end
 end

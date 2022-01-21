@@ -120,6 +120,8 @@ module NestedText
     end
 
     def dump_custom_class(obj, **kwargs)
+      raise Errors::DumpCustomClassStrictMode, obj if @strict
+
       if obj.respond_to? :encode_nt_with
         class_name = obj.nil? ? "nil" : obj.class.name
         enc = { CUSTOM_CLASS_KEY => class_name, "data" => obj.encode_nt_with }

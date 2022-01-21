@@ -176,7 +176,18 @@ class EncodeCustomClassTest < NTTest
   def test_custom_class_not_encodeable
     obj = CustomTestClasses::NotNTEncodable.new
     assert_raises(NestedText::Errors::DumpUnsupportedTypeError) do
-      NestedText.dump(obj)
+      NestedText.dump(obj, strict: false)
+    end
+  end
+
+  def test_custom_class_strict_true
+    obj = CustomTestClasses::Inner.new("c")
+    exp = <<~NT.chomp
+      __nestedtext_class__: CustomTestClasses::Inner
+      data: c
+    NT
+    assert_raises(NestedText::Errors::DumpCustomClassStrictMode) do
+      NestedText.dump(obj, strict: true)
     end
   end
 end

@@ -238,6 +238,12 @@ module NestedText
       end
     end
 
+    class DumpCustomClassStrictMode < DumpError
+      def initialize(obj)
+        super("Trying to dump an unsupported class #{obj.class.name} while in strict mode. To dump custom classes, set strict to false and implement #encode_nt_with.")
+      end
+    end
+
     def self.raise_unrecognized_line(line)
       # [[:space:]] include all Unicode spaces e.g. non-breakable space which \s does not.
       raise InvalidIndentationChar, line if line.content.chr =~ /[[:space:]]/
