@@ -72,7 +72,7 @@ module NestedText
     end
 
     def dump_hash(obj, depth: 0, **kwargs)
-      rep = if depth == 0 && obj.empty?
+      rep = if obj.empty?
               "{}"
             else
               obj.map do |key, value|
@@ -94,7 +94,7 @@ module NestedText
                 "#{rep_key}#{rep_value}"
               end.join("\n")
             end
-      indent(rep) if !obj.empty? && depth > 0
+      indent(rep) if depth > 0
       rep
     end
 

@@ -628,6 +628,15 @@ class EncodeInlineArrayTest < NTTest
     NT
     assert_equal exp, obj.to_nt
   end
+
+  def test_inline_array_with_dict
+    obj = [{}]
+    exp = <<~NT.chomp
+      -
+          {}
+    NT
+    assert_equal exp, obj.to_nt
+  end
 end
 
 # TODO: test io with .to_nt (should we support that? I guess so)
