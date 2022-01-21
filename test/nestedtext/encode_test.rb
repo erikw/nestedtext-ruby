@@ -242,6 +242,26 @@ class EncodeHashTest < NTTest
     assert_equal exp, NestedText.dump(obj)
   end
 
+  def test_hash_multiline_key_lf_start
+    obj = { "\nkey" => "value" }
+    exp = <<~NT.chomp
+      :
+      : key
+          > value
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_multiline_key_lf_end
+    obj = { "key\n" => "value" }
+    exp = <<~NT.chomp
+      : key
+      :
+          > value
+    NT
+    assert_equal exp, NestedText.dump(obj)
+  end
+
   def test_hash_multiline_key_empty_value
     obj = { "k1\nk2" => "" }
     exp = <<~NT.chomp

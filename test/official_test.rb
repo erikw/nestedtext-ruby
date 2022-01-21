@@ -19,8 +19,8 @@ class OfficialTest < Minitest::Test
 
   NestedTextOfficialTests.select_load_success(cases).each do |caze|
     define_method("test_load_success_#{caze.name}") do
-      exp = caze[:load][:out][:data]
       act = NestedText.load_file(caze[:load][:in][:path])
+      exp = caze[:load][:out][:data]
       if exp.nil?
         assert_nil act
       else
@@ -49,14 +49,9 @@ class OfficialTest < Minitest::Test
 
   NestedTextOfficialTests.select_dump_success(cases).each do |caze|
     define_method("test_dump_success_#{caze.name}") do
-      exp = caze[:dump][:out][:data].sub(/[\n\r]+$/, "")
       act = NestedText.dump(caze[:dump][:in][:data])
-      if exp.nil?
-        # TODO: this case needed?
-        assert_nil act
-      else
-        assert_equal(exp, act)
-      end
+      exp = caze[:dump][:out][:data].sub(/[\n\r]+$/, "")
+      assert_equal(exp, act)
     end
   end
 end
