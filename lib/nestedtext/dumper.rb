@@ -77,11 +77,7 @@ module NestedText
         when nil
           @strict ? "" : dump_custom_class(nil, depth: depth, **kwargs)
         else
-          if @strict
-            raise Errors::DumpUnsupportedTypeError, obj
-          else
-            dump_custom_class(obj, depth: depth, **kwargs)
-          end
+          dump_custom_class(obj, depth: depth, **kwargs)
         end
       end
     end
