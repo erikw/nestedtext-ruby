@@ -35,6 +35,4 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: 031d4b3d619508ecf0f2d6ce8f2565d506d4cb24b6fa7ef913af274533021bee
       with:
-        debug: true  # TODO set to false when stable.
-        # TODO if we need to run rake again, then might as well break this out to separate job like here: https://docs.codeclimate.com/docs/github-actions-test-coverage
-        #coverageCommand: bundle exec rake test
+        debug: false
