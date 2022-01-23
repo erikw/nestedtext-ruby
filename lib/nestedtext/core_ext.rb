@@ -12,7 +12,9 @@ class Hash include NestedText::NTEncodeStrictMixing end
 class NilClass
   include NestedText::NTEncodeStrictMixing
 
-  def self.nt_create(_data) = nil
+  def self.nt_create(_data)
+    nil
+  end
 
   def encode_nt_with
     ""
