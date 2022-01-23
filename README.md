@@ -8,8 +8,9 @@
 [![License](https://img.shields.io/github/license/erikw/nestedtext-ruby)](LICENSE.txt)
 [![OSS Lifecycle](https://img.shields.io/osslifecycle/erikw/nestedtext-ruby)](https://github.com/Netflix/osstracker)
 
+[![CodeQL](https://github.com/erikw/nestedtext-ruby/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/erikw/nestedtext-ruby/actions/workflows/codeql-analysis.yml)
 
-Inspired by the `JSON` and `YAML` modules. 
+Inspired by the `JSON` and `YAML` modules.
 
 This project will soon be released! :tada:
 
