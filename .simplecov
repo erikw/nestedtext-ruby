@@ -7,4 +7,10 @@ SimpleCov.start do
   # TODO could move this to .simplecov?
   command_name "test:bdd"           # Must be set for codeclimat reporter
   add_filter "test/official_tests/"	# Not part of project
+  if ENV["CI"]
+    require "simplecov_json_formatter"
+    formatter = SimpleCov::Formatter::JSONFormatter
+  else
+    formatter SimpleCov::Formatter::HTMLFormatter
+  end
 end
