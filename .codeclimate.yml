@@ -15,7 +15,6 @@ plugins:
     config:
       languages:
       - ruby
-      - javascript
 ratings:
   paths:
   - "**.rb"
