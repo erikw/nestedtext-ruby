@@ -28,7 +28,7 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true
-    - name: Run cibuild
+    - name: Run rake cibuild
       run: bundle exec rake cibuild
     - name: Publish code coverage
       uses: paambaati/codeclimate-action@v3.0.0
