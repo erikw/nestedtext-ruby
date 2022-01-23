@@ -1,10 +1,14 @@
-name: Tests
+name: Continuous Integration
 
 on:
   push:
     branches: [ main ]
+    paths:
+      - '!*.md'
   pull_request:
     branches: [ main]
+    paths:
+      - '!*.md'
 
 jobs:
   test:
@@ -15,7 +19,6 @@ jobs:
         # os: [ubuntu, macos, windows]
         #ruby-version: [2.7, 3.1]
         ruby-version: [3.1]
-
     steps:
     - uses: actions/checkout@v2
       with:
@@ -27,3 +30,6 @@ jobs:
         bundler-cache: true
     - name: Run cibuild
       run: bundle exec rake cibuild
+
+  coverage:
+    runs-on: ubuntu-latest
