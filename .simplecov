@@ -3,10 +3,8 @@
 SimpleCov.start do
   enable_coverage :branch # Add branch coverage statistics.
   minimum_coverage 90 # Minimum coverage percentage.
-  # TODO still needed? is bdd correct name?
-  # TODO could move this to .simplecov?
-  command_name "test:bdd"           # Must be set for codeclimat reporter
-  add_filter "test/official_tests/"	# Not part of project
+  command_name "test:internal" # Must be set for codeclimat reporter
+  add_filter "test/official_tests/"	# Code is not part of project, don't analyze.
 
   # Code climate needs JSON output.
   # Need to do SimpleCov.formater instead of just formatter, to not trigger warning of useless assignment.
