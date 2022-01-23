@@ -14,5 +14,7 @@ class NilClass
 
   def self.nt_create(_data) = nil
 
-  def encode_nt_with() = ""
+  def encode_nt_with
+    ""
+  end
 end
