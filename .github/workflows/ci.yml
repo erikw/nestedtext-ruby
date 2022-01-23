@@ -37,3 +37,4 @@ jobs:
         CC_TEST_REPORTER_ID: 031d4b3d619508ecf0f2d6ce8f2565d506d4cb24b6fa7ef913af274533021bee
       with:
         debug: true
+        coverageCommand: bundle exec rake test
