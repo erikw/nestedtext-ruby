@@ -1,0 +1,27 @@
+name: CI Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main]
+
+jobs:
+  cibuild:
+    runs-on: ubuntu-latest
+    #runs-on: ${{ matrix.os }}-latest
+    strategy:
+      matrix:
+        # os: [ubuntu, macos, windows]
+        #ruby-version: [2.7.x, 3.x]
+        ruby-version: [3.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true
+    - name: Run cibuild
+      run: bundle exec rake cibuild
