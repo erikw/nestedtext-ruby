@@ -9,6 +9,7 @@
 [![OSS Lifecycle](https://img.shields.io/osslifecycle/erikw/nestedtext-ruby)](https://github.com/Netflix/osstracker)
 
 
+[![Tests](https://github.com/erikw/nestedtext-ruby/actions/workflows/tests.yml/badge.svg)](https://github.com/erikw/nestedtext-ruby/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/erikw/nestedtext-ruby/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/erikw/nestedtext-ruby/actions/workflows/codeql-analysis.yml)
 
 Inspired by the `JSON` and `YAML` modules.
