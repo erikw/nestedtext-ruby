@@ -9,10 +9,11 @@ SimpleCov.start do
   add_filter "test/official_tests/"	# Not part of project
 
   # Code climate needs JSON output.
+  # Need to do SimpleCov.formater instead of just formatter, to not trigger warning of useless assignment.
   if ENV["CI"]  # Set in GitHub Actions: https://docs.github.com/en/actions/learn-github-actions/environment-variables
     require "simplecov_json_formatter"
-    formatter = SimpleCov::Formatter::JSONFormatter
+    SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
   else
-    formatter SimpleCov::Formatter::HTMLFormatter
+    SimpleCov.formatter SimpleCov::Formatter::HTMLFormatter
   end
 end
