@@ -9,7 +9,7 @@ task default: %i[test rubocop]
 
 desc "Build steps to be used by ci runner"
 # TODO: enable rubocop after fixing issues.
-task ci: %i[build test]
+task ci: %i[test]
 
 # rubocop: Linting. Adds 'rubocop' rake task.
 require "rubocop/rake_task"
