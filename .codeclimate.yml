@@ -19,6 +19,5 @@ plugins:
 ratings:
   paths:
   - "**.rb"
-  - "**.js"
-exclude_paths:
-- script/
+#exclude_paths:
+#- script/
