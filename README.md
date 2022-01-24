@@ -18,14 +18,80 @@ This project will soon be released! :tada:
 
 On-going development is at branch [**dev**](https://github.com/erikw/nestedtext-ruby/tree/dev).
 
+# What is NestedText?
+TODO
+
+## Examples
+TODO NT examples
+
+# Usage
+TODO Link to lib docs
+TODO link to my test repo showin live usage.
 
 
-# Decoding
+# Usage
+## Decoding (reading NT)
 
-# Encoding
+## Encoding (writing NT)
 
-
-# Custom classes serialization
+## Custom Classes Serialization
 This library has support for serialization/deserialization of custom classes as well.
 `strict: false` flag needed
 See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.rb) for more real working examples.
+
+
+# Installation
+1. Add this gem to your ruby project's Gemfile
+   - Simply with `$ bundle add nestedtext` when standing in the project root
+   - Or manually by adding to `Gemfile`
+   ```ruby
+     gem 'nestedtext'
+   ```
+   and then running `$ bundle install`.
+   ```
+1. Require the library and start using it!
+   ```ruby
+     require 'nestedtext'
+
+     NestedText::load(...)
+     NestedText::dump(...)
+     obj.to_nt
+   ```
+
+
+
+# Development
+
+1. Clone the repo
+   ```console
+   $ git clone https://github.com/erikw/nestedtext-ruby.git && cd $(basename "$_" .git)
+   ```
+1. Install a supported ruby version (see .gemspec) with a ruby version manager e.g. [rbenv](https://github.com/rbenv/rbenv), [asdf](http://asdf-vm.com/) or [RVM](https://rvm.io/rvm/install)
+1. run `$ script/setup` to install dependencies
+1. run `$ script/test` to run the tests
+1.  You can also run `$ script/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `$ bundle exec rake install`.
+
+## Releasing
+Instructions for releasing on rubygems.org below. Optionally make a GitHub [release](https://github.com/erikw/nestedtext-ruby/releases) after this for the pushed git tag.
+
+## (manually) Using bundler/gem_tasks rake tasks
+Following instructions from [bundler.io](https://bundler.io/guides/creating_gem.html#releasing-the-gem):
+```console
+$ vi -p lib/nestedtext/version.rb CHANGELOG.md
+$ bundle exec rake build
+$ ver=$(ruby -r ./lib/nestedtext/version.rb -e 'puts NestedText::VERSION')
+$ bundle exec rake release
+```
+
+## (semi-manually) Using gem-release gem extension
+Using [gem-release](https://github.com/svenfuchs/gem-release):
+```console
+$ vi CHANGELOG.md && git add CHANGELOG.md && git commit -m "Update CHANGELOG.md" && git push
+$ gem bump --version minor --tag --sign --push --release
+```
+For `--version`, use `major|minor|patch` as needed.
+
+## (semi-automatic) Using GitHub Actions CD
+Just push a new semver tag and the workflow [cd.yml](.github/workflows/cd.yml) will publish a new release at rubygems.org.
