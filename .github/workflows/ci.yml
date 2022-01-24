@@ -5,10 +5,14 @@ on:
     branches: [ main ]
     paths-ignore:
       - '**/*.md'
+      - '.github/workflows/cd.yml'
+      - '.github/workflows/codeql-analysis.yml'
   pull_request:
     branches: [ main]
     paths-ignore:
       - '**/*.md'
+      - '.github/workflows/cd.yml'
+      - '.github/workflows/codeql-analysis.yml'
 
 env:
   RUBY_MAIN_VER: 3.1
