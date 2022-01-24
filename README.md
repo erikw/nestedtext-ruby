@@ -95,3 +95,13 @@ For `--version`, use `major|minor|patch` as needed.
 
 ## (semi-automatic) Using GitHub Actions CD
 Just push a new semver tag and the workflow [cd.yml](.github/workflows/cd.yml) will publish a new release at rubygems.org.
+
+
+# Contributing
+Bug reports and pull requests are welcome on GitHub at [https://github.com/erikw/nestedtext-ruby](https://github.com/erikw/nestedtext-ruby).
+
+# License
+The gem is available as open source with the [License](./LICENSE.txt).
+
+# Acknowledgement & Thanks
+Thanks to the data format authors making it easier making new implementations by providing an [official test suite](https://github.com/KenKundert/nestedtext_tests).
