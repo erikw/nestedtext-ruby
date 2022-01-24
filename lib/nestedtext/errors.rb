@@ -127,7 +127,7 @@ module NestedText
         end
         # Need to wrap like official tests. #wrap always add an extra \n we need to chop off.
         message_wrapped = message.wrap(70).chop
-        super(line, ind_exp, message_wrapped)
+        super(line, line.indentation, message_wrapped)
       end
     end
 
