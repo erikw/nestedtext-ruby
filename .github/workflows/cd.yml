@@ -19,19 +19,24 @@ jobs:
         bundler-cache: true
     - name: Run CI Build with Rake
       run: bundle exec rake ci
-  release:
+  release-rubygems:
     needs: [test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-      - name: Release Gem
+      - name: Release Gem to rubygems.org
         if: contains(github.ref, 'refs/tags/v')
         uses: cadwallion/publish-rubygems-action@master
         env:
           GITHUB_TOKEN: ${{ github.token }}
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
           RELEASE_COMMAND: bundle exec rake release
-
-# TODO publish to GitHub packages as well. using also same conditionss as gem.
+  release-github:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and publish gem to GitHub Packages
+        if: contains(github.ref, 'refs/tags/v')
+        uses: jstastny/publish-gem-to-github@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          owner: ${{ github.repository_owner }}
