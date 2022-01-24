@@ -18,6 +18,12 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = "https://github.com/erikw/nestedtext-ruby/"
   spec.metadata["changelog_uri"] = "https://github.com/erikw/nestedtext-ruby/blob/main/CHANGELOG.md"
 
+  # For push to GitHub packages to work.
+  # Reference: https://github.community/t/unable-to-push-rubygem-to-package-registry-the-expected-resource-was-not-found/14596/7
+  spec.metadata = {
+    "github_repo" => "git@github.com:erikw/nestedtext-ruby.git"
+  }
+
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     `git ls-files -z`.split("\x0").reject do |f|
       f.match(%r{\A(?:test/|script/|\.github/|\.gitmodules|Rakefile|TODO\.txt|\.codeclimate\.yml|\.vimlocal|\.simplecov)})
