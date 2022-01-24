@@ -1,12 +1,14 @@
 # Contrary to ruby apps, ruby gems should not check in Gemfile.lock.
 # Reference: https://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/
-Gemfile.lock
+/Gemfile.lock
 
 # Bundle local config
-.bundle/
+/.bundle/
 
 # Package gem from $(rake install)
-pkg/
+/pkg/
+# When built from $(gem build *.gemspec)
+/*.gem
 
 # minitest
 /test/html_reports/
