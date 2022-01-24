@@ -2,6 +2,7 @@
 [![Gem Version](https://badge.fury.io/rb/nestedtext-ruby.svg)](https://badge.fury.io/rb/nestedtext-ruby)
 [![Gem Downloads](https://ruby-gem-downloads-badge.herokuapp.com/nestedtext-ruby?color=brightgreen&type=total&label=gem%20downloads)](https://rubygems.org/gems/nestedtext-ruby)
 [![Tests](https://github.com/erikw/nestedtext-ruby/actions/workflows/ci.yml/badge.svg)](https://github.com/erikw/nestedtext-ruby/actions/workflows/ci.yml)
+[![Official Tests](https://img.shields.io/badge/Official%20Tests-Passing-success)](https://github.com/KenKundert/nestedtext_tests/tree/585e95a73d94ac1f48e71a154e2db0ab67cf30fa)
 [![CodeQL](https://github.com/erikw/nestedtext-ruby/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/erikw/nestedtext-ruby/actions/workflows/codeql-analysis.yml)
 [![Code Climate Maintainability](https://api.codeclimate.com/v1/badges/7ffb648ec4b77f3f9eb8/maintainability)](https://codeclimate.com/github/erikw/nestedtext-ruby/maintainability)
 [![Code Climate Test Coverage](https://api.codeclimate.com/v1/badges/7ffb648ec4b77f3f9eb8/test_coverage)](https://codeclimate.com/github/erikw/nestedtext-ruby/test_coverage)
