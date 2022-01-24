@@ -88,7 +88,7 @@ $ bundle exec rake release
 ## (semi-manually) Using gem-release gem extension
 Using [gem-release](https://github.com/svenfuchs/gem-release):
 ```console
-$ vi CHANGELOG.md && git add CHANGELOG.md && git commit -m "Update CHANGELOG.md" && git push
+$ vi CHANGELOG.md && git commit -am "Prepare release" && git push
 $ gem bump --version minor --tag --sign --push --release
 ```
 For `--version`, use `major|minor|patch` as needed.
@@ -100,6 +100,13 @@ Just push a new semver tag and the workflow [cd.yml](.github/workflows/cd.yml) w
 $ vi -p lib/nestedtext/version.rb CHANGELOG.md
 $ git commit -am "Prepare vX.Y.Z" && git push
 $ git tag x.y.z && git push --tags
+```
+
+or combined with gem-release
+```console
+$ vi CHANGELOG.md
+$ git commit -am "Prepare release" && git push
+$ gem bump --version minor --tag --sign --push
 ```
 
 
