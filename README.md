@@ -22,6 +22,8 @@ On-going development is at branch [**dev**](https://github.com/erikw/nestedtext-
 # What is NestedText?
 TODO
 
+https://nestedtext.org/en/latest/alternatives.html
+
 ## Examples
 TODO NT examples
 
