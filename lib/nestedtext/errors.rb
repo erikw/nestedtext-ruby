@@ -118,11 +118,7 @@ module NestedText
               prev_line.attribs.key?("value") &&
               prev_line.indentation < line.indentation &&
               %i[dict_item list_item].member?(prev_line.tag)
-          cond = ""
-          cond = ", which in this case consists only of whitespace" if prev_line.attribs["value"].strip.empty?
-          message = "invalid indentation. " \
-                    "An indent may only follow a dictionary or list item that " \
-                    "does not already have a value#{cond}."
+          message = "invalid indentation."
         elsif !prev_line.nil? && line.indentation < prev_line.indentation
           # Can't use ind_exp here, because it's a difference if the previous line was further indented. See test_load_error_dict_10
           message = "invalid indentation, partial dedent."
