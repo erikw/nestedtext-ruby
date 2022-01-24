@@ -3,7 +3,7 @@
 SimpleCov.start do
   enable_coverage :branch # Add branch coverage statistics.
   minimum_coverage 90 # Minimum coverage percentage.
-  command_name "test:internal" # Must be set for codeclimat reporter
+  command_name "test:internal" # Must be set for codeclimat reporter.
   add_filter "test/official_tests/"	# Code is not part of project, don't analyze.
 
   # Code climate needs JSON output.
