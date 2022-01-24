@@ -94,7 +94,7 @@ $ gem bump --version minor --tag --sign --push --release
 ```
 For `--version`, use `major|minor|patch` as needed.
 
-## **preferred** (semi-automatic) Using GitHub Actions CD
+## (semi-automatic, preferred) Using GitHub Actions CD
 Just push a new semver tag and the workflow [cd.yml](.github/workflows/cd.yml) will publish a new release at rubygems.org.
 
 ```console
