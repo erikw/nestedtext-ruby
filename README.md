@@ -29,7 +29,7 @@ TODO NT examples
 
 # Usage
 TODO Link to lib docs
-TODO link to my test repo showin live usage.
+TODO link to my test repo showin live usage. https://github.com/erikw/nestedtext-ruby-test
 
 
 # Usage
