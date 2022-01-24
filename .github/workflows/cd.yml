@@ -23,6 +23,9 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: Release Gem to rubygems.org
         if: contains(github.ref, 'refs/tags/v')
         uses: cadwallion/publish-rubygems-action@master
@@ -34,6 +37,9 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: Build and publish gem to GitHub Packages
         if: contains(github.ref, 'refs/tags/v')
         uses: jstastny/publish-gem-to-github@master
