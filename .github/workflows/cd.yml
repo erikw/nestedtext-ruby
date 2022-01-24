@@ -19,20 +19,20 @@ jobs:
         bundler-cache: true
     - name: Run CI Build with Rake
       run: bundle exec rake ci
-  release-rubygems:
-    needs: [test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-      - name: Release Gem to rubygems.org
-        if: contains(github.ref, 'refs/tags/v')
-        uses: cadwallion/publish-rubygems-action@master
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
-          RELEASE_COMMAND: bundle exec rake release
+#  release-rubygems:
+#    needs: [test]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          submodules: true
+#      - name: Release Gem to rubygems.org
+#        if: contains(github.ref, 'refs/tags/v')
+#        uses: cadwallion/publish-rubygems-action@master
+#        env:
+#          GITHUB_TOKEN: ${{ github.token }}
+#          RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+#          RELEASE_COMMAND: bundle exec rake release
   release-github:
     needs: [test]
     runs-on: ubuntu-latest
@@ -44,5 +44,5 @@ jobs:
         if: contains(github.ref, 'refs/tags/v')
         uses: jstastny/publish-gem-to-github@master
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ github.token }}
           owner: ${{ github.repository_owner }}
