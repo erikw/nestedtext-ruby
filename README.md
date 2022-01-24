@@ -1,6 +1,7 @@
 # NestedText Ruby Library [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Get%20a%20nifty%20tooltip%20for%20term%20definitions%20in%20your%20Jekyll%20blog%20with%20this%20plugin&url=https://github.com/erikw/nestedtext-ruby&via=erik_westrup&hashtags=jekyll,plugin)
 [![Gem Version](https://badge.fury.io/rb/nestedtext-ruby.svg)](https://badge.fury.io/rb/nestedtext-ruby)
 [![Gem Downloads](https://ruby-gem-downloads-badge.herokuapp.com/nestedtext-ruby?color=brightgreen&type=total&label=gem%20downloads)](https://rubygems.org/gems/nestedtext-ruby)
+[![Data Format Version Supported](https://img.shields.io/badge/%F0%9F%84%BD%F0%9F%85%83%20Version%20Supported-3.2.1-blueviolet)](https://nestedtext.org/en/v3.2/)
 [![Tests](https://github.com/erikw/nestedtext-ruby/actions/workflows/ci.yml/badge.svg)](https://github.com/erikw/nestedtext-ruby/actions/workflows/ci.yml)
 [![Official Tests](https://img.shields.io/badge/%F0%9F%8F%81%20Official%20Tests-Passing-success)](https://github.com/KenKundert/nestedtext_tests/tree/585e95a73d94ac1f48e71a154e2db0ab67cf30fa)
 [![CodeQL](https://github.com/erikw/nestedtext-ruby/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/erikw/nestedtext-ruby/actions/workflows/codeql-analysis.yml)
