@@ -37,6 +37,25 @@ TODO link to my test repo showin live usage. https://github.com/erikw/nestedtext
 
 ## Encoding (writing NT)
 
+`#to_nt` method:
+```irb
+irb> require 'nestedtext'
+irb> puts "a\nstring".to_nt
+> a
+> string
+irb> puts ["i1", "i2", "i3"].to_nt
+- i1
+- i2
+- i3
+irb> puts({"k1" => "v1", "multiline\nkey" => "v2", "k3" => "multiline\nvalue"}.to_nt)
+k1: v1
+: multiline
+: key
+    > v2
+k3:
+    > multiline
+    > value
+```
 ## Custom Classes Serialization
 This library has support for serialization/deserialization of custom classes as well.
 `strict: false` flag needed
