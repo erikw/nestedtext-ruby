@@ -34,6 +34,7 @@ jobs:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
           RELEASE_COMMAND: bundle exec rake release
   release-github:
+    # Manual push can be done as descried here: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-rubygems-registry#publishing-a-package
     needs: [test]
     runs-on: ubuntu-latest
     steps:
