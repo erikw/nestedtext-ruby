@@ -97,8 +97,8 @@ For `--version`, use `major|minor|patch` as needed.
 Just push a new semver tag and the workflow [cd.yml](.github/workflows/cd.yml) will publish a new release at rubygems.org.
 
 ```console
-$ vi CHANGELOG.md
-$ git add CHANGELOG.md && git commit -m "Prepare vx.y.z" && git push
+$ vi -p lib/nestedtext/version.rb CHANGELOG.md
+$ git commit -am "Prepare vX.Y.Z" && git push
 $ git tag x.y.z && git push --tags
 ```
 
