@@ -30,4 +30,7 @@ Gem::Specification.new do |spec|
     end
   end
   spec.require_paths = ["lib"]
+
+  spec.add_runtime_dependency "warning", "~> 1.2"
+  spec.add_runtime_dependency "word_wrap", "~> 1.0"
 end

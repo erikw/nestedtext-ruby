@@ -25,6 +25,3 @@ group :test do
   gem "rubocop-rake", "~> 0.6", require: false
   gem "simplecov", "~> 0.21", require: false
 end
-
-gem "warning", "~> 1.2"
-gem "word_wrap", "~> 1.0"
