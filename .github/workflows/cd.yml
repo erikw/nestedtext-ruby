@@ -45,4 +45,5 @@ jobs:
         uses: jstastny/publish-gem-to-github@master
         with:
           token: ${{ github.token }}
-          owner: ${{ github.repository_owner }}
+          #owner: ${{ github.repository_owner }}
+          owner: ${{ github.repository }}
