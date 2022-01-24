@@ -10,12 +10,15 @@ on:
     paths-ignore:
       - '**/*.md'
 
+env:
+  RUBY_MAIN_VER: 3.1
 jobs:
   test:
     runs-on: ubuntu-latest
     #runs-on: ${{ matrix.os }}-latest
     strategy:
       matrix:
+        # TODO enable other OSes?
         # os: [ubuntu, macos, windows]
         ruby-version: [3.0, 3.1]
     steps:
@@ -31,7 +34,7 @@ jobs:
       run: bundle exec rake ci
     - name: Publish Code Coverage
       uses: paambaati/codeclimate-action@v3.0.0
-      if: matrix.ruby-version == 3.1 && github.event_name != 'pull_request'
+      if: matrix.ruby-version == ${{ env.RUBY_MAIN_VER }} && github.event_name != 'pull_request'
       env:
         CC_TEST_REPORTER_ID: 031d4b3d619508ecf0f2d6ce8f2565d506d4cb24b6fa7ef913af274533021bee
       with:
