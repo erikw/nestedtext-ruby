@@ -91,9 +91,9 @@ See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.r
 1. Install a supported ruby version (see .gemspec) with a ruby version manager e.g. [rbenv](https://github.com/rbenv/rbenv), [asdf](http://asdf-vm.com/) or [RVM](https://rvm.io/rvm/install)
 1. run `$ script/setup` to install dependencies
 1. run `$ script/test` to run the tests
-1.  You can also run `$ script/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `$ bundle exec rake install`.
+1. You can also run `$ script/console` for an interactive prompt that will allow you to experiment.
+1. For local testing, install the gem on local machine with: `$ bundle exec rake install`.
+   * or manuall with `$ gem build *.gemscpec && gem install *.gem`
 
 ## Releasing
 Instructions for releasing on rubygems.org below. Optionally make a GitHub [release](https://github.com/erikw/nestedtext-ruby/releases) after this for the pushed git tag.
