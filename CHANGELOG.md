@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2022-01-25
+The library is now useful for clients!
+
+### Changed
+- Hide all internals in the module from clients.
+
 ## [0.6.0] - 2022-01-24
 ### Fixed
 - Move runtime dependencies from Gemfile to .gemspec.
