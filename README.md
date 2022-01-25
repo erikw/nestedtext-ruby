@@ -57,12 +57,12 @@ The official documentation can be found at [TODO](TODO). A fully working example
 ## Decoding (reading NT)
 This is how you can decode NestedText from a string or directly from a file (`*.nt`) to Ruby object instances:
 
+### Any Top Level Type
 ```ruby
 require 'nestedtext'
 
 ntstr = "- objitem1\n-list item 2"
 obj1 = NesedText::load(ntstr)
-
 
 obj2 = NestedText::load_file("path/to/data.nt")
 ```
@@ -87,6 +87,7 @@ The NestedText types maps like this to Ruby:
 
 Thus you must know what you're parsing, or test what you decoded.
 
+### Explicit Top Level Type
 If you already know what you expect to have, you can guarantee that this is what you will get by telling either function what the expected top type is. If not, an error will be raised.
 
 ```ruby
@@ -102,8 +103,22 @@ NesedText::load(ntstr, top_class=String)
 ```
 
 ## Encoding (writing NT)
+This is how you can decode Ruby objects to a NesedText string or file:
 
-`#to_nt` method:
+```ruby
+require 'nestedtext'
+
+data = ["i1", "i2"]
+
+ntstr = NesedText::dump(data)
+
+NestedText::dump_file(data, "path/to/data.nt")
+```
+
+
+### `#to_nt` Convenience
+To make it more convenient, the Ruby Core is extended with a `#to_nt` method on the supported types that will dump a String of the data structure. Here's an IRB session showing how it works:
+
 ```irb
 irb> require 'nestedtext'
 irb> puts "a\nstring".to_nt
@@ -113,18 +128,80 @@ irb> puts ["i1", "i2", "i3"].to_nt
 - i1
 - i2
 - i3
-irb> puts({"k1" => "v1", "multiline\nkey" => "v2", "k3" => "multiline\nvalue"}.to_nt)
+irb> puts({"k1" => "v1", "multiline\nkey" => "v2", "k3" => ["a", "list"]}.to_nt)
 k1: v1
 : multiline
 : key
     > v2
 k3:
-    > multiline
-    > value
+    - a
+    - list
 ```
+
 ## Custom Classes Serialization
-This library has support for serialization/deserialization of custom classes as well.
-`strict: false` flag needed
+This library has support for serialization/deserialization of custom classes as well. This is done by letting the objects tell NestedText what data should be used to represent the object instance with the `#encode_nt_with` method. All objects being serialized must either implement this method or be one of the core supported NestedText data types from the table above.
+
+```
+class Apple
+  def initialize(type, weight)
+    @type = type
+    @weight = weight
+  end
+
+  def encode_nt_with
+    [@type, @weight]
+  end
+end
+```
+
+When an apple instance will be serialized e.g. by `apple.to_nt`, NestedText will call `Apple.encode_nt_with` if it exist and let the returned data be encoded to represent the instance.
+
+
+To be able to get this instance back when deserializing the NestedText there must be a class method `Class.nt_create(data)`. When deserializing NestedText and the class `Apple` is detected, and the method `#nt_create` exist on the class, it will be called with the decoded data belonging to it. This method should create and return a new instance of the class. In the most simple case it's just translating this to a call to `#new`.
+
+In full, the `Apple` class should look like:
+
+```
+class Apple
+  def initialize(type, weight)
+    @type = type
+    @weight = weight
+  end
+
+  def self.nt_create(data)
+    new(*data)
+  end
+
+  def encode_nt_with
+    [@type, @weight]
+  end
+end
+```
+
+This class will be encoded like this:
+
+TODO strict: false not needed if making this default
+```ruby
+irb> puts NestedText::dump(Apple.new("granny smith", 12), strict: false)
+__nestedtext_class__: Apple
+data:
+    - granny smith
+    - 12
+```
+Note that the special key to denote the class name is subject to change in future versions and you **must not** rely on it.
+
+If you want to add some more super powers to your custom class, you can add the `#to_nt` shortcut by including the `NTEncodeMixin`:
+```
+class Apple
+  include NestedText::NTEncodeMixin
+  ...
+end
+
+Apple.new("granny smith", 12).to_nt
+```
+
+
+TODO `strict: false` flag needed??
 See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.rb) for more real working examples.
 
 
