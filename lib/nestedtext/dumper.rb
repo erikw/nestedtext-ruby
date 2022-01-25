@@ -1,12 +1,8 @@
-# TODO: is this exposed to client who import this file? If so, hide it!
-class String
-  def normalize_line_endings
-    # windows/mac -> unix
-    gsub(/\r\n?/, "\n")
-  end
-end
+require "nestedtext/core_ext_internal"
 
 module NestedText
+  using NestedText.const_get(:CoreExtInternal)
+
   class Dumper
     def initialize(opts = EncodeOptions.new)
       @indentation = opts.indentation
