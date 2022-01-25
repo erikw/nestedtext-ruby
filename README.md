@@ -77,12 +77,12 @@ key2: value2
 The NestedText types maps like this to Ruby:
 
 [NestedText](https://nestedtext.org/en/latest/basic_syntax.html) | Ruby | Comment
-|---|---
-`String`    | `String`  |
-`List`      | `Array`   |
-`Dictionary`| `Hash`    |
-`String`    | `Symbol`  | with `strict: false`, otherwise Symbols are encoded as Custom Class (see below).
-*empty*     | nil       | How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
+|---|---|
+`String` | `String` |
+`List` | `Array` |
+`Dictionary` | `Hash` |
+`String` | `Symbol` | with `strict: false`, otherwise Symbols are encoded as Custom Class (see below).
+*empty* | nil | How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
 
 
 Thus you must know what you're parsing, or test what you decoded.
