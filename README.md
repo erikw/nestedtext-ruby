@@ -213,7 +213,6 @@ See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.r
      gem 'nestedtext'
    ```
    and then running `$ bundle install`.
-   ```
 1. Require the library and start using it!
    ```ruby
      require 'nestedtext'
