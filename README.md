@@ -296,6 +296,6 @@ Bug reports and pull requests are welcome on GitHub at [https://github.com/erikw
 # License
 The gem is available as open source with the [License](./LICENSE.txt).
 
-# Acknowledgments & Thanks
+# Acknowledgments
 * Thanks to the data format authors making it easier making new implementations by providing an [official test suite](https://github.com/KenKundert/nestedtext_tests).
 * Thanks to [pixteller](https://pixteller.com/) & [placeit](https://placeit.net/video-to-gif-converter) tools for creating the animated logo.
