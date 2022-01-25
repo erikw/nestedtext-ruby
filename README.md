@@ -14,7 +14,7 @@
 
 A ruby library for the human friendly data format [NestedText](https://nestedtext.org/).
 
-There is support for decoding a NestedText file or string to Ruby data structures, as well as encoding Ruby objects to a NestedText file or string. Furthermore there is support for serialization and deserialization of custom classes. The supported language version of the data format can be see in the badge above. This implementation pass all the [official tests](https://github.com/KenKundert/nestedtext_tests).
+Provided is support for decoding a NestedText file or string to Ruby data structures, as well as encoding Ruby objects to a NestedText file or string. Furthermore there is support for serialization and deserialization of custom classes. The supported language version of the data format can be see in the badge above. This implementation pass all the [official tests](https://github.com/KenKundert/nestedtext_tests).
 
 This library is inspired Ruby stdlib modules `JSON` and `YAML` as well as the [reference implementation](https://github.com/KenKundert/nestedtext) of NestedText in Python.
 
@@ -24,7 +24,7 @@ Citing from official [introduction](https://nestedtext.org/en/latest/index.html)
 >
 > NestedText is convenient for configuration files, address books, account information, and the like. Because there is no need for quoting or escaping, it is particularly nice for holding code fragments.
 
-*"Why do we need another data format?"* is the expected question to ask. The answer is that the current popular formats (JSON, YAML, TOML, INI etc.) all have shortcomings which NestedText [addresses](https://nestedtext.org/en/latest/alternatives.html).
+*"Why do we need another data format?"* is the right question to ask. The answer is that the current popular formats (JSON, YAML, TOML, INI etc.) all have shortcomings which NestedText [addresses](https://nestedtext.org/en/latest/alternatives.html).
 
 ## Examples
 Here's a full-fledged example of an address book (from the official docs):
