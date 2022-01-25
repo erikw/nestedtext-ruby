@@ -174,4 +174,5 @@ module NestedText
       end
     end
   end
+  private_constant :Dumper
 end
