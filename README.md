@@ -139,7 +139,7 @@ k3:
 ```
 
 ## Custom Classes Serialization
-This library has support for serialization/deserialization of custom classes as well. This is done by letting the objects tell NestedText what data should be used to represent the object instance with the `#encode_nt_with` method. All objects being serialized must either implement this method or be one of the core supported NestedText data types from the table above.
+This library has support for serialization/deserialization of custom classes as well. This is done by letting the objects tell NestedText what data should be used to represent the object instance with the `#encode_nt_with` method (inspired by `YAML`'s `#encode_with` method). All objects being serialized must either implement this method or be one of the core supported NestedText data types from the table above.
 
 ```ruby
 class Apple
