@@ -187,7 +187,7 @@ class EncodeCustomClassTest < NTTest
 
   def test_custom_class_strict_true
     obj = CustomTestClasses::Inner.new("c")
-    assert_raises(NestedText::Errors::DumpUnsupportedTypeError) do
+    assert_raises(ERRORS::DumpUnsupportedTypeError) do
       NestedText.dump(obj)
     end
   end

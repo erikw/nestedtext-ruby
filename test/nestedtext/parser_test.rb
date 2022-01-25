@@ -4,7 +4,7 @@ require "test_helper"
 
 class ParserTest < NTTest
   def test_invalid_top_type_initialize
-    assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
+    assert_raises(ERRORS::UnsupportedTopLevelTypeError) do
       PARSER.new(StringIO.new, Enumerable)
     end
   end
@@ -12,13 +12,13 @@ class ParserTest < NTTest
   def test_invalid_top_type_parse
     parser = PARSER.new(StringIO.new("- dummy"), Object)
     parser.instance_variable_set :@top_class, Enumerable
-    assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
+    assert_raises(ERRORS::UnsupportedTopLevelTypeError) do
       parser.parse
     end
   end
 
   def test_io_invalid_string
-    assert_raises(NestedText::Errors::WrongInputTypeError) do
+    assert_raises(ERRORS::WrongInputTypeError) do
       PARSER.new("", Hash)
     end
   end
@@ -27,7 +27,7 @@ class ParserTest < NTTest
     parser = PARSER.new(StringIO.new("dummy"), Object)
     # Float is not a valid result type from #parse_any.
     parser.stub :parse_any, 1.99 do
-      assert_raises(NestedText::Errors::AssertionError) do
+      assert_raises(ERRORS::AssertionError) do
         parser.parse
       end
     end
@@ -49,7 +49,7 @@ class ParserTest < NTTest
 
     parser = PARSER.new(StringIO.new("dummy"), Object)
     parser.instance_variable_set :@line_scanner, scan_mock
-    assert_raises(NestedText::Errors::AssertionError) do
+    assert_raises(ERRORS::AssertionError) do
       parser.parse
     end
   end
@@ -64,7 +64,7 @@ class ParserTest < NTTest
 
     INLINE_SCANNER.stub :new, scan_mock do
       parser.stub :parse_inline, [] do
-        assert_raises(NestedText::Errors::AssertionError) do
+        assert_raises(ERRORS::AssertionError) do
           parser.parse
         end
       end
@@ -81,7 +81,7 @@ class ParserTest < NTTest
 
     INLINE_SCANNER.stub :new, scan_mock do
       parser.stub :parse_inline, {} do
-        assert_raises(NestedText::Errors::AssertionError) do
+        assert_raises(ERRORS::AssertionError) do
           parser.parse
         end
       end

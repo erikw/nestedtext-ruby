@@ -16,7 +16,7 @@ class LineScannerTest < NTTest
     assert_equal ntstring, line.content
 
     assert scanner.empty?
-    assert_raises(NestedText::Errors::LineScannerIsEmpty) do
+    assert_raises(ERRORS::LineScannerIsEmpty) do
       scanner.read_next
     end
   end
@@ -37,7 +37,7 @@ class InlineScannerTest < NTTest
     assert_equal line.content, char
 
     assert scanner.empty?
-    assert_raises(NestedText::Errors::InlineScannerIsEmpty) do
+    assert_raises(ERRORS::InlineScannerIsEmpty) do
       scanner.read_next
     end
   end
@@ -53,7 +53,7 @@ class LineTest < NTTest
 
   def test_invalid_tag
     line = LINE.new("", 0, nil)
-    assert_raises(NestedText::Errors::LineTagUnknown) do
+    assert_raises(ERRORS::LineTagUnknown) do
       line.tag = :not_allowed
     end
   end

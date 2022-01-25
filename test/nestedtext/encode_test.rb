@@ -18,7 +18,7 @@ class EncodeTest < NTTest
     a = []
     b = [a]
     a << b
-    assert_raises(NestedText::Errors::DumpCyclicReferencesDetected) do
+    assert_raises(ERRORS::DumpCyclicReferencesDetected) do
       NestedText.dump(a)
     end
   end
@@ -27,7 +27,7 @@ class EncodeTest < NTTest
     a = []
     b = ["i1", [a]]
     a << b
-    assert_raises(NestedText::Errors::DumpCyclicReferencesDetected) do
+    assert_raises(ERRORS::DumpCyclicReferencesDetected) do
       NestedText.dump(a)
     end
   end
@@ -515,7 +515,7 @@ class EncodeHashTest < NTTest
 
   def test_hash_symbol_key_strict
     obj = { key: "value" }
-    assert_raises(NestedText::Errors::DumpHashKeyStrictString) do
+    assert_raises(ERRORS::DumpHashKeyStrictString) do
       NestedText.dump(obj)
     end
   end
@@ -530,7 +530,7 @@ class EncodeHashTest < NTTest
 
   def test_hash_symbol_value_strict
     obj = { "key" => :value }
-    assert_raises(NestedText::Errors::DumpUnsupportedTypeError) do
+    assert_raises(ERRORS::DumpUnsupportedTypeError) do
       NestedText.dump(obj)
     end
   end
@@ -545,7 +545,7 @@ class EncodeHashTest < NTTest
 
   def test_hash_int_value_strict
     obj = { "key" => 1 }
-    assert_raises(NestedText::Errors::DumpUnsupportedTypeError) do
+    assert_raises(ERRORS::DumpUnsupportedTypeError) do
       NestedText.dump(obj)
     end
   end
@@ -568,7 +568,7 @@ class EncodeHashTest < NTTest
 
   def test_hash_key_int_strict
     obj = { 1 => "value" }
-    assert_raises(NestedText::Errors::DumpHashKeyStrictString) do
+    assert_raises(ERRORS::DumpHashKeyStrictString) do
       NestedText.dump(obj)
     end
   end
@@ -750,13 +750,13 @@ class EncodeToIO < NTTest
   end
 
   def test_io_dump_invalid_io_array
-    assert_raises(NestedText::Errors::DumpBadIO) do
+    assert_raises(ERRORS::DumpBadIO) do
       NestedText.dump("dummy", io: [])
     end
   end
 
   def test_io_dump_invalid_path_nil
-    assert_raises(NestedText::Errors::DumpFileBadPath) do
+    assert_raises(ERRORS::DumpFileBadPath) do
       NestedText.dump_file("dummy", nil)
     end
   end

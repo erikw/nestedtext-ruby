@@ -259,4 +259,5 @@ module NestedText
       raise LineTagNotDetected, line
     end
   end
+  private_constant :Errors
 end

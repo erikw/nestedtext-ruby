@@ -19,13 +19,13 @@ class DecodeStringTopAnyTest < NTTest
   end
 
   def test_invalid_indentation_first_entry_col0
-    assert_raises(NestedText::Errors::InvalidIndentation) do
+    assert_raises(ERRORS::InvalidIndentation) do
       NestedText.load(" a: b")
     end
   end
 
   def test_invalid_line_tag
-    assert_raises(NestedText::Errors::LineTagNotDetected) do
+    assert_raises(ERRORS::LineTagNotDetected) do
       NestedText.load("$ nothing starts with this char")
     end
   end
@@ -86,7 +86,7 @@ class DecodeStringTopAnyDictTest < NTTest
       one: 1
         two: 2
     NT
-    assert_raises(NestedText::Errors::InvalidIndentation) do
+    assert_raises(ERRORS::InvalidIndentation) do
       NestedText.load(nts)
     end
   end
@@ -96,7 +96,7 @@ class DecodeStringTopAnyDictTest < NTTest
       key 1:
           \t    key2: this line has tab indentation
     NT
-    assert_raises(NestedText::Errors::InvalidIndentationChar) do
+    assert_raises(ERRORS::InvalidIndentationChar) do
       NestedText.load(nts)
     end
   end
@@ -106,7 +106,7 @@ class DecodeStringTopAnyDictTest < NTTest
       key:
        > this line has non-breaking space in indentation
     NT
-    assert_raises(NestedText::Errors::InvalidIndentationChar) do
+    assert_raises(ERRORS::InvalidIndentationChar) do
       NestedText.load(nts)
     end
   end
@@ -136,7 +136,7 @@ class DecodeStringTopAnyDictTest < NTTest
       one: two
       - list instead of dict
     NT
-    assert_raises(NestedText::Errors::LineTypeExpectedDictItem) do
+    assert_raises(ERRORS::LineTypeExpectedDictItem) do
       NestedText.load(nts)
     end
   end
@@ -231,7 +231,7 @@ class DecodeStringTopAnyDictTest < NTTest
       : keypt2
            [inline list here]
     NT
-    assert_raises(NestedText::Errors::LineTypeNotExpected) do
+    assert_raises(ERRORS::LineTypeNotExpected) do
       NestedText.load(nts)
     end
   end
@@ -242,7 +242,7 @@ class DecodeStringTopAnyDictTest < NTTest
       : keypt2
       - list value, but not further indented
     NT
-    assert_raises(NestedText::Errors::MultilineKeyNoValue) do
+    assert_raises(ERRORS::MultilineKeyNoValue) do
       NestedText.load(nts)
     end
   end
@@ -281,7 +281,7 @@ class DecodeStringTopAnyDictTest < NTTest
       dict key:
       - list value
     NT
-    assert_raises(NestedText::Errors::LineTypeExpectedDictItem) do
+    assert_raises(ERRORS::LineTypeExpectedDictItem) do
       NestedText.load(nts)
     end
   end
@@ -292,7 +292,7 @@ class DecodeStringTopAnyDictTest < NTTest
           key2: v2
         key3: v3
     NT
-    assert_raises(NestedText::Errors::InvalidIndentation) do
+    assert_raises(ERRORS::InvalidIndentation) do
       NestedText.load(nts)
     end
   end
@@ -302,7 +302,7 @@ class DecodeStringTopAnyDictTest < NTTest
       key1:#{" "}
           key2: v2
     NT
-    assert_raises(NestedText::Errors::InvalidIndentation) do
+    assert_raises(ERRORS::InvalidIndentation) do
       NestedText.load(nts)
     end
   end
@@ -331,7 +331,7 @@ class DecodeStringTopAnyListTest < NTTest
       -
       [not indented]
     NT
-    assert_raises(NestedText::Errors::LineTypeExpectedListItem) do
+    assert_raises(ERRORS::LineTypeExpectedListItem) do
       NestedText.load(nts)
     end
   end
@@ -399,7 +399,7 @@ class DecodeStringTopAnyListTest < NTTest
       - L1
         - L2
     NT
-    assert_raises(NestedText::Errors::InvalidIndentation) do
+    assert_raises(ERRORS::InvalidIndentation) do
       NestedText.load(nts)
     end
   end
@@ -409,7 +409,7 @@ class DecodeStringTopAnyListTest < NTTest
       - item here
       : but suddently key item here
     NT
-    assert_raises(NestedText::Errors::LineTypeExpectedListItem) do
+    assert_raises(ERRORS::LineTypeExpectedListItem) do
       NestedText.load(nts)
     end
   end
@@ -419,7 +419,7 @@ class DecodeStringTopAnyListTest < NTTest
       key:
        \t    - this line has tab indentation
     NT
-    assert_raises(NestedText::Errors::InvalidIndentationChar) do
+    assert_raises(ERRORS::InvalidIndentationChar) do
       NestedText.load(nts)
     end
   end
@@ -429,7 +429,7 @@ class DecodeStringTopAnyListTest < NTTest
       - valid line
       $ invalid line
     NT
-    assert_raises(NestedText::Errors::LineTagNotDetected) do
+    assert_raises(ERRORS::LineTagNotDetected) do
       NestedText.load(nts)
     end
   end
@@ -439,7 +439,7 @@ class DecodeStringTopAnyListTest < NTTest
       key: value1
       key: value2
     NT
-    assert_raises(NestedText::Errors::DictDuplicateKey) do
+    assert_raises(ERRORS::DictDuplicateKey) do
       NestedText.load(nts)
     end
   end
@@ -503,7 +503,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
       > L1
         > L2
     NT
-    assert_raises(NestedText::Errors::InvalidIndentation) do
+    assert_raises(ERRORS::InvalidIndentation) do
       NestedText.load(nts)
     end
   end
@@ -513,7 +513,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
       > multiline here
       : but suddently key item here
     NT
-    assert_raises(NestedText::Errors::LineTypeNotExpected) do
+    assert_raises(ERRORS::LineTypeNotExpected) do
       NestedText.load(nts)
     end
   end
@@ -524,7 +524,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
           \t    > multiline
                 > string
     NT
-    assert_raises(NestedText::Errors::InvalidIndentationChar) do
+    assert_raises(ERRORS::InvalidIndentationChar) do
       NestedText.load(nts)
     end
   end
@@ -536,19 +536,19 @@ class DecodeStringTopAnyInlineDictTest < NTTest
   end
 
   def test_inline_dict_invalid_empty_whitespace
-    assert_raises(NestedText::Errors::InlineDictKeySyntaxError) do
+    assert_raises(ERRORS::InlineDictKeySyntaxError) do
       NestedText.load("{ }")
     end
   end
 
   def test_inline_dict_invalid_empty_values
-    assert_raises(NestedText::Errors::InlineDictKeySyntaxError) do
+    assert_raises(ERRORS::InlineDictKeySyntaxError) do
       NestedText.load("{,}")
     end
   end
 
   def test_inline_dict_invalid_missing_value
-    assert_raises(NestedText::Errors::InlineMissingValue) do
+    assert_raises(ERRORS::InlineMissingValue) do
       NestedText.load("{a:1,}")
     end
   end
@@ -619,42 +619,42 @@ class DecodeStringTopAnyInlineDictTest < NTTest
 
   def test_inline_dict_invalid_wrong_closing_bracket
     nts = "{a: 1, b: 2]"
-    assert_raises(NestedText::Errors::InlineDictSyntaxError) do
+    assert_raises(ERRORS::InlineDictSyntaxError) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_dict_invalid_missing_closing_bracket
     nts = "{a: 1, b: 2"
-    assert_raises(NestedText::Errors::InlineNoClosingDelimiter) do
+    assert_raises(ERRORS::InlineNoClosingDelimiter) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_dict_invalid_inline_string
     nts = "{a: 1:b"
-    assert_raises(NestedText::Errors::InlineNoClosingDelimiter) do
+    assert_raises(ERRORS::InlineNoClosingDelimiter) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_dict_extra_char
     nts = "{a: 1}x"
-    assert_raises(NestedText::Errors::InlineExtraCharactersAfterDelimiter) do
+    assert_raises(ERRORS::InlineExtraCharactersAfterDelimiter) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_dict_extra_chars
     nts = "{a: 1}extra"
-    assert_raises(NestedText::Errors::InlineExtraCharactersAfterDelimiter) do
+    assert_raises(ERRORS::InlineExtraCharactersAfterDelimiter) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_dict_incomplete_key
     nts = "{key"
-    assert_raises(NestedText::Errors::InlineNoClosingDelimiter) do
+    assert_raises(ERRORS::InlineNoClosingDelimiter) do
       NestedText.load(nts)
     end
   end
@@ -747,35 +747,35 @@ class DecodeStringTopAnyInlineListTest < NTTest
 
   def test_inline_list_invalid_wrong_closing_bracket
     nts = "[1, 2}"
-    assert_raises(NestedText::Errors::InlineListSyntaxError) do
+    assert_raises(ERRORS::InlineListSyntaxError) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_list_no_closing_bracket_empty
     nts = "[,"
-    assert_raises(NestedText::Errors::InlineNoClosingDelimiter) do
+    assert_raises(ERRORS::InlineNoClosingDelimiter) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_list_no_closing_bracket_items
     nts = "[1, 2"
-    assert_raises(NestedText::Errors::InlineNoClosingDelimiter) do
+    assert_raises(ERRORS::InlineNoClosingDelimiter) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_list_extra_chars
     nts = "[a, b]extra"
-    assert_raises(NestedText::Errors::InlineExtraCharactersAfterDelimiter) do
+    assert_raises(ERRORS::InlineExtraCharactersAfterDelimiter) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_list_missing_value
     nts = "[a, }]"
-    assert_raises(NestedText::Errors::InlineMissingValue) do
+    assert_raises(ERRORS::InlineMissingValue) do
       NestedText.load(nts)
     end
   end
@@ -783,39 +783,39 @@ end
 
 class DecodeStringTopTest < NTTest
   def test_top_invalid_enumerable
-    assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
+    assert_raises(ERRORS::UnsupportedTopLevelTypeError) do
       NestedText.load("", top_class: Enumerable)
     end
   end
 
   def test_top_invalid_nil
-    assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
+    assert_raises(ERRORS::UnsupportedTopLevelTypeError) do
       NestedText.load("", top_class: nil)
     end
   end
 
   def test_input_invalid_array
-    assert_raises(NestedText::Errors::WrongInputTypeError) do
+    assert_raises(ERRORS::WrongInputTypeError) do
       NestedText.load([])
     end
   end
 
   def test_input_invalid_hash
-    assert_raises(NestedText::Errors::WrongInputTypeError) do
+    assert_raises(ERRORS::WrongInputTypeError) do
       NestedText.load({})
     end
   end
 
   def test_top_hash_but_is_array
     nts = "- l1"
-    assert_raises(NestedText::Errors::TopLevelTypeMismatchParsedType) do
+    assert_raises(ERRORS::TopLevelTypeMismatchParsedType) do
       NestedText.load(nts, top_class: Hash)
     end
   end
 
   def test_top_array_but_is_hash
     nts = "k: v"
-    assert_raises(NestedText::Errors::TopLevelTypeMismatchParsedType) do
+    assert_raises(ERRORS::TopLevelTypeMismatchParsedType) do
       NestedText.load(nts, top_class: Array)
     end
   end
@@ -834,7 +834,7 @@ class DecodeStringTopHashTest < NTTest
     nts = <<~NT
       - it's a list!
     NT
-    assert_raises(NestedText::Errors::TopLevelTypeMismatchParsedType) do
+    assert_raises(ERRORS::TopLevelTypeMismatchParsedType) do
       NestedText.load(nts, top_class: Hash)
     end
   end
@@ -853,7 +853,7 @@ class DecodeStringTopArrayTest < NTTest
     nts = <<~NT
       this is a : dict
     NT
-    assert_raises(NestedText::Errors::TopLevelTypeMismatchParsedType) do
+    assert_raises(ERRORS::TopLevelTypeMismatchParsedType) do
       NestedText.load(nts, top_class: Array)
     end
   end
@@ -876,7 +876,7 @@ class DecodeStringTopArrayTest < NTTest
     nts = <<~NT
       - this list item will not be expected
     NT
-    assert_raises(NestedText::Errors::TopLevelTypeMismatchParsedType) do
+    assert_raises(ERRORS::TopLevelTypeMismatchParsedType) do
       NestedText.load(nts, top_class: String)
     end
   end
@@ -898,13 +898,13 @@ class DecodeFileTest < NTTest
   end
 
   def test_load_file_invalid_filename_nil
-    assert_raises(NestedText::Errors::WrongInputTypeError) do
+    assert_raises(ERRORS::WrongInputTypeError) do
       NestedText.load_file(nil)
     end
   end
 
   def test_load_file_invalid_filename_array
-    assert_raises(NestedText::Errors::WrongInputTypeError) do
+    assert_raises(ERRORS::WrongInputTypeError) do
       NestedText.load_file([])
     end
   end
@@ -921,7 +921,7 @@ class DecodeCustomClassTest < NTTest
       data: dummy
     NT
 
-    assert_raises(NestedText::Errors::ParseCustomClassNoCreateMethod) do
+    assert_raises(ERRORS::ParseCustomClassNoCreateMethod) do
       NestedText.load(nts, strict: false)
     end
   end
@@ -933,7 +933,7 @@ class DecodeCustomClassTest < NTTest
       data: dummy
     NT
 
-    assert_raises(NestedText::Errors::ParseCustomClassNotFound) do
+    assert_raises(ERRORS::ParseCustomClassNotFound) do
       NestedText.load(nts, strict: false)
     end
   end
