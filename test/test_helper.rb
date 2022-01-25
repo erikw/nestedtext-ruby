@@ -26,3 +26,9 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 class NTTest < Minitest::Test
   parallelize_me!
 end
+
+# Work around private_constant. Reference: https://stackoverflow.com/a/45070911/265508
+PARSER = NestedText.const_get(:Parser)
+LINE_SCANNER = NestedText.const_get(:LineScanner)
+INLINE_SCANNER = NestedText.const_get(:InlineScanner)
+LINE = NestedText.const_get(:Line)

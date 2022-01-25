@@ -3,9 +3,6 @@ require "stringio"
 require "test_helper"
 
 class ParserTest < NTTest
-  # Work around private_constant. Reference: https://stackoverflow.com/a/45070911/265508
-  PARSER = NestedText.const_get(:Parser)
-
   def test_invalid_top_type_initialize
     assert_raises(NestedText::Errors::UnsupportedTopLevelTypeError) do
       PARSER.new(StringIO.new, Enumerable)
@@ -65,7 +62,7 @@ class ParserTest < NTTest
 
     parser = PARSER.new(StringIO.new("{k: v}"), Object)
 
-    NestedText::InlineScanner.stub :new, scan_mock do
+    INLINE_SCANNER.stub :new, scan_mock do
       parser.stub :parse_inline, [] do
         assert_raises(NestedText::Errors::AssertionError) do
           parser.parse
@@ -82,7 +79,7 @@ class ParserTest < NTTest
 
     parser = PARSER.new(StringIO.new("[i1, i2]"), Object)
 
-    NestedText::InlineScanner.stub :new, scan_mock do
+    INLINE_SCANNER.stub :new, scan_mock do
       parser.stub :parse_inline, {} do
         assert_raises(NestedText::Errors::AssertionError) do
           parser.parse

@@ -4,13 +4,13 @@ require "test_helper"
 
 class LineScannerTest < NTTest
   def test_empty
-    scanner = NestedText::LineScanner.new(StringIO.new("# comment\n#comment"))
+    scanner = LINE_SCANNER.new(StringIO.new("# comment\n#comment"))
     assert scanner.empty?
   end
 
   def test_reading_when_empty
     ntstring = "- single item"
-    scanner = NestedText::LineScanner.new(StringIO.new(ntstring))
+    scanner = LINE_SCANNER.new(StringIO.new(ntstring))
     refute scanner.empty?
     line = scanner.read_next
     assert_equal ntstring, line.content
@@ -24,14 +24,14 @@ end
 
 class InlineScannerTest < NTTest
   def test_empty
-    line = NestedText::Line.new("", 0, nil)
-    scanner = NestedText::InlineScanner.new(line)
+    line = LINE.new("", 0, nil)
+    scanner = INLINE_SCANNER.new(line)
     assert scanner.empty?
   end
 
   def test_reading_when_empty
-    line = NestedText::Line.new("1", 0, nil)
-    scanner = NestedText::InlineScanner.new(line)
+    line = LINE.new("1", 0, nil)
+    scanner = INLINE_SCANNER.new(line)
     refute scanner.empty?
     char = scanner.read_next
     assert_equal line.content, char
@@ -46,13 +46,13 @@ end
 class LineTest < NTTest
   def test_to_s
     content = "string content"
-    line = NestedText::Line.new(content, 0, nil)
+    line = LINE.new(content, 0, nil)
     repr = line.to_s
     assert repr.include? content
   end
 
   def test_invalid_tag
-    line = NestedText::Line.new("", 0, nil)
+    line = LINE.new("", 0, nil)
     assert_raises(NestedText::Errors::LineTagUnknown) do
       line.tag = :not_allowed
     end

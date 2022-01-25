@@ -40,6 +40,7 @@ module NestedText
       @next_line = line
     end
   end
+  private_constant :LineScanner
 
   class InlineScanner
     attr_reader :line, :pos
@@ -68,6 +69,7 @@ module NestedText
       empty? ? nil : @line.content[@pos]
     end
   end
+  private_constant :InlineScanner
 
   class Line
     # Reference: https://nestedtext.org/en/latest/file_format.html
@@ -158,4 +160,5 @@ module NestedText
       end
     end
   end
+  private_constant :Line
 end
