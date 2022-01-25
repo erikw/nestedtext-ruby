@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2022-01-25
+### Added
+- Expose `NestedText::VERSION` for convenience to the clients.
+
 ## [1.0.0] - 2022-01-25
 The library is now useful for clients!
 
