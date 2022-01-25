@@ -77,7 +77,7 @@ key2: value2
 The NestedText types maps like this to Ruby:
 
 [NestedText](https://nestedtext.org/en/latest/basic_syntax.html) | Ruby | Comment
-|---|---
+---|---|---
 `String` | `String` |
 `List` | `Array` |
 `Dictionary` | `Hash` |
