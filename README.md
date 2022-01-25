@@ -18,7 +18,7 @@ A ruby library for the human friendly data format [NestedText](https://nestedtex
 <a href="#" ><img src="https://raw.githubusercontent.com/erikw/nestedtext-ruby/main/img/logo.webp" align="right" width="400px" alt="Project logo" /></a>
 Provided is support for decoding a NestedText file or string to Ruby data structures, as well as encoding Ruby objects to a NestedText file or string. Furthermore there is support for serialization and deserialization of custom classes. The supported language version of the data format can be see in the badge above. This implementation pass all the [official tests](https://github.com/KenKundert/nestedtext_tests).
 
-This library is inspired Ruby stdlib modules `JSON` and `YAML` as well as the [reference implementation](https://github.com/KenKundert/nestedtext) of NestedText in Python.
+This library is inspired Ruby stdlib modules `JSON` and `YAML` as well as the Python [reference implementation](https://github.com/KenKundert/nestedtext) of NestedText.
 
 # What is NestedText?
 Citing from official [introduction](https://nestedtext.org/en/latest/index.html) page:
