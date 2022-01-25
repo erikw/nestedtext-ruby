@@ -5,8 +5,7 @@ require "nestedtext/encode_helpers"
 # Or both: add encoding/decoding of more native classes, and allow decoding + applying a schema with 3rd party.
 # Or encourage using Marshal from core?
 
-NT_MIXIN = NestedText.const_get(:NTEncodeStrictMixing)
-
+NT_MIXIN = NestedText.const_get(:NTEncodeStrictMixin)
 class String include NT_MIXIN end
 class Array include NT_MIXIN end
 class Hash include NT_MIXIN end

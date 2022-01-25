@@ -4,7 +4,7 @@ require "test_helper"
 # or implement this?
 module CustomTestClasses
   class Inner
-    include NestedText::NTEncodeMixing
+    include NestedText::NTEncodeMixin
     def initialize(val)
       @val = val
     end
