@@ -711,8 +711,6 @@ end
 
 # TODO: test io with .to_nt (should we support that? I guess so)
 class EncodeToIO < NTTest
-  # TODO: setup method that creates tmp file to dump to, and remove if after block?
-
   def setup
     @file = Tempfile.new("nestedtext_test")
   end

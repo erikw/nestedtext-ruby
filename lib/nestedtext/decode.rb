@@ -8,10 +8,6 @@ require "stringio"
 
 module NestedText
   def self.load(ntstring, top_class: Object, strict: true)
-    # logger = Logger.new(STDOUT) # TODO: make this available to other classes in module. How avoid singleton?
-    # logger.info "input=#{raw_input_string}"
-    # logger.info "top=#{top}"
-
     raise Errors::WrongInputTypeError.new([String], ntstring) unless ntstring.nil? || ntstring.is_a?(String)
 
     Parser.new(StringIO.new(ntstring), top_class, strict: strict).parse
