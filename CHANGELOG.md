@@ -6,19 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2022-01-25
+### Changed
+- Hide core extension `String.normalize_line_endings` from users.
+
 ## [1.1.1] - 2022-01-25
 ### Fixed
 - Renamed `NTEncodeMixing` to `NTEncodeMixin` .
 
 ## [1.1.0] - 2022-01-25
 ### Added
-- Expose `NestedText::VERSION` for convenience to the clients.
+- Expose `NestedText::VERSION` for convenience to the users.
 
 ## [1.0.0] - 2022-01-25
-The library is now useful for clients!
+The library is now useful for users!
 
 ### Changed
-- Hide all internals in the module from clients.
+- Hide all internals in the module from users.
 
 ## [0.6.0] - 2022-01-24
 ### Fixed
