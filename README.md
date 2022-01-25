@@ -26,7 +26,7 @@ Citing from official [introduction](https://nestedtext.org/en/latest/index.html)
 
 *"Why do we need another data format?"* is the right question to ask. The answer is that the current popular formats (JSON, YAML, TOML, INI etc.) all have shortcomings which NestedText [addresses](https://nestedtext.org/en/latest/alternatives.html).
 
-## Examples
+## Example
 Here's a full-fledged example of an address book (from the official docs):
 ```nestedtext
 # Contact information for our officers
@@ -62,7 +62,7 @@ This is how you can decode NestedText from a string or directly from a file (`*.
 require 'nestedtext'
 
 ntstr = "- objitem1\n-list item 2"
-obj1 = NesedText::load(ntstr)
+obj1 = NestedText::load(ntstr)
 
 obj2 = NestedText::load_file("path/to/data.nt")
 ```
@@ -94,23 +94,23 @@ If you already know what you expect to have, you can guarantee that this is what
 require 'nestedtext'
 
 ntstr = "- objitem1\n-list item 2"
-array = NesedText::load(ntstr, top_class=Array)
+array = NestedText::load(ntstr, top_class=Array)
 
 hash = NestedText::load_file("path/to/data.nt", top_class=Hash)
 
 # will raise NestedText::Error
-NesedText::load(ntstr, top_class=String)
+NestedText::load(ntstr, top_class=String)
 ```
 
 ## Encoding (writing NT)
-This is how you can decode Ruby objects to a NesedText string or file:
+This is how you can decode Ruby objects to a NestedText string or file:
 
 ```ruby
 require 'nestedtext'
 
 data = ["i1", "i2"]
 
-ntstr = NesedText::dump(data)
+ntstr = NestedText::dump(data)
 
 NestedText::dump_file(data, "path/to/data.nt")
 ```
