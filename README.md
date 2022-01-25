@@ -61,7 +61,7 @@ This is how you can decode NestedText from a string or directly from a file (`*.
 ```ruby
 require 'nestedtext'
 
-ntstr = "- objitem1\n-list item 2"
+ntstr = "- objitem1\n- list item 2"
 obj1 = NestedText::load(ntstr)
 
 obj2 = NestedText::load_file("path/to/data.nt")
@@ -77,7 +77,7 @@ key2: value2
 The NestedText types maps like this to Ruby:
 
 [NestedText](https://nestedtext.org/en/latest/basic_syntax.html) | Ruby | Comment
----|---|---
+|---|---|
 `String` | `String` |
 `List` | `Array` |
 `Dictionary` | `Hash` |
@@ -93,13 +93,13 @@ If you already know what you expect to have, you can guarantee that this is what
 ```ruby
 require 'nestedtext'
 
-ntstr = "- objitem1\n-list item 2"
-array = NestedText::load(ntstr, top_class=Array)
+ntstr = "- objitem1\n- list item 2"
+array = NestedText::load(ntstr, top_class: Array)
 
-hash = NestedText::load_file("path/to/data.nt", top_class=Hash)
+hash = NestedText::load_file("path/to/data.nt", top_class: Hash)
 
 # will raise NestedText::Error
-NestedText::load(ntstr, top_class=String)
+NestedText::load(ntstr, top_class: String)
 ```
 
 ## Encoding (writing NT)
