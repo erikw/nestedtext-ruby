@@ -284,4 +284,5 @@ module NestedText
       result
     end
   end
+  private_constant :Parser
 end
