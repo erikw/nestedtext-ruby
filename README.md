@@ -12,20 +12,44 @@
 [![License](https://img.shields.io/github/license/erikw/nestedtext-ruby)](LICENSE.txt)
 [![OSS Lifecycle](https://img.shields.io/osslifecycle/erikw/nestedtext-ruby)](https://github.com/Netflix/osstracker)
 
+A ruby library implementation for the human friendly data format [NestedText](https://nestedtext.org/).
 
-Inspired by the `JSON` and `YAML` modules.
+There is support for decoding a NestedText file or string to Ruby data structures, as well as encoding Ruby objects to a NestedText file or string. Furthermore there is support for serialization and deserialization of custom classes. Support for v3.2.1 of the data format will all official tests passing.
 
-This project will soon be released! :tada:
-
-On-going development is at branch [**dev**](https://github.com/erikw/nestedtext-ruby/tree/dev).
+This library is inspired Rubystdlib modules `JSON` and `YAML` as well as the [reference implementation](https://github.com/KenKundert/nestedtext) of NestedText in Python.
 
 # What is NestedText?
-TODO
+Citing from official [introduction](https://nestedtext.org/en/latest/index.html) page:
+> NestedText is a file format for holding structured data to be entered, edited, or viewed by people. It organizes the data into a nested collection of dictionaries, lists, and strings without the need for quoting or escaping. A unique feature of this file format is that it only supports one scalar type: strings.  While the decision to eschew integer, real, date, etc. types may seem counter intuitive, it leads to simpler data files and applications that are more robust.
+>
+> NestedText is convenient for configuration files, address books, account information, and the like. Because there is no need for quoting or escaping, it is particularly nice for holding code fragments.
 
-https://nestedtext.org/en/latest/alternatives.html
+*"Why do we need another data format?"* is the expected question to ask. The answer is that the current popular formats (JSON, YAML, TOML, INI etc.) all have shortcomings which NestedText [addresses](https://nestedtext.org/en/latest/alternatives.html).
 
 ## Examples
-TODO NT examples
+Here's a full-fledged example of an address book (from the official docs):
+```nestedtext
+# Contact information for our officers
+
+president:
+    name: Katheryn McDaniel
+    address:
+        > 138 Almond Street
+        > Topeka, Kansas 20697
+    phone:
+        cell: 1-210-555-5297
+        home: 1-210-555-8470
+            # Katheryn prefers that we always call her on her cell phone.
+    email: KateMcD@aol.com
+    additional roles:
+        - board member
+
+vice president:
+    name: Margaret Hodge
+    ...
+```
+
+See the [language introduction](https://nestedtext.org/en/latest/basic_syntax.html) for more details.
 
 # Usage
 TODO Link to lib docs
