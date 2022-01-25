@@ -27,7 +27,7 @@ class OfficialTest < Minitest::Test
 
       begin
         NestedText.load_file(caze[:load][:in][:path])
-      rescue NestedText::Errors::ParseError => e
+      rescue ERRORS::ParseError => e
         assert_equal(exp["lineno"], e.lineno, msg = "lineno is wrong")
         assert_equal(exp["colno"], e.colno, msg = "colno is wrong")
         assert_equal(exp["message"], e.message_raw, msg = "message is wrong")
@@ -53,7 +53,7 @@ class OfficialTest < Minitest::Test
 
       begin
         NestedText.dump(caze[:dump][:in][:data])
-      rescue NestedText::Errors::DumpError => e
+      rescue ERRORS::DumpError => e
         assert_equal(exp["culprit"], e.culprit, msg = "culprit is wrong")
         assert_equal(exp["message"], e.message, msg = "message is wrong")
       rescue Exception => e
