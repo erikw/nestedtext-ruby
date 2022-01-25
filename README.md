@@ -298,4 +298,4 @@ The gem is available as open source with the [License](./LICENSE.txt).
 
 # Acknowledgments
 * Thanks to the data format authors making it easier making new implementations by providing an [official test suite](https://github.com/KenKundert/nestedtext_tests).
-* Thanks to [pixteller](https://pixteller.com/) & [placeit](https://placeit.net/video-to-gif-converter) tools for creating the animated logo.
+* Thanks to [pixteller](https://pixteller.com/) & [mp4.to](https://mp4.to/webp/) tools for creating the animated logo.
