@@ -99,7 +99,7 @@ Make sure that only intended constants and methods are exposed from the module `
 ```
 irb> require 'nestedtext'
 irb> NestedText.constants
-irb> NestedText.methods
+irb> NestedText.methods(false)
 ```
 
 ## Releasing
