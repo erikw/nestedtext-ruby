@@ -20,7 +20,7 @@ jobs:
     - name: Run CI Build with Rake
       run: bundle exec rake ci
   release-rubygems:
-    needs: [test]
+    needs: [test]  # TODO would be better if this depends on the whole testing workflow, as it might fail in one of the build matrix combinations. Create reusable action and use here and in ci.yml?
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
