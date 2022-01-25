@@ -6,13 +6,19 @@ require "word_wrap/core_ext"
 require "nestedtext/constants"
 
 module NestedText
-  # Top level ParseError for clients to rescue.
+  # Top level error for clients to rescue on.
   # TODO hide #new so that client's cant create instance of it. Unit test this. https://ruby-doc.org/core-3.1.0/Module.html#private_class_method-method
-  class Error < StandardError; end
+  class Error < StandardError
+    private_class_method :new
+  end
 
   module Errors
+    class InternalError < Error
+      public_class_method :new # Prevent clients from instansiating.
+    end
+
     # TODO: rename all Subclasses to ParseXError, just like for Dump
-    class ParseError < Error
+    class ParseError < InternalError
       attr_reader :lineno, :colno, :message_raw
 
       def initialize(line, colno, message)
@@ -178,25 +184,7 @@ module NestedText
       end
     end
 
-    class UnsupportedTopLevelTypeError < Error
-      def initialize(type_class)
-        super("The given top level type #{type_class&.name} is unsupported. Chose between #{TOP_LEVEL_TYPES.join(", ")}.")
-      end
-    end
-
-    class WrongInputTypeError < Error
-      def initialize(class_exps, class_act)
-        super("The given input type #{class_act.class.name} is unsupported. Expected to be of types #{class_exps.map(&:name).join(", ")}")
-      end
-    end
-
-    class TopLevelTypeMismatchParsedType < Error
-      def initialize(class_exp, class_act)
-        super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act}.")
-      end
-    end
-
-    class AssertionError < Error; end
+    class AssertionError < InternalError; end
 
     class LineScannerIsEmpty < AssertionError
       def initialize
@@ -210,19 +198,7 @@ module NestedText
       end
     end
 
-    class DumpBadIO < Error
-      def initialize(io)
-        super("When giving the io argument, it must be of type IO (respond to #write, #fsync). Given: #{io.class.name}")
-      end
-    end
-
-    class DumpFileBadPath < Error
-      def initialize(path)
-        super("Must supply a string to a file path that can be written to. Given: #{path}")
-      end
-    end
-
-    class DumpError < Error
+    class DumpError < InternalError
       attr_reader :culprit
 
       def initialize(culprit, message)
@@ -258,6 +234,36 @@ module NestedText
       raise InvalidIndentationChar, line if line.content.chr =~ /[[:space:]]/
 
       raise LineTagNotDetected, line
+    end
+
+    class UnsupportedTopLevelTypeError < InternalError
+      def initialize(type_class)
+        super("The given top level type #{type_class&.name} is unsupported. Chose between #{TOP_LEVEL_TYPES.join(", ")}.")
+      end
+    end
+
+    class WrongInputTypeError < InternalError
+      def initialize(class_exps, class_act)
+        super("The given input type #{class_act.class.name} is unsupported. Expected to be of types #{class_exps.map(&:name).join(", ")}")
+      end
+    end
+
+    class TopLevelTypeMismatchParsedType < InternalError
+      def initialize(class_exp, class_act)
+        super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act}.")
+      end
+    end
+
+    class DumpBadIO < InternalError
+      def initialize(io)
+        super("When giving the io argument, it must be of type IO (respond to #write, #fsync). Given: #{io.class.name}")
+      end
+    end
+
+    class DumpFileBadPath < InternalError
+      def initialize(path)
+        super("Must supply a string to a file path that can be written to. Given: #{path}")
+      end
     end
   end
   private_constant :Errors
