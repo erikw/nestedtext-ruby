@@ -244,7 +244,7 @@ irb> NestedText.constants
 irb> NestedText.methods(false)
 ```
 
-## Releasing
+# Releasing
 Instructions for releasing on rubygems.org below. Optionally make a GitHub [release](https://github.com/erikw/nestedtext-ruby/releases) after this for the pushed git tag.
 
 ## (manually) Using bundler/gem_tasks rake tasks
