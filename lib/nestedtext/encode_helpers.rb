@@ -1,11 +1,13 @@
 require "nestedtext/dumper"
 
+# TODO: s/Mixing/Mixin/g
 module NestedText
   module NTEncodeStrictMixing
     def to_nt(indentation: 4, strict: true)
       Dumper.new(EncodeOptions.new(indentation, strict)).dump self
     end
   end
+  private_constant :NTEncodeStrictMixing
 
   module NTEncodeMixing
     def to_nt(indentation: 4)
@@ -21,4 +23,5 @@ module NestedText
       @strict = strict
     end
   end
+  private_constant :EncodeOptions
 end
