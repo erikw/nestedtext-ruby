@@ -29,7 +29,7 @@ Provided is support for decoding a NestedText file or string to Ruby data struct
 This library is inspired Ruby stdlib modules `JSON` and `YAML` as well as the Python [reference implementation](https://github.com/KenKundert/nestedtext) of NestedText.
 
 # What is NestedText?
-Citing from official [introduction](https://nestedtext.org/en/latest/index.html) page:
+Citing from the official [introduction](https://nestedtext.org/en/latest/index.html) page:
 > NestedText is a file format for holding structured data to be entered, edited, or viewed by people. It organizes the data into a nested collection of dictionaries, lists, and strings without the need for quoting or escaping. A unique feature of this file format is that it only supports one scalar type: strings.  While the decision to eschew integer, real, date, etc. types may seem counter intuitive, it leads to simpler data files and applications that are more robust.
 >
 > NestedText is convenient for configuration files, address books, account information, and the like. Because there is no need for quoting or escaping, it is particularly nice for holding code fragments.
