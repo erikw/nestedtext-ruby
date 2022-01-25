@@ -7,6 +7,7 @@ require "nestedtext/constants"
 
 module NestedText
   # Top level ParseError for clients to rescue.
+  # TODO hide #new so that client's cant create instance of it. Unit test this. https://ruby-doc.org/core-3.1.0/Module.html#private_class_method-method
   class Error < StandardError; end
 
   module Errors

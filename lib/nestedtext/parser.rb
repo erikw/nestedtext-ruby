@@ -4,14 +4,20 @@ require "stringio"
 
 require "nestedtext/errors"
 require "nestedtext/scanners"
-require "nestedtext/helpers"
+require "nestedtext/constants"
 
 module NestedText
   class Parser
+    def self.assert_valid_top_level_type(top_class)
+      unless !top_class.nil? && top_class.is_a?(Class) && TOP_LEVEL_TYPES.map(&:object_id).include?(top_class.object_id)
+        raise Errors::UnsupportedTopLevelTypeError, top_class
+      end
+    end
+
     # TODO: document that caller is responsible for closing IO after done with Parser.
     def initialize(io, top_class, strict: true)
       assert_valid_input_type io
-      NestedText.assert_valid_top_level_type(top_class)
+      Parser.assert_valid_top_level_type(top_class)
       @top_class = top_class
       @strict = strict
       @line_scanner = LineScanner.new(io)

@@ -2,7 +2,6 @@
 
 require "nestedtext/parser"
 require "nestedtext/errors"
-require "nestedtext/helpers"
 
 require "logger"
 require "stringio"
@@ -15,15 +14,11 @@ module NestedText
 
     raise Errors::WrongInputTypeError.new([String], ntstring) unless ntstring.nil? || ntstring.is_a?(String)
 
-    assert_valid_top_level_type top_class
-
     Parser.new(StringIO.new(ntstring), top_class, strict: strict).parse
   end
 
   def self.load_file(filename, top_class: Object, strict: true)
     raise Errors::WrongInputTypeError.new([String], filename) unless !filename.nil? && filename.is_a?(String)
-
-    assert_valid_top_level_type top_class
 
     # Open explicitly in text mode to detect \r as line ending.
     File.open(filename, mode = "rt") do |file|
