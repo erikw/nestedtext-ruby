@@ -291,7 +291,7 @@ $ gem bump --version minor --tag --sign --push
 
 
 # Contributing
-Bug reports and pull requests are welcome on GitHub at [https://github.com/erikw/nestedtext-ruby](https://github.com/erikw/nestedtext-ruby).
+Bug reports and pull requests are welcome on GitHub at [erikw/nestedtext-ruby](https://github.com/erikw/nestedtext-ruby).
 
 # License
 The gem is available as open source with the [License](./LICENSE.txt).
