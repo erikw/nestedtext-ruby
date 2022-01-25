@@ -141,7 +141,7 @@ k3:
 ## Custom Classes Serialization
 This library has support for serialization/deserialization of custom classes as well. This is done by letting the objects tell NestedText what data should be used to represent the object instance with the `#encode_nt_with` method. All objects being serialized must either implement this method or be one of the core supported NestedText data types from the table above.
 
-```
+```ruby
 class Apple
   def initialize(type, weight)
     @type = type
@@ -161,7 +161,7 @@ To be able to get this instance back when deserializing the NestedText there mus
 
 In full, the `Apple` class should look like:
 
-```
+```ruby
 class Apple
   def initialize(type, weight)
     @type = type
@@ -191,7 +191,7 @@ data:
 Note that the special key to denote the class name is subject to change in future versions and you **must not** rely on it.
 
 If you want to add some more super powers to your custom class, you can add the `#to_nt` shortcut by including the `NTEncodeMixin`:
-```
+```ruby
 class Apple
   include NestedText::NTEncodeMixin
   ...
