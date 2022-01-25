@@ -52,12 +52,51 @@ vice president:
 See the [language introduction](https://nestedtext.org/en/latest/basic_syntax.html) for more details.
 
 # Usage
-TODO Link to lib docs
-TODO link to my test repo showin live usage. https://github.com/erikw/nestedtext-ruby-test
+The official documentation can be found at [TODO](TODO). A fully working example of a project using this library can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test).
 
-
-# Usage
 ## Decoding (reading NT)
+This is how you can decode NestedText from a string or directly from a file (`*.nt`) to Ruby object instances:
+
+```ruby
+require 'nestedtext'
+
+ntstr = "- objitem1\n-list item 2"
+obj1 = NesedText::load(ntstr)
+
+
+obj2 = NestedText::load_file("path/to/data.nt")
+```
+
+The type of the returned object depends on the top level type in the NestedText data and will be of corresponding native Ruby type. In the example above, `obj1` will be an `Array` and obj2 will be `Hash` if `data.nt` looks like e.g.
+
+```
+key1: value1
+key2: value2
+```
+
+The NestedText types maps like this to Ruby:
+
+NestedText | Ruby
+---|---|
+Juicy Apples | 1.99
+Bananas | 1.89
+
+
+Thus you must know what you're parsing, or test what you decoded.
+
+If you already know what you expect to have, you can guarantee that this is what you will get by telling either function what the expected top type is. If not, an error will be raised.
+
+```ruby
+require 'nestedtext'
+
+ntstr = "- objitem1\n-list item 2"
+array = NesedText::load(ntstr, top_class=Array)
+
+hash = NestedText::load_file("path/to/data.nt", top_class=Hash)
+
+# will raise NestedText::Error
+NesedText::load(ntstr, top_class=String)
+```
 
 ## Encoding (writing NT)
 
