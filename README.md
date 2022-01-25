@@ -12,11 +12,11 @@
 [![License](https://img.shields.io/github/license/erikw/nestedtext-ruby)](LICENSE.txt)
 [![OSS Lifecycle](https://img.shields.io/osslifecycle/erikw/nestedtext-ruby)](https://github.com/Netflix/osstracker)
 
-A ruby library implementation for the human friendly data format [NestedText](https://nestedtext.org/).
+A ruby library for the human friendly data format [NestedText](https://nestedtext.org/).
 
-There is support for decoding a NestedText file or string to Ruby data structures, as well as encoding Ruby objects to a NestedText file or string. Furthermore there is support for serialization and deserialization of custom classes. Support for v3.2.1 of the data format will all official tests passing.
+There is support for decoding a NestedText file or string to Ruby data structures, as well as encoding Ruby objects to a NestedText file or string. Furthermore there is support for serialization and deserialization of custom classes. The supported language version of the data format can be see in the badge above. This implementation pass all the [official tests](https://github.com/KenKundert/nestedtext_tests).
 
-This library is inspired Rubystdlib modules `JSON` and `YAML` as well as the [reference implementation](https://github.com/KenKundert/nestedtext) of NestedText in Python.
+This library is inspired Ruby stdlib modules `JSON` and `YAML` as well as the [reference implementation](https://github.com/KenKundert/nestedtext) of NestedText in Python.
 
 # What is NestedText?
 Citing from official [introduction](https://nestedtext.org/en/latest/index.html) page:
@@ -52,7 +52,7 @@ vice president:
 See the [language introduction](https://nestedtext.org/en/latest/basic_syntax.html) for more details.
 
 # Usage
-The official documentation can be found at [TODO](TODO). A fully working example of a project using this library can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test).
+The full documentation can be found at [TODO](TODO). A fully working example of a project using this library can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test).
 
 ## Decoding (reading NT)
 This is how you can decode NestedText from a string or directly from a file (`*.nt`) to Ruby object instances:
