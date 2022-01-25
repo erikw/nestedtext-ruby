@@ -98,7 +98,7 @@ array = NestedText::load(ntstr, top_class: Array)
 
 hash = NestedText::load_file("path/to/data.nt", top_class: Hash)
 
-# will raise NestedText::Error
+# will raise NestedText::Error as we specify top level String but it will be Array.
 NestedText::load(ntstr, top_class: String)
 ```
 
