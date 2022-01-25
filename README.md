@@ -178,7 +178,7 @@ class Apple
 end
 ```
 
-This class will be encoded like this:
+An instance of this class would be encoded like this:
 
 TODO strict: false not needed if making this default
 ```ruby
@@ -207,7 +207,7 @@ See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.r
 
 # Installation
 1. Add this gem to your ruby project's Gemfile
-   - Simply with `$ bundle add nestedtext` when standing in the project root
+   - Simply with `$ bundle add nestedtext` when standing inside your project
    - Or manually by adding to `Gemfile`
    ```ruby
      gem 'nestedtext'
