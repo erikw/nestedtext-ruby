@@ -231,13 +231,13 @@ See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.r
    $ git clone https://github.com/erikw/nestedtext-ruby.git && cd $(basename "$_" .git)
    ```
 1. Install a supported ruby version (see .gemspec) with a ruby version manager e.g. [rbenv](https://github.com/rbenv/rbenv), [asdf](http://asdf-vm.com/) or [RVM](https://rvm.io/rvm/install)
-1. run `$ script/setup` to install dependencies
-1. run `$ script/test` to run the tests
+1. run `$ script/setup` or `$ bundle install` to install dependencies
+1. run `$ script/test` or `bundle exec rake test` to run the tests
 1. You can also run `$ script/console` for an interactive prompt that will allow you to experiment.
 1. For local testing, install the gem on local machine with: `$ bundle exec rake install`.
-   * or manuall with `$ gem build *.gemscpec && gem install *.gem`
+   * or manually with `$ gem build *.gemscpec && gem install *.gem`
 
-Make sure that only intended constants and methods are exposed from the module `NestedText`. Check with
+Make sure that only intended constants and methods are exposed publicly from the module `NestedText`. Check with
 ```
 irb> require 'nestedtext'
 irb> NestedText.constants
@@ -273,7 +273,7 @@ $ git commit -am "Prepare vX.Y.Z" && git push
 $ git tag x.y.z && git push --tags
 ```
 
-or combined with gem-release
+or combined with gem-release:
 ```console
 $ vi CHANGELOG.md
 $ git commit -am "Update CHANGELOG.md" && git push
@@ -287,5 +287,5 @@ Bug reports and pull requests are welcome on GitHub at [https://github.com/erikw
 # License
 The gem is available as open source with the [License](./LICENSE.txt).
 
-# Acknowledgement & Thanks
+# Acknowledgments & Thanks
 Thanks to the data format authors making it easier making new implementations by providing an [official test suite](https://github.com/KenKundert/nestedtext_tests).
