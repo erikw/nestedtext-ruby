@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2022-01-25
+### Fixed
+- Renamed `NTEncodeMixing` to `NTEncodeMixin` .
+
 ## [1.1.0] - 2022-01-25
 ### Added
 - Expose `NestedText::VERSION` for convenience to the clients.
