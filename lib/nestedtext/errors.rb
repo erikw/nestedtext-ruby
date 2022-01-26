@@ -177,7 +177,7 @@ module NestedText
       end
     end
 
-    class ParseCustomClassNoCreateMethod < ParseError
+    class ParseCustomClassNoCreateMethodError < ParseError
       def initialize(line, class_name)
         super(line, line.indentation, "Detected an encode custom class #{class_name} but it does not have a #nt_create method, so it can't be deserialzied.")
       end

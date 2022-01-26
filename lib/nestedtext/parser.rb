@@ -152,7 +152,7 @@ module NestedText
         if clazz.respond_to? :nt_create
           result = clazz.nt_create(result["data"])
         else
-          raise Errors::ParseCustomClassNoCreateMethod.new(first_line, class_name)
+          raise Errors::ParseCustomClassNoCreateMethodError.new(first_line, class_name)
         end
       end
 
