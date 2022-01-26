@@ -136,7 +136,7 @@ class DecodeStringTopAnyDictTest < NTTest
       one: two
       - list instead of dict
     NT
-    assert_raises(ERRORS::LineTypeExpectedDictItem) do
+    assert_raises(ERRORS::ParseLineTypeExpectedDictItemError) do
       NestedText.load(nts)
     end
   end
@@ -231,7 +231,7 @@ class DecodeStringTopAnyDictTest < NTTest
       : keypt2
            [inline list here]
     NT
-    assert_raises(ERRORS::LineTypeNotExpected) do
+    assert_raises(ERRORS::ParseLineTypeNotExpectedError) do
       NestedText.load(nts)
     end
   end
@@ -281,7 +281,7 @@ class DecodeStringTopAnyDictTest < NTTest
       dict key:
       - list value
     NT
-    assert_raises(ERRORS::LineTypeExpectedDictItem) do
+    assert_raises(ERRORS::ParseLineTypeExpectedDictItemError) do
       NestedText.load(nts)
     end
   end
@@ -513,7 +513,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
       > multiline here
       : but suddently key item here
     NT
-    assert_raises(ERRORS::LineTypeNotExpected) do
+    assert_raises(ERRORS::ParseLineTypeNotExpectedError) do
       NestedText.load(nts)
     end
   end

@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Breaking change: strict mode now defaults to false for both the `load` and `dump` methods.
+- **Breaking change**: strict mode now defaults to false for both the `load` and `dump` methods.
 - Interna rename of error classes to be more consistent.
 
 ## [1.2.0] - 2022-01-25

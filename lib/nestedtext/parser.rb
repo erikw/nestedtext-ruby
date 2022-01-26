@@ -105,7 +105,7 @@ module NestedText
         first_line = line if first_line.nil?
         Errors.raise_unrecognized_line(line) if line.tag == :unrecognized
         raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
-        raise Errors::LineTypeExpectedDictItem, line unless %i[dict_item key_item].include? line.tag
+        raise Errors::ParseLineTypeExpectedDictItemError, line unless %i[dict_item key_item].include? line.tag
 
         value = nil
         key = nil
@@ -129,7 +129,7 @@ module NestedText
             value = ""
           else
             unless exp_types.member?(@line_scanner.peek.tag)
-              raise Errors::LineTypeNotExpected.new(line, exp_types, line.tag)
+              raise Errors::ParseLineTypeNotExpectedError.new(line, exp_types, line.tag)
             end
             raise Errors::ParseMultilineKeyNoValueError, line unless @line_scanner.peek.indentation > indentation
 
@@ -164,7 +164,7 @@ module NestedText
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         line = @line_scanner.read_next
         raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
-        raise Errors::LineTypeNotExpected.new(line, %i[string_item], line.tag) unless line.tag == :string_item
+        raise Errors::ParseLineTypeNotExpectedError.new(line, %i[string_item], line.tag) unless line.tag == :string_item
 
         value = line.attribs["value"]
         result << value
