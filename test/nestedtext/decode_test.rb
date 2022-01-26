@@ -536,13 +536,13 @@ class DecodeStringTopAnyInlineDictTest < NTTest
   end
 
   def test_inline_dict_invalid_empty_whitespace
-    assert_raises(ERRORS::ParseInlineDictKeySyntaxErrorError) do
+    assert_raises(ERRORS::ParseInlineDictKeySyntaxError) do
       NestedText.load("{ }")
     end
   end
 
   def test_inline_dict_invalid_empty_values
-    assert_raises(ERRORS::ParseInlineDictKeySyntaxErrorError) do
+    assert_raises(ERRORS::ParseInlineDictKeySyntaxError) do
       NestedText.load("{,}")
     end
   end
@@ -619,7 +619,7 @@ class DecodeStringTopAnyInlineDictTest < NTTest
 
   def test_inline_dict_invalid_wrong_closing_bracket
     nts = "{a: 1, b: 2]"
-    assert_raises(ERRORS::ParseInlineDictSyntaxErrorError) do
+    assert_raises(ERRORS::ParseInlineDictSyntaxError) do
       NestedText.load(nts)
     end
   end

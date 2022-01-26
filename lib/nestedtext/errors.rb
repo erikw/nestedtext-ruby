@@ -78,13 +78,13 @@ module NestedText
       end
     end
 
-    class ParseInlineDictSyntaxErrorError < ParseError
+    class ParseInlineDictSyntaxError < ParseError
       def initialize(line, colno, wrong_char)
         super(line, line.indentation + colno, "expected ‘,’ or ‘}’, found ‘#{wrong_char}’.")
       end
     end
 
-    class ParseInlineDictKeySyntaxErrorError < ParseError
+    class ParseInlineDictKeySyntaxError < ParseError
       def initialize(line, colno, wrong_char)
         super(line, line.indentation + colno, "expected ‘:’, found ‘#{wrong_char}’.")
       end

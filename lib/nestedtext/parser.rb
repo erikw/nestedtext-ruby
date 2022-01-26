@@ -187,7 +187,7 @@ module NestedText
         raise Errors::ParseInlineMissingValueError.new(@inline_scanner.line, @inline_scanner.pos - 1)
       end
       unless last_char == ":"
-        raise Errors::ParseInlineDictKeySyntaxErrorError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
+        raise Errors::ParseInlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
       end
 
       key.join.strip
@@ -219,8 +219,8 @@ module NestedText
         end
         last_char = @inline_scanner.read_next
         unless last_char == "}"
-          raise Errors::ParseInlineDictSyntaxErrorError.new(@inline_scanner.line, @inline_scanner.pos - 1,
-                                                            last_char)
+          raise Errors::ParseInlineDictSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
+                                                       last_char)
         end
 
       when "["
