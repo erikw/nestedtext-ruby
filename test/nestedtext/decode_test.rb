@@ -926,7 +926,6 @@ class DecodeCustomClassTest < NTTest
     end
   end
 
-  # TODO: test this with real client code outside this repo, to ensure how to handle this. Is the solution to make a missing require 'NotInScope' if the class is in this module but not yet loaded in to the program? Translte to unit test here after experimentation.
   def test_custom_class_not_in_scope
     nts = <<~NT
       __nestedtext_class__: NotInScope

@@ -1,5 +1,5 @@
 module NestedText
-  # Hiding extensions for Kernel here away from clients.
+  # Hiding extensions for Kernel here away from users.
   # Reference: https://ruby-doc.org/core-3.1.0/doc/syntax/refinements_rdoc.html
   module CoreExtInternal
     refine String do

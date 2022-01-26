@@ -6,14 +6,14 @@ require "word_wrap/core_ext"
 require "nestedtext/constants"
 
 module NestedText
-  # Top level error for clients to rescue on.
+  # Top level error for users to rescue on.
   class Error < StandardError
     private_class_method :new
   end
 
   module Errors
     class InternalError < Error
-      public_class_method :new # Prevent clients from instansiating.
+      public_class_method :new # Prevent users from instansiating.
     end
 
     class ParseError < InternalError
