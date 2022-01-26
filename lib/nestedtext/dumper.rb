@@ -7,13 +7,13 @@ module NestedText
     def initialize(indentation, strict)
       @indentation = indentation
       @strict = strict
-      @trace_cycles = nil
-      @trace_keys = nil
+      @traced_cycles = nil
+      @traced_keys = nil
     end
 
     def dump(obj)
-      @trace_cycles = []
-      @trace_keys = []
+      @traced_cycles = []
+      @traced_keys = []
       dump_any obj
     end
 
@@ -57,26 +57,24 @@ module NestedText
       target.replace indented
     end
 
-    # TODO: different name on method and instance var...
     def trace_cycles(obj)
-      raise Errors::DumpCyclicReferencesDetectedError, traced_key if @trace_cycles.include?(obj)
+      raise Errors::DumpCyclicReferencesDetectedError, traced_key if @traced_cycles.include?(obj)
 
-      @trace_cycles << obj
+      @traced_cycles << obj
       yield
     ensure
-      @trace_cycles.pop
+      @traced_cycles.pop
     end
 
-    # TODO: different name on method and instance var...
     def trace_keys(key)
-      @trace_keys << key
+      @traced_keys << key
       yield
     ensure
-      @trace_keys.pop
+      @traced_keys.pop
     end
 
     def traced_key
-      @trace_keys.last
+      @traced_keys.last
     end
 
     def dump_any(obj, depth: 0, **kwargs)
@@ -93,7 +91,7 @@ module NestedText
       end
     end
 
-    # TODO: document that @strict: false allows to_s on key object
+    # TODO: document that @strict==false allows to_s on key object
     def dump_hash(obj, depth: 0, **kwargs)
       rep = if obj.empty?
               "{}"
