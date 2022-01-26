@@ -4,9 +4,9 @@ module NestedText
   using NestedText.const_get(:CoreExtInternal)
 
   class Dumper
-    def initialize(opts = EncodeOptions.new)
-      @indentation = opts.indentation
-      @strict = opts.strict
+    def initialize(indentation, strict)
+      @indentation = indentation
+      @strict = strict
       @trace_cycles = nil
       @trace_keys = nil
     end

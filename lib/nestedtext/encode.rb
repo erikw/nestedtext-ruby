@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "nestedtext/errors"
-require "nestedtext/encode_helpers"
 require "nestedtext/dumper"
 
 # Model after JSON
@@ -14,14 +13,13 @@ module NestedText
 
     raise Errors::DumpBadIOError, io unless io.nil? || io.respond_to?(:write) && io.respond_to?(:fsync)
 
-    opts = EncodeOptions.new(indentation, strict)
-    dumper = Dumper.new(opts)
+    dumper = Dumper.new(indentation, strict)
     result = dumper.dump obj
     unless io.nil?
       io.write(result)
       io.fsync
     end
-    result
+    dumper.dump obj
   end
 
   def self.dump_file(obj, filename, **kwargs)

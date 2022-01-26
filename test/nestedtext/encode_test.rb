@@ -737,6 +737,15 @@ class EncodeToIO < NTTest
     assert_equal exp, file_content
   end
 
+  def test_io_dump_io_param_file_to_nt
+    obj = %w[a b]
+    exp = "- a\n- b"
+
+    dumped = obj.to_nt(io: @file)
+    assert_equal exp, dumped
+    assert_equal exp, file_content
+  end
+
   def test_io_dump_io_param_stringio
     obj = %w[a b]
     exp = "- a\n- b"
