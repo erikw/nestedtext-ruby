@@ -13,7 +13,7 @@ module NestedText
     Parser.new(StringIO.new(ntstring), top_class, strict: strict).parse
   end
 
-  def self.load_file(filename, top_class: Object, strict: true)
+  def self.load_file(filename, top_class: Object, strict: false)
     raise Errors::WrongInputTypeError.new([String], filename) unless !filename.nil? && filename.is_a?(String)
 
     # Open explicitly in text mode to detect \r as line ending.
