@@ -213,7 +213,7 @@ Apple.new("granny smith", 12).to_nt
 **NOTE** that when deserializing a custom class, this custom class must be available when calling the `#dump*` methods e.g.
 ```ruby
 require 'nestedtext'
-require_relative 'apple'  # This is needed, unless Apple is defined in this scope already.
+require_relative 'apple'  # This is needed if Apple is defined in apple.rb and not in this scope already.
 
 NestedText::load_file('path/to/apple_dump.nt')
 ```
