@@ -106,6 +106,19 @@ module CustomTestClasses
 end
 
 class EncodeCustomClassTest < NTTest
+  def test_custom_class_nil
+    obj = nil
+    exp = <<~NT.chomp
+      __nestedtext_class__: nil
+      data:
+    NT
+    dumped = NestedText.dump(obj)
+    assert_equal exp, dumped
+
+    loaded = NestedText.load(dumped)
+    assert_equal obj, loaded
+  end
+
   def test_custom_class_nested
     outer = CustomTestClasses::Outer.new("a", "b", CustomTestClasses::Inner.new("c"))
     obj = [outer]
@@ -119,10 +132,10 @@ class EncodeCustomClassTest < NTTest
                   __nestedtext_class__: CustomTestClasses::Inner
                   data: c
     NT
-    dumped = NestedText.dump(obj, strict: false)
+    dumped = NestedText.dump(obj)
     assert_equal exp, dumped
 
-    loaded = NestedText.load(dumped, strict: false)
+    loaded = NestedText.load(dumped)
     assert_equal obj, loaded
   end
 
@@ -137,10 +150,10 @@ class EncodeCustomClassTest < NTTest
           __nestedtext_class__: CustomTestClasses::Inner
           data: c
     NT
-    dumped = NestedText.dump(obj, indentation: 2, strict: false)
+    dumped = NestedText.dump(obj, indentation: 2)
     assert_equal exp, dumped
 
-    loaded = NestedText.load(dumped, strict: false)
+    loaded = NestedText.load(dumped)
     assert_equal obj, loaded
   end
 
@@ -172,23 +185,23 @@ class EncodeCustomClassTest < NTTest
                               __nestedtext_class__: nil
                               data:
     NT
-    dumped = NestedText.dump(obj, strict: false)
+    dumped = NestedText.dump(obj)
     assert_equal exp, dumped
 
-    loaded = NestedText.load(dumped, strict: false)
+    loaded = NestedText.load(dumped)
     assert_equal obj, loaded
   end
 
   def test_custom_class_not_encodeable
     obj = CustomTestClasses::NotNTEncodable.new
     exp = "> but it has an to_s method that will be called to represent the object"
-    assert_equal exp, NestedText.dump(obj, strict: false)
+    assert_equal exp, NestedText.dump(obj)
   end
 
   def test_custom_class_strict_true
     obj = CustomTestClasses::Inner.new("c")
     assert_raises(ERRORS::DumpUnsupportedTypeError) do
-      NestedText.dump(obj)
+      NestedText.dump(obj, strict: true)
     end
   end
 end

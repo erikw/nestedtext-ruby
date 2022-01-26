@@ -24,7 +24,7 @@ class ParserTest < NTTest
   end
 
   def test_invalid_parsed_type
-    parser = PARSER.new(StringIO.new("dummy"), Object)
+    parser = PARSER.new(StringIO.new("dummy"), Object, strict: true)
     # Float is not a valid result type from #parse_any.
     parser.stub :parse_any, 1.99 do
       assert_raises(ERRORS::AssertionError) do

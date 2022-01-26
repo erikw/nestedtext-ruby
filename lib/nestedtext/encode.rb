@@ -9,8 +9,7 @@ require "nestedtext/dumper"
 # NestedText.dump_file(obj, filename)
 
 module NestedText
-  # TODO: strict should maybe be false by default, as this is what ntpy does. If so, make the same for the load functions.
-  def self.dump(obj, io: nil, indentation: 4, strict: true)
+  def self.dump(obj, io: nil, indentation: 4, strict: false)
     # io - additionaly write the out result to IO and still return result.
 
     raise Errors::DumpBadIO, io unless io.nil? || io.respond_to?(:write) && io.respond_to?(:fsync)

@@ -52,7 +52,7 @@ class OfficialTest < Minitest::Test
       exp = caze[:dump][:err][:data]
 
       begin
-        NestedText.dump(caze[:dump][:in][:data])
+        NestedText.dump(caze[:dump][:in][:data], strict: true)
       rescue ERRORS::DumpError => e
         assert_equal(exp["culprit"], e.culprit, msg = "culprit is wrong")
         assert_equal(exp["message"], e.message, msg = "message is wrong")

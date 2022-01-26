@@ -922,7 +922,7 @@ class DecodeCustomClassTest < NTTest
     NT
 
     assert_raises(ERRORS::ParseCustomClassNoCreateMethod) do
-      NestedText.load(nts, strict: false)
+      NestedText.load(nts)
     end
   end
 
@@ -934,7 +934,7 @@ class DecodeCustomClassTest < NTTest
     NT
 
     assert_raises(ERRORS::ParseCustomClassNotFound) do
-      NestedText.load(nts, strict: false)
+      NestedText.load(nts)
     end
   end
 

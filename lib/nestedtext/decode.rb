@@ -7,7 +7,7 @@ require "logger"
 require "stringio"
 
 module NestedText
-  def self.load(ntstring, top_class: Object, strict: true)
+  def self.load(ntstring, top_class: Object, strict: false)
     raise Errors::WrongInputTypeError.new([String], ntstring) unless ntstring.nil? || ntstring.is_a?(String)
 
     Parser.new(StringIO.new(ntstring), top_class, strict: strict).parse

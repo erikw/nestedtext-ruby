@@ -17,7 +17,7 @@ module NestedText
   class EncodeOptions
     attr_reader :indentation, :strict
 
-    def initialize(indentation = 4, strict = true)
+    def initialize(indentation = 4, strict = false)
       @indentation = indentation
       @strict = strict
     end
