@@ -59,7 +59,7 @@ module NestedText
 
     # TODO: different name on method and instance var...
     def trace_cycles(obj)
-      raise Errors::DumpCyclicReferencesDetected, traced_key if @trace_cycles.include?(obj)
+      raise Errors::DumpCyclicReferencesDetectedError, traced_key if @trace_cycles.include?(obj)
 
       @trace_cycles << obj
       yield

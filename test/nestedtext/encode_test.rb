@@ -18,7 +18,7 @@ class EncodeTest < NTTest
     a = []
     b = [a]
     a << b
-    assert_raises(ERRORS::DumpCyclicReferencesDetected) do
+    assert_raises(ERRORS::DumpCyclicReferencesDetectedError) do
       NestedText.dump(a)
     end
   end
@@ -27,7 +27,7 @@ class EncodeTest < NTTest
     a = []
     b = ["i1", [a]]
     a << b
-    assert_raises(ERRORS::DumpCyclicReferencesDetected) do
+    assert_raises(ERRORS::DumpCyclicReferencesDetectedError) do
       NestedText.dump(a)
     end
   end

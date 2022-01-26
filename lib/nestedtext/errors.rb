@@ -215,7 +215,7 @@ module NestedText
       end
     end
 
-    class DumpCyclicReferencesDetected < DumpError
+    class DumpCyclicReferencesDetectedError < DumpError
       def initialize(culprit)
         super(culprit, "cyclic reference found: cannot be dumped.")
       end
