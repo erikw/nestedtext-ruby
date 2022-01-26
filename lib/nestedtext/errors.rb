@@ -252,7 +252,7 @@ module NestedText
       end
     end
 
-    class DumpBadIO < InternalError
+    class DumpBadIOError < InternalError
       def initialize(io)
         super("When giving the io argument, it must be of type IO (respond to #write, #fsync). Given: #{io.class.name}")
       end

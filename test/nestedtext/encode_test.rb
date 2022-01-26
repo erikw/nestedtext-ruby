@@ -748,7 +748,7 @@ class EncodeToIO < NTTest
   end
 
   def test_io_dump_invalid_io_array
-    assert_raises(ERRORS::DumpBadIO) do
+    assert_raises(ERRORS::DumpBadIOError) do
       NestedText.dump("dummy", io: [])
     end
   end

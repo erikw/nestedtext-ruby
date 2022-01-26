@@ -12,7 +12,7 @@ module NestedText
   def self.dump(obj, io: nil, indentation: 4, strict: false)
     # io - additionaly write the out result to IO and still return result.
 
-    raise Errors::DumpBadIO, io unless io.nil? || io.respond_to?(:write) && io.respond_to?(:fsync)
+    raise Errors::DumpBadIOError, io unless io.nil? || io.respond_to?(:write) && io.respond_to?(:fsync)
 
     opts = EncodeOptions.new(indentation, strict)
     dumper = Dumper.new(opts)
