@@ -619,7 +619,7 @@ class DecodeStringTopAnyInlineDictTest < NTTest
 
   def test_inline_dict_invalid_wrong_closing_bracket
     nts = "{a: 1, b: 2]"
-    assert_raises(ERRORS::InlineDictSyntaxError) do
+    assert_raises(ERRORS::ParseInlineDictSyntaxErrorError) do
       NestedText.load(nts)
     end
   end

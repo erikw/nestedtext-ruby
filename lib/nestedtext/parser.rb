@@ -219,8 +219,8 @@ module NestedText
         end
         last_char = @inline_scanner.read_next
         unless last_char == "}"
-          raise Errors::InlineDictSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
-                                                  last_char)
+          raise Errors::ParseInlineDictSyntaxErrorError.new(@inline_scanner.line, @inline_scanner.pos - 1,
+                                                            last_char)
         end
 
       when "["
