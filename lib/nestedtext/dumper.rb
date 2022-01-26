@@ -47,7 +47,7 @@ module NestedText
       elsif !@strict
         key.to_s
       else
-        raise Errors::DumpHashKeyStrictString, key
+        raise Errors::DumpHashKeyStrictStringError, key
       end
     end
 

@@ -515,7 +515,7 @@ class EncodeHashTest < NTTest
 
   def test_hash_symbol_key_strict
     obj = { key: "value" }
-    assert_raises(ERRORS::DumpHashKeyStrictString) do
+    assert_raises(ERRORS::DumpHashKeyStrictStringError) do
       NestedText.dump(obj, strict: true)
     end
   end
@@ -568,7 +568,7 @@ class EncodeHashTest < NTTest
 
   def test_hash_key_int_strict
     obj = { 1 => "value" }
-    assert_raises(ERRORS::DumpHashKeyStrictString) do
+    assert_raises(ERRORS::DumpHashKeyStrictStringError) do
       NestedText.dump(obj, strict: true)
     end
   end

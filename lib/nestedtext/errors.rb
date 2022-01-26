@@ -221,7 +221,7 @@ module NestedText
       end
     end
 
-    class DumpHashKeyStrictString < DumpError
+    class DumpHashKeyStrictStringError < DumpError
       def initialize(obj)
         super(obj, "keys must be strings.")
       end
