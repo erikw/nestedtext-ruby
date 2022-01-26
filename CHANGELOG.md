@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2022-01-26
+### Fixed
+- README issue with logo showing up on Rdoc (out-commented HTML).
+
 ## [2.0.0] - 2022-01-26
 ### Changed
 - **Breaking change**: strict mode now defaults to false for both the `load` and `dump` methods.
