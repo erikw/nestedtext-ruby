@@ -10,6 +10,9 @@
 # When built from $(gem build *.gemspec)
 /*.gem
 
+# rdoc
+/doc
+
 # minitest
 /test/html_reports/
 /test/reports/
