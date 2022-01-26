@@ -709,7 +709,6 @@ class EncodeInlineHashTest < NTTest
   end
 end
 
-# TODO: test io with .to_nt (should we support that? I guess so)
 class EncodeToIO < NTTest
   def setup
     @file = Tempfile.new("nestedtext_test")
