@@ -108,7 +108,7 @@ module NestedText
 
     def tag=(tag)
       @tag = tag
-      raise Errors::LineTagUnknown.new(self, tag) unless ALLOWED_LINE_TAGS.include?(@tag)
+      raise Errors::ParseLineTagUnknownError.new(self, tag) unless ALLOWED_LINE_TAGS.include?(@tag)
     end
 
     def to_s

@@ -53,7 +53,7 @@ class LineTest < NTTest
 
   def test_invalid_tag
     line = LINE.new("", 0, nil)
-    assert_raises(ERRORS::LineTagUnknown) do
+    assert_raises(ERRORS::ParseLineTagUnknownError) do
       line.tag = :not_allowed
     end
   end
