@@ -626,14 +626,14 @@ class DecodeStringTopAnyInlineDictTest < NTTest
 
   def test_inline_dict_invalid_missing_closing_bracket
     nts = "{a: 1, b: 2"
-    assert_raises(ERRORS::InlineNoClosingDelimiter) do
+    assert_raises(ERRORS::ParseInlineNoClosingDelimiterError) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_dict_invalid_inline_string
     nts = "{a: 1:b"
-    assert_raises(ERRORS::InlineNoClosingDelimiter) do
+    assert_raises(ERRORS::ParseInlineNoClosingDelimiterError) do
       NestedText.load(nts)
     end
   end
@@ -654,7 +654,7 @@ class DecodeStringTopAnyInlineDictTest < NTTest
 
   def test_inline_dict_incomplete_key
     nts = "{key"
-    assert_raises(ERRORS::InlineNoClosingDelimiter) do
+    assert_raises(ERRORS::ParseInlineNoClosingDelimiterError) do
       NestedText.load(nts)
     end
   end
@@ -754,14 +754,14 @@ class DecodeStringTopAnyInlineListTest < NTTest
 
   def test_inline_list_no_closing_bracket_empty
     nts = "[,"
-    assert_raises(ERRORS::InlineNoClosingDelimiter) do
+    assert_raises(ERRORS::ParseInlineNoClosingDelimiterError) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_list_no_closing_bracket_items
     nts = "[1, 2"
-    assert_raises(ERRORS::InlineNoClosingDelimiter) do
+    assert_raises(ERRORS::ParseInlineNoClosingDelimiterError) do
       NestedText.load(nts)
     end
   end

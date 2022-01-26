@@ -178,8 +178,8 @@ module NestedText
         key << @inline_scanner.read_next
       end
       if @inline_scanner.empty?
-        raise Errors::InlineNoClosingDelimiter.new(@inline_scanner.line,
-                                                   @inline_scanner.pos)
+        raise Errors::ParseInlineNoClosingDelimiterError.new(@inline_scanner.line,
+                                                             @inline_scanner.pos)
       end
 
       last_char = @inline_scanner.read_next
@@ -214,8 +214,8 @@ module NestedText
           break unless @inline_scanner.peek == ","
         end
         if @inline_scanner.empty?
-          raise Errors::InlineNoClosingDelimiter.new(@inline_scanner.line,
-                                                     @inline_scanner.pos)
+          raise Errors::ParseInlineNoClosingDelimiterError.new(@inline_scanner.line,
+                                                               @inline_scanner.pos)
         end
         last_char = @inline_scanner.read_next
         unless last_char == "}"
@@ -235,8 +235,8 @@ module NestedText
           break unless @inline_scanner.peek == ","
         end
         if @inline_scanner.empty?
-          raise Errors::InlineNoClosingDelimiter.new(@inline_scanner.line,
-                                                     @inline_scanner.pos)
+          raise Errors::ParseInlineNoClosingDelimiterError.new(@inline_scanner.line,
+                                                               @inline_scanner.pos)
         end
         last_char = @inline_scanner.read_next
 
