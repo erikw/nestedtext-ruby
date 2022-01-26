@@ -264,8 +264,8 @@ module NestedText
       @inline_scanner = InlineScanner.new(@line_scanner.read_next)
       result = parse_inline
       unless @inline_scanner.empty?
-        raise Errors::InlineExtraCharactersAfterDelimiter.new(@inline_scanner.line, @inline_scanner.pos,
-                                                              @inline_scanner.remaining)
+        raise Errors::ParseInlineExtraCharactersAfterDelimiterError.new(@inline_scanner.line, @inline_scanner.pos,
+                                                                        @inline_scanner.remaining)
       end
       unless result.is_a? Hash
         raise Errors::AssertionError,
@@ -279,8 +279,8 @@ module NestedText
       @inline_scanner = InlineScanner.new(@line_scanner.read_next)
       result = parse_inline
       unless @inline_scanner.empty?
-        raise Errors::InlineExtraCharactersAfterDelimiter.new(@inline_scanner.line, @inline_scanner.pos,
-                                                              @inline_scanner.remaining)
+        raise Errors::ParseInlineExtraCharactersAfterDelimiterError.new(@inline_scanner.line, @inline_scanner.pos,
+                                                                        @inline_scanner.remaining)
       end
       unless result.is_a? Array
         raise Errors::AssertionError,

@@ -108,7 +108,7 @@ module NestedText
       end
     end
 
-    class InlineExtraCharactersAfterDelimiter < ParseError
+    class ParseInlineExtraCharactersAfterDelimiterError < ParseError
       def initialize(line, colno, extra_chars)
         character_str = extra_chars.length > 1 ? "characters" : "character"
         super(line, line.indentation + colno, "extra #{character_str} after closing delimiter: ‘#{extra_chars}’.")

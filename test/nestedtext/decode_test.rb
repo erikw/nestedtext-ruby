@@ -640,14 +640,14 @@ class DecodeStringTopAnyInlineDictTest < NTTest
 
   def test_inline_dict_extra_char
     nts = "{a: 1}x"
-    assert_raises(ERRORS::InlineExtraCharactersAfterDelimiter) do
+    assert_raises(ERRORS::ParseInlineExtraCharactersAfterDelimiterError) do
       NestedText.load(nts)
     end
   end
 
   def test_inline_dict_extra_chars
     nts = "{a: 1}extra"
-    assert_raises(ERRORS::InlineExtraCharactersAfterDelimiter) do
+    assert_raises(ERRORS::ParseInlineExtraCharactersAfterDelimiterError) do
       NestedText.load(nts)
     end
   end
@@ -768,7 +768,7 @@ class DecodeStringTopAnyInlineListTest < NTTest
 
   def test_inline_list_extra_chars
     nts = "[a, b]extra"
-    assert_raises(ERRORS::InlineExtraCharactersAfterDelimiter) do
+    assert_raises(ERRORS::ParseInlineExtraCharactersAfterDelimiterError) do
       NestedText.load(nts)
     end
   end
