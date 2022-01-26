@@ -85,8 +85,8 @@ The NestedText types maps like this to Ruby:
 `String`    | `String`  |
 `List`      | `Array`   |
 `Dictionary`| `Hash`    |
-`String`    | `Symbol`  | when `strict: false`, otherwise Ruby Symbols are encoded as Custom Class (see below).
-*empty*     |  `nil`    | How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
+`String`    | `Symbol`  | when `strict: true`, otherwise Ruby Symbols are encoded as Custom Class (see below).
+*empty*     |  `nil`    | when `strict: true`, otherwise as Custom Class. How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
 
 
 Thus you must know what you're parsing, or test what you decoded.
