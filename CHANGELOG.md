@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [2.0.0] - 2022-01-26
 ### Changed
 - **Breaking change**: strict mode now defaults to false for both the `load` and `dump` methods.
 - Internal rename of error classes to be more consistent.
