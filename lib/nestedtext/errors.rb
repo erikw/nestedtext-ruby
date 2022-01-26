@@ -149,7 +149,7 @@ module NestedText
       end
     end
 
-    class ParseInvalidIndentationErrorChar < ParseError
+    class ParseInvalidIndentationCharError < ParseError
       def initialize(line)
         printable_char = line.content[0].dump.gsub(/"/, "")
 
@@ -230,7 +230,7 @@ module NestedText
 
     def self.raise_unrecognized_line(line)
       # [[:space:]] include all Unicode spaces e.g. non-breakable space which \s does not.
-      raise ParseInvalidIndentationErrorChar, line if line.content.chr =~ /[[:space:]]/
+      raise ParseInvalidIndentationCharError, line if line.content.chr =~ /[[:space:]]/
 
       raise ParseLineTagNotDetectedError, line
     end

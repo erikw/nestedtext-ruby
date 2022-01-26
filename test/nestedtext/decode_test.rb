@@ -96,7 +96,7 @@ class DecodeStringTopAnyDictTest < NTTest
       key 1:
           \t    key2: this line has tab indentation
     NT
-    assert_raises(ERRORS::ParseInvalidIndentationErrorChar) do
+    assert_raises(ERRORS::ParseInvalidIndentationCharError) do
       NestedText.load(nts)
     end
   end
@@ -106,7 +106,7 @@ class DecodeStringTopAnyDictTest < NTTest
       key:
        > this line has non-breaking space in indentation
     NT
-    assert_raises(ERRORS::ParseInvalidIndentationErrorChar) do
+    assert_raises(ERRORS::ParseInvalidIndentationCharError) do
       NestedText.load(nts)
     end
   end
@@ -419,7 +419,7 @@ class DecodeStringTopAnyListTest < NTTest
       key:
        \t    - this line has tab indentation
     NT
-    assert_raises(ERRORS::ParseInvalidIndentationErrorChar) do
+    assert_raises(ERRORS::ParseInvalidIndentationCharError) do
       NestedText.load(nts)
     end
   end
@@ -524,7 +524,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
           \t    > multiline
                 > string
     NT
-    assert_raises(ERRORS::ParseInvalidIndentationErrorChar) do
+    assert_raises(ERRORS::ParseInvalidIndentationCharError) do
       NestedText.load(nts)
     end
   end
