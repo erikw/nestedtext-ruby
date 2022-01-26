@@ -147,7 +147,6 @@ module NestedText
       elsif @content[0] == "{"
         self.tag = :inline_dict
       elsif @content[0] == "["
-        # TODO: merge path of inline dict and list and just set :inline?
         self.tag = :inline_list
       elsif @content =~ PATTERN_DICT_ITEM
         self.tag = :dict_item
