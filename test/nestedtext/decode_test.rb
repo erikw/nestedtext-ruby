@@ -747,7 +747,7 @@ class DecodeStringTopAnyInlineListTest < NTTest
 
   def test_inline_list_invalid_wrong_closing_bracket
     nts = "[1, 2}"
-    assert_raises(ERRORS::ParseInlineListSyntaxErrorError) do
+    assert_raises(ERRORS::ParseInlineListSyntaxError) do
       NestedText.load(nts)
     end
   end

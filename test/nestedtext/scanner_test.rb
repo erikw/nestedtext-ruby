@@ -16,7 +16,7 @@ class LineScannerTest < NTTest
     assert_equal ntstring, line.content
 
     assert scanner.empty?
-    assert_raises(ERRORS::LineScannerIsEmpty) do
+    assert_raises(ERRORS::AssertionLineScannerIsEmptyError) do
       scanner.read_next
     end
   end

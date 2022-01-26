@@ -16,7 +16,6 @@ module NestedText
       public_class_method :new # Prevent clients from instansiating.
     end
 
-    # TODO: rename all Subclasses to ParseXError, just like for Dump
     class ParseError < InternalError
       attr_reader :lineno, :colno, :message_raw
 
@@ -96,7 +95,7 @@ module NestedText
       end
     end
 
-    class ParseInlineListSyntaxErrorError < ParseError
+    class ParseInlineListSyntaxError < ParseError
       def initialize(line, colno, wrong_char)
         super(line, line.indentation + colno, "expected ‘,’ or ‘]’, found ‘#{wrong_char}’.")
       end
@@ -185,7 +184,7 @@ module NestedText
 
     class AssertionError < InternalError; end
 
-    class LineScannerIsEmpty < AssertionError
+    class AssertionLineScannerIsEmptyError < AssertionError
       def initialize
         super("There is no more input to consume. You should have checked this with #empty? before calling.")
       end

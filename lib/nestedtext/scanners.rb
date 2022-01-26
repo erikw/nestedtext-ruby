@@ -15,7 +15,7 @@ module NestedText
     end
 
     def read_next
-      raise Errors::LineScannerIsEmpty if empty?
+      raise Errors::AssertionLineScannerIsEmptyError if empty?
 
       line = @next_line
       prepare_next_line
