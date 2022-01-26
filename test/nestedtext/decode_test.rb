@@ -25,7 +25,7 @@ class DecodeStringTopAnyTest < NTTest
   end
 
   def test_invalid_line_tag
-    assert_raises(ERRORS::LineTagNotDetected) do
+    assert_raises(ERRORS::ParseLineTagNotDetectedError) do
       NestedText.load("$ nothing starts with this char")
     end
   end
@@ -429,7 +429,7 @@ class DecodeStringTopAnyListTest < NTTest
       - valid line
       $ invalid line
     NT
-    assert_raises(ERRORS::LineTagNotDetected) do
+    assert_raises(ERRORS::ParseLineTagNotDetectedError) do
       NestedText.load(nts)
     end
   end

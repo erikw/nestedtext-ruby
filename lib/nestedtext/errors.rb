@@ -60,7 +60,7 @@ module NestedText
       end
     end
 
-    class LineTagNotDetected < ParseError
+    class ParseLineTagNotDetectedError < ParseError
       def initialize(line)
         super(line, line.indentation, "unrecognized line.")
       end
@@ -232,7 +232,7 @@ module NestedText
       # [[:space:]] include all Unicode spaces e.g. non-breakable space which \s does not.
       raise InvalidIndentationChar, line if line.content.chr =~ /[[:space:]]/
 
-      raise LineTagNotDetected, line
+      raise ParseLineTagNotDetectedError, line
     end
 
     class UnsupportedTopLevelTypeError < InternalError
