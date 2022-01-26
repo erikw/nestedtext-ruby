@@ -91,7 +91,7 @@ The NestedText types maps like this to Ruby:
 `String`    | `String`  |
 `List`      | `Array`   |
 `Dictionary`| `Hash`    |
-`String`    | `Symbol`  | with `strict: false`, otherwise Symbols are encoded as Custom Class (see below).
+`String`    | `Symbol`  | when `strict: false`, otherwise Ruby Symbols are encoded as Custom Class (see below).
 *empty*     |  `nil`    | How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
 
 
@@ -190,9 +190,8 @@ end
 
 An instance of this class would be encoded like this:
 
-TODO strict: false not needed if making this default
 ```ruby
-irb> puts NestedText::dump(Apple.new("granny smith", 12), strict: false)
+irb> puts NestedText::dump(Apple.new("granny smith", 12))
 __nestedtext_class__: Apple
 data:
     - granny smith
@@ -211,7 +210,6 @@ Apple.new("granny smith", 12).to_nt
 ```
 
 
-TODO `strict: false` flag needed??
 See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.rb) for more real working examples.
 
 
