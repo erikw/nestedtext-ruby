@@ -190,7 +190,7 @@ module NestedText
       end
     end
 
-    class InlineScannerIsEmpty < AssertionError
+    class AssertionInlineScannerIsEmptyError < AssertionError
       def initialize
         super("There is no more input to consume. You should have checked this with #empty? before calling.")
       end

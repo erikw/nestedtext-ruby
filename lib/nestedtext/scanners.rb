@@ -59,7 +59,7 @@ module NestedText
     end
 
     def read_next
-      raise Errors::InlineScannerIsEmpty if empty?
+      raise Errors::AssertionInlineScannerIsEmptyError if empty?
 
       @pos += 1
       @line.content[@pos - 1]

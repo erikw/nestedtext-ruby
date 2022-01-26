@@ -37,7 +37,7 @@ class InlineScannerTest < NTTest
     assert_equal line.content, char
 
     assert scanner.empty?
-    assert_raises(ERRORS::InlineScannerIsEmpty) do
+    assert_raises(ERRORS::AssertionInlineScannerIsEmptyError) do
       scanner.read_next
     end
   end
