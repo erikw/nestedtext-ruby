@@ -244,8 +244,8 @@ module NestedText
           if result[-1] == ""
             raise Errors::ParseInlineMissingValueError.new(@inline_scanner.line, @inline_scanner.pos - 1)
           else
-            raise Errors::InlineListSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
-                                                    last_char)
+            raise Errors::ParseInlineListSyntaxErrorError.new(@inline_scanner.line, @inline_scanner.pos - 1,
+                                                              last_char)
           end
         end
       else # Inline string

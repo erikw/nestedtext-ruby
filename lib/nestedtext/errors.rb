@@ -96,7 +96,7 @@ module NestedText
       end
     end
 
-    class InlineListSyntaxError < ParseError
+    class ParseInlineListSyntaxErrorError < ParseError
       def initialize(line, colno, wrong_char)
         super(line, line.indentation + colno, "expected ‘,’ or ‘]’, found ‘#{wrong_char}’.")
       end
