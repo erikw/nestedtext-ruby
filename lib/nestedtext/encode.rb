@@ -25,7 +25,7 @@ module NestedText
   end
 
   def self.dump_file(obj, filename, **kwargs)
-    raise Errors::DumpFileBadPath, filename unless filename.is_a? String
+    raise Errors::DumpFileBadPathError, filename unless filename.is_a? String
 
     File.open(filename, mode = "wt") do |file|
       dump(obj, io: file, **kwargs)

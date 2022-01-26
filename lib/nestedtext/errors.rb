@@ -258,7 +258,7 @@ module NestedText
       end
     end
 
-    class DumpFileBadPath < InternalError
+    class DumpFileBadPathError < InternalError
       def initialize(path)
         super("Must supply a string to a file path that can be written to. Given: #{path}")
       end

@@ -754,7 +754,7 @@ class EncodeToIO < NTTest
   end
 
   def test_io_dump_invalid_path_nil
-    assert_raises(ERRORS::DumpFileBadPath) do
+    assert_raises(ERRORS::DumpFileBadPathError) do
       NestedText.dump_file("dummy", nil)
     end
   end
