@@ -32,13 +32,13 @@ module NestedText
         !result.nil? && ![Hash, Array, String].include?(result.class) && @strict
       when Hash.object_id
         result = {} if result.nil?
-        raise Errors::TopLevelTypeMismatchParsedType.new(@top_class, result) unless result.instance_of?(Hash)
+        raise Errors::TopLevelTypeMismatchParsedTypeError.new(@top_class, result) unless result.instance_of?(Hash)
       when Array.object_id
         result = [] if result.nil?
-        raise Errors::TopLevelTypeMismatchParsedType.new(@top_class, result) unless result.instance_of?(Array)
+        raise Errors::TopLevelTypeMismatchParsedTypeError.new(@top_class, result) unless result.instance_of?(Array)
       when String.object_id
         result = "" if result.nil?
-        raise Errors::TopLevelTypeMismatchParsedType.new(@top_class, result) unless result.instance_of?(String)
+        raise Errors::TopLevelTypeMismatchParsedTypeError.new(@top_class, result) unless result.instance_of?(String)
       else
         raise Errors::UnsupportedTopLevelTypeError, @top_class
       end

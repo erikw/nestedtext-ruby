@@ -808,14 +808,14 @@ class DecodeStringTopTest < NTTest
 
   def test_top_hash_but_is_array
     nts = "- l1"
-    assert_raises(ERRORS::TopLevelTypeMismatchParsedType) do
+    assert_raises(ERRORS::TopLevelTypeMismatchParsedTypeError) do
       NestedText.load(nts, top_class: Hash)
     end
   end
 
   def test_top_array_but_is_hash
     nts = "k: v"
-    assert_raises(ERRORS::TopLevelTypeMismatchParsedType) do
+    assert_raises(ERRORS::TopLevelTypeMismatchParsedTypeError) do
       NestedText.load(nts, top_class: Array)
     end
   end
@@ -834,7 +834,7 @@ class DecodeStringTopHashTest < NTTest
     nts = <<~NT
       - it's a list!
     NT
-    assert_raises(ERRORS::TopLevelTypeMismatchParsedType) do
+    assert_raises(ERRORS::TopLevelTypeMismatchParsedTypeError) do
       NestedText.load(nts, top_class: Hash)
     end
   end
@@ -853,7 +853,7 @@ class DecodeStringTopArrayTest < NTTest
     nts = <<~NT
       this is a : dict
     NT
-    assert_raises(ERRORS::TopLevelTypeMismatchParsedType) do
+    assert_raises(ERRORS::TopLevelTypeMismatchParsedTypeError) do
       NestedText.load(nts, top_class: Array)
     end
   end
@@ -876,7 +876,7 @@ class DecodeStringTopArrayTest < NTTest
     nts = <<~NT
       - this list item will not be expected
     NT
-    assert_raises(ERRORS::TopLevelTypeMismatchParsedType) do
+    assert_raises(ERRORS::TopLevelTypeMismatchParsedTypeError) do
       NestedText.load(nts, top_class: String)
     end
   end

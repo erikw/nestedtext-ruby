@@ -246,7 +246,7 @@ module NestedText
       end
     end
 
-    class TopLevelTypeMismatchParsedType < InternalError
+    class TopLevelTypeMismatchParsedTypeError < InternalError
       def initialize(class_exp, class_act)
         super("The requested top level class #{class_exp.name} is not the same as the actual parsed top level class #{class_act}.")
       end
