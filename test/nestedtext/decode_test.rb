@@ -933,7 +933,7 @@ class DecodeCustomClassTest < NTTest
       data: dummy
     NT
 
-    assert_raises(ERRORS::ParseCustomClassNotFound) do
+    assert_raises(ERRORS::ParseCustomClassNotFoundError) do
       NestedText.load(nts)
     end
   end

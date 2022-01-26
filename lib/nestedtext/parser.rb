@@ -147,7 +147,7 @@ module NestedText
         begin
           clazz = class_name == "nil" ? NilClass : Object.const_get(class_name, false)
         rescue NameError
-          raise Errors::ParseCustomClassNotFound.new(first_line, class_name)
+          raise Errors::ParseCustomClassNotFoundError.new(first_line, class_name)
         end
         if clazz.respond_to? :nt_create
           result = clazz.nt_create(result["data"])
