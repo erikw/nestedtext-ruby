@@ -3,6 +3,7 @@
 # Include default tasks like build, release, install etc. See https://github.com/rubygems/rubygems/blob/master/bundler/lib/bundler/gem_helper.rb#L46
 require "bundler/gem_tasks"
 require "rake/testtask"
+require "rdoc/task"
 
 # default task: Add spec and rubocop to default tasks.
 task default: %i[test rubocop]
@@ -46,6 +47,13 @@ desc "run :test with DEBUG=1 set"
 task :testd do
   ENV["DEBUG"] = "1"
   Rake::Task["test"].invoke
+end
+
+Rake::RDocTask.new do |rd|
+  # rd.main = "README.rdoc" # TODO what is this
+  # rd.rdoc_files.include("README.rdoc", "lib/**/*.rb")
+  rd.rdoc_files.include("lib/**/*.rb")
+  # TODO: output to doc/ instead
 end
 
 # Call like:
