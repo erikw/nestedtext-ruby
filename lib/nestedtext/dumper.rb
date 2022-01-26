@@ -3,6 +3,7 @@ require "nestedtext/core_ext_internal"
 module NestedText
   using NestedText.const_get(:CoreExtInternal)
 
+  # Dumping with recursive DFS traversal of the object references.
   class Dumper
     def initialize(indentation, strict)
       @indentation = indentation
