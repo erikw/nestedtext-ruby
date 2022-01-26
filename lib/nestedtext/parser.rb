@@ -131,7 +131,7 @@ module NestedText
             unless exp_types.member?(@line_scanner.peek.tag)
               raise Errors::LineTypeNotExpected.new(line, exp_types, line.tag)
             end
-            raise Errors::MultilineKeyNoValue, line unless @line_scanner.peek.indentation > indentation
+            raise Errors::ParseMultilineKeyNoValueError, line unless @line_scanner.peek.indentation > indentation
 
             value = parse_any(@line_scanner.peek.indentation)
           end

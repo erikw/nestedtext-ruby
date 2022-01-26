@@ -242,7 +242,7 @@ class DecodeStringTopAnyDictTest < NTTest
       : keypt2
       - list value, but not further indented
     NT
-    assert_raises(ERRORS::MultilineKeyNoValue) do
+    assert_raises(ERRORS::ParseMultilineKeyNoValueError) do
       NestedText.load(nts)
     end
   end

@@ -72,7 +72,7 @@ module NestedText
       end
     end
 
-    class MultilineKeyNoValue < ParseError
+    class ParseMultilineKeyNoValueError < ParseError
       def initialize(line)
         super(line, line.indentation, "multiline key requires a value.")
       end
