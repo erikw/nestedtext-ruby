@@ -331,7 +331,7 @@ class DecodeStringTopAnyListTest < NTTest
       -
       [not indented]
     NT
-    assert_raises(ERRORS::LineTypeExpectedListItem) do
+    assert_raises(ERRORS::ParseLineTypeExpectedListItemError) do
       NestedText.load(nts)
     end
   end
@@ -409,7 +409,7 @@ class DecodeStringTopAnyListTest < NTTest
       - item here
       : but suddently key item here
     NT
-    assert_raises(ERRORS::LineTypeExpectedListItem) do
+    assert_raises(ERRORS::ParseLineTypeExpectedListItemError) do
       NestedText.load(nts)
     end
   end

@@ -66,7 +66,7 @@ module NestedText
       end
     end
 
-    class LineTypeExpectedListItem < ParseError
+    class ParseLineTypeExpectedListItemError < ParseError
       def initialize(line)
         super(line, line.indentation, "expected list item.")
       end
