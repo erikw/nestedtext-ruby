@@ -19,7 +19,7 @@ class DecodeStringTopAnyTest < NTTest
   end
 
   def test_invalid_indentation_first_entry_col0
-    assert_raises(ERRORS::InvalidIndentation) do
+    assert_raises(ERRORS::ParseInvalidIndentationError) do
       NestedText.load(" a: b")
     end
   end
@@ -86,7 +86,7 @@ class DecodeStringTopAnyDictTest < NTTest
       one: 1
         two: 2
     NT
-    assert_raises(ERRORS::InvalidIndentation) do
+    assert_raises(ERRORS::ParseInvalidIndentationError) do
       NestedText.load(nts)
     end
   end
@@ -96,7 +96,7 @@ class DecodeStringTopAnyDictTest < NTTest
       key 1:
           \t    key2: this line has tab indentation
     NT
-    assert_raises(ERRORS::InvalidIndentationChar) do
+    assert_raises(ERRORS::ParseInvalidIndentationErrorChar) do
       NestedText.load(nts)
     end
   end
@@ -106,7 +106,7 @@ class DecodeStringTopAnyDictTest < NTTest
       key:
        > this line has non-breaking space in indentation
     NT
-    assert_raises(ERRORS::InvalidIndentationChar) do
+    assert_raises(ERRORS::ParseInvalidIndentationErrorChar) do
       NestedText.load(nts)
     end
   end
@@ -292,7 +292,7 @@ class DecodeStringTopAnyDictTest < NTTest
           key2: v2
         key3: v3
     NT
-    assert_raises(ERRORS::InvalidIndentation) do
+    assert_raises(ERRORS::ParseInvalidIndentationError) do
       NestedText.load(nts)
     end
   end
@@ -302,7 +302,7 @@ class DecodeStringTopAnyDictTest < NTTest
       key1:#{" "}
           key2: v2
     NT
-    assert_raises(ERRORS::InvalidIndentation) do
+    assert_raises(ERRORS::ParseInvalidIndentationError) do
       NestedText.load(nts)
     end
   end
@@ -399,7 +399,7 @@ class DecodeStringTopAnyListTest < NTTest
       - L1
         - L2
     NT
-    assert_raises(ERRORS::InvalidIndentation) do
+    assert_raises(ERRORS::ParseInvalidIndentationError) do
       NestedText.load(nts)
     end
   end
@@ -419,7 +419,7 @@ class DecodeStringTopAnyListTest < NTTest
       key:
        \t    - this line has tab indentation
     NT
-    assert_raises(ERRORS::InvalidIndentationChar) do
+    assert_raises(ERRORS::ParseInvalidIndentationErrorChar) do
       NestedText.load(nts)
     end
   end
@@ -439,7 +439,7 @@ class DecodeStringTopAnyListTest < NTTest
       key: value1
       key: value2
     NT
-    assert_raises(ERRORS::DictDuplicateKey) do
+    assert_raises(ERRORS::ParseDictDuplicateKeyError) do
       NestedText.load(nts)
     end
   end
@@ -503,7 +503,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
       > L1
         > L2
     NT
-    assert_raises(ERRORS::InvalidIndentation) do
+    assert_raises(ERRORS::ParseInvalidIndentationError) do
       NestedText.load(nts)
     end
   end
@@ -524,7 +524,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
           \t    > multiline
                 > string
     NT
-    assert_raises(ERRORS::InvalidIndentationChar) do
+    assert_raises(ERRORS::ParseInvalidIndentationErrorChar) do
       NestedText.load(nts)
     end
   end

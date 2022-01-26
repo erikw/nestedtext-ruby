@@ -115,7 +115,7 @@ module NestedText
       end
     end
 
-    class InvalidIndentation < ParseError
+    class ParseInvalidIndentationError < ParseError
       def initialize(line, ind_exp)
         prev_line = line.prev
         if prev_line.nil? && ind_exp == 0
@@ -149,7 +149,7 @@ module NestedText
       end
     end
 
-    class InvalidIndentationChar < ParseError
+    class ParseInvalidIndentationErrorChar < ParseError
       def initialize(line)
         printable_char = line.content[0].dump.gsub(/"/, "")
 
@@ -165,7 +165,7 @@ module NestedText
       end
     end
 
-    class DictDuplicateKey < ParseError
+    class ParseDictDuplicateKeyError < ParseError
       def initialize(line)
         super(line, line.indentation, "duplicate key: #{line.attribs["key"]}.")
       end
@@ -230,7 +230,7 @@ module NestedText
 
     def self.raise_unrecognized_line(line)
       # [[:space:]] include all Unicode spaces e.g. non-breakable space which \s does not.
-      raise InvalidIndentationChar, line if line.content.chr =~ /[[:space:]]/
+      raise ParseInvalidIndentationErrorChar, line if line.content.chr =~ /[[:space:]]/
 
       raise ParseLineTagNotDetectedError, line
     end

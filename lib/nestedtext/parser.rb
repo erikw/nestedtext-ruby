@@ -81,7 +81,7 @@ module NestedText
 
         Errors.raise_unrecognized_line(line) if line.tag == :unrecognized
         raise Errors::ParseLineTypeExpectedListItemError, line unless line.tag == :list_item
-        raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
+        raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
 
         value = line.attribs["value"]
         if value.nil?
@@ -104,7 +104,7 @@ module NestedText
         line = @line_scanner.read_next
         first_line = line if first_line.nil?
         Errors.raise_unrecognized_line(line) if line.tag == :unrecognized
-        raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
+        raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
         raise Errors::LineTypeExpectedDictItem, line unless %i[dict_item key_item].include? line.tag
 
         value = nil
@@ -136,7 +136,7 @@ module NestedText
             value = parse_any(@line_scanner.peek.indentation)
           end
         end
-        raise Errors::DictDuplicateKey, line if result.key? key
+        raise Errors::ParseDictDuplicateKeyError, line if result.key? key
 
         result[key] = value
       end
@@ -163,7 +163,7 @@ module NestedText
       result = []
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         line = @line_scanner.read_next
-        raise Errors::InvalidIndentation.new(line, indentation) if line.indentation != indentation
+        raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
         raise Errors::LineTypeNotExpected.new(line, %i[string_item], line.tag) unless line.tag == :string_item
 
         value = line.attribs["value"]
