@@ -90,7 +90,7 @@ module NestedText
       end
     end
 
-    class InlineMissingValue < ParseError
+    class ParseInlineMissingValueError < ParseError
       def initialize(line, colno)
         super(line, line.indentation + colno, "expected value.")
       end

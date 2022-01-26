@@ -548,7 +548,7 @@ class DecodeStringTopAnyInlineDictTest < NTTest
   end
 
   def test_inline_dict_invalid_missing_value
-    assert_raises(ERRORS::InlineMissingValue) do
+    assert_raises(ERRORS::ParseInlineMissingValueError) do
       NestedText.load("{a:1,}")
     end
   end
@@ -775,7 +775,7 @@ class DecodeStringTopAnyInlineListTest < NTTest
 
   def test_inline_list_missing_value
     nts = "[a, }]"
-    assert_raises(ERRORS::InlineMissingValue) do
+    assert_raises(ERRORS::ParseInlineMissingValueError) do
       NestedText.load(nts)
     end
   end
