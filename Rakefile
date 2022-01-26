@@ -50,10 +50,10 @@ task :testd do
 end
 
 Rake::RDocTask.new do |rd|
-  # rd.main = "README.rdoc" # TODO what is this
-  # rd.rdoc_files.include("README.rdoc", "lib/**/*.rb")
+  rd.main = "README.md"
+  rd.rdoc_files.include("README.md", "lib/**/*.rb")
   rd.rdoc_files.include("lib/**/*.rb")
-  # TODO: output to doc/ instead
+  # TODO: output to doc/ instead of html/
 end
 
 # Call like:
