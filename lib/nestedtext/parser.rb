@@ -187,7 +187,7 @@ module NestedText
         raise Errors::InlineMissingValue.new(@inline_scanner.line, @inline_scanner.pos - 1)
       end
       unless last_char == ":"
-        raise Errors::InlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
+        raise Errors::ParseInlineDictKeySyntaxErrorError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
       end
 
       key.join.strip

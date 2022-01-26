@@ -536,13 +536,13 @@ class DecodeStringTopAnyInlineDictTest < NTTest
   end
 
   def test_inline_dict_invalid_empty_whitespace
-    assert_raises(ERRORS::InlineDictKeySyntaxError) do
+    assert_raises(ERRORS::ParseInlineDictKeySyntaxErrorError) do
       NestedText.load("{ }")
     end
   end
 
   def test_inline_dict_invalid_empty_values
-    assert_raises(ERRORS::InlineDictKeySyntaxError) do
+    assert_raises(ERRORS::ParseInlineDictKeySyntaxErrorError) do
       NestedText.load("{,}")
     end
   end
