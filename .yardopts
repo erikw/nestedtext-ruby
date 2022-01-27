@@ -1,4 +1,17 @@
+--title "NestedText API Documentation"
+--readme README.md
 --embed-mixin NTEncodeMixin
+--exclude /server/templates/
+--exclude /yard/rubygems/
+--asset img:img
+lib/nestedtext.rb
+lib/nestedtext/core_ext.rb
+lib/nestedtext/decode.rb
+lib/nestedtext/encode_helpers.rb
+lib/nestedtext/encode.rb
+lib/nestedtext/error.rb
+lib/nestedtext/version.rb
 -
 CHANGELOG.md
-README.md
+CONTRIBUTING.md
+LICENSE.txt

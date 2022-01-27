@@ -111,7 +111,7 @@ NestedText::dump_file(data, "path/to/data.nt")
 ### `#to_nt` Convenience
 To make it more convenient, the Ruby Core is extended with a `#to_nt` method on the supported types that will dump a String of the data structure. Here's an IRB session showing how it works:
 
-```irb
+```ruby
 irb> require 'nestedtext'
 irb> puts "a\nstring".to_nt
 > a
@@ -120,7 +120,10 @@ irb> puts ["i1", "i2", "i3"].to_nt
 - i1
 - i2
 - i3
-irb> puts({"k1" => "v1", "multiline\nkey" => "v2", "k3" => ["a", "list"]}.to_nt)
+irb> hash = {"k1" => "v1",
+            "multiline\nkey" => "v2",
+            "k3" => ["a", "list"]}
+irb> puts hash.to_nt
 k1: v1
 : multiline
 : key

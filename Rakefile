@@ -67,16 +67,17 @@ end
 # end
 
 YARD::Rake::YardocTask.new do |t|
-  t.options = ["--embed-mixin", "NTEncodeMixin"]
-  t.files = ["README.md",
-             "CHANGELOG.md",
-             "lib/nestedtext.rb",
-             "lib/nestedtext/core_ext.rb",
-             "lib/nestedtext/decode.rb",
-             "lib/nestedtext/encode_helpers.rb",
-             "lib/nestedtext/encode.rb",
-             "lib/nestedtext/error.rb",
-             "lib/nestedtext/version.rb"]
+  # use .yardopts instead so that rubygems.org can use it when generating docs for rubydocs.org
+  # t.options = ["--embed-mixin", "NTEncodeMixin"]
+  # t.files = ["README.md",
+  # "CHANGELOG.md",
+  # "lib/nestedtext.rb",
+  # "lib/nestedtext/core_ext.rb",
+  # "lib/nestedtext/decode.rb",
+  # "lib/nestedtext/encode_helpers.rb",
+  # "lib/nestedtext/encode.rb",
+  # "lib/nestedtext/error.rb",
+  # "lib/nestedtext/version.rb"]
 end
 
 desc "Generate documentation"
