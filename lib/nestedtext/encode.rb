@@ -11,7 +11,7 @@ module NestedText
   # @param indentation [Integer] The indentation of nested levels to use.
   # @param strict [Boolean] If strict mode should be used.
   #
-  # @return A String containing NestedText data.
+  # @return [String, nil] A String containing NestedText data, or nil when obj is represented as empty.
   # @raise [NestedText::Error] if anything went wrong.
   # @raise Whatever the `io` can raise, if supplied.
   def self.dump(obj, io: nil, indentation: 4, strict: false)
