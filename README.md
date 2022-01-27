@@ -1,7 +1,7 @@
 # NestedText Ruby Library [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=NestedText,%20the%20human%20friendly%20data%20format,%20has%20a%20now%20a%20ruby%20library%20for%20easy%20encoding%20and%20decoding&url=https://github.com/erikw/nestedtext-ruby&via=erik_westrup&hashtags=nestedtext,ruby,gem)
 [![Gem Version](https://badge.fury.io/rb/nestedtext.svg)](https://badge.fury.io/rb/nestedtext)
 [![Gem Downloads](https://ruby-gem-downloads-badge.herokuapp.com/nestedtext?color=brightgreen&type=total&label=gem%20downloads)](https://rubygems.org/gems/nestedtext)
-[![Documentation](https://img.shields.io/badge/docs-API-informational?logo=readthedocs&logoColor=violet)](https://www.rubydoc.info/gems/nestedtext/)
+[![Documentation](https://img.shields.io/badge/docs-API-informational?logo=readthedocs&logoColor=violet)](https://www.rubydoc.info/gems/nestedtext/NestedText)
 [![Data Format Version Supported](https://img.shields.io/badge/%F0%9F%84%BD%F0%9F%85%83%20Version%20Supported-3.2.1-blueviolet)](https://nestedtext.org/en/v3.2/)
 [![Official Tests](https://img.shields.io/badge/Official%20Tests-Passing-success?logo=cachet)](https://github.com/KenKundert/nestedtext_tests/tree/585e95a73d94ac1f48e71a154e2db0ab67cf30fa)
 [![GitHub Actions: Continuous Integration](https://github.com/erikw/nestedtext-ruby/actions/workflows/ci.yml/badge.svg)](https://github.com/erikw/nestedtext-ruby/actions/workflows/ci.yml)
@@ -57,7 +57,7 @@ vice president:
 See the [language introduction](https://nestedtext.org/en/latest/basic_syntax.html) for more details.
 
 # Usage
-The full API documentation can be found at [**rubydocs.info**](https://www.rubydoc.info/gems/nestedtext/). A minimal & fully working example of a project using this library can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test).
+The full API documentation can be found at [**rubydocs.info**](https://www.rubydoc.info/gems/nestedtext/NestedText). A minimal & fully working example of a project using this library can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test).
 
 ## Decoding (reading NT)
 This is how you can decode NestedText from a string or directly from a file (`*.nt`) to Ruby object instances:
