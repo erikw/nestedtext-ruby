@@ -286,7 +286,7 @@ Extra:
    irb> NestedText.constants
    irb> NestedText.methods(false)
    ```
-* To see undocumented methods: `$ yard stats --list-undoc`
+* To see undocumented methods with [YARD](https://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md): `$ yard stats --list-undoc`
 
 # Releasing
 Instructions for releasing on rubygems.org below. Optionally make a GitHub [release](https://github.com/erikw/nestedtext-ruby/releases) after this for the pushed git tag.
