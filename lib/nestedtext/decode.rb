@@ -31,7 +31,8 @@ module NestedText
   # Returns the parsed object.
   #
   # Raises NestedText::Error if anything went wrong.
-  # Raises IOError on IO issues.
+  #
+  # Raises +IOError+ on issue opening +filename+ for reading in text mode.
   def self.load_file(filename, top_class: Object, strict: false)
     raise Errors::WrongInputTypeError.new([String], filename) unless !filename.nil? && filename.is_a?(String)
 
