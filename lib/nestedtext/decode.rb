@@ -9,13 +9,13 @@ require "stringio"
 module NestedText
   # Decode a NestedText string to Ruby objects.
   #
-  # [ntstring] The string containing NestedText to be decoded.
-  # [top_class] Force the top level returned object to be of this type. Supported values are +Object+, +Array+, +Hash+ and +String+. Default is +Object+.
-  # [strict] If strict mode should be used. +true+ or +false+. Default is +false+
+  # @param ntstring [String] The string containing NestedText to be decoded.
+  # @param top_class [String] Force the top level returned object to be of this type. Supported values are +Object+, +Array+, +Hash+ and +String+.
+  # @param strict [Boolean] If strict mode should be used.
   #
-  # Returns the parsed object.
+  # @return [Object, nil] The parsed object.
   #
-  # Raises NestedText::Error if anything went wrong.
+  # @raise [NestedText::Error] if anything went wrong.
   def self.load(ntstring, top_class: Object, strict: false)
     raise Errors::WrongInputTypeError.new([String], ntstring) unless ntstring.nil? || ntstring.is_a?(String)
 
@@ -23,16 +23,15 @@ module NestedText
   end
 
   # Decode a NestedText stored in a given file.
-
-  # [filename] The file path to read NestedText to decode from.
-  # [top_class] Force the top level returned object to be of this type. Supported values are +Object+, +Array+, +Hash+ and +String+. Default is +Object+.
-  # [strict] If strict mode should be used. +true+ or +false+. Default is +false+
   #
-  # Returns the parsed object.
+  # @param filename [String] The file path to read NestedText to decode from.
+  # @param top_class [String] Force the top level returned object to be of this type. Supported values are +Object+, +Array+, +Hash+ and +String+.
+  # @param strict [Boolean] If strict mode should be used.
   #
-  # Raises NestedText::Error if anything went wrong.
+  # @return [Object, nil] The parsed object.
   #
-  # Raises +IOError+ on issue opening +filename+ for reading in text mode.
+  # @raise [NestedText::Error] if anything went wrong.
+  # @raise [IOError] on issue opening +filename+ for reading in text mode.
   def self.load_file(filename, top_class: Object, strict: false)
     raise Errors::WrongInputTypeError.new([String], filename) unless !filename.nil? && filename.is_a?(String)
 

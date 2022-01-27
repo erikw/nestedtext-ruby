@@ -6,16 +6,14 @@ require "nestedtext/errors_internal"
 module NestedText
   # Encode a Ruby object to a NestedText string.
   #
-  # [obj] The object to encode to NestedText.
-  # [io] Additionally write the output to this IO object. The caller is responsible for that the IO is closed after the call to this method.
-  # [indentation] The indentation of nested levels to use.
-  # [strict] If strict mode should be used. +true+ or +false+. Default is +false+
+  # @param obj [Object] The object to encode to NestedText.
+  # @param io [IO] Additionally write the output to this IO object. The caller is responsible for that the IO is closed after the call to this method.
+  # @param indentation [Integer] The indentation of nested levels to use.
+  # @param strict [Boolean] If strict mode should be used.
   #
-  # Returns a String containing NestedText data.
-  #
-  # Raises NestedText::Error if anything went wrong.
-  #
-  # Raises whatever the passed +io+ can raise.
+  # @return A String containing NestedText data.
+  # @raise [NestedText::Error] if anything went wrong.
+  # @raise Whatever the +io+ can raise, if supplied.
   def self.dump(obj, io: nil, indentation: 4, strict: false)
     raise Errors::DumpBadIOError, io unless io.nil? || io.respond_to?(:write) && io.respond_to?(:fsync)
 
@@ -29,12 +27,17 @@ module NestedText
   end
 
   # Encode a Ruby object to a NestedText file.
+
+  # Apart from +filename+, this method behaves exactly like dump.
   #
-  # [filename] The file path to write the NestedText result to. The conventional file extension is +.nt+.
+  # @param (see dump)
+  # @param filename [String] The file path to write the NestedText result to. The conventional file extension is +.nt+.
   #
-  # Raises +IOError+ on issues opening the +filename+ for writing in text mode.
   #
-  # Apart from +filename+, this method behaves exactly like dump (taking same arguments, returning and raising the same values).
+  # @return (see dump)
+  # @raise (see dump)
+  # @raise [IOError] on issues opening the +filename+ for writing in text mode.
+  #
   def self.dump_file(obj, filename, **kwargs)
     raise Errors::DumpFileBadPathError, filename unless filename.is_a? String
 
