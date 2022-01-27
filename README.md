@@ -60,24 +60,37 @@ The full documentation can be found at [TODO](TODO). A minimal & fully working e
 
 # Types
 Ruby classes maps like this to NestedText types:
-Ruby | [NestedText](https://nestedtext.org/en/latest/basic_syntax.html) | Comment
----|---|---
-`String`  |`String`       |
-`Array`   |`List`         |
-`Hash`    |`Dictionary`   |
-`Symbol`  |`String`       | when `strict: true`
-`Symbol`  |*Custom Class* | when `strict: false` (1.)
-`nil`     |*empty*        | when `strict: true`, otherwise as Custom Class. How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
-`nil`     |*Custom Class* | when `strict: false`. (2.)
+Ruby | [NestedText](https://nestedtext.org/en/latest/basic_syntax.html)
+---|---
+`String`  |`String`
+`Array`   |`List`
+`Hash`    |`Dictionary`
 
-* (1.) See below for [Custom Classes](#custom-classes-serialization)
-* (2.) How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
 
 ## Strict Mode
-Strict mode means that the encoding and decoding is limited to use the basic types `Array`, `Hash` and `String`. By **default** strict mode is turned **off**.
+The strict mode determines how classes other than the basic types `String`, `Array` and `Hash` are handled during encoding and decoding. By **default** strict mode is turned **off**.
 
-### Encoding
-### Decoding
+With `strict: true`
+Ruby | NestedText | Comment
+---|---|---
+`Symbol`     |`String` |
+`nil`        |*empty*  | (1.)
+Custom Class | --      | Raises `NestedText::Error`
+
+
+With `strict: false`
+Ruby | NestedText | Comment
+---|---|---
+`nil`        | *Custom Class Encoding* |
+`Symbol`     | *Custom Class Encoding* | (1.)
+Custom Class | *Custom Class Encoding* | If the Custom Class implements `#encode_nt_with` (2.)
+Custom Class | String | `#to_s` will be called if there is no `#encode_nt_with`
+
+
+* (1.) How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
+* (2.) See below for [Custom Classes](#custom-classes-serialization)
+
+
 Symbols can't be used as keys in dicts.
 
 
