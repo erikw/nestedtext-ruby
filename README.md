@@ -57,7 +57,7 @@ vice president:
 See the [language introduction](https://nestedtext.org/en/latest/basic_syntax.html) for more details.
 
 # Usage
-The full API documentation can be found at [**rubydocs.info**](https://www.rubydoc.info/gems/nestedtext/NestedText). A minimal & fully working example of a project using this library can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test).
+The **full API documentation** can be found at [rubydocs.info](https://www.rubydoc.info/gems/nestedtext/NestedText). A minimal & fully working example of a project using this library can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test).
 
 ## Decoding (reading NT)
 This is how you can decode NestedText from a string or directly from a file (`*.nt`) to Ruby object instances:
