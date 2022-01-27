@@ -6,7 +6,7 @@ module NestedText
   module NTEncodeMixin
     # Encode this object to a NestedText string.
     #
-    # This method takes the same arguments as NestedText::dump.
+    # This method takes the same named arguments as {NestedText.dump}.
     def to_nt(**kwargs)
       NestedText.dump(self, strict: false, **kwargs)
     end

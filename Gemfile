@@ -16,6 +16,7 @@ group :development, :test do
   gem "pry-byebug", "~> 3.9"
   gem "rake", "~> 13.0", require: false
   gem "solargraph", require: false
+  gem "yard", "~> 0.9.27"
 end
 
 group :test do
