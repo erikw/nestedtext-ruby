@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [3.0.0] - 2022-01-27
 ### Added
 - API documentation generated with rdoc.
 
@@ -13,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - **Breaking change**: `#to_nt` on `String`, `Array` and `Hash` is no longer strict by default for consistency an unexpected surprises e.g. when having an array of CustomObjects and calling the method on the array.
+- Internal clean-up and simplifications on helper classes and methods.
 
 ## [2.1.0] - 2022-01-27
 ### Changed
