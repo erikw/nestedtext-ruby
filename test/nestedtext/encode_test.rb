@@ -111,14 +111,6 @@ class EncodeArrayTest < NTTest
     assert_equal exp, NestedText.dump(obj)
   end
 
-  def test_array_method_to_nt
-    obj = ["an item here"]
-    exp = <<~NT.chomp
-      - an item here
-    NT
-    assert_equal exp, obj.to_nt
-  end
-
   def test_array_with_single_hash
     obj = [{ "key" => "value" }]
     exp = <<~NT.chomp
@@ -558,14 +550,6 @@ class EncodeHashTest < NTTest
     assert_equal exp, NestedText.dump(obj)
   end
 
-  def test_hash_method_to_nt
-    obj = { "key" => "value" }
-    exp = <<~NT.chomp
-      key: value
-    NT
-    assert_equal exp, obj.to_nt
-  end
-
   def test_hash_key_int_strict
     obj = { 1 => "value" }
     assert_raises(ERRORS::DumpHashKeyStrictStringError) do
@@ -660,15 +644,6 @@ class EncodeStringTest < NTTest
     NT
     assert_equal exp, NestedText.dump(obj)
   end
-
-  def test_string_method_to_nt
-    obj = "multi-line\nstring"
-    exp = <<~NT.chomp
-      > multi-line
-      > string
-    NT
-    assert_equal exp, obj.to_nt
-  end
 end
 
 class EncodeInlineArrayTest < NTTest
@@ -732,15 +707,6 @@ class EncodeToIO < NTTest
     exp = "- a\n- b"
 
     dumped = NestedText.dump(obj, io: @file)
-    assert_equal exp, dumped
-    assert_equal exp, file_content
-  end
-
-  def test_io_dump_io_param_file_to_nt
-    obj = %w[a b]
-    exp = "- a\n- b"
-
-    dumped = obj.to_nt(io: @file)
     assert_equal exp, dumped
     assert_equal exp, file_content
   end
