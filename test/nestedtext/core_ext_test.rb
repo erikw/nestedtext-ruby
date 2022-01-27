@@ -1,7 +1,7 @@
 require "test_helper"
 require "stringio"
 
-class EncodeTest < NTTest
+class CoreExtTest < NTTest
   def test_to_nt_array
     obj = ["an item here"]
     exp = <<~NT.chomp
