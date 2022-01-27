@@ -51,6 +51,7 @@ end
 
 Rake::RDocTask.new do |rd|
   rd.main = "README.md"
+  rd.title = "NestedText API Documentation"
   rd.rdoc_dir = "doc"
   rd.rdoc_files.include("README.md",
                         "lib/nestedtext.rb",
