@@ -66,6 +66,7 @@ end
 #                        "lib/nestedtext/version.rb")
 # end
 
+# To see undocumented methods: $(yard stats --list-undoc)
 YARD::Rake::YardocTask.new do |t|
   # use .yardopts instead so that rubygems.org can use it when generating docs for rubydocs.org
   # t.options = ["--embed-mixin", "NTEncodeMixin"]

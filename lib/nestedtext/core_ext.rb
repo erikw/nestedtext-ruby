@@ -7,14 +7,22 @@ require "nestedtext/encode_helpers"
 # Or both: add encoding/decoding of more native classes, and allow decoding + applying a schema with 3rd party.
 # Or encourage using Marshal from core?
 
+# Extended with the +#to_nt+ method.
 class String include NestedText::NTEncodeMixin; end
+
+# Extended with the +#to_nt+ method.
 class Array include NestedText::NTEncodeMixin; end
+
+# Extended with the +#to_nt+ method.
 class Hash include NestedText::NTEncodeMixin; end
 
+# Extended with NestedText support.
 class NilClass
   include NestedText::NTEncodeMixin
 
+  # Adds support for encoding and decoding nil.
   def self.nt_create(_data) = nil
 
+  # Adds support for encoding and decoding nil.
   def encode_nt_with() = ""
 end
