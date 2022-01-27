@@ -31,10 +31,12 @@ module NestedText
   # Returns the parsed object.
   #
   # Raises NestedText::Error if anything went wrong.
+  # Raises IOError on IO issues.
   def self.load_file(filename, top_class: Object, strict: false)
     raise Errors::WrongInputTypeError.new([String], filename) unless !filename.nil? && filename.is_a?(String)
 
     # Open explicitly in text mode to detect \r as line ending.
+    # TODO should rescue errors from File?
     File.open(filename, mode = "rt") do |file|
       Parser.new(file, top_class, strict: strict).parse
     end
