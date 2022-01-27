@@ -227,8 +227,8 @@ Apple.new("granny smith", 12).to_nt
 
 
 **Important notes**:
-* That the special key to denote the class name is subject to change in future versions and you **must not** rely on it.
-* Custom Classes can not be a key in a Hash.
+* The special key to denote the class name is subject to change in future versions and you **must not** rely on it.
+* Custom Classes **can not be a key** in a Hash.
 * When deserializing a custom class, this custom class must be available when calling the `#dump*` methods e.g.
   ```ruby
   require 'nestedtext'
