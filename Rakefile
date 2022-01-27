@@ -51,9 +51,12 @@ end
 
 Rake::RDocTask.new do |rd|
   rd.main = "README.md"
-  rd.rdoc_files.include("README.md", "lib/**/*.rb")
-  rd.rdoc_files.include("lib/**/*.rb")
-  # TODO: output to doc/ instead of html/
+  rd.rdoc_dir = "doc"
+  rd.rdoc_files.include("README.md",
+                        "lib/nestedtext.rb",
+                        "lib/nestedtext/encode.rb",
+                        "lib/nestedtext/decode.rb",
+                        "lib/nestedtext/core_ext.rb")
 end
 
 # Call like:
