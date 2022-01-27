@@ -13,6 +13,9 @@
 # rdoc
 /doc
 
+# YARD
+/.yardoc/
+
 # minitest
 /test/html_reports/
 /test/reports/

@@ -11,6 +11,6 @@ require_relative "nestedtext/version"
 # = NestedText
 # The main module in this library to use.
 #
-# See README.md (https://github.com/erikw/nestedtext-ruby) for documentation on Types, Strict Mode and Custom Classes.
+# See {file:README.md here} for documentation on Types, Strict Mode and Custom Classes.
 module NestedText
 end

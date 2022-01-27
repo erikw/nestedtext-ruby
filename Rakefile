@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 # Include default tasks like build, release, install etc. See https://github.com/rubygems/rubygems/blob/master/bundler/lib/bundler/gem_helper.rb#L46
+# require "rdoc/task"
 require "bundler/gem_tasks"
 require "rake/testtask"
-require "rdoc/task"
+require "yard"
 
 # default task: Add spec and rubocop to default tasks.
 task default: %i[test rubocop rdoc]
@@ -49,23 +50,37 @@ task :testd do
   Rake::Task["test"].invoke
 end
 
-Rake::RDocTask.new do |rd|
-  rd.title = "NestedText API Documentation"
-  rd.rdoc_dir = "doc"
-  rd.options = ["--hyperlink-all"]
-  rd.main = "README.md"
-  rd.rdoc_files.include("README.md",
-                        "lib/nestedtext.rb",
-                        "lib/nestedtext/core_ext.rb",
-                        "lib/nestedtext/decode.rb",
-                        "lib/nestedtext/encode_helpers.rb",
-                        "lib/nestedtext/encode.rb",
-                        "lib/nestedtext/error.rb",
-                        "lib/nestedtext/version.rb")
+# Lets use YARD instead, as this is what is used automatically at rubydoc.info for rubygems.org.
+# Rake::RDocTask.new do |rd|
+#  rd.title = "NestedText API Documentation"
+#  rd.rdoc_dir = "doc"
+#  rd.options = ["--hyperlink-all"]
+#  rd.main = "README.md"
+#  rd.rdoc_files.include("README.md",
+#                        "lib/nestedtext.rb",
+#                        "lib/nestedtext/core_ext.rb",
+#                        "lib/nestedtext/decode.rb",
+#                        "lib/nestedtext/encode_helpers.rb",
+#                        "lib/nestedtext/encode.rb",
+#                        "lib/nestedtext/error.rb",
+#                        "lib/nestedtext/version.rb")
+# end
+
+YARD::Rake::YardocTask.new do |t|
+  t.options = ["--embed-mixin", "NTEncodeMixin"]
+  t.files = ["README.md",
+             "CHANGELOG.md",
+             "lib/nestedtext.rb",
+             "lib/nestedtext/core_ext.rb",
+             "lib/nestedtext/decode.rb",
+             "lib/nestedtext/encode_helpers.rb",
+             "lib/nestedtext/encode.rb",
+             "lib/nestedtext/error.rb",
+             "lib/nestedtext/version.rb"]
 end
 
 desc "Generate documentation"
-task doc: :rdoc
+task doc: :yard
 
 # Call like:
 # $ rake parse_file F=path/to/file.nt
