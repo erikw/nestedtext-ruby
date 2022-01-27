@@ -73,25 +73,22 @@ The strict mode determines how classes other than the basic types `String`, `Arr
 With `strict: true`
 Ruby | NestedText | Comment
 ---|---|---
-`Symbol`     |`String` |
 `nil`        |*empty*  | (1.)
+`Symbol`     |`String` | Raises `NestedText::Error`
 Custom Class | --      | Raises `NestedText::Error`
 
 
 With `strict: false`
 Ruby | NestedText | Comment
 ---|---|---
-`nil`        | *Custom Class Encoding* |
-`Symbol`     | *Custom Class Encoding* | (1.)
-Custom Class | *Custom Class Encoding* | If the Custom Class implements `#encode_nt_with` (2.)
+`nil`        | *Custom Class Encoding* | (1.)
+`Symbol`     | `String` |
+Custom Class | *Custom Class Encoding* | If the [Custom Class](#custom-classes-serialization) implements `#encode_nt_with` (2.)
 Custom Class | String | `#to_s` will be called if there is no `#encode_nt_with`
 
 
 * (1.) How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
-* (2.) See below for [Custom Classes](#custom-classes-serialization)
 
-
-Symbols can't be used as keys in dicts.
 
 
 ## Decoding (reading NT)

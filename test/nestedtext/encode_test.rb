@@ -534,19 +534,19 @@ class EncodeHashTest < NTTest
     end
   end
 
-  def test_hash_int_value_strict
-    obj = { "key" => 1 }
-    assert_raises(ERRORS::DumpUnsupportedTypeError) do
-      NestedText.dump(obj, strict: true)
-    end
-  end
-
   def test_hash_symbol_value_non_strict
     obj = { "key" => :value }
     exp = <<~NT.chomp
       key: value
     NT
     assert_equal exp, NestedText.dump(obj)
+  end
+
+  def test_hash_int_value_strict
+    obj = { "key" => 1 }
+    assert_raises(ERRORS::DumpUnsupportedTypeError) do
+      NestedText.dump(obj, strict: true)
+    end
   end
 
   def test_hash_int_value_non_strict
