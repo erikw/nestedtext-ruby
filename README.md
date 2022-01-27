@@ -3,7 +3,7 @@
 [![Gem Downloads](https://ruby-gem-downloads-badge.herokuapp.com/nestedtext?color=brightgreen&type=total&label=gem%20downloads)](https://rubygems.org/gems/nestedtext)
 [![Documentation](https://img.shields.io/badge/docs-API-informational?logo=readthedocs&logoColor=violet)](https://www.rubydoc.info/gems/nestedtext/)
 [![Data Format Version Supported](https://img.shields.io/badge/%F0%9F%84%BD%F0%9F%85%83%20Version%20Supported-3.2.1-blueviolet)](https://nestedtext.org/en/v3.2/)
-[![Official Tests](https://img.shields.io/badge/%F0%9F%8F%81%20Official%20Tests-Passing-success)](https://github.com/KenKundert/nestedtext_tests/tree/585e95a73d94ac1f48e71a154e2db0ab67cf30fa)
+[![Official Tests](https://img.shields.io/badge/Official%20Tests-Passing-success?logo=cachet)](https://github.com/KenKundert/nestedtext_tests/tree/585e95a73d94ac1f48e71a154e2db0ab67cf30fa)
 [![GitHub Actions: Continuous Integration](https://github.com/erikw/nestedtext-ruby/actions/workflows/ci.yml/badge.svg)](https://github.com/erikw/nestedtext-ruby/actions/workflows/ci.yml)
 [![GitHub Actions: Continuous Deployment](https://github.com/erikw/nestedtext-ruby/actions/workflows/cd.yml/badge.svg)](https://github.com/erikw/nestedtext-ruby/actions/workflows/cd.yml)
 [![GitHub Actions: CodeQL Analysis](https://github.com/erikw/nestedtext-ruby/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/erikw/nestedtext-ruby/actions/workflows/codeql-analysis.yml)
