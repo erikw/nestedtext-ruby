@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed leaked `NT_MIXIN` constant in core extensions.
 
 ### Changed
-- **Breaking change**: `#to_nt` on `String`, `Array` and `Hash` is no longer strict by default for consistency an unexpected surprises e.g. when having an array of CustomObjects and calling the method on the array.
+- **Breaking change**: `#to_nt` on `String`, `Array` and `Hash` is no longer strict by default for consistency an unexpected surprises e.g. when having an array of Custom Objects and calling the method on the array.
 - Internal clean-up and simplifications on helper classes and methods.
 
 ## [2.1.0] - 2022-01-27
@@ -72,13 +72,13 @@ The library is now useful for users!
 - Publish Gem to GitHub Packages
 
 ## [0.4.0] - 2022-01-24
-- Iteration on CD GitHub Actins workflow.
+- Iteration on CD GitHub Actions workflow.
 
 ## [0.3.0] - 2022-01-24
-- Iteration on CD GitHub Actins workflow.
+- Iteration on CD GitHub Actions workflow.
 
 ## [0.2.0] - 2022-01-24
-- Iteration on CD GitHub Actins workflow.
+- Iteration on CD GitHub Actions workflow.
 
 ## [0.1.0] - 2022-01-24
 ### Added

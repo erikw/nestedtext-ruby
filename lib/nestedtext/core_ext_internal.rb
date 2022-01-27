@@ -4,7 +4,7 @@ module NestedText
   module CoreExtInternal
     refine String do
       def normalize_line_endings
-        # windows/mac -> unix
+        # Windows/Mac -> Unix
         gsub(/\r\n?/, "\n")
       end
     end

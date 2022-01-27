@@ -5,7 +5,6 @@ require_relative "official_tests/api/nestedtext_official_tests"
 # Override - Separate command name from internal tests, so that SimpleCov can distinguish and merge the total coverage.
 SimpleCov.command_name "test:official"
 
-# class OfficialTest < NTTest
 class OfficialTest < Minitest::Test
   cases = NestedTextOfficialTests.load_test_cases
 

@@ -15,7 +15,7 @@ group :development, :test do
   gem "gem-release", "~> 2.0", require: false
   gem "pry-byebug", "~> 3.9"
   gem "rake", "~> 13.0", require: false
-  gem "redcarpet", "~> 3.5"  # To render GitHub flavoured Markdown files with yard.
+  gem "redcarpet", "~> 3.5"  # To render GitHub flavored Markdown files with yard.
   gem "solargraph", require: false
   gem "yard", "~> 0.9.27"
 end

@@ -9,7 +9,7 @@ require "nestedtext/error"
 module NestedText
   module Errors
     class InternalError < Error
-      public_class_method :new # Prevent users from instansiating.
+      public_class_method :new # Prevent users from instantiating.
     end
 
     class ParseError < InternalError
@@ -148,7 +148,7 @@ module NestedText
       def initialize(line)
         printable_char = line.content[0].dump.gsub(/"/, "")
 
-        # Looking for non-breaking space is just to be compatialbe with official tests.
+        # Looking for non-breaking space is just to be compatible with official tests.
         explanation = ""
         if printable_char == '\\u00A0'
           printable_char = '\\xa0'
