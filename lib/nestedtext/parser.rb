@@ -2,7 +2,7 @@
 
 require "stringio"
 
-require "nestedtext/errors"
+require "nestedtext/errors_internal"
 require "nestedtext/scanners"
 require "nestedtext/constants"
 

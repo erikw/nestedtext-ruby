@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "nestedtext/errors"
 require "nestedtext/dumper"
+require "nestedtext/errors_internal"
 
 module NestedText
   def self.dump(obj, io: nil, indentation: 4, strict: false)

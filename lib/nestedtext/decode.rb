@@ -1,12 +1,21 @@
 # frozen_string_literal: true
 
 require "nestedtext/parser"
-require "nestedtext/errors"
+require "nestedtext/errors_internal"
 
 require "logger"
 require "stringio"
 
 module NestedText
+  # Decode a NestedText string to Ruby objects.
+  #
+  # [ntstring] The string containing NestedText to be decoded.
+  # [top_class] Force the top level returned object to be of this type. Supported values are +Object+, +Array+, +Hash+ and +String+.
+  # [strict] If strict mode should be used. +true+ or +false+.
+  #
+  # Returns the parsed object.
+  #
+  # Raises NestedText::Error if anything went wrong.
   def self.load(ntstring, top_class: Object, strict: false)
     raise Errors::WrongInputTypeError.new([String], ntstring) unless ntstring.nil? || ntstring.is_a?(String)
 

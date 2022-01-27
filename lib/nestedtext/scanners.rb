@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "nestedtext/errors"
+require "nestedtext/errors_internal"
 
 module NestedText
   class LineScanner
