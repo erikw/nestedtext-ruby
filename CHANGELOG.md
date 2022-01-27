@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2022-01-27
+### Changed
+- Switch from rdoc to YARD to match rubydoc.info that is used automatically for Gems uploaded to rubygems.org.
+
 ## [3.0.0] - 2022-01-27
 ### Added
 - API documentation generated with rdoc.
