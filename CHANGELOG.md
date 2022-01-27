@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Removed leaked `NT_MIXIN` constant in core extensions.
 
+### Changed
+- **Breaking change**: `#to_nt` on `String`, `Array` and `Hash` is no longer strict by default for consistency an unexpected surprises e.g. when having an array of CustomObjects and calling the method on the array.
+
 ## [2.1.0] - 2022-01-27
 ### Changed
 - Slim down Gem by using include instead of block list.

@@ -58,6 +58,7 @@ Rake::RDocTask.new do |rd|
                         "lib/nestedtext.rb",
                         "lib/nestedtext/core_ext.rb",
                         "lib/nestedtext/decode.rb",
+                        "lib/nestedtext/encode_helpers.rb",
                         "lib/nestedtext/encode.rb",
                         "lib/nestedtext/error.rb",
                         "lib/nestedtext/version.rb")

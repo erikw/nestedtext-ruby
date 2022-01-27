@@ -3,6 +3,7 @@
 require_relative "nestedtext/core_ext"
 require_relative "nestedtext/decode"
 require_relative "nestedtext/encode"
+require_relative "nestedtext/encode_helpers"
 require_relative "nestedtext/error"
 require_relative "nestedtext/version"
 

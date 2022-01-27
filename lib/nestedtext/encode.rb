@@ -17,8 +17,6 @@ module NestedText
   # Raises whatever the passed IO can raise.
   # TODO should catch IO errors and re-raise as NT:Error maybe!! So client only need to catch one thing?
   def self.dump(obj, io: nil, indentation: 4, strict: false)
-    # io - additionaly write the out result to IO and still return result.
-
     raise Errors::DumpBadIOError, io unless io.nil? || io.respond_to?(:write) && io.respond_to?(:fsync)
 
     dumper = Dumper.new(indentation, strict)

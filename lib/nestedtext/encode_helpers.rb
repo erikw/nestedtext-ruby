@@ -1,16 +1,14 @@
 require "nestedtext/dumper"
 
 module NestedText
-  module NTEncodeStrictMixin
-    def to_nt(**kwargs)
-      NestedText.dump(self, strict: true, **kwargs)
-    end
-  end
-  private_constant :NTEncodeStrictMixin
-
+  # A mixin for Custom Classes to get the to_nt shortcut.
+  # TODO rename to: ToNTMixin
   module NTEncodeMixin
+    # Encode this object to a NestedText string.
+    #
+    # This method takes the same arguments as NestedText::dump.
     def to_nt(**kwargs)
-      NestedText.dump(self, **kwargs)
+      NestedText.dump(self, strict: false, **kwargs)
     end
   end
 end
