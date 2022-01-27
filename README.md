@@ -16,7 +16,8 @@
 
 A ruby library for the human friendly data format [NestedText](https://nestedtext.org/).
 
-<a href="#" ><img src="img/logo.webp" align="right" width="420px" alt="Project logo" /></a>
+<!-- Use URL to hosetd image, so that it shows up at rubydocs.info as well. Using relative image and yardoc option "--asset img:img" did not work. -->
+<a href="#" ><img src="https://raw.githubusercontent.com/erikw/nestedtext-ruby/main/img/logo.webp" align="right" width="420px" alt="Project logo" /></a>
 
 Provided is support for decoding a NestedText file or string to Ruby data structures, as well as encoding Ruby objects to a NestedText file or string. Furthermore there is support for serialization and deserialization of custom classes. The supported language version of the data format can be see in the badge above. This implementation pass all the [official tests](https://github.com/KenKundert/nestedtext_tests).
 

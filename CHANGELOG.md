@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.1] - 2022-01-27
+### Fixed
+- Fix logo at rubydoc.info
+
 ## [3.2.0] - 2022-01-27
 ### Changed
 - Switch from rdoc formatting syntax to Markdown with Redcarpet to be able to render README.md properly.

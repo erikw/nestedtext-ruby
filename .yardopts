@@ -3,7 +3,6 @@
 --embed-mixin NTEncodeMixin
 --exclude /server/templates/
 --exclude /yard/rubygems/
---asset img:img
 --markup markdown
 --markup-provider redcarpet
 lib/nestedtext.rb
