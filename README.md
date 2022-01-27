@@ -58,6 +58,29 @@ See the [language introduction](https://nestedtext.org/en/latest/basic_syntax.ht
 # Usage
 The full documentation can be found at [TODO](TODO). A minimal & fully working example of a project using this library can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test).
 
+# Types
+Ruby classes maps like this to NestedText types:
+Ruby | [NestedText](https://nestedtext.org/en/latest/basic_syntax.html) | Comment
+---|---|---
+`String`  |`String`       |
+`Array`   |`List`         |
+`Hash`    |`Dictionary`   |
+`Symbol`  |`String`       | when `strict: true`
+`Symbol`  |*Custom Class* | when `strict: false` (1.)
+`nil`     |*empty*        | when `strict: true`, otherwise as Custom Class. How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
+`nil`     |*Custom Class* | when `strict: false`. (2.)
+
+* (1.) See below for [Custom Classes](#custom-classes-serialization)
+* (2.) How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
+
+## Strict Mode
+Strict mode means that the encoding and decoding is limited to use the basic types `Array`, `Hash` and `String`. By **default** strict mode is turned **off**.
+
+### Encoding
+### Decoding
+Symbols can't be used as keys in dicts.
+
+
 ## Decoding (reading NT)
 This is how you can decode NestedText from a string or directly from a file (`*.nt`) to Ruby object instances:
 
@@ -77,17 +100,6 @@ The type of the returned object depends on the top level type in the NestedText 
 key1: value1
 key2: value2
 ```
-
-The NestedText types maps like this to Ruby:
-
-[NestedText](https://nestedtext.org/en/latest/basic_syntax.html) | Ruby | Comment
----|---|---
-`String`    | `String`  |
-`List`      | `Array`   |
-`Dictionary`| `Hash`    |
-`String`    | `Symbol`  | when `strict: true`, otherwise Ruby Symbols are encoded as Custom Class (see below).
-*empty*     |  `nil`    | when `strict: true`, otherwise as Custom Class. How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
-
 
 Thus you must know what you're parsing, or test what you decoded.
 
@@ -191,7 +203,6 @@ data:
     - granny smith
     - 12
 ```
-Note that the special key to denote the class name is subject to change in future versions and you **must not** rely on it.
 
 If you want to add some more super powers to your custom class, you can add the `#to_nt` shortcut by including the `NTEncodeMixin`:
 ```ruby
@@ -204,13 +215,16 @@ Apple.new("granny smith", 12).to_nt
 ```
 
 
-**NOTE** that when deserializing a custom class, this custom class must be available when calling the `#dump*` methods e.g.
-```ruby
-require 'nestedtext'
-require_relative 'apple'  # This is needed if Apple is defined in apple.rb and not in this scope already.
+**Important notes**:
+* That the special key to denote the class name is subject to change in future versions and you **must not** rely on it.
+* Custom Classes can not be a key in a Hash.
+* When deserializing a custom class, this custom class must be available when calling the `#dump*` methods e.g.
+  ```ruby
+  require 'nestedtext'
+  require_relative 'apple'  # This is needed if Apple is defined in apple.rb and not in this scope already.
 
-NestedText::load_file('path/to/apple_dump.nt')
-```
+  NestedText::load_file('path/to/apple_dump.nt')
+  ```
 
 See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.rb) for more real working examples.
 

@@ -141,7 +141,14 @@ class EncodeArrayTest < NTTest
     assert_equal exp, NestedText.dump(obj)
   end
 
-  def test_array_with_symbols
+  def test_array_with_symbols_strict
+    obj = %i[sym1 sym2]
+    assert_raises(ERRORS::DumpUnsupportedTypeError) do
+      NestedText.dump(obj, strict: true)
+    end
+  end
+
+  def test_array_with_symbols_non_strict
     obj = %i[sym1 sym2]
     exp = <<~NT.chomp
       - sym1
@@ -527,19 +534,19 @@ class EncodeHashTest < NTTest
     end
   end
 
+  def test_hash_int_value_strict
+    obj = { "key" => 1 }
+    assert_raises(ERRORS::DumpUnsupportedTypeError) do
+      NestedText.dump(obj, strict: true)
+    end
+  end
+
   def test_hash_symbol_value_non_strict
     obj = { "key" => :value }
     exp = <<~NT.chomp
       key: value
     NT
     assert_equal exp, NestedText.dump(obj)
-  end
-
-  def test_hash_int_value_strict
-    obj = { "key" => 1 }
-    assert_raises(ERRORS::DumpUnsupportedTypeError) do
-      NestedText.dump(obj, strict: true)
-    end
   end
 
   def test_hash_int_value_non_strict
@@ -583,7 +590,14 @@ class EncodeStringTest < NTTest
     assert_equal exp, NestedText.dump(obj)
   end
 
-  def test_string_symbol
+  def test_string_symbol_strict
+    obj = :sym
+    assert_raises(ERRORS::DumpUnsupportedTypeError) do
+      NestedText.dump(obj, strict: true)
+    end
+  end
+
+  def test_string_symbol_non_strict
     obj = :sym
     exp = <<~NT.chomp
       > sym

@@ -9,5 +9,7 @@ require_relative "nestedtext/version"
 ##
 # = NestedText
 # The main module in this library to use.
+#
+# See README.md for documentation on Types, Strict Mode and Custom Classes.
 module NestedText
 end
