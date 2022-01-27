@@ -7,11 +7,11 @@ require "rake/testtask"
 require "yard"
 
 # default task: Add spec and rubocop to default tasks.
-task default: %i[test rubocop rdoc]
+task default: %i[test rubocop yard]
 
 desc "Build steps to be used by ci runner"
 # TODO: enable rubocop after fixing issues.
-task ci: %i[test rdoc]
+task ci: %i[test yard]
 
 # rubocop: Linting. Adds 'rubocop' rake task.
 require "rubocop/rake_task"
