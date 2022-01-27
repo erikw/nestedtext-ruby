@@ -68,7 +68,8 @@ end
 
 # To see undocumented methods: $(yard stats --list-undoc)
 YARD::Rake::YardocTask.new do |t|
-  # use .yardopts instead so that rubygems.org can use it when generating docs for rubydocs.org
+  # Use .yardopts instead so that rubygems.org can use it when generating docs for rubydocs.org
+  # TODO remove this block all togeter
   # t.options = ["--embed-mixin", "NTEncodeMixin"]
   # t.files = ["README.md",
   # "CHANGELOG.md",
