@@ -50,37 +50,9 @@ task :testd do
   Rake::Task["test"].invoke
 end
 
-# Lets use YARD instead, as this is what is used automatically at rubydoc.info for rubygems.org.
-# Rake::RDocTask.new do |rd|
-#  rd.title = "NestedText API Documentation"
-#  rd.rdoc_dir = "doc"
-#  rd.options = ["--hyperlink-all"]
-#  rd.main = "README.md"
-#  rd.rdoc_files.include("README.md",
-#                        "lib/nestedtext.rb",
-#                        "lib/nestedtext/core_ext.rb",
-#                        "lib/nestedtext/decode.rb",
-#                        "lib/nestedtext/encode_helpers.rb",
-#                        "lib/nestedtext/encode.rb",
-#                        "lib/nestedtext/error.rb",
-#                        "lib/nestedtext/version.rb")
-# end
-
-# To see undocumented methods: $(yard stats --list-undoc)
-YARD::Rake::YardocTask.new do |t|
-  # Use .yardopts instead so that rubygems.org can use it when generating docs for rubydocs.org
-  # TODO remove this block all togeter?
-  # t.options = ["--embed-mixin", "NTEncodeMixin", "--asset", "img:img"]
-  # t.files = ["README.md",
-  # "CHANGELOG.md",
-  # "lib/nestedtext.rb",
-  # "lib/nestedtext/core_ext.rb",
-  # "lib/nestedtext/decode.rb",
-  # "lib/nestedtext/encode_helpers.rb",
-  # "lib/nestedtext/encode.rb",
-  # "lib/nestedtext/error.rb",
-  # "lib/nestedtext/version.rb"]
-end
+# Use .yardopts instead of configuration here,
+# so that rubygems.org can use it when generating docs for rubydocs.org
+YARD::Rake::YardocTask.new
 
 desc "Generate documentation"
 task doc: :yard

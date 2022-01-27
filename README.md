@@ -278,12 +278,15 @@ See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.r
 1. For local testing, install the gem on local machine with: `$ bundle exec rake install`.
    * or manually with `$ gem build *.gemscpec && gem install *.gem`
 
-Make sure that only intended constants and methods are exposed publicly from the module `NestedText`. Check with
-```
-irb> require 'nestedtext'
-irb> NestedText.constants
-irb> NestedText.methods(false)
-```
+
+Extra:
+* Make sure that only intended constants and methods are exposed publicly from the module `NestedText`. Check with
+   ```
+   irb> require 'nestedtext'
+   irb> NestedText.constants
+   irb> NestedText.methods(false)
+   ```
+* To see undocumented methods: `$ yard stats --list-undoc`
 
 # Releasing
 Instructions for releasing on rubygems.org below. Optionally make a GitHub [release](https://github.com/erikw/nestedtext-ruby/releases) after this for the pushed git tag.
