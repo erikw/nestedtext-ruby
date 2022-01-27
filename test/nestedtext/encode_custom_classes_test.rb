@@ -2,7 +2,7 @@ require "test_helper"
 
 module CustomTestClasses
   class Inner
-    include NestedText::NTEncodeMixin
+    include NestedText::ToNTMixin
     def initialize(val)
       @val = val
     end

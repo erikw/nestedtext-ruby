@@ -221,10 +221,10 @@ data:
     - 12
 ```
 
-If you want to add some more super powers to your custom class, you can add the `#to_nt` shortcut by including the `NTEncodeMixin`:
+If you want to add some more super powers to your custom class, you can add the `#to_nt` shortcut by including the `ToNTMixin`:
 ```ruby
 class Apple
-  include NestedText::NTEncodeMixin
+  include NestedText::ToNTMixin
   ...
 end
 

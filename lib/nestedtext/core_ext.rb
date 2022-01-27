@@ -1,6 +1,6 @@
 require "nestedtext/encode_helpers"
 
-# Extension of Ruby core types with the NestedText::NTEncodeMixin.
+# Extension of Ruby core types with the NestedText::ToNTMixin.
 #
 # TODO: add encoding of more Ruby native classes like Integer, Float etc plus commons like Set,....? Not covered in NestedText language.
 # Or leave this to a schema validator 3rd party plugin maybe? And replace my custom class decoding (and also encoding?)?
@@ -8,17 +8,17 @@ require "nestedtext/encode_helpers"
 # Or encourage using Marshal from core?
 
 # Extended with the `#to_nt` method.
-class String include NestedText::NTEncodeMixin; end
+class String include NestedText::ToNTMixin; end
 
 # Extended with the `#to_nt` method.
-class Array include NestedText::NTEncodeMixin; end
+class Array include NestedText::ToNTMixin; end
 
 # Extended with the `#to_nt` method.
-class Hash include NestedText::NTEncodeMixin; end
+class Hash include NestedText::ToNTMixin; end
 
 # Extended with NestedText support.
 class NilClass
-  include NestedText::NTEncodeMixin
+  include NestedText::ToNTMixin
 
   # Adds support for encoding and decoding nil.
   def self.nt_create(_data) = nil

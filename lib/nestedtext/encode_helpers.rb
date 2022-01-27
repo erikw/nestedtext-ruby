@@ -2,8 +2,7 @@ require "nestedtext/dumper"
 
 module NestedText
   # A mixin for Custom Classes to get the to_nt shortcut.
-  # TODO rename to: ToNTMixin
-  module NTEncodeMixin
+  module ToNTMixin
     # Encode this object to a NestedText string.
     #
     # This method takes the same named arguments as {NestedText.dump}.
