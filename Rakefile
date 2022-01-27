@@ -50,15 +50,19 @@ task :testd do
 end
 
 Rake::RDocTask.new do |rd|
-  rd.main = "README.md"
   rd.title = "NestedText API Documentation"
   rd.rdoc_dir = "doc"
+  rd.options = ["--hyperlink-all"]
+  rd.main = "README.md"
   rd.rdoc_files.include("README.md",
                         "lib/nestedtext.rb",
                         "lib/nestedtext/encode.rb",
                         "lib/nestedtext/decode.rb",
                         "lib/nestedtext/core_ext.rb")
 end
+
+desc "Generate documentation"
+task doc: :rdoc
 
 # Call like:
 # $ rake parse_file F=path/to/file.nt
