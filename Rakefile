@@ -56,9 +56,10 @@ Rake::RDocTask.new do |rd|
   rd.main = "README.md"
   rd.rdoc_files.include("README.md",
                         "lib/nestedtext.rb",
-                        "lib/nestedtext/encode.rb",
+                        "lib/nestedtext/core_ext.rb",
                         "lib/nestedtext/decode.rb",
-                        "lib/nestedtext/core_ext.rb")
+                        "lib/nestedtext/encode.rb",
+                        "lib/nestedtext/version.rb")
 end
 
 desc "Generate documentation"

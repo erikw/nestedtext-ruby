@@ -3,10 +3,6 @@
 require "nestedtext/errors"
 require "nestedtext/dumper"
 
-# Model after JSON
-# NestedText.dump(obj, io=nil) => dumps to string, or to IO if given
-# NestedText.dump_file(obj, filename)
-
 module NestedText
   def self.dump(obj, io: nil, indentation: 4, strict: false)
     # io - additionaly write the out result to IO and still return result.
