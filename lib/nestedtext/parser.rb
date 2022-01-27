@@ -2,7 +2,7 @@
 
 require "stringio"
 
-require "nestedtext/errors"
+require "nestedtext/errors_internal"
 require "nestedtext/scanners"
 require "nestedtext/constants"
 
@@ -15,7 +15,6 @@ module NestedText
       end
     end
 
-    # TODO: document that caller is responsible for closing IO after done with Parser.
     def initialize(io, top_class, strict: false)
       assert_valid_input_type io
       Parser.assert_valid_top_level_type(top_class)

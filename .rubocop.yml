@@ -43,7 +43,7 @@ Lint/EmptyClass:
 Layout/EmptyLineBetweenDefs:
   Enabled: true
   Exclude:
-  - lib/nestedtext-ruby/errors.rb
+  - lib/nestedtext-ruby/errors_internal.rb
 Lint/EmptyInPattern:
   Enabled: true
 Lint/LambdaWithoutLiteralBlock:
@@ -98,7 +98,7 @@ Style/CollectionCompact:
 Style/Documentation:
   Enabled: true
   Exclude:
-  - lib/nestedtext-ruby/errors.rb
+  - lib/nestedtext-ruby/errors_internal.rb
 Style/DocumentDynamicEvalDefinition:
   Enabled: true
 Style/EndlessMethod:
@@ -126,7 +126,7 @@ Style/RegexpLiteral:
 Style/SingleLineMethods:
   Enabled: true
   Exclude:
-  - lib/nestedtext-ruby/errors.rb
+  - lib/nestedtext-ruby/errors_internal.rb
 Style/StringChars:
   Enabled: true
 Style/StringLiterals:

@@ -3,13 +3,14 @@
 # Include default tasks like build, release, install etc. See https://github.com/rubygems/rubygems/blob/master/bundler/lib/bundler/gem_helper.rb#L46
 require "bundler/gem_tasks"
 require "rake/testtask"
+require "rdoc/task"
 
 # default task: Add spec and rubocop to default tasks.
-task default: %i[test rubocop]
+task default: %i[test rubocop rdoc]
 
 desc "Build steps to be used by ci runner"
 # TODO: enable rubocop after fixing issues.
-task ci: %i[test]
+task ci: %i[test rdoc]
 
 # rubocop: Linting. Adds 'rubocop' rake task.
 require "rubocop/rake_task"
@@ -47,6 +48,24 @@ task :testd do
   ENV["DEBUG"] = "1"
   Rake::Task["test"].invoke
 end
+
+Rake::RDocTask.new do |rd|
+  rd.title = "NestedText API Documentation"
+  rd.rdoc_dir = "doc"
+  rd.options = ["--hyperlink-all"]
+  rd.main = "README.md"
+  rd.rdoc_files.include("README.md",
+                        "lib/nestedtext.rb",
+                        "lib/nestedtext/core_ext.rb",
+                        "lib/nestedtext/decode.rb",
+                        "lib/nestedtext/encode_helpers.rb",
+                        "lib/nestedtext/encode.rb",
+                        "lib/nestedtext/error.rb",
+                        "lib/nestedtext/version.rb")
+end
+
+desc "Generate documentation"
+task doc: :rdoc
 
 # Call like:
 # $ rake parse_file F=path/to/file.nt

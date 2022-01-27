@@ -1,7 +1,5 @@
 require "test_helper"
 
-# TODO: document that custom classes can't be keys in hash!
-# or implement this?
 module CustomTestClasses
   class Inner
     include NestedText::NTEncodeMixin

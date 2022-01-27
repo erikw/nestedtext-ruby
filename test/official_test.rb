@@ -11,7 +11,7 @@ class OfficialTest < Minitest::Test
 
   NestedTextOfficialTests.select_load_success(cases).each do |caze|
     define_method("test_load_success_#{caze.name}") do
-      act = NestedText.load_file(caze[:load][:in][:path])
+      act = NestedText.load_file(caze[:load][:in][:path], strict: true)
       exp = caze[:load][:out][:data]
       if exp.nil?
         assert_nil act
@@ -26,7 +26,7 @@ class OfficialTest < Minitest::Test
       exp = caze[:load][:err][:data]
 
       begin
-        NestedText.load_file(caze[:load][:in][:path])
+        NestedText.load_file(caze[:load][:in][:path], strict: true)
       rescue ERRORS::ParseError => e
         assert_equal(exp["lineno"], e.lineno, msg = "lineno is wrong")
         assert_equal(exp["colno"], e.colno, msg = "colno is wrong")
@@ -41,7 +41,7 @@ class OfficialTest < Minitest::Test
 
   NestedTextOfficialTests.select_dump_success(cases).each do |caze|
     define_method("test_dump_success_#{caze.name}") do
-      act = NestedText.dump(caze[:dump][:in][:data])
+      act = NestedText.dump(caze[:dump][:in][:data], strict: true)
       exp = caze[:dump][:out][:data].sub(/[\n\r]+$/, "")
       assert_equal(exp, act)
     end
