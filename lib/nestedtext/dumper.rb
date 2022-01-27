@@ -92,7 +92,6 @@ module NestedText
       end
     end
 
-    # TODO: document that @strict==false allows to_s on key object
     def dump_hash(obj, depth: 0, **kwargs)
       rep = if obj.empty?
               "{}"

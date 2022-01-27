@@ -56,7 +56,7 @@ vice president:
 See the [language introduction](https://nestedtext.org/en/latest/basic_syntax.html) for more details.
 
 # Usage
-The full documentation can be found at [TODO](TODO). A minimal & fully working example of a project using this library can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test).
+The full API documentation can be found at [**rubydocs.info**](https://www.rubydoc.info/gems/nestedtext/). A minimal & fully working example of a project using this library can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test).
 
 ## Decoding (reading NT)
 This is how you can decode NestedText from a string or directly from a file (`*.nt`) to Ruby object instances:
@@ -147,7 +147,7 @@ Ruby | NestedText | Comment
 ---|---|---
 `nil`        |*empty*  | (1.)
 `Symbol`     |`String` | Raises `NestedText::Error`
-Custom Class | --      | Raises `NestedText::Error`
+Other Class | --      | Raises `NestedText::Error`
 
 
 With `strict: false`
@@ -156,7 +156,7 @@ Ruby | NestedText | Comment
 `nil`        | *Custom Class Encoding* | (1.)
 `Symbol`     | `String` |
 Custom Class | *Custom Class Encoding* | If the [Custom Class](#custom-classes-serialization) implements `#encode_nt_with` (2.)
-Custom Class | String | `#to_s` will be called if there is no `#encode_nt_with`
+Other Class | String | `#to_s` will be called if there is no `#encode_nt_with`
 
 
 * (1.) How empty strings and nil are handled depends on where it is used. This library follows how the official implementation does it.
@@ -167,6 +167,8 @@ Custom Class | String | `#to_s` will be called if there is no `#encode_nt_with`
 
 ## Custom Classes Serialization
 This library has support for serialization/deserialization of custom classes as well. This is done by letting the objects tell NestedText what data should be used to represent the object instance with the `#encode_nt_with` method (inspired by `YAML`'s `#encode_with` method). All objects being recursively referenced from a root object being serialized must either implement this method or be one of the core supported NestedText data types from the table above.
+
+A class implementing `#encode_nt_with` is refered to as `Custom Class` in this document.
 
 ```ruby
 class Apple
@@ -228,7 +230,7 @@ Apple.new("granny smith", 12).to_nt
 
 **Important notes**:
 * The special key to denote the class name is subject to change in future versions and you **must not** rely on it.
-* Custom Classes **can not be a key** in a Hash.
+* Custom Classes **can not be a key** in a Hash. Trying to do this will raise an Error.
 * When deserializing a custom class, this custom class must be available when calling the `#dump*` methods e.g.
   ```ruby
   require 'nestedtext'
