@@ -8,7 +8,7 @@ require_relative "nestedtext/error"
 require_relative "nestedtext/version"
 
 ##
-# = NestedText
+# # NestedText
 # The main module in this library to use.
 #
 # See {file:README.md} for documentation on Types, Strict Mode and Custom Classes.

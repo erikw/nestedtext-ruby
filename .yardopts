@@ -4,6 +4,8 @@
 --exclude /server/templates/
 --exclude /yard/rubygems/
 --asset img:img
+--markup markdown
+--markup-provider redcarpet
 lib/nestedtext.rb
 lib/nestedtext/core_ext.rb
 lib/nestedtext/decode.rb

@@ -13,7 +13,7 @@ module NestedText
   #
   # @return A String containing NestedText data.
   # @raise [NestedText::Error] if anything went wrong.
-  # @raise Whatever the +io+ can raise, if supplied.
+  # @raise Whatever the `io` can raise, if supplied.
   def self.dump(obj, io: nil, indentation: 4, strict: false)
     raise Errors::DumpBadIOError, io unless io.nil? || io.respond_to?(:write) && io.respond_to?(:fsync)
 
@@ -28,15 +28,15 @@ module NestedText
 
   # Encode a Ruby object to a NestedText file.
 
-  # Apart from +filename+, this method behaves exactly like dump.
+  # Apart from `filename`, this method behaves exactly like dump.
   #
   # @param (see dump)
-  # @param filename [String] The file path to write the NestedText result to. The conventional file extension is +.nt+.
+  # @param filename [String] The file path to write the NestedText result to. The conventional file extension is `.nt`.
   #
   #
   # @return (see dump)
   # @raise (see dump)
-  # @raise [IOError] on issues opening the +filename+ for writing in text mode.
+  # @raise [IOError] on issues opening the `filename` for writing in text mode.
   #
   def self.dump_file(obj, filename, **kwargs)
     raise Errors::DumpFileBadPathError, filename unless filename.is_a? String
