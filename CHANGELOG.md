@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - date
+### Changed
+- Slim down Gem by using include instead of block list.
+
 ## [2.0.1] - 2022-01-26
 ### Fixed
 - README issue with logo showing up on Rdoc (out-commented HTML).
