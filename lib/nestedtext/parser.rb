@@ -111,7 +111,7 @@ module NestedText
       clazz.nt_create(hash['data'])
     end
 
-    def parse_dict_item_key_value(indentation, line)
+    def parse_dict_item_kv(indentation, line)
       key = line.attribs['key']
       value = line.attribs['value']
       if value.nil?
@@ -158,13 +158,11 @@ module NestedText
         raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
         raise Errors::ParseLineTypeExpectedDictItemError, line unless %i[dict_item key_item].include? line.tag
 
-        key = nil
-        value = nil
-        if line.tag == :dict_item
-          key, value = parse_dict_item_key_value(indentation, line)
-        else
-          key, value = parse_key_item(indentation, line)
-        end
+        key, value = if line.tag == :dict_item
+                       parse_dict_item_kv(indentation, line)
+                     else
+                       parse_key_item(indentation, line)
+                     end
         raise Errors::ParseDictDuplicateKeyError, line if result.key? key
 
         result[key] = value
