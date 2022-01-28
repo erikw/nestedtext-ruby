@@ -99,8 +99,7 @@ module NestedText
       key_lines = key.empty? ? [''] : key.lines
       key_lines << '' if key_lines[-1][-1] =~ /\n|\r/
       rep_key = key_lines.map { |line| Dumper.add_prefix(':', line) }.join
-      force_multiline = value.is_a? String
-      rep_value = dump_any(value, depth: depth + 1, force_multiline:, **kwargs)
+      rep_value = dump_any(value, depth: depth + 1, force_multiline: value.is_a?(String), **kwargs)
       [rep_key, rep_value].join
     end
 
