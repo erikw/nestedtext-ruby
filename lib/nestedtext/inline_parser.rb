@@ -19,11 +19,12 @@ module NestedText
       result
     end
 
+    private
+
     def parse_any
       return nil if @inline_scanner.peek.nil?
 
-      # Trim leading whitespaces
-      @inline_scanner.read_next while !@inline_scanner.empty? && [' ', "\t"].include?(@inline_scanner.peek)
+      consume_whitespaces # Leading
       result = case @inline_scanner.peek
                when '{'
                  parse_dict
@@ -33,9 +34,12 @@ module NestedText
                  parse_string
                end
 
-      # Trim trailing whitespaces
-      @inline_scanner.read_next while !@inline_scanner.empty? && [' ', "\t"].include?(@inline_scanner.peek)
+      consume_whitespaces # Trailing
       result
+    end
+
+    def consume_whitespaces
+      @inline_scanner.read_next while !@inline_scanner.empty? && [' ', "\t"].include?(@inline_scanner.peek)
     end
 
     def parse_key_last_char(key)
