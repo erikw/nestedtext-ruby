@@ -4,10 +4,6 @@
 require:
   - rubocop-rake
 
-inherit_mode:
-  merge:
-    - Exclude  # Merge my AllCops.Exclude with default exludes from https://github.com/rubocop/rubocop/blob/master/config/default.yml
-
 AllCops:
   TargetRubyVersion: 3.1
   UseCache: true
@@ -15,13 +11,28 @@ AllCops:
   - lib/**/*.rb
   - test/**/*.rb
 
+# Reference: https://github.com/rubocop/rubocop-rake/blob/master/config/default.yml
+Rake:
+  Enabled: true
+
+inherit_mode:
+  merge:
+    - Exclude  # Merge my AllCops.Exclude with default exludes from https://github.com/rubocop/rubocop/blob/master/config/default.yml
+
+# Standard Cops
 Gemspec/DateAssignment:
   Enabled: true
-
+Gemspec/RequireMFA:
+  Enabled: true
 Layout/LineEndStringConcatenationIndentation:
   Enabled: true
-
+Layout/SpaceBeforeBrackets:
+  Enabled: true
 Lint/AmbiguousAssignment:
+  Enabled: true
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: true
+Lint/AmbiguousRange:
   Enabled: true
 Lint/DeprecatedConstants:
   Enabled: true
@@ -33,16 +44,12 @@ Lint/EmptyBlock:
   Enabled: true
 Lint/EmptyClass:
   Enabled: true
-Layout/EmptyLineBetweenDefs:
-  Enabled: true
-  Exclude:
-  - lib/nestedtext-ruby/errors_internal.rb
 Lint/EmptyInPattern:
+  Enabled: true
+Lint/IncompatibleIoSelectWithFiberScheduler:
   Enabled: true
 Lint/LambdaWithoutLiteralBlock:
   Enabled: true
-Layout/LineLength:
-  Max: 120
 Lint/NoReturnInBeginEndBlocks:
   Enabled: true
 Lint/NumberedParameterAssignment:
@@ -51,7 +58,7 @@ Lint/OrAssignmentToConstant:
   Enabled: true
 Lint/RedundantDirGlobSort:
   Enabled: true
-Layout/SpaceBeforeBrackets:
+Lint/RequireRelativeSelfPath:
   Enabled: true
 Lint/SymbolConversion:
   Enabled: true
@@ -63,38 +70,23 @@ Lint/UnexpectedBlockArity:
   Enabled: true
 Lint/UnmodifiedReduceAccumulator:
   Enabled: true
-Lint/UnreachableCode:
-  Severity: error
-Lint/UselessAccessModifier:
-  Enabled: false
-
-Metrics/AbcSize:
+Lint/UselessRuby2Keywords:
   Enabled: true
-Metrics/BlockLength:
+Naming/BlockForwarding:
   Enabled: true
-  Max: 100
-Metrics/MethodLength:
+Security/IoMethods:
   Enabled: true
-  Max: 25
-
-Naming/FileName:
-  Enabled: false
-  Exclude:
-  - lib/nestedtext-ruby.rb
-Naming/InclusiveLanguage:
-  Enabled: true
-
 Style/ArgumentsForwarding:
   Enabled: true
 Style/CollectionCompact:
   Enabled: true
-Style/Documentation:
-  Enabled: true
-  Exclude:
-  - lib/nestedtext-ruby/errors_internal.rb
 Style/DocumentDynamicEvalDefinition:
   Enabled: true
 Style/EndlessMethod:
+  Enabled: true
+Style/FileRead:
+  Enabled: true
+Style/FileWrite:
   Enabled: true
 Style/HashConversion:
   Enabled: true
@@ -104,34 +96,29 @@ Style/IfWithBooleanLiteralBranches:
   Enabled: true
 Style/InPatternThen:
   Enabled: true
+Style/MapToHash:
+  Enabled: true
 Style/MultilineInPatternThen:
   Enabled: true
 Style/NegatedIfElseCondition:
   Enabled: true
 Style/NilLambda:
   Enabled: true
+Style/NumberedParameters:
+  Enabled: true
+Style/NumberedParametersLimit:
+  Enabled: true
+Style/OpenStructUse:
+  Enabled: true
 Style/QuotedSymbols:
   Enabled: true
 Style/RedundantArgument:
   Enabled: true
-Style/RegexpLiteral:
-  Enabled: false
-Style/SingleLineMethods:
+Style/RedundantSelfAssignmentBranch:
   Enabled: true
-  Exclude:
-  - lib/nestedtext-ruby/errors_internal.rb
+Style/SelectByRegexp:
+  Enabled: true
 Style/StringChars:
   Enabled: true
-Style/StringLiterals:
-  Enabled: true
-  EnforcedStyle: double_quotes
-Style/StringLiteralsInInterpolation:
-  Enabled: true
-  EnforcedStyle: double_quotes
 Style/SwapValues:
-  Enabled: true
-
-
-# Reference: https://github.com/rubocop/rubocop-rake/blob/master/config/default.yml
-Rake:
   Enabled: true
