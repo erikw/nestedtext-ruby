@@ -101,6 +101,7 @@ Metrics/MethodLength:
     - test_custom_class_nested
     - detect_line_tag_and_indentation
     - parse_dict_item
+    - parse_any
 Metrics/PerceivedComplexity:
   Enabled: true
   IgnoredMethods:
