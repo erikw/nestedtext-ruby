@@ -37,31 +37,31 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
   def test_dict_single_entry
     nts = 'a: b'
     exp = { 'a' => 'b' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_two_entries
     nts = "a: b\n5: 7"
     exp = { 'a' => 'b', '5' => '7' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_three_entries_empty_lines
     nts = "a: b\n5: 7\n  \n\ng: f\n"
     exp = { 'g' => 'f', '5' => '7', 'a' => 'b' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_empty_value
     nts = 'a: '
     exp = { 'a' => '' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_empty_value_two
     nts = "a: \nb:"
     exp = { 'a' => '', 'b' => '' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_key_alignment
@@ -71,7 +71,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
       threethree : 3
     NT
     exp = { 'one' => '1', 'twotwo' => '2', 'threethree' => '3' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_nested
@@ -80,7 +80,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
         two: 3
     NT
     exp = { 'one' => { 'two' => '3' } }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_nested_invalid_indentation
@@ -120,7 +120,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
           - L2
     NT
     exp = { 'key' => %w[L1 L2] }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_value_of_multiline_string
@@ -130,7 +130,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
           > S2
     NT
     exp = { 'key' => "S1\nS2" }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_invalid_type
@@ -149,7 +149,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
       two: 2
     NT
     exp = { 'one' => '', 'two' => '2' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_valuenextline_last_line
@@ -162,7 +162,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
       three:
     NT
     exp = { 'one' => '', 'two' => '2', 'three' => '' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_single_multiline_key
@@ -173,7 +173,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
           regular: dict
     NT
     exp = { "key:here\n     still\nhere" => { 'regular' => 'dict' } }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_single_multiline_key_oneline
@@ -182,7 +182,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
           regular: dict
     NT
     exp = { 'key but on one line only' => { 'regular' => 'dict' } }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_single_multiline_key_oneline2
@@ -190,7 +190,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
       : oneline
     NT
     exp = { 'oneline' => '' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_legal_spaces
@@ -200,7 +200,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
       k3\t:  \tv3
     NT
     exp = { 'k1' => 'v1', 'k2' => "\tv2", 'k3' => " \tv3" }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_two_multiline_keys
@@ -213,7 +213,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
         key-two: value2
     NT
     exp = { "key\n one" => { 'key-one' => 'value1' }, "key\n\ttwo" => { 'key-two' => 'value2' } }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_multiline_key_list_values
@@ -224,7 +224,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
            - l2
     NT
     exp = { "keypt1\nkeypt2" => %w[l1 l2] }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_multiline_key_invalid_value
@@ -255,7 +255,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
         >
     NT
     exp = { '' => '' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_multiline_empty_key_value_plus_item_after
@@ -265,7 +265,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
       key: value
     NT
     exp = { '' => '', 'key' => 'value' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_multiline_after_emtpy_dict_value
@@ -275,7 +275,7 @@ class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
          > value2
     NT
     exp = { 'key' => '', 'key2' => 'value2' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_dict_value_invalid_indent_missing
@@ -316,7 +316,7 @@ class DecodeStringTopAnyListTest < NTTest # rubocop:disable Metrics/ClassLength
       -
     NT
     exp = ['']
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_list_empty_two
@@ -325,7 +325,7 @@ class DecodeStringTopAnyListTest < NTTest # rubocop:disable Metrics/ClassLength
       -
     NT
     exp = ['', '']
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_list_value_not_indented
@@ -343,7 +343,7 @@ class DecodeStringTopAnyListTest < NTTest # rubocop:disable Metrics/ClassLength
       - List  Item\t
     NT
     exp = ["List  Item\t"]
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_list_multiple_items
@@ -354,7 +354,7 @@ class DecodeStringTopAnyListTest < NTTest # rubocop:disable Metrics/ClassLength
       - item three
     NT
     exp = ["List  Item\t", 'item2', " \t", 'item three']
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_list_nested_list
@@ -365,7 +365,7 @@ class DecodeStringTopAnyListTest < NTTest # rubocop:disable Metrics/ClassLength
         - item3
     NT
     exp = ['item1', %w[item2 item3]]
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_list_nested_dict
@@ -376,7 +376,7 @@ class DecodeStringTopAnyListTest < NTTest # rubocop:disable Metrics/ClassLength
         key2 : value2
     NT
     exp = ['item1', { 'key1' => 'value1', 'key2' => 'value2' }]
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_list_nested_multiple
@@ -393,7 +393,7 @@ class DecodeStringTopAnyListTest < NTTest # rubocop:disable Metrics/ClassLength
       - litem3
     NT
     exp = [%w[litem1 litem2], { 'key1' => 'value1', 'key2' => 'value2' }, "some multi-line\nstring here", 'litem3']
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_list_invalid_indentation
@@ -453,7 +453,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
       > just this line\t
     NT
     exp = "just this line\t"
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_multistring_single_line_empty
@@ -461,7 +461,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
       >
     NT
     exp = ''
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_multistring_multiple_line
@@ -471,7 +471,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
       >   L3
     NT
     exp = "L1\n\tL2\n  L3"
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_multistring_multiple_line_empty
@@ -481,7 +481,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
       >
     NT
     exp = "\n\n"
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_multistring_multiple_line_with_empty_between
@@ -497,7 +497,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
       > L6
     NT
     exp = "L1\n\nL3\n\n\nL6"
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_multistring_invalid_indentation
@@ -558,65 +558,67 @@ class DecodeStringTopAnyInlineDictTest < NTTest # rubocop:disable Metrics/ClassL
   def test_inline_dict_single_entry
     nts = '{a:1}'
     exp = { 'a' => '1' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_dict_single_entry_empty_key
     nts = '{:1}'
     exp = { '' => '1' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_dict_single_entry_empty_valuue
-    assert_equal({ '1' => '' }, NestedText.load('{1:}'))
+    nts = '{1:}'
+    exp = { '1' => '' }
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_dict_single_entry_empty_key_value
     nts = '{:}'
     exp = { '' => '' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_dict_multiple_entry
     nts = '{a:1, b : 2, c :3}'
     exp = { 'a' => '1', 'b' => '2', 'c' => '3' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_dict_multiple_entry_empty_values
     nts = '{a:, b : , c:}'
     exp = { 'a' => '', 'b' => '', 'c' => '' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_dict_nested_dict_first
     nts = '{a: {b : 1}, c: 2}'
     exp = { 'a' => { 'b' => '1' }, 'c' => '2' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_dict_nested_dict_between
     nts = '{a: 1, b: {c : 2}, d: 3}'
     exp = { 'a' => '1', 'b' => { 'c' => '2' }, 'd' => '3' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_dict_nested_dict_last
     nts = '{a:1, b: {c : 2}}'
     exp = { 'a' => '1', 'b' => { 'c' => '2' } }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_dict_nested_list
     nts = '{a:1, b: [l1, l2] }'
     exp = { 'a' => '1', 'b' => %w[l1 l2] }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_dict_space_between_dict_and_comma
     nts = '{ a : { b : 1 } , c : 2 }   '
     exp = { 'a' => { 'b' => '1' }, 'c' => '2' }
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_dict_invalid_wrong_closing_bracket
@@ -666,85 +668,85 @@ class DecodeStringTopAnyInlineListTest < NTTest
   def test_inline_list_empty
     nts = '[]'
     exp = []
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_empty_string
     nts = '[ ]'
     exp = ['']
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_single_item
     nts = '[item]'
     exp = ['item']
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_single_plus_empty_item
     nts = '[item,]'
     exp = ['item', '']
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_single_plus_empty_items
     nts = '[item,,]'
     exp = ['item', '', '']
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_whitespace_tabs
     nts = "[1, 2 ,\t3\t, \t 4,\t 5]"
     exp = %w[1 2 3 4 5]
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_multiple_item
     nts = '[1,2 ,3, a  ,  b]'
     exp = %w[1 2 3 a b]
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_nested_first
     nts = '[[1, 2], 3]'
     exp = [%w[1 2], '3']
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_nested_second
     nts = '[1, [2, 3]]'
     exp = ['1', %w[2 3]]
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_nested_multiple_singles
     nts = '[[1], [2], [3]]'
     exp = [['1'], ['2'], ['3']]
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_nested_multiple_mixed
     nts = '[[1, 2], 3, [4, 5], 6]'
     exp = [%w[1 2], '3', %w[4 5], '6']
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_nested_nested
     nts = '[[[1], 2], 3]'
     exp = [[['1'], '2'], '3']
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_nested_dict
     nts = '[1, {a: 2, b: 3}]'
     exp = ['1', { 'a' => '2', 'b' => '3' }]
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_nested_dict_nested_list
     nts = '[1, {a: [ 2, 3 ] } ]'
     exp = ['1', { 'a' => %w[2 3] }]
-    assert_equal(exp, NestedText.load(nts))
+    assert_equal exp, NestedText.load(nts)
   end
 
   def test_inline_list_invalid_wrong_closing_bracket
@@ -844,11 +846,11 @@ end
 
 class DecodeStringTopArrayTest < NTTest
   def test_top_array_empty
-    assert_equal([], NestedText.load('', top_class: Array))
+    assert_equal [], NestedText.load('', top_class: Array)
   end
 
   def test_top_array_empty_whitespace
-    assert_equal([], NestedText.load('  ', top_class: Array))
+    assert_equal [], NestedText.load('  ', top_class: Array)
   end
 
   def test_top_array_invalid_actual
@@ -865,13 +867,13 @@ class DecodeStringTopArrayTest < NTTest
   def test_top_multilinestring_empty
     nts = '      '
     exp = ''
-    assert_equal(exp, NestedText.load(nts, top_class: String))
+    assert_equal exp, NestedText.load(nts, top_class: String)
   end
 
   def test_top_multilinestring_multiline
     nts = "> line 1\n> line 2"
     exp = "line 1\nline 2"
-    assert_equal(exp, NestedText.load(nts, top_class: String))
+    assert_equal exp, NestedText.load(nts, top_class: String)
   end
 
   def test_top_multilinestring_invalid_actual
@@ -890,13 +892,13 @@ class DecodeFileTest < NTTest
   def test_load_file_hash_dict_nested
     ntf = "#{FIXTURE_PATH}/1.nt"
     exp = { 'one' => { 'two' => '3' } }
-    assert_equal(exp, NestedText.load_file(ntf, top_class: Hash))
+    assert_equal exp, NestedText.load_file(ntf, top_class: Hash)
   end
 
   def test_load_file_nested_multiple
     ntf = "#{FIXTURE_PATH}/2.nt"
     exp = { 'a' => { 'b' => '1' }, 'c' => '2', 'd' => { 'e' => '3' }, 'f' => '' }
-    assert_equal(exp, NestedText.load_file(ntf, top_class: Hash))
+    assert_equal exp, NestedText.load_file(ntf, top_class: Hash)
   end
 
   def test_load_file_invalid_filename_nil
@@ -945,6 +947,6 @@ class DecodeCustomClassTest < NTTest
       data: dummydata
     NT
     exp = { '__nestedtext_class__' => 'DummyClass', 'data' => 'dummydata' }
-    assert_equal(exp, NestedText.load(nts, strict: true))
+    assert_equal exp, NestedText.load(nts, strict: true)
   end
 end

@@ -4,7 +4,6 @@ require 'test_helper'
 
 require 'stringio'
 
-# TODO: style is different from decode_test.rb: here uses "assert_equal a, b" but with spaces in other. Use this style.
 class EncodeTest < NTTest
   def test_nil_strict
     assert_equal '', NestedText.dump(nil, strict: true)
