@@ -86,18 +86,18 @@ module NestedText
       end
     end
 
-    def parse_list_item_line(indentation, line)
+    def assert_list_line(line, indentation)
       Errors.raise_unrecognized_line(line) if line.tag == :unrecognized
       raise Errors::ParseLineTypeExpectedListItemError, line unless line.tag == :list_item
       raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
-
-      parse_list_item_value(indentation, line.attribs['value'])
     end
 
     def parse_list_item(indentation)
       result = []
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
-        result << parse_list_item_line(indentation, @line_scanner.read_next)
+        line = @line_scanner.read_next
+        assert_list_line(line, indentation)
+        result << parse_list_item_value(indentation, line.attribs['value'])
       end
       result
     end
