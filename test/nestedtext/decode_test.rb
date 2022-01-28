@@ -915,7 +915,7 @@ end
 class NoNTCreateClass; end
 
 class DecodeCustomClassTest < NTTest
-  class NotInScope; end
+  class NotInScope; end  # # rubocop:disable Lint/EmptyClass
 
   def test_custom_class_no_nt_creat_method
     nts = <<~NT
