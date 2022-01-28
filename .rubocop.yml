@@ -80,7 +80,6 @@ Metrics/AbcSize:
   Enabled: true
   IgnoredMethods:
     - detect_line_tag_and_indentation
-    - parse_dict_item
     - parse
     - dump_string
 Metrics/ClassLength:
@@ -89,7 +88,6 @@ Metrics/CyclomaticComplexity:
   Enabled: true
   IgnoredMethods:
     - detect_line_tag_and_indentation
-    - parse_dict_item
     - parse_any
     - parse
     - dump_string
@@ -104,14 +102,12 @@ Metrics/MethodLength:
     - test_custom_class_linked_list
     - test_custom_class_nested
     - detect_line_tag_and_indentation
-    - parse_dict_item
     - parse_any
     - parse
 Metrics/PerceivedComplexity:
   Enabled: true
   IgnoredMethods:
     - detect_line_tag_and_indentation
-    - parse_dict_item
     - parse
     - dump_string
 Security/IoMethods:
