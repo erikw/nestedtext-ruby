@@ -140,11 +140,7 @@ module NestedText
       obj = obj.normalize_line_endings
       lines = obj.lines
       lines << "\n" if !lines.empty? && lines[-1][-1] == "\n"
-      if lines.length > 1 || depth == 0 || force_multiline
-        lines.each do |line|
-          Dumper.add_prefix(">", line)
-        end
-      end
+      lines.each { |line| Dumper.add_prefix(">", line) } if lines.length > 1 || depth == 0 || force_multiline
 
       # Case of empty input string. No space after '>'
       lines << ">" if lines.empty? && (depth == 0 || force_multiline)
