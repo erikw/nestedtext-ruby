@@ -78,6 +78,7 @@ Metrics/MethodLength:
   Max: 15
   IgnoredMethods:
     - test_invalid_line_tag
+    - test_hash_multiline_key_all_cases
 Security/IoMethods:
   Enabled: true
 Style/ArgumentsForwarding:
