@@ -10,7 +10,8 @@ module NestedText
   # Decode a NestedText string to Ruby objects.
   #
   # @param ntstring [String] The string containing NestedText to be decoded.
-  # @param top_class [String] Force the top level returned object to be of this type. Supported values are `Object`, `Array`, `Hash` and `String`.
+  # @param top_class [String] Force the top level returned object to be of this type.
+  #                           Supported values are `Object`, `Array`, `Hash` and `String`.
   # @param strict [Boolean] If strict mode should be used.
   #
   # @return [Object, nil] The parsed object.
@@ -25,7 +26,8 @@ module NestedText
   # Decode a NestedText stored in a given file.
   #
   # @param filename [String] The file path to read NestedText to decode from.
-  # @param top_class [String] Force the top level returned object to be of this type. Supported values are `Object`, `Array`, `Hash` and `String`.
+  # @param top_class [String] Force the top level returned object to be of this type.
+  #                           Supported values are `Object`, `Array`, `Hash` and `String`.
   # @param strict [Boolean] If strict mode should be used.
   #
   # @return [Object, nil] The parsed object.
