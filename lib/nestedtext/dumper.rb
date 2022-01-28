@@ -54,11 +54,10 @@ module NestedText
     end
 
     def indent(target, depth)
-      return unless depth.positive?
+      return target unless depth.positive?
 
       indentstr = ' ' * @indentation
-      indented = "\n" + target.lines.map { |line| indentstr + line }.join
-      target.replace indented
+      "\n" + target.lines.map { |line| indentstr + line }.join
     end
 
     def trace_cycles(obj)
@@ -119,7 +118,6 @@ module NestedText
               end.join("\n")
             end
       indent(rep, depth)
-      rep
     end
 
     def dump_array(obj, depth: 0, **kwargs)
@@ -136,7 +134,6 @@ module NestedText
             end
 
       indent(rep, depth)
-      rep
     end
 
     def dump_string(obj, depth: 0, force_multiline: false)
@@ -150,8 +147,7 @@ module NestedText
       lines << '>' if lines.empty? && (depth.zero? || multiline)
 
       rep = lines.join.chomp
-      indent(rep, depth) if multiline
-      rep
+      multiline ? indent(rep, depth) : rep
     end
 
     def dump_custom_class(obj, **kwargs)
