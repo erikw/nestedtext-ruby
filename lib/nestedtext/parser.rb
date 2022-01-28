@@ -30,24 +30,47 @@ module NestedText
       result = parse_any(0)
       case @top_class.object_id
       when Object.object_id
-        raise Errors::AssertionError, 'Parsed result is of unexpected type.' if
-        !result.nil? && ![Hash, Array, String].include?(result.class) && @strict
+        return_object(result)
       when Hash.object_id
-        result = {} if result.nil?
-        raise Errors::TopLevelTypeMismatchParsedTypeError.new(@top_class, result) unless result.instance_of?(Hash)
+        return_hash(result)
       when Array.object_id
-        result = [] if result.nil?
-        raise Errors::TopLevelTypeMismatchParsedTypeError.new(@top_class, result) unless result.instance_of?(Array)
+        return_array(result)
       when String.object_id
-        result = '' if result.nil?
-        raise Errors::TopLevelTypeMismatchParsedTypeError.new(@top_class, result) unless result.instance_of?(String)
+        return_string(result)
       else
         raise Errors::UnsupportedTopLevelTypeError, @top_class
       end
-      result
     end
 
     private
+
+    def return_object(result)
+      raise Errors::AssertionError, 'Parsed result is of unexpected type.' if \
+        !result.nil? && ![Hash, Array, String].include?(result.class) && @strict
+
+      result
+    end
+
+    def return_hash(result)
+      result = {} if result.nil?
+      raise Errors::TopLevelTypeMismatchParsedTypeError.new(@top_class, result) unless result.instance_of?(Hash)
+
+      result
+    end
+
+    def return_array(result)
+      result = [] if result.nil?
+      raise Errors::TopLevelTypeMismatchParsedTypeError.new(@top_class, result) unless result.instance_of?(Array)
+
+      result
+    end
+
+    def return_string(result)
+      result = '' if result.nil?
+      raise Errors::TopLevelTypeMismatchParsedTypeError.new(@top_class, result) unless result.instance_of?(String)
+
+      result
+    end
 
     def assert_valid_input_type(input)
       return if input.nil? || input.is_a?(IO) || input.is_a?(StringIO)
