@@ -26,26 +26,40 @@ module NestedText
 
       private
 
-      def pretty_message(line)
-        lineno_disp = @lineno + 1
-        colno_disp = @colno + 1
-        prefix = "\nParse ParseError (line #{lineno_disp}, column #{colno_disp}): "
+      def lineno_disp
+        @lineno + 1
+      end
 
+      def colno_disp
+        @colno + 1
+      end
+
+      # Number of digits in the line number.
+      def lineno_digits
+        lineno_disp.to_s.length
+      end
+
+      def pretty_prefix
+        "\nParse ParseError (line #{lineno_disp}, column #{colno_disp}): "
+      end
+
+      def pretty_last_lines(line)
         last_lines = ''
         # From one line to another, we can at most have 1 digits length difference.
-        digits = lineno_disp.to_s.length
         unless line.prev.nil?
           lline_indent = ' ' * line.prev.indentation
           prev_lineno_disp = line.prev.lineno + 1
-          last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(digits)}│#{lline_indent}#{line.prev.content}"
+          last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(lineno_digits)}│#{lline_indent}#{line.prev.content}"
         end
         line_indent = ' ' * line.indentation
         last_lines += "\n\t#{lineno_disp}│#{line_indent}#{line.content}"
+      end
 
-        marker_indent = colno_disp + digits # +1 for the "|"
+      def pretty_message(line)
+        marker_indent = colno_disp + lineno_digits # +1 for the "|"
         marker = "\n\t#{' ' * marker_indent}^"
 
-        prefix + @message_raw + last_lines + marker
+        pretty_prefix + @message_raw + pretty_last_lines(line) + marker
       end
     end
 
