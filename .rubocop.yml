@@ -86,6 +86,7 @@ Metrics/MethodLength:
     - test_array_with_multiple_hash
     - test_custom_class_linked_list
     - test_custom_class_nested
+    - detect_line_tag_and_indentation
 Metrics/PerceivedComplexity:
   Enabled: true
   IgnoredMethods:
