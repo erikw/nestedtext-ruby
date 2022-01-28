@@ -99,7 +99,6 @@ Metrics/PerceivedComplexity:
   Enabled: true
   IgnoredMethods:
     - detect_line_tag_and_indentation
-    - parse_inline
 Security/IoMethods:
   Enabled: true
 Style/ArgumentsForwarding:

@@ -31,6 +31,7 @@ end
 
 # Work around private_constant. Reference: https://stackoverflow.com/a/45070911/265508
 PARSER = NestedText.const_get(:Parser)
+INLINE_PARSER = NestedText.const_get(:InlineParser)
 LINE_SCANNER = NestedText.const_get(:LineScanner)
 INLINE_SCANNER = NestedText.const_get(:InlineScanner)
 LINE = NestedText.const_get(:Line)

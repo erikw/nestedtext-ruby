@@ -57,35 +57,29 @@ class ParserTest < NTTest
   end
 
   def test_inline_dict_invalid_parsed_type
-    scan_mock = Minitest::Mock.new
-    def scan_mock.empty?
-      true
+    inline_parser_mock = Minitest::Mock.new
+    def inline_parser_mock.parse
+      []
     end
 
     parser = PARSER.new(StringIO.new('{k: v}'), Object)
-
-    INLINE_SCANNER.stub :new, scan_mock do
-      parser.stub :parse_inline, [] do
-        assert_raises(ERRORS::AssertionError) do
-          parser.parse
-        end
+    INLINE_PARSER.stub :new, inline_parser_mock do
+      assert_raises(ERRORS::AssertionError) do
+        parser.parse
       end
     end
   end
 
   def test_inline_list_invalid_parsed_type
-    scan_mock = Minitest::Mock.new
-    def scan_mock.empty?
-      true
+    inline_parser_mock = Minitest::Mock.new
+    def inline_parser_mock.parse
+      {}
     end
 
     parser = PARSER.new(StringIO.new('[i1, i2]'), Object)
-
-    INLINE_SCANNER.stub :new, scan_mock do
-      parser.stub :parse_inline, {} do
-        assert_raises(ERRORS::AssertionError) do
-          parser.parse
-        end
+    INLINE_PARSER.stub :new, inline_parser_mock do
+      assert_raises(ERRORS::AssertionError) do
+        parser.parse
       end
     end
   end
