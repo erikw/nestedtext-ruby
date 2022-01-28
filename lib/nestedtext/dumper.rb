@@ -19,8 +19,6 @@ module NestedText
       dump_any obj
     end
 
-    private
-
     def self.add_prefix(prefix, target)
       if target.empty? || target[0] == "\n"
         target.prepend(prefix)
@@ -40,6 +38,8 @@ module NestedText
         syntax1.include?(key.lstrip[0]) ||
         (syntax2.include?(key.lstrip[0]) && key.lstrip[1] == ' ')
     end
+
+    private
 
     def convert_key(key)
       if key.nil?
