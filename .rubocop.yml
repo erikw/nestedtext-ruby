@@ -1,5 +1,3 @@
-# TODO  clean this upand remove Excludes not needed.
-
 # Rubocop extensions
 require:
   - rubocop-rake
@@ -76,6 +74,8 @@ Lint/UselessRuby2Keywords:
   Enabled: true
 Naming/BlockForwarding:
   Enabled: true
+Metrics/MethodLength:
+  Max: 15
 Security/IoMethods:
   Enabled: true
 Style/ArgumentsForwarding:
