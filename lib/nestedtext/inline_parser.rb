@@ -62,10 +62,10 @@ module NestedText
 
     def parse_dict_last_char
       last_char = @inline_scanner.read_next
-      unless last_char == '}'
-        raise Errors::ParseInlineDictSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
-                                                     last_char)
-      end
+      return if last_char == '}'
+
+      raise Errors::ParseInlineDictSyntaxError.new(@inline_scanner.line,
+                                                   @inline_scanner.pos - 1, last_char)
     end
 
     def parse_dict
