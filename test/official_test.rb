@@ -33,7 +33,9 @@ class OfficialTest < Minitest::Test
         assert_equal(exp['colno'], e.colno, 'colno is wrong')
         assert_equal(exp['message'], e.message_raw, 'message is wrong')
       rescue Exception => e
-        raise "Unexpected exception #{e.class.name} with message:\n#{e.message}\n, but expected one with with message:\n#{exp['message']}\nBacktrace:\n#{e.backtrace.join("\n")}"
+        raise "Unexpected exception #{e.class.name} with message:\n" \
+          "#{e.message}\n, but expected one with with message:\n" \
+          "#{exp['message']}\nBacktrace:\n#{e.backtrace.join("\n")}"
       else
         raise "No exception raised, but expected one with with message:\n#{exp['message']}"
       end
