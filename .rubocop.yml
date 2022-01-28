@@ -84,6 +84,7 @@ Metrics/MethodLength:
     - test_hash_multiline_key_all_cases
     - test_hash_key_line_endings
     - test_array_with_multiple_hash
+    - test_custom_class_linked_list
 Security/IoMethods:
   Enabled: true
 Style/ArgumentsForwarding:
