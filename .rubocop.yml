@@ -1,3 +1,5 @@
+# TODO work on removing exclusions in here and in code with markers: # rubocop:disable
+
 # Rubocop extensions
 require:
   - rubocop-rake
