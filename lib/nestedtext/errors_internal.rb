@@ -134,7 +134,9 @@ module NestedText
 
     class ParseLineTypeNotExpectedError < ParseError
       def initialize(line, type_exps, type_act)
-        super(line, line.indentation, "The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(', ')}] here.")
+        super(line, line.indentation,
+              "The current line was detected to be #{type_act}, "\
+              "but we expected to see any of [#{type_exps.join(', ')}] here.")
       end
     end
 
