@@ -12,6 +12,9 @@ plugins:
     enabled: true
   duplication:
     enabled: true
+    checks:
+      TODO:
+        enabled: false
     config:
       languages:
       - ruby
