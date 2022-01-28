@@ -80,6 +80,7 @@ Metrics/AbcSize:
   Enabled: true
   IgnoredMethods:
     - detect_line_tag_and_indentation
+    - parse_string_item
 Metrics/ClassLength:
   Enabled: true
 Metrics/CyclomaticComplexity:
