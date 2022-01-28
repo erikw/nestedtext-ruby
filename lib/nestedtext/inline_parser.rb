@@ -60,6 +60,14 @@ module NestedText
       key.join.strip
     end
 
+    def parse_dict_last_char
+      last_char = @inline_scanner.read_next
+      unless last_char == '}'
+        raise Errors::ParseInlineDictSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
+                                                     last_char)
+      end
+    end
+
     def parse_dict
       result = {}
       first = true
@@ -77,11 +85,7 @@ module NestedText
         raise Errors::ParseInlineNoClosingDelimiterError.new(@inline_scanner.line,
                                                              @inline_scanner.pos)
       end
-      last_char = @inline_scanner.read_next
-      unless last_char == '}'
-        raise Errors::ParseInlineDictSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
-                                                     last_char)
-      end
+      parse_dict_last_char
       result
     end
 
