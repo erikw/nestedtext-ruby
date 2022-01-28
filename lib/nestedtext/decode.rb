@@ -36,7 +36,7 @@ module NestedText
     raise Errors::WrongInputTypeError.new([String], filename) unless !filename.nil? && filename.is_a?(String)
 
     # Open explicitly in text mode to detect \r as line ending.
-    File.open(filename, mode = 'rt') do |file|
+    File.open(filename, 'rt') do |file|
       Parser.new(file, top_class, strict:).parse
     end
   end
