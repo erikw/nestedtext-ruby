@@ -43,16 +43,18 @@ module NestedText
         "\nParse ParseError (line #{lineno_disp}, column #{colno_disp}): "
       end
 
-      def pretty_last_lines(line)
-        last_lines = ''
+      def pretty_line(line)
+        return '' if line.nil?
+
+        lline_indent = ' ' * line.indentation
+        prev_lineno_disp = line.lineno + 1
+
         # From one line to another, we can at most have 1 digits length difference.
-        unless line.prev.nil?
-          lline_indent = ' ' * line.prev.indentation
-          prev_lineno_disp = line.prev.lineno + 1
-          last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(lineno_digits)}│#{lline_indent}#{line.prev.content}"
-        end
-        line_indent = ' ' * line.indentation
-        last_lines + "\n\t#{lineno_disp}│#{line_indent}#{line.content}"
+        "\n\t#{prev_lineno_disp.to_s.rjust(lineno_digits)}│#{lline_indent}#{line.content}"
+      end
+
+      def pretty_last_lines(line)
+        pretty_line(line.prev) + pretty_line(line)
       end
 
       def pretty_marker
