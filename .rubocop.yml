@@ -82,6 +82,8 @@ Style/ArgumentsForwarding:
   Enabled: true
 Style/CollectionCompact:
   Enabled: true
+Style/Documentation:
+  Enabled: false
 Style/DocumentDynamicEvalDefinition:
   Enabled: true
 Style/EndlessMethod:

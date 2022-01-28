@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'simplecov' # Must be before any application code. See conf in .simplecov
 
 require 'minitest/autorun'

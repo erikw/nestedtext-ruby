@@ -116,7 +116,7 @@ class EncodeCustomClassTest < NTTest
     assert_equal exp, dumped
 
     loaded = NestedText.load(dumped)
-    assert_equal obj, loaded
+    assert_nil loaded
   end
 
   def test_custom_class_nested
