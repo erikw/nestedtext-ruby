@@ -97,6 +97,25 @@ module NestedText
       result
     end
 
+    def deserialize_custom_class(hash, first_line)
+      # Custom class decoding.
+      if !@strict && hash.length == 2 && hash.key?(CUSTOM_CLASS_KEY)
+        class_name = hash[CUSTOM_CLASS_KEY]
+        begin
+          clazz = class_name == 'nil' ? NilClass : Object.const_get(class_name, false)
+        rescue NameError
+          raise Errors::ParseCustomClassNotFoundError.new(first_line, class_name)
+        end
+        unless clazz.respond_to? :nt_create
+          raise Errors::ParseCustomClassNoCreateMethodError.new(first_line, class_name)
+        end
+
+        clazz.nt_create(hash['data'])
+      else
+        hash
+      end
+    end
+
     def parse_key_item(indentation, line)
       key = line.attribs['key']
       value = nil
@@ -151,22 +170,7 @@ module NestedText
         result[key] = value
       end
 
-      # Custom class decoding.
-      if !@strict && result.length == 2 && result.key?(CUSTOM_CLASS_KEY)
-        class_name = result[CUSTOM_CLASS_KEY]
-        begin
-          clazz = class_name == 'nil' ? NilClass : Object.const_get(class_name, false)
-        rescue NameError
-          raise Errors::ParseCustomClassNotFoundError.new(first_line, class_name)
-        end
-        unless clazz.respond_to? :nt_create
-          raise Errors::ParseCustomClassNoCreateMethodError.new(first_line, class_name)
-        end
-
-        result = clazz.nt_create(result['data'])
-      end
-
-      result
+      deserialize_custom_class(result, first_line)
     end
 
     def parse_string_item(indentation)
