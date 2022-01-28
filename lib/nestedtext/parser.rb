@@ -123,7 +123,7 @@ module NestedText
       [key, value]
     end
 
-    def parse_multiline_key(indentation, line)
+    def parse_key_item_key(indentation, line)
       key = line.attribs['key']
       while @line_scanner.peek&.tag == :key_item && @line_scanner.peek.indentation == indentation
         line = @line_scanner.read_next
@@ -132,24 +132,25 @@ module NestedText
       key
     end
 
-    def parse_key_item(indentation, line)
-      key = parse_multiline_key(indentation, line)
-      value = nil
-      if @line_scanner.peek.nil?
-        value = ''
-      else
-        exp_types = %i[dict_item key_item list_item string_item]
-        unless exp_types.member?(@line_scanner.peek.tag)
-          raise Errors::ParseLineTypeNotExpectedError.new(line, exp_types, line.tag)
-        end
+    def parse_key_item_value(indentation, line)
+      return '' if @line_scanner.peek.nil?
 
-        unless @line_scanner.peek.indentation > indentation
-          raise Errors::ParseMultilineKeyNoValueError,
-                line
-        end
-
-        value = parse_any(@line_scanner.peek.indentation)
+      exp_types = %i[dict_item key_item list_item string_item]
+      unless exp_types.member?(@line_scanner.peek.tag)
+        raise Errors::ParseLineTypeNotExpectedError.new(line, exp_types, line.tag)
       end
+
+      unless @line_scanner.peek.indentation > indentation
+        raise Errors::ParseMultilineKeyNoValueError,
+              line
+      end
+
+      parse_any(@line_scanner.peek.indentation)
+    end
+
+    def parse_key_item(indentation, line)
+      key = parse_key_item_key(indentation, line)
+      value = parse_key_item_value(indentation, line)
       [key, value]
     end
 
