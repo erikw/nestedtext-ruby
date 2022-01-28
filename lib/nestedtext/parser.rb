@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "stringio"
+require 'stringio'
 
-require "nestedtext/errors_internal"
-require "nestedtext/scanners"
-require "nestedtext/constants"
+require 'nestedtext/errors_internal'
+require 'nestedtext/scanners'
+require 'nestedtext/constants'
 
 module NestedText
   # A LL(1) recursive descent parser for NT.
@@ -28,7 +28,7 @@ module NestedText
       result = parse_any(0)
       case @top_class.object_id
       when Object.object_id
-        raise Errors::AssertionError, "Parsed result is of unexpected type." if
+        raise Errors::AssertionError, 'Parsed result is of unexpected type.' if
         !result.nil? && ![Hash, Array, String].include?(result.class) && @strict
       when Hash.object_id
         result = {} if result.nil?
@@ -37,7 +37,7 @@ module NestedText
         result = [] if result.nil?
         raise Errors::TopLevelTypeMismatchParsedTypeError.new(@top_class, result) unless result.instance_of?(Array)
       when String.object_id
-        result = "" if result.nil?
+        result = '' if result.nil?
         raise Errors::TopLevelTypeMismatchParsedTypeError.new(@top_class, result) unless result.instance_of?(String)
       else
         raise Errors::UnsupportedTopLevelTypeError, @top_class
@@ -83,12 +83,12 @@ module NestedText
         raise Errors::ParseLineTypeExpectedListItemError, line unless line.tag == :list_item
         raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
 
-        value = line.attribs["value"]
+        value = line.attribs['value']
         if value.nil?
           if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
             value = parse_any(@line_scanner.peek.indentation)
           elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :list_item
-            value = ""
+            value = ''
           end
         end
 
@@ -109,11 +109,11 @@ module NestedText
 
         value = nil
         key = nil
-        key = line.attribs["key"]
+        key = line.attribs['key']
         if line.tag == :dict_item
-          value = line.attribs["value"]
+          value = line.attribs['value']
           if value.nil?
-            value = ""
+            value = ''
             if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
               value = parse_any(@line_scanner.peek.indentation)
             end
@@ -121,11 +121,11 @@ module NestedText
         else # :key_item
           while @line_scanner.peek&.tag == :key_item && @line_scanner.peek.indentation == indentation
             line = @line_scanner.read_next
-            key += "\n#{line.attribs["key"]}"
+            key += "\n#{line.attribs['key']}"
           end
           exp_types = %i[dict_item key_item list_item string_item]
           if @line_scanner.peek.nil?
-            value = ""
+            value = ''
           else
             unless exp_types.member?(@line_scanner.peek.tag)
               raise Errors::ParseLineTypeNotExpectedError.new(line, exp_types, line.tag)
@@ -148,12 +148,12 @@ module NestedText
       if !@strict && result.length == 2 && result.key?(CUSTOM_CLASS_KEY)
         class_name = result[CUSTOM_CLASS_KEY]
         begin
-          clazz = class_name == "nil" ? NilClass : Object.const_get(class_name, false)
+          clazz = class_name == 'nil' ? NilClass : Object.const_get(class_name, false)
         rescue NameError
           raise Errors::ParseCustomClassNotFoundError.new(first_line, class_name)
         end
         if clazz.respond_to? :nt_create
-          result = clazz.nt_create(result["data"])
+          result = clazz.nt_create(result['data'])
         else
           raise Errors::ParseCustomClassNoCreateMethodError.new(first_line, class_name)
         end
@@ -169,7 +169,7 @@ module NestedText
         raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
         raise Errors::ParseLineTypeNotExpectedError.new(line, %i[string_item], line.tag) unless line.tag == :string_item
 
-        value = line.attribs["value"]
+        value = line.attribs['value']
         result << value
       end
       result.join("\n")
@@ -177,7 +177,7 @@ module NestedText
 
     def parse_inline_key
       key = []
-      until @inline_scanner.empty? || [":", "{", "}", "[", "]", ","].include?(@inline_scanner.peek)
+      until @inline_scanner.empty? || [':', '{', '}', '[', ']', ','].include?(@inline_scanner.peek)
         key << @inline_scanner.read_next
       end
       if @inline_scanner.empty?
@@ -186,10 +186,10 @@ module NestedText
       end
 
       last_char = @inline_scanner.read_next
-      if last_char == "}" && key.empty?
+      if last_char == '}' && key.empty?
         raise Errors::ParseInlineMissingValueError.new(@inline_scanner.line, @inline_scanner.pos - 1)
       end
-      unless last_char == ":"
+      unless last_char == ':'
         raise Errors::ParseInlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
       end
 
@@ -201,41 +201,41 @@ module NestedText
 
       result = nil
       # Trim leading whitespaces
-      @inline_scanner.read_next while !@inline_scanner.empty? && [" ", "\t"].include?(@inline_scanner.peek)
+      @inline_scanner.read_next while !@inline_scanner.empty? && [' ', "\t"].include?(@inline_scanner.peek)
       case @inline_scanner.peek
-      when "{"
+      when '{'
         result = {}
         first = true
         loop do
           @inline_scanner.read_next
-          break if first && @inline_scanner.peek == "}"
+          break if first && @inline_scanner.peek == '}'
 
           first = false
           key = parse_inline_key
           value = parse_inline
           result[key] = value
-          break unless @inline_scanner.peek == ","
+          break unless @inline_scanner.peek == ','
         end
         if @inline_scanner.empty?
           raise Errors::ParseInlineNoClosingDelimiterError.new(@inline_scanner.line,
                                                                @inline_scanner.pos)
         end
         last_char = @inline_scanner.read_next
-        unless last_char == "}"
+        unless last_char == '}'
           raise Errors::ParseInlineDictSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
                                                        last_char)
         end
 
-      when "["
+      when '['
         result = []
         first = true # TODO: can be replaced by checking result.empty? below?
         loop do
           @inline_scanner.read_next
-          break if first && @inline_scanner.peek == "]"
+          break if first && @inline_scanner.peek == ']'
 
           first = false
           result << parse_inline
-          break unless @inline_scanner.peek == ","
+          break unless @inline_scanner.peek == ','
         end
         if @inline_scanner.empty?
           raise Errors::ParseInlineNoClosingDelimiterError.new(@inline_scanner.line,
@@ -243,8 +243,8 @@ module NestedText
         end
         last_char = @inline_scanner.read_next
 
-        if last_char != "]"
-          if result[-1] == ""
+        if last_char != ']'
+          if result[-1] == ''
             raise Errors::ParseInlineMissingValueError.new(@inline_scanner.line, @inline_scanner.pos - 1)
           else
             raise Errors::ParseInlineListSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
@@ -253,13 +253,13 @@ module NestedText
         end
       else # Inline string
         inline_string = []
-        until @inline_scanner.empty? || ["{", "}", "[", "]", ","].include?(@inline_scanner.peek)
+        until @inline_scanner.empty? || ['{', '}', '[', ']', ','].include?(@inline_scanner.peek)
           inline_string << @inline_scanner.read_next
         end
         result = inline_string.join.rstrip # Trim trailing whitespaces that lead up to next break point.
       end
       # Trim trailing whitespaces
-      @inline_scanner.read_next while !@inline_scanner.empty? && [" ", "\t"].include?(@inline_scanner.peek)
+      @inline_scanner.read_next while !@inline_scanner.empty? && [' ', "\t"].include?(@inline_scanner.peek)
       result
     end
 
