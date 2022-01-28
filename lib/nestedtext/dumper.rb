@@ -143,7 +143,6 @@ module NestedText
 
       lines.each { |line| Dumper.add_prefix('>', line) } if multiline || depth.zero?
 
-      # Case of empty input string. No space after '>'
       lines << '>' if lines.empty? && (depth.zero? || multiline)
 
       rep = lines.join.chomp
