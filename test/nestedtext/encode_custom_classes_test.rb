@@ -30,8 +30,8 @@ module CustomTestClasses
   end
 
   class Outer
-    def initialize(a, b, inner)
-      @list = [a, b]
+    def initialize(attr_a, attr_b, inner)
+      @list = [attr_a, attr_b]
       @inner = inner
     end
 
