@@ -1,3 +1,4 @@
+# TODO: add forzen literal by using string#replace?
 require 'nestedtext/core_ext_internal'
 
 module NestedText
