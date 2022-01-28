@@ -132,9 +132,7 @@ module NestedText
       @content = @content[@indentation..]
     end
 
-    def detect_line_tag_and_indentation
-      fast_forward_indentation
-
+    def detect_line_tag
       if @content.length.zero?
         self.tag = :blank
       elsif @content[0] == '#'
@@ -161,6 +159,12 @@ module NestedText
         # thus could hide an error that we detect when parsing the previous line.
         self.tag = :unrecognized
       end
+    end
+
+    def detect_line_tag_and_indentation
+      fast_forward_indentation
+      detect_line_tag
+
     end
   end
   private_constant :Line
