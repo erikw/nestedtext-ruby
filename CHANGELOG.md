@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.1.1] - 2022-01-28
+### Fixed
+- Don't trigger CI when CD will run all tests anyways.
+
 ## [4.1.0] - 2022-01-28
 ### Changed
 - cd.yml now runs full tests before releasing new version, by using reusable workflows.

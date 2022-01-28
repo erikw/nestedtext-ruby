@@ -7,6 +7,7 @@ on:
       - '**/*.md'
       - '.github/workflows/cd.yml'
       - '.github/workflows/codeql-analysis.yml'
+      - 'lib/nestedtext/version.rb'  # Avoid CI when CD will trigger and do the same testing.
   pull_request:
     branches: [ main]
     paths-ignore:
