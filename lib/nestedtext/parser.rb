@@ -48,9 +48,9 @@ module NestedText
     private
 
     def assert_valid_input_type(input)
-      unless input.nil? || input.is_a?(IO) || input.is_a?(StringIO)
-        raise Errors::WrongInputTypeError.new([IO, StringIO], input)
-      end
+      return if input.nil? || input.is_a?(IO) || input.is_a?(StringIO)
+
+      raise Errors::WrongInputTypeError.new([IO, StringIO], input)
     end
 
     def parse_any(indentation)
