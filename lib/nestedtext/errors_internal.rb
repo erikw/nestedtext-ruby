@@ -55,11 +55,13 @@ module NestedText
         last_lines += "\n\t#{lineno_disp}│#{line_indent}#{line.content}"
       end
 
-      def pretty_message(line)
+      def pretty_marker
         marker_indent = colno_disp + lineno_digits # +1 for the "|"
-        marker = "\n\t#{' ' * marker_indent}^"
+        "\n\t#{' ' * marker_indent}^"
+      end
 
-        pretty_prefix + @message_raw + pretty_last_lines(line) + marker
+      def pretty_message(line)
+        pretty_prefix + @message_raw + pretty_last_lines(line) + pretty_marker
       end
     end
 
