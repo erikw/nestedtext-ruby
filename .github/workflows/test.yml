@@ -6,8 +6,8 @@ on:
         type: boolean
 
 env:
-  RUBY_MAIN_VER: 3.1
-  OS_MAIN: ubuntu
+  MAIN_RUBY_VER: 3.1
+  MAIN_OS: ubuntu
 jobs:
   test:
     runs-on: ${{ matrix.os }}-latest
@@ -30,8 +30,8 @@ jobs:
       uses: paambaati/codeclimate-action@v3.0.0
       if: |
         inputs.code_coverage &&
-        matrix.os == env.OS_MAIN &&
-        matrix.ruby-version == env.RUBY_MAIN_VER &&
+        matrix.os == env.MAIN_OS &&
+        matrix.ruby-version == env.MAIN_RUBY_VER &&
         github.event_name != 'pull_request'
       env:
         CC_TEST_REPORTER_ID: 031d4b3d619508ecf0f2d6ce8f2565d506d4cb24b6fa7ef913af274533021bee
