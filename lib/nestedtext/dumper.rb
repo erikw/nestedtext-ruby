@@ -53,7 +53,9 @@ module NestedText
       end
     end
 
-    def indent(target)
+    def indent(target, depth)
+      return unless depth.positive?
+
       indentstr = ' ' * @indentation
       indented = "\n" + target.lines.map { |line| indentstr + line }.join
       target.replace indented
@@ -116,7 +118,7 @@ module NestedText
                 end
               end.join("\n")
             end
-      indent(rep) if depth.positive?
+      indent(rep, depth)
       rep
     end
 
@@ -133,7 +135,7 @@ module NestedText
               end.join("\n")
             end
 
-      indent(rep) if depth.positive?
+      indent(rep, depth)
       rep
     end
 
@@ -148,7 +150,7 @@ module NestedText
       lines << '>' if lines.empty? && (depth.zero? || multiline)
 
       rep = lines.join.chomp
-      indent(rep) if depth.positive? && multiline
+      indent(rep, depth) if multiline
       rep
     end
 
