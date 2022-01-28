@@ -138,10 +138,10 @@ module NestedText
 
     def dump_string(obj, depth: 0, force_multiline: false)
       lines = obj.normalize_line_endings.lines
+      lines << "\n" if !lines.empty? && lines[-1][-1] == "\n"
       multiline = lines.length > 1 || force_multiline
 
-      lines << "\n" if !lines.empty? && lines[-1][-1] == "\n"
-      lines.each { |line| Dumper.add_prefix('>', line) } if lines.length > 1 || depth.zero? || multiline
+      lines.each { |line| Dumper.add_prefix('>', line) } if multiline || depth.zero?
 
       # Case of empty input string. No space after '>'
       lines << '>' if lines.empty? && (depth.zero? || multiline)
