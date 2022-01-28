@@ -89,6 +89,7 @@ Metrics/CyclomaticComplexity:
   IgnoredMethods:
     - detect_line_tag_and_indentation
     - parse_dict_item
+    - parse_any
 Metrics/MethodLength:
   Enabled: true
   Max: 15
