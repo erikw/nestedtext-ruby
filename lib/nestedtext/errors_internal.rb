@@ -115,11 +115,6 @@ module NestedText
         prev_line = line.prev
         message = if prev_line.nil? && ind_exp.zero?
                     'top-level content must start in column 1.'
-                  elsif !prev_line.nil? &&
-                        prev_line.attribs.key?('value') &&
-                        prev_line.indentation < line.indentation &&
-                        %i[dict_item list_item].member?(prev_line.tag)
-                    'invalid indentation.'
                   elsif !prev_line.nil? && line.indentation < prev_line.indentation
                     # Can't use ind_exp here, because it's a difference if the previous line was further indented.
                     # See test_load_error_dict_10
