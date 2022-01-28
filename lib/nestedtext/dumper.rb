@@ -146,7 +146,7 @@ module NestedText
       lines << '>' if lines.empty? && (depth.zero? || force_multiline)
 
       rep = lines.join.chomp
-      indent(rep) if !rep.empty? && depth.positive? && (rep.include?("\n") || force_multiline)
+      indent(rep) if depth.positive? && (rep.include?("\n") || force_multiline)
       rep
     end
 
