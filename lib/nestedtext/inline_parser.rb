@@ -70,12 +70,10 @@ module NestedText
 
     def parse_dict
       result = {}
-      first = true
       loop do
         @inline_scanner.read_next
-        break if first && @inline_scanner.peek == '}'
+        break if result.empty? && @inline_scanner.peek == '}'
 
-        first = false
         key = parse_key
         value = parse_any
         result[key] = value
