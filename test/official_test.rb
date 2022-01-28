@@ -17,7 +17,7 @@ class OfficialTest < Minitest::Test
       if exp.nil?
         assert_nil act
       else
-        assert_equal(exp, act)
+        assert_equal exp, act
       end
     end
   end
@@ -29,9 +29,9 @@ class OfficialTest < Minitest::Test
       begin
         NestedText.load_file(caze[:load][:in][:path], strict: true)
       rescue ERRORS::ParseError => e
-        assert_equal(exp['lineno'], e.lineno, 'lineno is wrong')
-        assert_equal(exp['colno'], e.colno, 'colno is wrong')
-        assert_equal(exp['message'], e.message_raw, 'message is wrong')
+        assert_equal exp['lineno'], e.lineno, 'lineno is wrong'
+        assert_equal exp['colno'], e.colno, 'colno is wrong'
+        assert_equal exp['message'], e.message_raw, 'message is wrong'
       rescue StandardError => e
         raise "Unexpected exception #{e.class.name} with message:\n" \
               "#{e.message}\n, but expected one with with message:\n" \
@@ -46,7 +46,7 @@ class OfficialTest < Minitest::Test
     define_method("test_dump_success_#{caze.name}") do
       act = NestedText.dump(caze[:dump][:in][:data], strict: true)
       exp = caze[:dump][:out][:data].sub(/[\n\r]+$/, '')
-      assert_equal(exp, act)
+      assert_equal exp, act
     end
   end
 
@@ -57,8 +57,8 @@ class OfficialTest < Minitest::Test
       begin
         NestedText.dump(caze[:dump][:in][:data], strict: true)
       rescue ERRORS::DumpError => e
-        assert_equal(exp['culprit'], e.culprit, 'culprit is wrong')
-        assert_equal(exp['message'], e.message, 'message is wrong')
+        assert_equal exp['culprit'], e.culprit, 'culprit is wrong'
+        assert_equal exp['message'], e.message, 'message is wrong'
       rescue StandardError => e
         raise "Unexpected exception #{e.class.name} with message:\n" \
               "#{e.message}\n, but expected one with with message:\n" \
