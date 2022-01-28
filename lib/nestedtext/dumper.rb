@@ -144,14 +144,18 @@ module NestedText
       indent(rep, depth)
     end
 
+    def prefix_lines(lines, depth, multiline)
+      lines = lines.map { |line| Dumper.add_prefix('>', line) } if multiline || depth.zero?
+      lines << '>' if lines.empty? && (depth.zero? || multiline)
+      lines
+    end
+
     def dump_string(string, depth: 0, force_multiline: false)
       lines = string.normalize_line_endings.lines
       lines << '' if !lines.empty? && lines.last[-1] == "\n"
       multiline = lines.length > 1 || force_multiline
 
-      lines = lines.map { |line| Dumper.add_prefix('>', line) } if multiline || depth.zero?
-
-      lines << '>' if lines.empty? && (depth.zero? || multiline)
+      lines = prefix_lines(lines, depth, multiline)
 
       rep = lines.join.chomp
       multiline ? indent(rep, depth) : rep
