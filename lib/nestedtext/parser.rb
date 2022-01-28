@@ -98,22 +98,29 @@ module NestedText
     end
 
     def deserialize_custom_class(hash, first_line)
-      # Custom class decoding.
-      if !@strict && hash.length == 2 && hash.key?(CUSTOM_CLASS_KEY)
-        class_name = hash[CUSTOM_CLASS_KEY]
-        begin
-          clazz = class_name == 'nil' ? NilClass : Object.const_get(class_name, false)
-        rescue NameError
-          raise Errors::ParseCustomClassNotFoundError.new(first_line, class_name)
-        end
-        unless clazz.respond_to? :nt_create
-          raise Errors::ParseCustomClassNoCreateMethodError.new(first_line, class_name)
-        end
+      return hash unless !@strict && hash.length == 2 && hash.key?(CUSTOM_CLASS_KEY)
 
-        clazz.nt_create(hash['data'])
-      else
-        hash
+      class_name = hash[CUSTOM_CLASS_KEY]
+      begin
+        clazz = class_name == 'nil' ? NilClass : Object.const_get(class_name, false)
+      rescue NameError
+        raise Errors::ParseCustomClassNotFoundError.new(first_line, class_name)
       end
+      raise Errors::ParseCustomClassNoCreateMethodError.new(first_line, class_name) unless clazz.respond_to? :nt_create
+
+      clazz.nt_create(hash['data'])
+    end
+
+    def parse_dict_item_key_value(indentation, line)
+      key = line.attribs['key']
+      value = line.attribs['value']
+      if value.nil?
+        value = ''
+        if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
+          value = parse_any(@line_scanner.peek.indentation)
+        end
+      end
+      [key, value]
     end
 
     def parse_key_item(indentation, line)
@@ -154,15 +161,8 @@ module NestedText
         key = nil
         value = nil
         if line.tag == :dict_item
-          key = line.attribs['key']
-          value = line.attribs['value']
-          if value.nil?
-            value = ''
-            if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
-              value = parse_any(@line_scanner.peek.indentation)
-            end
-          end
-        else # :key_item
+          key, value = parse_dict_item_key_value(indentation, line)
+        else
           key, value = parse_key_item(indentation, line)
         end
         raise Errors::ParseDictDuplicateKeyError, line if result.key? key
