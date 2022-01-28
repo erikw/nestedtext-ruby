@@ -44,9 +44,9 @@ module NestedText
       if last_char == '}' && key.empty?
         raise Errors::ParseInlineMissingValueError.new(@inline_scanner.line, @inline_scanner.pos - 1)
       end
-      unless last_char == ':'
-        raise Errors::ParseInlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
-      end
+      return if last_char == ':'
+
+      raise Errors::ParseInlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
     end
 
     def parse_key
