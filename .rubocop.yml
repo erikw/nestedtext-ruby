@@ -80,7 +80,6 @@ Metrics/AbcSize:
   Enabled: true
   IgnoredMethods:
     - detect_line_tag_and_indentation
-    - parse_string_item
     - parse_dict_item
     - parse
     - dump_string

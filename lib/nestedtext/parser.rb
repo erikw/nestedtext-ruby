@@ -182,12 +182,16 @@ module NestedText
       deserialize_custom_class(result, first_line)
     end
 
+    def assert_string_line(line, indentation)
+      raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
+      raise Errors::ParseLineTypeNotExpectedError.new(line, %i[string_item], line.tag) unless line.tag == :string_item
+    end
+
     def parse_string_item(indentation)
       result = []
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         line = @line_scanner.read_next
-        raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
-        raise Errors::ParseLineTypeNotExpectedError.new(line, %i[string_item], line.tag) unless line.tag == :string_item
+        assert_string_line(line, indentation)
 
         value = line.attribs['value']
         result << value
