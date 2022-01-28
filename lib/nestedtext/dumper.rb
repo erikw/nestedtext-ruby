@@ -137,9 +137,9 @@ module NestedText
     end
 
     def dump_string(obj, depth: 0, force_multiline: false)
-      obj = obj.normalize_line_endings
-      lines = obj.lines
+      lines = obj.normalize_line_endings.lines
       multiline = lines.length > 1 || force_multiline
+
       lines << "\n" if !lines.empty? && lines[-1][-1] == "\n"
       lines.each { |line| Dumper.add_prefix('>', line) } if lines.length > 1 || depth.zero? || multiline
 
