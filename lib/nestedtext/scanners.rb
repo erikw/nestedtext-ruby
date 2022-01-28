@@ -117,7 +117,6 @@ module NestedText
 
     private
 
-    # TODO: this regex must  unit tested.
     PATTERN_DICT_ITEM = /^
              (?<key>[^\s].*?)   # Key must start with a non-whitespace character, and goes until first
               \s*:              # first optional space, or :-separator

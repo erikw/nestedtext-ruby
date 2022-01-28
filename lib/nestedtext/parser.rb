@@ -81,7 +81,7 @@ module NestedText
     def parse_any(indentation)
       return nil if @line_scanner.peek.nil?
 
-      case @line_scanner.peek.tag # TODO: Use Null Pattern instead with a EndOfInput tag?
+      case @line_scanner.peek.tag
       when :list_item
         parse_list_item(indentation)
       when :dict_item, :key_item

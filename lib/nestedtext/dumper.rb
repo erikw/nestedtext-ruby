@@ -130,7 +130,6 @@ module NestedText
 
     def dump_array(array, depth: 0, **kwargs)
       rep = if array.empty?
-              # TODO: replace this special case with simply general inline rendering detection.
               '[]'
             else
               array.each_with_index.map do |e, i|
