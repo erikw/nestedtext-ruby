@@ -110,9 +110,8 @@ module NestedText
       [rep_key, rep_value].join
     end
 
-    # TODO: rename obj to what it is i.e. hash in this case, same for array, string methods.
-    def dump_hash_items(obj, depth, **kwargs)
-      obj.map do |key, value|
+    def dump_hash_items(hash, depth, **kwargs)
+      hash.map do |key, value|
         trace_keys(key) do
           key = convert_key(key)
           if Dumper.multiline_key?(key)
@@ -124,17 +123,17 @@ module NestedText
       end.join("\n")
     end
 
-    def dump_hash(obj, depth: 0, **kwargs)
-      rep = obj.empty? ? '{}' : dump_hash_items(obj, depth, **kwargs)
+    def dump_hash(hash, depth: 0, **kwargs)
+      rep = hash.empty? ? '{}' : dump_hash_items(hash, depth, **kwargs)
       indent(rep, depth)
     end
 
-    def dump_array(obj, depth: 0, **kwargs)
-      rep = if obj.empty?
+    def dump_array(array, depth: 0, **kwargs)
+      rep = if array.empty?
               # TODO: replace this special case with simply general inline rendering detection.
               '[]'
             else
-              obj.each_with_index.map do |e, i|
+              array.each_with_index.map do |e, i|
                 trace_keys(i) do
                   e_rep = dump_any(e, depth: depth + 1, **kwargs)
                   Dumper.add_prefix('-', e_rep)
@@ -145,8 +144,8 @@ module NestedText
       indent(rep, depth)
     end
 
-    def dump_string(obj, depth: 0, force_multiline: false)
-      lines = obj.normalize_line_endings.lines
+    def dump_string(string, depth: 0, force_multiline: false)
+      lines = string.normalize_line_endings.lines
       lines << '' if !lines.empty? && lines.last[-1] == "\n"
       multiline = lines.length > 1 || force_multiline
 
