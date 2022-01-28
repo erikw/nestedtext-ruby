@@ -168,13 +168,17 @@ module NestedText
 
     class ParseCustomClassNotFoundError < ParseError
       def initialize(line, class_name)
-        super(line, line.indentation, "Detected an encode custom class #{class_name} however we can't find it, so it can't be deserialzied.")
+        super(line, line.indentation,
+              "Detected an encode custom class #{class_name} " \
+              "however we can't find it, so it can't be deserialzied.")
       end
     end
 
     class ParseCustomClassNoCreateMethodError < ParseError
       def initialize(line, class_name)
-        super(line, line.indentation, "Detected an encode custom class #{class_name} but it does not have a #nt_create method, so it can't be deserialzied.")
+        super(line, line.indentation,
+              "Detected an encode custom class #{class_name} "\
+              "but it does not have a #nt_create method, so it can't be deserialzied.")
       end
     end
 
@@ -232,7 +236,8 @@ module NestedText
 
     class UnsupportedTopLevelTypeError < InternalError
       def initialize(type_class)
-        super("The given top level type #{type_class&.name} is unsupported. Chose between #{TOP_LEVEL_TYPES.join(', ')}.")
+        super("The given top level type #{type_class&.name} is unsupported." \
+              "Chose between #{TOP_LEVEL_TYPES.join(', ')}.")
       end
     end
 
@@ -252,7 +257,8 @@ module NestedText
 
     class DumpBadIOError < InternalError
       def initialize(io)
-        super("When giving the io argument, it must be of type IO (respond to #write, #fsync). Given: #{io.class.name}")
+        super('When giving the io argument, it must be of type IO (respond to #write, #fsync).' \
+              " Given: #{io.class.name}")
       end
     end
 
