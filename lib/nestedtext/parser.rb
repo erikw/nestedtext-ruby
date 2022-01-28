@@ -152,11 +152,11 @@ module NestedText
         rescue NameError
           raise Errors::ParseCustomClassNotFoundError.new(first_line, class_name)
         end
-        if clazz.respond_to? :nt_create
-          result = clazz.nt_create(result['data'])
-        else
+        unless clazz.respond_to? :nt_create
           raise Errors::ParseCustomClassNoCreateMethodError.new(first_line, class_name)
         end
+
+        result = clazz.nt_create(result['data'])
       end
 
       result
