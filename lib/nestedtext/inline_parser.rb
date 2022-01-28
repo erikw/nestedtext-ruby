@@ -5,7 +5,7 @@ require 'nestedtext/scanners'
 
 module NestedText
   # A LL(1) recursive descent parser for inline NT types.
-  class InlineParser
+  class InlineParser # rubocop:disable Metrics/ClassLength
     def initialize(line)
       @inline_scanner = InlineScanner.new(line)
     end
