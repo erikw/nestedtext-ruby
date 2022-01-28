@@ -33,7 +33,7 @@ class DecodeStringTopAnyTest < NTTest
   end
 end
 
-class DecodeStringTopAnyDictTest < NTTest
+class DecodeStringTopAnyDictTest < NTTest # rubocop:disable Metrics/ClassLength
   def test_dict_single_entry
     nts = 'a: b'
     exp = { 'a' => 'b' }
@@ -310,7 +310,7 @@ class DecodeStringTopAnyDictTest < NTTest
   end
 end
 
-class DecodeStringTopAnyListTest < NTTest
+class DecodeStringTopAnyListTest < NTTest # rubocop:disable Metrics/ClassLength
   def test_list_empty
     nts = <<~NT
       -
