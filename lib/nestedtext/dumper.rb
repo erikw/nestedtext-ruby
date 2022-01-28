@@ -5,7 +5,7 @@ module NestedText
   using NestedText.const_get(:CoreExtInternal)
 
   # Dumping with recursive DFS traversal of the object references.
-  class Dumper
+  class Dumper # rubocop:disable Metrics/ClassLength
     def initialize(indentation, strict)
       @indentation = indentation
       @strict = strict
