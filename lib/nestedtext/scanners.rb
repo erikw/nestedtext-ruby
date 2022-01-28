@@ -127,9 +127,13 @@ module NestedText
               )?
               $/x
 
-    def detect_line_tag_and_indentation
+    def fast_forward_indentation
       @indentation += 1 while @indentation < @content.length && @content[@indentation] == ' '
       @content = @content[@indentation..]
+    end
+
+    def detect_line_tag_and_indentation
+      fast_forward_indentation
 
       if @content.length.zero?
         self.tag = :blank
