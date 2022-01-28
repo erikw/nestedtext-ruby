@@ -17,7 +17,7 @@ task ci: %i[test yard]
 require "rubocop/rake_task"
 RuboCop::RakeTask.new(:rubocop) do |t|
   # See https://docs.rubocop.org/rubocop/usage/basic_usage.html
-  t.options = ["--display-cop-names", "--parallel"]
+  t.options = ["--parallel", "--display-cop-names", "--display-style-guide"]
 end
 
 Rake::TestTask.new do |t|
