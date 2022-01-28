@@ -888,13 +888,13 @@ class DecodeFileTest < NTTest
   FIXTURE_PATH = 'test/fixtures'
 
   def test_load_file_hash_dict_nested
-    ntf = FIXTURE_PATH + '/1.nt'
+    ntf = "#{FIXTURE_PATH}/1.nt"
     exp = { 'one' => { 'two' => '3' } }
     assert_equal(exp, NestedText.load_file(ntf, top_class: Hash))
   end
 
   def test_load_file_nested_multiple
-    ntf = FIXTURE_PATH + '/2.nt'
+    ntf = "#{FIXTURE_PATH}/2.nt"
     exp = { 'a' => { 'b' => '1' }, 'c' => '2', 'd' => { 'e' => '3' }, 'f' => '' }
     assert_equal(exp, NestedText.load_file(ntf, top_class: Hash))
   end
