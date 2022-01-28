@@ -139,14 +139,15 @@ module NestedText
     def dump_string(obj, depth: 0, force_multiline: false)
       obj = obj.normalize_line_endings
       lines = obj.lines
+      multiline = lines.length > 1 || force_multiline
       lines << "\n" if !lines.empty? && lines[-1][-1] == "\n"
-      lines.each { |line| Dumper.add_prefix('>', line) } if lines.length > 1 || depth.zero? || force_multiline
+      lines.each { |line| Dumper.add_prefix('>', line) } if lines.length > 1 || depth.zero? || multiline
 
       # Case of empty input string. No space after '>'
-      lines << '>' if lines.empty? && (depth.zero? || force_multiline)
+      lines << '>' if lines.empty? && (depth.zero? || multiline)
 
       rep = lines.join.chomp
-      indent(rep) if depth.positive? && (rep.include?("\n") || force_multiline)
+      indent(rep) if depth.positive? && (rep.include?("\n") || multiline)
       rep
     end
 
