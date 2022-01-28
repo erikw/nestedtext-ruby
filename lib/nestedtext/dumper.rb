@@ -94,29 +94,38 @@ module NestedText
       end
     end
 
-    def dump_hash(obj, depth: 0, **kwargs)
-      rep = if obj.empty?
-              '{}'
-            else
-              obj.map do |key, value|
-                trace_keys(key) do
-                  key = convert_key(key)
+    def dump_hash_key_multiline(key, value, depth, **kwargs)
+      key_lines = key.empty? ? [''] : key.lines
+      key_lines << '' if key_lines[-1][-1] =~ /\n|\r/
+      rep_key = key_lines.map { |line| Dumper.add_prefix(':', line) }.join
+      force_multiline = value.is_a? String
+      rep_value = dump_any(value, depth: depth + 1, force_multiline:, **kwargs)
+      [rep_key, rep_value].join
+    end
 
-                  if Dumper.multiline_key?(key)
-                    key_lines = key.empty? ? [''] : key.lines
-                    key_lines << '' if key_lines[-1][-1] =~ /\n|\r/
-                    rep_key = key_lines.map { |line| Dumper.add_prefix(':', line) }.join
-                    force_multiline = value.is_a? String
-                    rep_value = dump_any(value, depth: depth + 1, force_multiline:, **kwargs)
-                  else
-                    rep_key = "#{key}:"
-                    rep_value = dump_any(value, depth: depth + 1, **kwargs)
-                    rep_key += ' ' unless rep_value.empty? || rep_value.include?("\n")
-                  end
-                  "#{rep_key}#{rep_value}"
-                end
-              end.join("\n")
-            end
+    def dump_hash_key(key, value, depth, **kwargs)
+      rep_key = "#{key}:"
+      rep_value = dump_any(value, depth: depth + 1, **kwargs)
+      rep_key += ' ' unless rep_value.empty? || rep_value.include?("\n")
+      [rep_key, rep_value].join
+    end
+
+    # TODO: rename obj to what it is i.e. hash in this case, same for array, string methods.
+    def dump_hash_items(obj, depth, **kwargs)
+      obj.map do |key, value|
+        trace_keys(key) do
+          key = convert_key(key)
+          if Dumper.multiline_key?(key)
+            dump_hash_key_multiline(key, value, depth, **kwargs)
+          else
+            dump_hash_key(key, value, depth, **kwargs)
+          end
+        end
+      end.join("\n")
+    end
+
+    def dump_hash(obj, depth: 0, **kwargs)
+      rep = obj.empty? ? '{}' : dump_hash_items(obj, depth, **kwargs)
       indent(rep, depth)
     end
 
