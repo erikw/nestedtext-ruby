@@ -1,4 +1,5 @@
-# TODO: add forzen literal by using string#replace?
+# frozen_string_literal: true
+
 require 'nestedtext/core_ext_internal'
 
 module NestedText
@@ -21,9 +22,9 @@ module NestedText
 
     def self.add_prefix(prefix, target)
       if target.empty? || target[0] == "\n"
-        target.prepend(prefix)
+        "#{prefix}#{target}"
       else
-        target.prepend(prefix, ' ')
+        "#{prefix} #{target}"
       end
     end
 
@@ -135,8 +136,7 @@ module NestedText
             else
               array.each_with_index.map do |e, i|
                 trace_keys(i) do
-                  e_rep = dump_any(e, depth: depth + 1, **kwargs)
-                  Dumper.add_prefix('-', e_rep)
+                  Dumper.add_prefix('-', dump_any(e, depth: depth + 1, **kwargs))
                 end
               end.join("\n")
             end
@@ -149,7 +149,7 @@ module NestedText
       lines << '' if !lines.empty? && lines.last[-1] == "\n"
       multiline = lines.length > 1 || force_multiline
 
-      lines.each { |line| Dumper.add_prefix('>', line) } if multiline || depth.zero?
+      lines = lines.map { |line| Dumper.add_prefix('>', line) } if multiline || depth.zero?
 
       lines << '>' if lines.empty? && (depth.zero? || multiline)
 
