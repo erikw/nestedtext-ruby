@@ -10,14 +10,16 @@ AllCops:
   Include:
   - lib/**/*.rb
   - test/**/*.rb
-
-# Reference: https://github.com/rubocop/rubocop-rake/blob/master/config/default.yml
-Rake:
-  Enabled: true
+  Exclude:
+  - script/*
 
 inherit_mode:
   merge:
     - Exclude  # Merge my AllCops.Exclude with default exludes from https://github.com/rubocop/rubocop/blob/master/config/default.yml
+
+# Reference: https://github.com/rubocop/rubocop-rake/blob/master/config/default.yml
+Rake:
+  Enabled: true
 
 # Standard Cops
 Gemspec/DateAssignment:

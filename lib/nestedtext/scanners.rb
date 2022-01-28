@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "nestedtext/errors_internal"
+require 'nestedtext/errors_internal'
 
 module NestedText
   class LineScanner
@@ -112,7 +112,7 @@ module NestedText
     end
 
     def to_s
-      "[##{@lineno}] #{" " * @indentation}#{@content}"
+      "[##{@lineno}] #{' ' * @indentation}#{@content}"
     end
 
     private
@@ -128,30 +128,30 @@ module NestedText
               $/x
 
     def detect_line_tag_and_indentation
-      @indentation += 1 while @indentation < @content.length && @content[@indentation] == " "
+      @indentation += 1 while @indentation < @content.length && @content[@indentation] == ' '
       @content = @content[@indentation..]
 
       if @content.length.zero?
         self.tag = :blank
-      elsif @content[0] == "#"
+      elsif @content[0] == '#'
         self.tag = :comment
       elsif @content =~ /^:(?: |$)/
         self.tag = :key_item
-        @attribs["key"] = @content[2..] || ""
+        @attribs['key'] = @content[2..] || ''
       elsif @content =~ /^-(?: |$)/
         self.tag = :list_item
-        @attribs["value"] = @content[2..]
+        @attribs['value'] = @content[2..]
       elsif @content =~ /^>(?: |$)/
         self.tag = :string_item
-        @attribs["value"] = @content[2..] || ""
-      elsif @content[0] == "{"
+        @attribs['value'] = @content[2..] || ''
+      elsif @content[0] == '{'
         self.tag = :inline_dict
-      elsif @content[0] == "["
+      elsif @content[0] == '['
         self.tag = :inline_list
       elsif @content =~ PATTERN_DICT_ITEM
         self.tag = :dict_item
-        @attribs["key"] = Regexp.last_match(:key)
-        @attribs["value"] = Regexp.last_match(:value)
+        @attribs['key'] = Regexp.last_match(:key)
+        @attribs['value'] = Regexp.last_match(:value)
       else
         # Don't raise error here, as this line might not have been consumed yet,
         # thus could hide an error that we detect when parsing the previous line.

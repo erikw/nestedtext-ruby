@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "test_helper"
-require "stringio"
+require 'test_helper'
+require 'stringio'
 
 class CoreExtTest < NTTest
   def test_to_nt_array
-    obj = ["an item here"]
+    obj = ['an item here']
     exp = <<~NT.chomp
       - an item here
     NT
@@ -13,7 +13,7 @@ class CoreExtTest < NTTest
   end
 
   def test_to_nt_hash
-    obj = { "key" => "value" }
+    obj = { 'key' => 'value' }
     exp = <<~NT.chomp
       key: value
     NT

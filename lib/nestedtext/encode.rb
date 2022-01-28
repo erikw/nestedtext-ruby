@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "nestedtext/dumper"
-require "nestedtext/errors_internal"
+require 'nestedtext/dumper'
+require 'nestedtext/errors_internal'
 
 module NestedText
   # Encode a Ruby object to a NestedText string.
@@ -15,7 +15,7 @@ module NestedText
   # @raise [NestedText::Error] if anything went wrong.
   # @raise Whatever the `io` can raise, if supplied.
   def self.dump(obj, io: nil, indentation: 4, strict: false)
-    raise Errors::DumpBadIOError, io unless io.nil? || io.respond_to?(:write) && io.respond_to?(:fsync)
+    raise Errors::DumpBadIOError, io unless io.nil? || (io.respond_to?(:write) && io.respond_to?(:fsync))
 
     dumper = Dumper.new(indentation, strict)
     result = dumper.dump obj
@@ -41,7 +41,7 @@ module NestedText
   def self.dump_file(obj, filename, **kwargs)
     raise Errors::DumpFileBadPathError, filename unless filename.is_a? String
 
-    File.open(filename, mode = "wt") do |file|
+    File.open(filename, mode = 'wt') do |file|
       dump(obj, io: file, **kwargs)
     end
   end

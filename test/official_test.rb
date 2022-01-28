@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require 'test_helper'
 
-require_relative "official_tests/api/nestedtext_official_tests"
+require_relative 'official_tests/api/nestedtext_official_tests'
 
 # Override - Separate command name from internal tests, so that SimpleCov can distinguish and merge the total coverage.
-SimpleCov.command_name "test:official"
+SimpleCov.command_name 'test:official'
 
 class OfficialTest < Minitest::Test
   cases = NestedTextOfficialTests.load_test_cases
@@ -29,13 +29,13 @@ class OfficialTest < Minitest::Test
       begin
         NestedText.load_file(caze[:load][:in][:path], strict: true)
       rescue ERRORS::ParseError => e
-        assert_equal(exp["lineno"], e.lineno, msg = "lineno is wrong")
-        assert_equal(exp["colno"], e.colno, msg = "colno is wrong")
-        assert_equal(exp["message"], e.message_raw, msg = "message is wrong")
+        assert_equal(exp['lineno'], e.lineno, msg = 'lineno is wrong')
+        assert_equal(exp['colno'], e.colno, msg = 'colno is wrong')
+        assert_equal(exp['message'], e.message_raw, msg = 'message is wrong')
       rescue Exception => e
-        raise "Unexpected exception #{e.class.name} with message:\n#{e.message}\n, but expected one with with message:\n#{exp["message"]}\nBacktrace:\n#{e.backtrace.join("\n")}"
+        raise "Unexpected exception #{e.class.name} with message:\n#{e.message}\n, but expected one with with message:\n#{exp['message']}\nBacktrace:\n#{e.backtrace.join("\n")}"
       else
-        raise "No exception raised, but expected one with with message:\n#{exp["message"]}"
+        raise "No exception raised, but expected one with with message:\n#{exp['message']}"
       end
     end
   end
@@ -43,7 +43,7 @@ class OfficialTest < Minitest::Test
   NestedTextOfficialTests.select_dump_success(cases).each do |caze|
     define_method("test_dump_success_#{caze.name}") do
       act = NestedText.dump(caze[:dump][:in][:data], strict: true)
-      exp = caze[:dump][:out][:data].sub(/[\n\r]+$/, "")
+      exp = caze[:dump][:out][:data].sub(/[\n\r]+$/, '')
       assert_equal(exp, act)
     end
   end
@@ -55,12 +55,12 @@ class OfficialTest < Minitest::Test
       begin
         NestedText.dump(caze[:dump][:in][:data], strict: true)
       rescue ERRORS::DumpError => e
-        assert_equal(exp["culprit"], e.culprit, msg = "culprit is wrong")
-        assert_equal(exp["message"], e.message, msg = "message is wrong")
+        assert_equal(exp['culprit'], e.culprit, msg = 'culprit is wrong')
+        assert_equal(exp['message'], e.message, msg = 'message is wrong')
       rescue Exception => e
-        raise "Unexpected exception #{e.class.name} with message:\n#{e.message}\n, but expected one with with message:\n#{exp["message"]}\nBacktrace:\n#{e.backtrace.join("\n")}"
+        raise "Unexpected exception #{e.class.name} with message:\n#{e.message}\n, but expected one with with message:\n#{exp['message']}\nBacktrace:\n#{e.backtrace.join("\n")}"
       else
-        raise "No exception raised, but expected one with with message:\n#{exp["message"]}"
+        raise "No exception raised, but expected one with with message:\n#{exp['message']}"
       end
     end
   end

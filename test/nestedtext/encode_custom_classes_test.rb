@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require 'test_helper'
 
 module CustomTestClasses
   class Inner
@@ -100,7 +100,7 @@ module CustomTestClasses
 
   class NotNTEncodable
     def to_s
-      "but it has an to_s method that will be called to represent the object"
+      'but it has an to_s method that will be called to represent the object'
     end
   end
 end
@@ -120,7 +120,7 @@ class EncodeCustomClassTest < NTTest
   end
 
   def test_custom_class_nested
-    outer = CustomTestClasses::Outer.new("a", "b", CustomTestClasses::Inner.new("c"))
+    outer = CustomTestClasses::Outer.new('a', 'b', CustomTestClasses::Inner.new('c'))
     obj = [outer]
     exp = <<~NT.chomp
       -
@@ -140,7 +140,7 @@ class EncodeCustomClassTest < NTTest
   end
 
   def test_custom_class_nested_indented
-    obj = CustomTestClasses::Outer.new("a", "b", CustomTestClasses::Inner.new("c"))
+    obj = CustomTestClasses::Outer.new('a', 'b', CustomTestClasses::Inner.new('c'))
     exp = <<~NT.chomp
       __nestedtext_class__: CustomTestClasses::Outer
       data:
@@ -158,7 +158,7 @@ class EncodeCustomClassTest < NTTest
   end
 
   def test_custom_class_method_to_nt
-    obj = CustomTestClasses::Inner.new("a")
+    obj = CustomTestClasses::Inner.new('a')
     exp = <<~NT.chomp
       __nestedtext_class__: CustomTestClasses::Inner
       data: a
@@ -194,12 +194,12 @@ class EncodeCustomClassTest < NTTest
 
   def test_custom_class_not_encodeable
     obj = CustomTestClasses::NotNTEncodable.new
-    exp = "> but it has an to_s method that will be called to represent the object"
+    exp = '> but it has an to_s method that will be called to represent the object'
     assert_equal exp, NestedText.dump(obj)
   end
 
   def test_custom_class_strict_true
-    obj = CustomTestClasses::Inner.new("c")
+    obj = CustomTestClasses::Inner.new('c')
     assert_raises(ERRORS::DumpUnsupportedTypeError) do
       NestedText.dump(obj, strict: true)
     end

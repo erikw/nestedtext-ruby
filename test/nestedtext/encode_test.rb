@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require 'test_helper'
 
-require "stringio"
+require 'stringio'
 
 # TODO: style is different from decode_test.rb: here uses "assert_equal a, b" but with spaces in other. Use this style.
 class EncodeTest < NTTest
   def test_nil_strict
-    assert_equal "", NestedText.dump(nil, strict: true)
+    assert_equal '', NestedText.dump(nil, strict: true)
   end
 
   def test_cyclic_references_no_cycle
@@ -27,7 +27,7 @@ class EncodeTest < NTTest
 
   def test_cyclic_references_longer
     a = []
-    b = ["i1", [a]]
+    b = ['i1', [a]]
     a << b
     assert_raises(ERRORS::DumpCyclicReferencesDetectedError) do
       NestedText.dump(a)
@@ -37,23 +37,23 @@ end
 
 class EncodeArrayTest < NTTest
   def test_array_empty
-    assert_equal "[]", NestedText.dump([])
+    assert_equal '[]', NestedText.dump([])
   end
 
   def test_array_nil
-    assert_equal "-", NestedText.dump([nil], strict: true)
+    assert_equal '-', NestedText.dump([nil], strict: true)
   end
 
   def test_array_empty_string
-    assert_equal "-", NestedText.dump([""])
+    assert_equal '-', NestedText.dump([''])
   end
 
   def test_array_whitespace_string
-    assert_equal "-  ", NestedText.dump([" "])
+    assert_equal '-  ', NestedText.dump([' '])
   end
 
   def test_array_one
-    obj = ["an item here"]
+    obj = ['an item here']
     exp = <<~NT.chomp
       - an item here
     NT
@@ -70,7 +70,7 @@ class EncodeArrayTest < NTTest
   end
 
   def test_array_multiple_nil
-    obj = [nil, "a", nil]
+    obj = [nil, 'a', nil]
     exp = <<~NT.chomp
       -
       - a
@@ -80,7 +80,7 @@ class EncodeArrayTest < NTTest
   end
 
   def test_array_nested_array_first
-    obj = [%w[a b], "c"]
+    obj = [%w[a b], 'c']
     exp = <<~NT.chomp
       -
           - a
@@ -91,7 +91,7 @@ class EncodeArrayTest < NTTest
   end
 
   def test_array_nested_array_last
-    obj = ["a", %w[b c]]
+    obj = ['a', %w[b c]]
     exp = <<~NT.chomp
       - a
       -
@@ -102,7 +102,7 @@ class EncodeArrayTest < NTTest
   end
 
   def test_array_nested_array_middle
-    obj = ["a", %w[b c], "d"]
+    obj = ['a', %w[b c], 'd']
     exp = <<~NT.chomp
       - a
       -
@@ -114,7 +114,7 @@ class EncodeArrayTest < NTTest
   end
 
   def test_array_with_single_hash
-    obj = [{ "key" => "value" }]
+    obj = [{ 'key' => 'value' }]
     exp = <<~NT.chomp
       -
           key: value
@@ -124,9 +124,9 @@ class EncodeArrayTest < NTTest
 
   def test_array_with_multiple_hash
     obj = [
-      { "key1" => "value1" },
-      { "key2\nmultiline" => "value2" },
-      { "key3" => "value3\nmultiline" }
+      { 'key1' => 'value1' },
+      { "key2\nmultiline" => 'value2' },
+      { 'key3' => "value3\nmultiline" }
     ]
     exp = <<~NT.chomp
       -
@@ -162,11 +162,11 @@ end
 
 class EncodeHashTest < NTTest
   def test_hash_empty
-    assert_equal "{}", NestedText.dump({})
+    assert_equal '{}', NestedText.dump({})
   end
 
   def test_hash_single_nil_key
-    obj = { nil => "value" }
+    obj = { nil => 'value' }
     exp = <<~NT.chomp
       :
           > value
@@ -175,7 +175,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_single_nil_value
-    obj = { "key" => nil }
+    obj = { 'key' => nil }
     exp = <<~NT.chomp
       key:
     NT
@@ -183,7 +183,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_single_empty_value
-    obj = { "key" => "" }
+    obj = { 'key' => '' }
     exp = <<~NT.chomp
       key:
     NT
@@ -191,15 +191,15 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_single_whitespace_value
-    obj = { "key" => " " }
+    obj = { 'key' => ' ' }
     exp = <<~NT.chomp
-      key:#{"  "}
+      key:#{'  '}
     NT
     assert_equal exp, NestedText.dump(obj)
   end
 
   def test_hash_single_empty_key
-    obj = { "" => "value" }
+    obj = { '' => 'value' }
     exp = <<~NT.chomp
       :
           > value
@@ -208,7 +208,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_single_empty_key_and_value
-    obj = { "" => "" }
+    obj = { '' => '' }
     exp = <<~NT.chomp
       :
           >
@@ -217,16 +217,16 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_single_whitespace_key_and_value
-    obj = { " " => " " }
+    obj = { ' ' => ' ' }
     exp = <<~NT.chomp
-      :#{"  "}
-          >#{"  "}
+      :#{'  '}
+          >#{'  '}
     NT
     assert_equal exp, NestedText.dump(obj)
   end
 
   def test_hash_single_item
-    obj = { "key" => "value" }
+    obj = { 'key' => 'value' }
     exp = <<~NT.chomp
       key: value
     NT
@@ -234,7 +234,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_multiline_key
-    obj = { "two line\n key" => "value" }
+    obj = { "two line\n key" => 'value' }
     exp = <<~NT.chomp
       : two line
       :  key
@@ -244,7 +244,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_multiline_key_lf_start
-    obj = { "\nkey" => "value" }
+    obj = { "\nkey" => 'value' }
     exp = <<~NT.chomp
       :
       : key
@@ -254,7 +254,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_multiline_key_lf_end
-    obj = { "key\n" => "value" }
+    obj = { "key\n" => 'value' }
     exp = <<~NT.chomp
       : key
       :
@@ -264,7 +264,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_multiline_key_lf_end_double
-    obj = { "key\n\n" => "value" }
+    obj = { "key\n\n" => 'value' }
     exp = <<~NT.chomp
       : key
       :
@@ -275,7 +275,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_multiline_key_empty_value
-    obj = { "k1\nk2" => "" }
+    obj = { "k1\nk2" => '' }
     exp = <<~NT.chomp
       : k1
       : k2
@@ -285,23 +285,23 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_multiline_key_whitespace_value
-    obj = { "k1\nk2" => " " }
+    obj = { "k1\nk2" => ' ' }
     exp = <<~NT.chomp
       : k1
       : k2
-          >#{"  "}
+          >#{'  '}
     NT
     assert_equal exp, NestedText.dump(obj)
   end
 
   def test_hash_multiline_key_many_lines
-    obj = { "\na \n b\n\tc\n " => "value" }
+    obj = { "\na \n b\n\tc\n " => 'value' }
     exp = <<~NT.chomp
       :
-      : a#{" "}
+      : a#{' '}
       :  b
       : \tc
-      :#{"  "}
+      :#{'  '}
           > value
     NT
     assert_equal exp, NestedText.dump(obj)
@@ -326,7 +326,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_nested
-    obj = { "key1" => { "key2" => "value" } }
+    obj = { 'key1' => { 'key2' => 'value' } }
     exp = <<~NT.chomp
       key1:
           key2: value
@@ -335,7 +335,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_nested_multiline_value
-    obj = { "key1" => { "key2" => "value\nhere" } }
+    obj = { 'key1' => { 'key2' => "value\nhere" } }
     exp = <<~NT.chomp
       key1:
           key2:
@@ -359,7 +359,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_nested_empty_key
-    obj = { "key" => { "" => "value" } }
+    obj = { 'key' => { '' => 'value' } }
     exp = <<~NT.chomp
       key:
           :
@@ -369,7 +369,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_nested_empty_and_value
-    obj = { "key" => { "" => "" } }
+    obj = { 'key' => { '' => '' } }
     exp = <<~NT.chomp
       key:
           :
@@ -379,27 +379,27 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_nested_whitespace_key
-    obj = { "key" => { " " => "value" } }
+    obj = { 'key' => { ' ' => 'value' } }
     exp = <<~NT.chomp
       key:
-          :#{"  "}
+          :#{'  '}
               > value
     NT
     assert_equal exp, NestedText.dump(obj)
   end
 
   def test_hash_nested_whitespace_key_and_value
-    obj = { "key" => { " " => " " } }
+    obj = { 'key' => { ' ' => ' ' } }
     exp = <<~NT.chomp
       key:
-          :#{"  "}
-              >#{"  "}
+          :#{'  '}
+              >#{'  '}
     NT
     assert_equal exp, NestedText.dump(obj)
   end
 
   def test_hash_array_value
-    obj = { "key" => %w[i1 i2] }
+    obj = { 'key' => %w[i1 i2] }
     exp = <<~NT.chomp
       key:
           - i1
@@ -409,7 +409,7 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_key_tailing_colon_empty_value
-    obj = { "key:" => "" }
+    obj = { 'key:' => '' }
     exp = <<~NT.chomp
       key::
     NT
@@ -418,9 +418,9 @@ class EncodeHashTest < NTTest
 
   def test_hash_key_line_endings
     obj = {
-      "key\r\n1" => "cr/lf",
-      "key\r2" => "cr",
-      "key\n3" => "lf"
+      "key\r\n1" => 'cr/lf',
+      "key\r2" => 'cr',
+      "key\n3" => 'lf'
     }
     exp = <<~NT.chomp
       : key
@@ -474,17 +474,17 @@ class EncodeHashTest < NTTest
 
   def test_hash_multiline_key_all_cases
     obj = {
-      "" => "empty key",
-      "key\nline" => "linefeed",
-      " " => "whitespace key",
-      " key" => "leading whitespace",
-      "[a, b]" => "looks like inline list",
-      "{a: b}" => "looks like inline dict",
-      ": key" => "looks like multiline key",
-      "key1: key2" => "looks like multiline key",
-      "#key" => "looks like comment",
-      "- key" => "looks like list item",
-      "> key" => "looks like multiline string"
+      '' => 'empty key',
+      "key\nline" => 'linefeed',
+      ' ' => 'whitespace key',
+      ' key' => 'leading whitespace',
+      '[a, b]' => 'looks like inline list',
+      '{a: b}' => 'looks like inline dict',
+      ': key' => 'looks like multiline key',
+      'key1: key2' => 'looks like multiline key',
+      '#key' => 'looks like comment',
+      '- key' => 'looks like list item',
+      '> key' => 'looks like multiline string'
     }
     exp = <<~NT.chomp
       :
@@ -492,7 +492,7 @@ class EncodeHashTest < NTTest
       : key
       : line
           > linefeed
-      :#{"  "}
+      :#{'  '}
           > whitespace key
       :  key
           > leading whitespace
@@ -515,14 +515,14 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_symbol_key_strict
-    obj = { key: "value" }
+    obj = { key: 'value' }
     assert_raises(ERRORS::DumpHashKeyStrictStringError) do
       NestedText.dump(obj, strict: true)
     end
   end
 
   def test_hash_symbol_key_non_strict
-    obj = { key: "value" }
+    obj = { key: 'value' }
     exp = <<~NT.chomp
       key: value
     NT
@@ -530,14 +530,14 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_symbol_value_strict
-    obj = { "key" => :value }
+    obj = { 'key' => :value }
     assert_raises(ERRORS::DumpUnsupportedTypeError) do
       NestedText.dump(obj, strict: true)
     end
   end
 
   def test_hash_symbol_value_non_strict
-    obj = { "key" => :value }
+    obj = { 'key' => :value }
     exp = <<~NT.chomp
       key: value
     NT
@@ -545,14 +545,14 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_int_value_strict
-    obj = { "key" => 1 }
+    obj = { 'key' => 1 }
     assert_raises(ERRORS::DumpUnsupportedTypeError) do
       NestedText.dump(obj, strict: true)
     end
   end
 
   def test_hash_int_value_non_strict
-    obj = { "key" => 1 }
+    obj = { 'key' => 1 }
     exp = <<~NT.chomp
       key: 1
     NT
@@ -560,14 +560,14 @@ class EncodeHashTest < NTTest
   end
 
   def test_hash_key_int_strict
-    obj = { 1 => "value" }
+    obj = { 1 => 'value' }
     assert_raises(ERRORS::DumpHashKeyStrictStringError) do
       NestedText.dump(obj, strict: true)
     end
   end
 
   def test_hash_key_int_non_strict
-    obj = { 1 => "value" }
+    obj = { 1 => 'value' }
     exp = <<~NT.chomp
       1: value
     NT
@@ -577,11 +577,11 @@ end
 
 class EncodeStringTest < NTTest
   def test_string_empty
-    assert_equal ">", NestedText.dump("")
+    assert_equal '>', NestedText.dump('')
   end
 
   def test_string_whitespace
-    assert_equal ">  ", NestedText.dump(" ")
+    assert_equal '>  ', NestedText.dump(' ')
   end
 
   def test_string_simple
@@ -633,7 +633,7 @@ class EncodeStringTest < NTTest
       > multi-line
       > with trailing line
       > \t
-      >#{"  "}
+      >#{'  '}
       >
       >
     NT
@@ -702,7 +702,7 @@ end
 
 class EncodeToIO < NTTest
   def setup
-    @file = Tempfile.new("nestedtext_test")
+    @file = Tempfile.new('nestedtext_test')
   end
 
   def file_content
@@ -739,13 +739,13 @@ class EncodeToIO < NTTest
 
   def test_io_dump_invalid_io_array
     assert_raises(ERRORS::DumpBadIOError) do
-      NestedText.dump("dummy", io: [])
+      NestedText.dump('dummy', io: [])
     end
   end
 
   def test_io_dump_invalid_path_nil
     assert_raises(ERRORS::DumpFileBadPathError) do
-      NestedText.dump_file("dummy", nil)
+      NestedText.dump_file('dummy', nil)
     end
   end
 end

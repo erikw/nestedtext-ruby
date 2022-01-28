@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "test_helper"
-require "nestedtext/core_ext_internal"
+require 'test_helper'
+require 'nestedtext/core_ext_internal'
 
 class CoreExtInternalTest < NTTest
   using NestedText.const_get(:CoreExtInternal)

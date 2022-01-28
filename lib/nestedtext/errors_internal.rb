@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "word_wrap"
-require "word_wrap/core_ext"
+require 'word_wrap'
+require 'word_wrap/core_ext'
 
-require "nestedtext/constants"
-require "nestedtext/error"
+require 'nestedtext/constants'
+require 'nestedtext/error'
 
 module NestedText
   module Errors
@@ -31,19 +31,19 @@ module NestedText
         colno_disp = @colno + 1
         prefix = "\nParse ParseError (line #{lineno_disp}, column #{colno_disp}): "
 
-        last_lines = ""
+        last_lines = ''
         # From one line to another, we can at most have 1 digits length difference.
         digits = lineno_disp.to_s.length
         unless line.prev.nil?
-          lline_indent = " " * line.prev.indentation
+          lline_indent = ' ' * line.prev.indentation
           prev_lineno_disp = line.prev.lineno + 1
           last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(digits)}│#{lline_indent}#{line.prev.content}"
         end
-        line_indent = " " * line.indentation
+        line_indent = ' ' * line.indentation
         last_lines += "\n\t#{lineno_disp}│#{line_indent}#{line.content}"
 
         marker_indent = colno_disp + digits # +1 for the "|"
-        marker = "\n\t#{" " * marker_indent}^"
+        marker = "\n\t#{' ' * marker_indent}^"
 
         prefix + @message_raw + last_lines + marker
       end
@@ -57,19 +57,19 @@ module NestedText
 
     class ParseLineTagNotDetectedError < ParseError
       def initialize(line)
-        super(line, line.indentation, "unrecognized line.")
+        super(line, line.indentation, 'unrecognized line.')
       end
     end
 
     class ParseLineTypeExpectedListItemError < ParseError
       def initialize(line)
-        super(line, line.indentation, "expected list item.")
+        super(line, line.indentation, 'expected list item.')
       end
     end
 
     class ParseMultilineKeyNoValueError < ParseError
       def initialize(line)
-        super(line, line.indentation, "multiline key requires a value.")
+        super(line, line.indentation, 'multiline key requires a value.')
       end
     end
 
@@ -87,7 +87,7 @@ module NestedText
 
     class ParseInlineMissingValueError < ParseError
       def initialize(line, colno)
-        super(line, line.indentation + colno, "expected value.")
+        super(line, line.indentation + colno, 'expected value.')
       end
     end
 
@@ -99,13 +99,13 @@ module NestedText
 
     class ParseInlineNoClosingDelimiterError < ParseError
       def initialize(line, colno)
-        super(line, line.indentation + colno, "line ended without closing delimiter.")
+        super(line, line.indentation + colno, 'line ended without closing delimiter.')
       end
     end
 
     class ParseInlineExtraCharactersAfterDelimiterError < ParseError
       def initialize(line, colno, extra_chars)
-        character_str = extra_chars.length > 1 ? "characters" : "character"
+        character_str = extra_chars.length > 1 ? 'characters' : 'character'
         super(line, line.indentation + colno, "extra #{character_str} after closing delimiter: ‘#{extra_chars}’.")
       end
     end
@@ -114,17 +114,17 @@ module NestedText
       def initialize(line, ind_exp)
         prev_line = line.prev
         if prev_line.nil? && ind_exp.zero?
-          message = "top-level content must start in column 1."
+          message = 'top-level content must start in column 1.'
         elsif !prev_line.nil? &&
-              prev_line.attribs.key?("value") &&
+              prev_line.attribs.key?('value') &&
               prev_line.indentation < line.indentation &&
               %i[dict_item list_item].member?(prev_line.tag)
-          message = "invalid indentation."
+          message = 'invalid indentation.'
         elsif !prev_line.nil? && line.indentation < prev_line.indentation
           # Can't use ind_exp here, because it's a difference if the previous line was further indented. See test_load_error_dict_10
-          message = "invalid indentation, partial dedent."
+          message = 'invalid indentation, partial dedent.'
         else
-          message = "invalid indentation."
+          message = 'invalid indentation.'
         end
         # Need to wrap like official tests. #wrap always add an extra \n we need to chop off.
         message_wrapped = message.wrap(70).chop
@@ -134,25 +134,25 @@ module NestedText
 
     class ParseLineTypeNotExpectedError < ParseError
       def initialize(line, type_exps, type_act)
-        super(line, line.indentation, "The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(", ")}] here.")
+        super(line, line.indentation, "The current line was detected to be #{type_act}, but we expected to see any of [#{type_exps.join(', ')}] here.")
       end
     end
 
     class ParseLineTypeExpectedDictItemError < ParseError
       def initialize(line)
-        super(line, line.indentation, "expected dictionary item.")
+        super(line, line.indentation, 'expected dictionary item.')
       end
     end
 
     class ParseInvalidIndentationCharError < ParseError
       def initialize(line)
-        printable_char = line.content[0].dump.gsub(/"/, "")
+        printable_char = line.content[0].dump.gsub(/"/, '')
 
         # Looking for non-breaking space is just to be compatible with official tests.
-        explanation = ""
+        explanation = ''
         if printable_char == '\\u00A0'
           printable_char = '\\xa0'
-          explanation = " (NO-BREAK SPACE)"
+          explanation = ' (NO-BREAK SPACE)'
         end
 
         message = "invalid character in indentation: '#{printable_char}'#{explanation}."
@@ -162,7 +162,7 @@ module NestedText
 
     class ParseDictDuplicateKeyError < ParseError
       def initialize(line)
-        super(line, line.indentation, "duplicate key: #{line.attribs["key"]}.")
+        super(line, line.indentation, "duplicate key: #{line.attribs['key']}.")
       end
     end
 
@@ -182,13 +182,13 @@ module NestedText
 
     class AssertionLineScannerIsEmptyError < AssertionError
       def initialize
-        super("There is no more input to consume. You should have checked this with #empty? before calling.")
+        super('There is no more input to consume. You should have checked this with #empty? before calling.')
       end
     end
 
     class AssertionInlineScannerIsEmptyError < AssertionError
       def initialize
-        super("There is no more input to consume. You should have checked this with #empty? before calling.")
+        super('There is no more input to consume. You should have checked this with #empty? before calling.')
       end
     end
 
@@ -206,20 +206,20 @@ module NestedText
     class DumpUnsupportedTypeError < DumpError
       def initialize(obj, culprit)
         # Needed to pass official test.
-        class_name = obj.is_a?(Integer) ? "int" : obj.class.name
+        class_name = obj.is_a?(Integer) ? 'int' : obj.class.name
         super(culprit, "unsupported type (#{class_name}).")
       end
     end
 
     class DumpCyclicReferencesDetectedError < DumpError
       def initialize(culprit)
-        super(culprit, "cyclic reference found: cannot be dumped.")
+        super(culprit, 'cyclic reference found: cannot be dumped.')
       end
     end
 
     class DumpHashKeyStrictStringError < DumpError
       def initialize(obj)
-        super(obj, "keys must be strings.")
+        super(obj, 'keys must be strings.')
       end
     end
 
@@ -232,13 +232,13 @@ module NestedText
 
     class UnsupportedTopLevelTypeError < InternalError
       def initialize(type_class)
-        super("The given top level type #{type_class&.name} is unsupported. Chose between #{TOP_LEVEL_TYPES.join(", ")}.")
+        super("The given top level type #{type_class&.name} is unsupported. Chose between #{TOP_LEVEL_TYPES.join(', ')}.")
       end
     end
 
     class WrongInputTypeError < InternalError
       def initialize(class_exps, class_act)
-        super("The given input type #{class_act.class.name} is unsupported. Expected to be of types #{class_exps.map(&:name).join(", ")}")
+        super("The given input type #{class_act.class.name} is unsupported. Expected to be of types #{class_exps.map(&:name).join(', ')}")
       end
     end
 

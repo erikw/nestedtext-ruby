@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "nestedtext/encode_helpers"
+require 'nestedtext/encode_helpers'
 
 # Extension of Ruby core types with the NestedText::ToNTMixin.
 #
@@ -26,5 +26,5 @@ class NilClass
   def self.nt_create(_data) = nil
 
   # Adds support for encoding and decoding nil.
-  def encode_nt_with() = ""
+  def encode_nt_with() = ''
 end

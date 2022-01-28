@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "nestedtext/dumper"
+require 'nestedtext/dumper'
 
 module NestedText
   # A mixin for Custom Classes to get the to_nt shortcut.
