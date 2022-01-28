@@ -76,8 +76,6 @@ Naming/BlockForwarding:
   Enabled: true
 Metrics/ClassLength:
   Enabled: true
-  IgnoredClasses:
-    - EncodeHashTest
 Metrics/MethodLength:
   Enabled: true
   Max: 15

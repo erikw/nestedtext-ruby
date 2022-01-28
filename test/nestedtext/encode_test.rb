@@ -160,7 +160,7 @@ class EncodeArrayTest < NTTest
   end
 end
 
-class EncodeHashTest < NTTest
+class EncodeHashTest < NTTest  # rubocop:disable Metrics/ClassLength
   def test_hash_empty
     assert_equal '{}', NestedText.dump({})
   end
