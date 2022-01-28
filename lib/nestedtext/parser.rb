@@ -245,11 +245,11 @@ module NestedText
 
         if last_char != ']'
           if result[-1] == ''
-            raise Errors::ParseInlineMissingValueError.new(@inline_scanner.line, @inline_scanner.pos - 1)
-          else
-            raise Errors::ParseInlineListSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1,
-                                                         last_char)
+            raise Errors::ParseInlineMissingValueError.new(@inline_scanner.line,
+                                                           @inline_scanner.pos - 1)
           end
+
+          raise Errors::ParseInlineListSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
         end
       else # Inline string
         inline_string = []
