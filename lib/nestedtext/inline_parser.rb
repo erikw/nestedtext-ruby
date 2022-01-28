@@ -11,7 +11,7 @@ module NestedText
     end
 
     def parse
-      result = parse_inline
+      result = parse_any
       unless @inline_scanner.empty?
         raise Errors::ParseInlineExtraCharactersAfterDelimiterError.new(@inline_scanner.line, @inline_scanner.pos,
                                                                         @inline_scanner.remaining)
@@ -19,7 +19,7 @@ module NestedText
       result
     end
 
-    def parse_inline_key
+    def parse_key
       key = []
       until @inline_scanner.empty? || [':', '{', '}', '[', ']', ','].include?(@inline_scanner.peek)
         key << @inline_scanner.read_next
@@ -40,7 +40,7 @@ module NestedText
       key.join.strip
     end
 
-    def parse_inline
+    def parse_any
       return nil if @inline_scanner.peek.nil?
 
       result = nil
@@ -55,8 +55,8 @@ module NestedText
           break if first && @inline_scanner.peek == '}'
 
           first = false
-          key = parse_inline_key
-          value = parse_inline
+          key = parse_key
+          value = parse_any
           result[key] = value
           break unless @inline_scanner.peek == ','
         end
@@ -78,7 +78,7 @@ module NestedText
           break if first && @inline_scanner.peek == ']'
 
           first = false
-          result << parse_inline
+          result << parse_any
           break unless @inline_scanner.peek == ','
         end
         if @inline_scanner.empty?
