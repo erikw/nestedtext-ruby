@@ -157,6 +157,19 @@ class EncodeArrayTest < NTTest # rubocop:disable Metrics/ClassLength
     NT
     assert_equal exp, NestedText.dump(obj)
   end
+
+  def test_encode_non_standard_float_strict
+    obj = [1.99]
+    assert_raises(ERRORS::DumpUnsupportedTypeError) do
+      NestedText.dump(obj, strict: true)
+    end
+  end
+
+  def test_encode_non_standard_float_non_strict
+    obj = [1.99]
+    exp = '- 1.99'
+    assert_equal exp, NestedText.dump(obj)
+  end
 end
 
 class EncodeHashTest < NTTest  # rubocop:disable Metrics/ClassLength
