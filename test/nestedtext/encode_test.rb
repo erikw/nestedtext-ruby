@@ -35,7 +35,7 @@ class EncodeTest < NTTest
   end
 end
 
-class EncodeArrayTest < NTTest
+class EncodeArrayTest < NTTest # rubocop:disable Metrics/ClassLength
   def test_array_empty
     assert_equal '[]', NestedText.dump([])
   end
