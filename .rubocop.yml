@@ -76,6 +76,8 @@ Naming/BlockForwarding:
   Enabled: true
 Metrics/MethodLength:
   Max: 15
+  IgnoredMethods:
+    - test_invalid_line_tag
 Security/IoMethods:
   Enabled: true
 Style/ArgumentsForwarding:
