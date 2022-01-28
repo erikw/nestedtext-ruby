@@ -532,7 +532,7 @@ class DecodeStringTopAnyMultilineStringTest < NTTest
   end
 end
 
-class DecodeStringTopAnyInlineDictTest < NTTest
+class DecodeStringTopAnyInlineDictTest < NTTest # rubocop:disable Metrics/ClassLength
   def test_inline_dict_empty
     assert_equal({}, NestedText.load('{}'))
   end
