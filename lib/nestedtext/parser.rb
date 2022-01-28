@@ -159,15 +159,19 @@ module NestedText
       [key, value]
     end
 
+    def assert_dict_item_line(line, indentation)
+      Errors.raise_unrecognized_line(line) if line.tag == :unrecognized
+      raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
+      raise Errors::ParseLineTypeExpectedDictItemError, line unless %i[dict_item key_item].include? line.tag
+    end
+
     def parse_dict_item(indentation)
       result = {}
       first_line = nil
       while !@line_scanner.peek.nil? && @line_scanner.peek.indentation >= indentation
         line = @line_scanner.read_next
         first_line = line if first_line.nil?
-        Errors.raise_unrecognized_line(line) if line.tag == :unrecognized
-        raise Errors::ParseInvalidIndentationError.new(line, indentation) if line.indentation != indentation
-        raise Errors::ParseLineTypeExpectedDictItemError, line unless %i[dict_item key_item].include? line.tag
+        assert_dict_item_line(line, indentation)
 
         key, value = if line.tag == :dict_item
                        parse_dict_item_kv(indentation, line)
