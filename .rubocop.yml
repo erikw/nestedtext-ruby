@@ -74,6 +74,10 @@ Lint/UselessRuby2Keywords:
   Enabled: true
 Naming/BlockForwarding:
   Enabled: true
+Metrics/AbcSize:
+  Enabled: true
+  IgnoredMethods:
+    - detect_line_tag_and_indentation
 Metrics/ClassLength:
   Enabled: true
 Metrics/CyclomaticComplexity:
