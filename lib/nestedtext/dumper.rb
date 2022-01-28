@@ -57,7 +57,7 @@ module NestedText
       return target unless depth.positive?
 
       indentstr = ' ' * @indentation
-      "\n" + target.lines.map { |line| indentstr + line }.join
+      "\n#{target.lines.map { |line| indentstr + line }.join}"
     end
 
     def trace_cycles(obj)
