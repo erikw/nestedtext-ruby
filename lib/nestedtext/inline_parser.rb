@@ -39,6 +39,16 @@ module NestedText
       result
     end
 
+    def parse_key_last_char(key)
+      last_char = @inline_scanner.read_next
+      if last_char == '}' && key.empty?
+        raise Errors::ParseInlineMissingValueError.new(@inline_scanner.line, @inline_scanner.pos - 1)
+      end
+      unless last_char == ':'
+        raise Errors::ParseInlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
+      end
+    end
+
     def parse_key
       key = []
       until @inline_scanner.empty? || [':', '{', '}', '[', ']', ','].include?(@inline_scanner.peek)
@@ -48,15 +58,7 @@ module NestedText
         raise Errors::ParseInlineNoClosingDelimiterError.new(@inline_scanner.line,
                                                              @inline_scanner.pos)
       end
-
-      last_char = @inline_scanner.read_next
-      if last_char == '}' && key.empty?
-        raise Errors::ParseInlineMissingValueError.new(@inline_scanner.line, @inline_scanner.pos - 1)
-      end
-      unless last_char == ':'
-        raise Errors::ParseInlineDictKeySyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
-      end
-
+      parse_key_last_char(key)
       key.join.strip
     end
 
