@@ -74,7 +74,12 @@ Lint/UselessRuby2Keywords:
   Enabled: true
 Naming/BlockForwarding:
   Enabled: true
+Metrics/ClassLength:
+  Enabled: true
+  IgnoredClasses:
+    - EncodeHashTest
 Metrics/MethodLength:
+  Enabled: true
   Max: 15
   IgnoredMethods:
     - test_invalid_line_tag
