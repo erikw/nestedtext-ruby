@@ -87,6 +87,7 @@ Metrics/CyclomaticComplexity:
   Enabled: true
   IgnoredMethods:
     - detect_line_tag_and_indentation
+    - parse_dict_item
 Metrics/MethodLength:
   Enabled: true
   Max: 15
@@ -98,10 +99,12 @@ Metrics/MethodLength:
     - test_custom_class_linked_list
     - test_custom_class_nested
     - detect_line_tag_and_indentation
+    - parse_dict_item
 Metrics/PerceivedComplexity:
   Enabled: true
   IgnoredMethods:
     - detect_line_tag_and_indentation
+    - parse_dict_item
 Security/IoMethods:
   Enabled: true
 Style/ArgumentsForwarding:
