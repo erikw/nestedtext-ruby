@@ -85,6 +85,19 @@ module NestedText
       result
     end
 
+    def parse_list_last_char(result)
+      last_char = @inline_scanner.read_next
+
+      if last_char != ']'
+        if result[-1] == ''
+          raise Errors::ParseInlineMissingValueError.new(@inline_scanner.line,
+                                                         @inline_scanner.pos - 1)
+        end
+
+        raise Errors::ParseInlineListSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
+      end
+    end
+
     def parse_list
       result = []
       first = true # TODO: can be replaced by checking result.empty? below?
@@ -100,16 +113,7 @@ module NestedText
         raise Errors::ParseInlineNoClosingDelimiterError.new(@inline_scanner.line,
                                                              @inline_scanner.pos)
       end
-      last_char = @inline_scanner.read_next
-
-      if last_char != ']'
-        if result[-1] == ''
-          raise Errors::ParseInlineMissingValueError.new(@inline_scanner.line,
-                                                         @inline_scanner.pos - 1)
-        end
-
-        raise Errors::ParseInlineListSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
-      end
+      parse_list_last_char(result)
       result
     end
 
