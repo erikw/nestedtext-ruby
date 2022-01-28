@@ -30,7 +30,7 @@ jobs:
       uses: paambaati/codeclimate-action@v3.0.0
       if: |
         inputs.code_coverage &&
-        matrix.os == env.OS_MAIN + "-latest" &&
+        matrix.os == env.OS_MAIN &&
         matrix.ruby-version == env.RUBY_MAIN_VER &&
         github.event_name != 'pull_request'
       env:
