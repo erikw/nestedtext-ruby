@@ -9,8 +9,7 @@ require 'yard'
 task default: %i[test rubocop yard]
 
 desc 'Build steps to be used by ci runner'
-# TODO: enable rubocop after fixing issues.
-task ci: %i[test yard]
+task ci: %i[test rubocop yard]
 
 Rake::TestTask.new do |t|
   t.name = 'test_internal'
