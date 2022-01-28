@@ -83,6 +83,7 @@ Metrics/MethodLength:
     - test_invalid_line_tag
     - test_hash_multiline_key_all_cases
     - test_hash_key_line_endings
+    - test_array_with_multiple_hash
 Security/IoMethods:
   Enabled: true
 Style/ArgumentsForwarding:
