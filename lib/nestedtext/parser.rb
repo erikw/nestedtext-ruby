@@ -75,14 +75,13 @@ module NestedText
     end
 
     def parse_list_item_value(indentation, value)
-      if value.nil?
-        if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
-          value = parse_any(@line_scanner.peek.indentation)
-        elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :list_item
-          value = ''
-        end
+      return value unless value.nil?
+
+      if !@line_scanner.peek.nil? && @line_scanner.peek.indentation > indentation
+        parse_any(@line_scanner.peek.indentation)
+      elsif @line_scanner.peek.nil? || @line_scanner.peek.tag == :list_item
+        ''
       end
-      value
     end
 
     def parse_list_item_line(indentation, line)
