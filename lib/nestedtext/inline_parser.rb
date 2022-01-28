@@ -102,12 +102,10 @@ module NestedText
 
     def parse_list
       result = []
-      first = true # TODO: can be replaced by checking result.empty? below?
       loop do
         @inline_scanner.read_next
-        break if first && @inline_scanner.peek == ']'
+        break if result.empty? && @inline_scanner.peek == ']'
 
-        first = false
         result << parse_any
         break unless @inline_scanner.peek == ','
       end
