@@ -22,7 +22,6 @@ module NestedText
     def parse_any
       return nil if @inline_scanner.peek.nil?
 
-      result = nil
       # Trim leading whitespaces
       @inline_scanner.read_next while !@inline_scanner.empty? && [' ', "\t"].include?(@inline_scanner.peek)
       result = case @inline_scanner.peek
