@@ -52,7 +52,7 @@ module NestedText
           last_lines += "\n\t#{prev_lineno_disp.to_s.rjust(lineno_digits)}│#{lline_indent}#{line.prev.content}"
         end
         line_indent = ' ' * line.indentation
-        last_lines += "\n\t#{lineno_disp}│#{line_indent}#{line.content}"
+        last_lines + "\n\t#{lineno_disp}│#{line_indent}#{line.content}"
       end
 
       def pretty_marker
