@@ -7,7 +7,8 @@ module NestedText
   # Encode a Ruby object to a NestedText string.
   #
   # @param obj [Object] The object to encode to NestedText.
-  # @param io [IO] Additionally write the output to this IO object. The caller is responsible for that the IO is closed after the call to this method.
+  # @param io [IO] Additionally write the output to this IO object.
+  #                The caller is responsible for that the IO is closed after the call to this method.
   # @param indentation [Integer] The indentation of nested levels to use.
   # @param strict [Boolean] If strict mode should be used.
   #
