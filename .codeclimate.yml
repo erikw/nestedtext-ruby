@@ -8,9 +8,6 @@ plugins:
     channel: rubocop-1-18-3
   fixme:
     enabled: true
-    checks:
-      TODO:
-        enabled: false
   eslint:
     enabled: true
   duplication:
