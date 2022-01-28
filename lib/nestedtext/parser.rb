@@ -9,11 +9,13 @@ require 'nestedtext/inline_parser'
 
 module NestedText
   # A LL(1) recursive descent parser for NT.
-  class Parser
+  class Parser # rubocop:disable Metrics/ClassLength
     def self.assert_valid_top_level_type(top_class)
-      unless !top_class.nil? && top_class.is_a?(Class) && TOP_LEVEL_TYPES.map(&:object_id).include?(top_class.object_id)
-        raise Errors::UnsupportedTopLevelTypeError, top_class
+      if !top_class.nil? && top_class.is_a?(Class) && TOP_LEVEL_TYPES.map(&:object_id).include?(top_class.object_id)
+        return
       end
+
+      raise Errors::UnsupportedTopLevelTypeError, top_class
     end
 
     def initialize(io, top_class, strict: false)
