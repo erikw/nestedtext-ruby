@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module NestedText
   # Top level error to rescue on.
   #

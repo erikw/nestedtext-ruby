@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "stringio"
 module NestedText
   TOP_LEVEL_TYPES = [Object, Hash, Array, String]

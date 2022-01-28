@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "nestedtext/encode_helpers"
 
 # Extension of Ruby core types with the NestedText::ToNTMixin.
