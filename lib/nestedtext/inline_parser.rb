@@ -91,15 +91,15 @@ module NestedText
 
     def parse_list_last_char(result)
       last_char = @inline_scanner.read_next
-
       return unless last_char != ']'
 
       if result[-1] == ''
         raise Errors::ParseInlineMissingValueError.new(@inline_scanner.line,
                                                        @inline_scanner.pos - 1)
+      else
+        raise Errors::ParseInlineListSyntaxError.new(@inline_scanner.line,
+                                                     @inline_scanner.pos - 1, last_char)
       end
-
-      raise Errors::ParseInlineListSyntaxError.new(@inline_scanner.line, @inline_scanner.pos - 1, last_char)
     end
 
     def parse_list
