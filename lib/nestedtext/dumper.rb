@@ -115,7 +115,7 @@ module NestedText
                 end
               end.join("\n")
             end
-      indent(rep) if depth > 0
+      indent(rep) if depth.positive?
       rep
     end
 
@@ -132,7 +132,7 @@ module NestedText
               end.join("\n")
             end
 
-      indent(rep) if depth > 0
+      indent(rep) if depth.positive?
       rep
     end
 
@@ -140,13 +140,13 @@ module NestedText
       obj = obj.normalize_line_endings
       lines = obj.lines
       lines << "\n" if !lines.empty? && lines[-1][-1] == "\n"
-      lines.each { |line| Dumper.add_prefix(">", line) } if lines.length > 1 || depth == 0 || force_multiline
+      lines.each { |line| Dumper.add_prefix(">", line) } if lines.length > 1 || depth.zero? || force_multiline
 
       # Case of empty input string. No space after '>'
-      lines << ">" if lines.empty? && (depth == 0 || force_multiline)
+      lines << ">" if lines.empty? && (depth.zero? || force_multiline)
 
       rep = lines.join.chomp
-      indent(rep) if !rep.empty? && depth > 0 && (rep.include?("\n") || force_multiline)
+      indent(rep) if !rep.empty? && depth.positive? && (rep.include?("\n") || force_multiline)
       rep
     end
 

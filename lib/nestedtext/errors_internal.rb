@@ -43,7 +43,7 @@ module NestedText
         last_lines += "\n\t#{lineno_disp}│#{line_indent}#{line.content}"
 
         marker_indent = colno_disp + digits # +1 for the "|"
-        marker = "\n\t" + " " * marker_indent + "^"
+        marker = "\n\t#{" " * marker_indent}^"
 
         prefix + @message_raw + last_lines + marker
       end
@@ -113,7 +113,7 @@ module NestedText
     class ParseInvalidIndentationError < ParseError
       def initialize(line, ind_exp)
         prev_line = line.prev
-        if prev_line.nil? && ind_exp == 0
+        if prev_line.nil? && ind_exp.zero?
           message = "top-level content must start in column 1."
         elsif !prev_line.nil? &&
               prev_line.attribs.key?("value") &&

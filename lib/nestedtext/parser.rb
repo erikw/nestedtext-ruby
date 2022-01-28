@@ -109,8 +109,8 @@ module NestedText
 
         value = nil
         key = nil
+        key = line.attribs["key"]
         if line.tag == :dict_item
-          key = line.attribs["key"]
           value = line.attribs["value"]
           if value.nil?
             value = ""
@@ -119,10 +119,9 @@ module NestedText
             end
           end
         else # :key_item
-          key = line.attribs["key"]
           while @line_scanner.peek&.tag == :key_item && @line_scanner.peek.indentation == indentation
             line = @line_scanner.read_next
-            key += "\n" + line.attribs["key"]
+            key += "\n#{line.attribs["key"]}"
           end
           exp_types = %i[dict_item key_item list_item string_item]
           if @line_scanner.peek.nil?
@@ -131,7 +130,11 @@ module NestedText
             unless exp_types.member?(@line_scanner.peek.tag)
               raise Errors::ParseLineTypeNotExpectedError.new(line, exp_types, line.tag)
             end
-            raise Errors::ParseMultilineKeyNoValueError, line unless @line_scanner.peek.indentation > indentation
+
+            unless @line_scanner.peek.indentation > indentation
+              raise Errors::ParseMultilineKeyNoValueError,
+                    line
+            end
 
             value = parse_any(@line_scanner.peek.indentation)
           end

@@ -83,7 +83,7 @@ module NestedText
       :inline_dict, # {key1: value1, key2: value2}
       :inline_list, # [value1, value2]
       :unrecognized # could not be determined
-    ]
+    ].freeze
 
     attr_accessor :prev
     attr_reader :tag, :content, :indentation, :attribs, :lineno
@@ -131,7 +131,7 @@ module NestedText
       @indentation += 1 while @indentation < @content.length && @content[@indentation] == " "
       @content = @content[@indentation..]
 
-      if @content.length == 0
+      if @content.length.zero?
         self.tag = :blank
       elsif @content[0] == "#"
         self.tag = :comment
