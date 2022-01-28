@@ -164,7 +164,6 @@ module NestedText
     def detect_line_tag_and_indentation
       fast_forward_indentation
       detect_line_tag
-
     end
   end
   private_constant :Line
