@@ -72,14 +72,14 @@ obj1 = NestedText::load(ntstr)
 obj2 = NestedText::load_file("path/to/data.nt")
 ```
 
-The type of the returned object depends on the top level type in the NestedText data and will be of corresponding native Ruby type. In the example above, `obj1` will be an `Array` and obj2 will be `Hash` if `data.nt` looks like e.g.
+The type of the returned object depends on the top level type in the NestedText data and will be of corresponding native Ruby type. In the example above, `obj1` will be an `Array` and `obj2` will be `Hash` if `data.nt` looks like e.g.
 
 ```
 key1: value1
 key2: value2
 ```
 
-Thus you must know what you're parsing, or test what you decoded.
+Thus you must know what you're parsing, or test what you decoded after.
 
 ### Explicit Top Level Type
 If you already know what you expect to have, you can guarantee that this is what you will get by telling either function what the expected top type is. If not, an error will be raised.
@@ -159,7 +159,7 @@ Ruby | NestedText | Comment
 ---|---|---
 `nil`        | *Custom Class Encoding* | (1.)
 `Symbol`     | `String` |
-Custom Class | *Custom Class Encoding* | If the [Custom Class](#custom-classes-serialization) implements `#encode_nt_with` (2.)
+Custom Class | *Custom Class Encoding* | If the [Custom Class](#custom-classes-serialization) implements `#encode_nt_with`
 Other Class | String | `#to_s` will be called if there is no `#encode_nt_with`
 
 
