@@ -277,7 +277,7 @@ After parsing this file with this NestedText library, the values for all keys wi
 
 
 ```ruby
-# Define schema.
+# Define our schema.
 schema = RSchema.define do
   array(
     hash(
