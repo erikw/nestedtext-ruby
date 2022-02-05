@@ -277,7 +277,7 @@ After parsing this file with this NestedText library, the values for all keys wi
 
 
 ```ruby
-# Define schema for our list of servers.
+# Define schema for our list of servers
 schema = RSchema.define do
   array(
     hash(
@@ -289,7 +289,7 @@ schema = RSchema.define do
   )
 end
 
-# The coercer will automatially convert types.
+# The coercer will automatially convert types
 coercer = RSchema::CoercionWrapper::RACK_PARAMS.wrap(schema)
 
 # Parse config file with NestedText
@@ -300,10 +300,11 @@ result = coercer.validate(data_success)
 
 if result.valid?
   servers = result.value
-  # Now 'servers' is known to be valid and have the types specified in the schema.:w
-  # We can thus use it!
-  stable_servers = severs.select { |server| server.stable }
-  high_port_servers = severs.select { |server| server.port > 1024 }
+  # Now 'servers' is known to be valid and have the types specified in the schema.
+  # Thus, we can use it now!
+  stable_servers = servers.select { |server| server['stable'] }
+  # Not a meaningful sum - just demonstrating that 'port's are integers!
+  port_sum = servers.map { |server| server['port'] }.sum
 else
   puts result.error
 end
