@@ -23,6 +23,8 @@ Provided is support for decoding a NestedText file or string to Ruby data struct
 
 This library is inspired Ruby stdlib modules `JSON` and `YAML` as well as the Python [reference implementation](https://github.com/KenKundert/nestedtext) of NestedText. Parsing is done with a LL(1) recursive descent parser and dumping with a recursive DFS traversal of the object references.
 
+To make this library practically useful, you should pair it with a [schema validator](#schema).
+
 # What is NestedText?
 Citing from the official [introduction](https://nestedtext.org/en/latest/index.html) page:
 > NestedText is a file format for holding structured data to be entered, edited, or viewed by people. It organizes the data into a nested collection of dictionaries, lists, and strings without the need for quoting or escaping. A unique feature of this file format is that it only supports one scalar type: strings.  While the decision to eschew integer, real, date, etc. types may seem counter intuitive, it leads to simpler data files and applications that are more robust.
@@ -245,6 +247,67 @@ Apple.new("granny smith", 12).to_nt
 
 See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.rb) for more real working examples.
 
+# Schema
+The point of NestedText is to not get in to business of supporting ambiguous types. That's why all values are simple strings. Having only simple strings is not useful in practice though. This is why NestedText is intended to be paired with a [Schema Validator](https://nestedtext.org/en/latest/schemas.html)!
+
+A schema validators can
+* assert that the parsed values are like the expected
+* automatically convert them to Ruby class instances like Integer, Float, etc.
+
+The reference implementation in Python [lists](https://nestedtext.org/en/latest/examples.html) a few examples of Python validators. For this Ruby implementation of NestedText, I've successfully paired it with [RSchema](https://github.com/tomdalling/rschema).
+
+## Example
+The full and working example can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test/blob/main/parse_validate.rb).
+
+Let's say that you have a program that should connect to a few servers. The list of servers should be stored in a configuration file. With NestedText, this file could look like:
+```yaml
+-
+  name: global-service
+  ip: 192.167.1.1
+  port: 8080
+-
+  name: aux-service
+  ip: 17.245.14.2
+  port: 67
+  # Unstable server, don't use this
+  stable: false
+```
+
+After parsing this file with this NestedText library, the values for all keys will be string. But for to make practical use of this, we would of course like the values for `port` to be `Integer`, and `stable` should have a value of either `true` or `false`. RSchema can do this conversion for us!
+
+
+```ruby
+# Define schema.
+schema = RSchema.define do
+  array(
+    hash(
+      'name' => _String,
+      'ip' => _String,
+      'port' => _Integer,
+      optional('stable') => boolean
+    )
+  )
+end
+
+# The coercer will automatially convert types.
+coercer = RSchema::CoercionWrapper::RACK_PARAMS.wrap(schema)
+
+# Parse config file with NestedText
+data = NestedText.load_file("conf.nt)
+
+# Validate
+result = coercer.validate(data_success)
+
+if result.valid?
+  servers = result.value
+  # Now 'servers' is known to be valid and have the types specified in the schema.:w
+  # We can thus use it!
+  stable_servers = severs.select { |server| server.stable }
+  high_port_servers = severs.select { |server| server.port > 1024 }
+else
+  puts result.error
+end
+```
 
 # Installation
 1. Add this gem to your ruby project's Gemfile
