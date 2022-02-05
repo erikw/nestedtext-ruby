@@ -1,5 +1,6 @@
 /* (WIP) Extended BNF of NestedText. */
 /* Test at https://bnfplayground.pauliankline.com/ */
+
 <NT> ::= E | <item>
 <item> ::= <stringItem> | <listItem> | <dictItem>
 <indent> ::= " "*
