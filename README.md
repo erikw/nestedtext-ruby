@@ -256,7 +256,7 @@ A schema validators can:
 
 The reference implementation in Python [lists](https://nestedtext.org/en/latest/examples.html) a few examples of Python validators. Here below is an example of how this Ruby implementation of NestedText can be paired it with [RSchema](https://github.com/tomdalling/rschema).
 
-## Example
+## Example with RSchema
 The full and working example can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test/blob/main/parse_validate.rb).
 
 Let's say that you have a program that should connect to a few servers. The list of servers should be stored in a configuration file. With NestedText, this file could look like:
