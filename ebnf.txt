@@ -1,0 +1,10 @@
+/* (WIP) Extended BNF of NestedText. */
+/* Test at https://bnfplayground.pauliankline.com/ */
+<NT> ::= E | <item>
+<item> ::= <stringItem> | <listItem> | <dictItem>
+<indent> ::= " "*
+<alpabeth> ::= [a-z] | [A-Z] | [0-9] | " " | "," | "-" | "@"
+<string> ::= <alpabeth>+
+<stringItem> ::= <indent> (<string> "\n"? | "> " <string> ("\n" <stringItem>)?)
+<listItem> ::= <indent> ("- " <string> "\n"? | "-\n" <item>) ("\n" <listItem>)?
+<dictItem> ::= <indent> <stringItem> (": " <string> "\n"? | ":\n" <item>) ("\n" <dictItem>)?
