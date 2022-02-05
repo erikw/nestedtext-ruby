@@ -303,7 +303,7 @@ if result.valid?
   # Now 'servers' is known to be valid and have the types specified in the schema.
   # Thus, we can use it now!
   stable_servers = servers.select { |server| server['stable'] }
-  # Not a meaningful sum - just demonstrating that 'port's are integers!
+  # Not a meaningful sum - just demonstrating that 'port's are integers and not strings anymore!
   port_sum = servers.map { |server| server['port'] }.sum
 else
   puts result.error
