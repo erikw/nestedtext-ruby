@@ -254,7 +254,7 @@ A schema validators can:
 * assert that the parsed values are like the expected
 * automatically convert them to Ruby class instances like Integer, Float, etc.
 
-The reference implementation in Python [lists](https://nestedtext.org/en/latest/examples.html) a few examples of Python validators. For this Ruby implementation of NestedText, I've successfully paired it with [RSchema](https://github.com/tomdalling/rschema).
+The reference implementation in Python [lists](https://nestedtext.org/en/latest/examples.html) a few examples of Python validators. Here below is an example of how this Ruby implementation of NestedText can be paired it with [RSchema](https://github.com/tomdalling/rschema).
 
 ## Example
 The full and working example can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test/blob/main/parse_validate.rb).
