@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-require_relative 'official_tests/api/nestedtext_official_tests'
+require_relative 'official_tests_api'
 
 # Override - Separate command name from internal tests, so that SimpleCov can distinguish and merge the total coverage.
 SimpleCov.command_name 'test:official'
