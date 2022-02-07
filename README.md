@@ -293,7 +293,7 @@ end
 coercer = RSchema::CoercionWrapper::RACK_PARAMS.wrap(schema)
 
 # Parse config file with NestedText
-data = NestedText.load_file("conf.nt)
+data = NestedText.load_file("conf.nt")
 
 # Validate
 result = coercer.validate(data_success)
