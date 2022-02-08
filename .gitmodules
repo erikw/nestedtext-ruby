@@ -1,4 +1,4 @@
 [submodule "test/official_tests"]
 	path = test/official_tests
-	url = git@github.com:erikw/nestedtext_tests.git
-	branch = add_ruby_api
+	url = git@github.com:KenKundert/nestedtext_tests.git
+	branch = master
