@@ -141,7 +141,7 @@ module NestedText
                   else
                     'invalid indentation.'
                   end
-        # Need to wrap like official tests. #wrap always add an extra \n we need to chop off.
+        # Official-tests kludge; Need to wrap like official tests. #wrap always add an extra \n we need to chop off.
         message_wrapped = message.wrap(70).chop
         super(line, ind_exp, message_wrapped)
       end
@@ -164,11 +164,11 @@ module NestedText
     class ParseInvalidIndentationCharError < ParseError
       def initialize(line)
         char = line.content[0]
-        # Official-test kludge; Translate rubys \u00 to python's unicodedata.name \x format.
+        # Official-tests kludge; Translate rubys \u00 to python's unicodedata.name \x format.
         printable_char = char.dump.gsub(/"/, '').gsub(/\\u0*/, '\x').downcase
 
         explanation = ''
-        # Official-test kludge; ASCII chars have printable names too, but they are not used in reference implementation.
+        # Official-tests kludge; ASCII chars have printable names too, but they are not used in reference implementation.
         explanation = " (#{UnicodeUtils.char_name(char)})" unless char.ord < 128
 
         message = "invalid character in indentation: '#{printable_char}'#{explanation}."
@@ -225,7 +225,7 @@ module NestedText
 
     class DumpUnsupportedTypeError < DumpError
       def initialize(obj, culprit)
-        # Official-test kludge; translate to Python names
+        # Official-tests kludge; translate to Python names
         class_name = obj.is_a?(Integer) ? 'int' : obj.class.name
         super(culprit, "unsupported type (#{class_name}).")
       end
