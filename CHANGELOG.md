@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.0] - 2022-02-08
+### Fixed
+- Proper Unicode character name lookup.
+
 ## [4.1.1] - 2022-01-28
 ### Fixed
 - Don't trigger CI when CD will run all tests anyways.
