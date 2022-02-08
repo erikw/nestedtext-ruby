@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'word_wrap'
-require 'word_wrap/core_ext'
+# require 'word_wrap'
+# require 'word_wrap/core_ext'
 require 'unicode_utils'
 
 require 'nestedtext/constants'
@@ -142,8 +142,9 @@ module NestedText
                     'invalid indentation.'
                   end
         # Official-tests kludge; Need to wrap like official tests. #wrap always add an extra \n we need to chop off.
-        message_wrapped = message.wrap(70).chop
-        super(line, ind_exp, message_wrapped)
+        # Seems not be needed anymore
+        # message_wrapped = message.wrap(70).chop
+        super(line, ind_exp, message)
       end
     end
 
@@ -168,7 +169,8 @@ module NestedText
         printable_char = char.dump.gsub(/"/, '').gsub(/\\u0*/, '\x').downcase
 
         explanation = ''
-        # Official-tests kludge; ASCII chars have printable names too, but they are not used in reference implementation.
+        # Official-tests kludge; ASCII chars have printable names too,
+        # but they are not used in reference implementation.
         explanation = " (#{UnicodeUtils.char_name(char)})" unless char.ord < 128
 
         message = "invalid character in indentation: '#{printable_char}'#{explanation}."
