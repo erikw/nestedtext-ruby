@@ -225,7 +225,7 @@ module NestedText
 
     class DumpUnsupportedTypeError < DumpError
       def initialize(obj, culprit)
-        # Needed to pass official test.
+        # Official-test kludge; translate to Python names
         class_name = obj.is_a?(Integer) ? 'int' : obj.class.name
         super(culprit, "unsupported type (#{class_name}).")
       end
