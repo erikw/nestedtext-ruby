@@ -2,6 +2,7 @@
 
 require 'word_wrap'
 require 'word_wrap/core_ext'
+require 'unicode_utils'
 
 require 'nestedtext/constants'
 require 'nestedtext/error'
@@ -162,14 +163,13 @@ module NestedText
 
     class ParseInvalidIndentationCharError < ParseError
       def initialize(line)
-        printable_char = line.content[0].dump.gsub(/"/, '')
+        char = line.content[0]
+        # Official-test kludge; Translate rubys \u00 to python's unicodedata.name \x format.
+        printable_char = char.dump.gsub(/"/, '').gsub(/\\u0*/, '\x').downcase
 
-        # Looking for non-breaking space is just to be compatible with official tests.
         explanation = ''
-        if printable_char == '\\u00A0'
-          printable_char = '\\xa0'
-          explanation = ' (NO-BREAK SPACE)'
-        end
+        # Official-test kludge; ASCII chars have printable names too, but they are not used in reference implementation.
+        explanation = " (#{UnicodeUtils.char_name(char)})" unless char.ord < 128
 
         message = "invalid character in indentation: '#{printable_char}'#{explanation}."
         super(line, line.indentation, message)
