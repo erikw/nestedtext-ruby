@@ -273,7 +273,7 @@ Let's say that you have a program that should connect to a few servers. The list
   stable: false
 ```
 
-After parsing this file with this NestedText library, the values for all keys will be string. But for to make practical use of this, we would of course like the values for `port` to be `Integer`, and `stable` should have a value of either `true` or `false`. RSchema can do this conversion for us!
+After parsing this file with this NestedText library, the values for all keys will be string. But to make practical use of this, we would of course like the values for the `port` keys to be `Integer`, and `stable` should have a value of either `true` or `false`. RSchema can do this conversion for us!
 
 
 ```ruby
