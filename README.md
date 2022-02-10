@@ -296,7 +296,7 @@ coercer = RSchema::CoercionWrapper::RACK_PARAMS.wrap(schema)
 data = NestedText.load_file('conf.nt')
 
 # Validate
-result = coercer.validate(data_success)
+result = coercer.validate(data)
 
 if result.valid?
   servers = result.value
