@@ -259,7 +259,7 @@ The reference implementation in Python [lists](https://nestedtext.org/en/latest/
 ## Example with RSchema
 The full and working example can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test/blob/main/parse_validate.rb).
 
-Let's say that you have a program that should connect to a few servers. The list of servers should be stored in a configuration file. With NestedText, this file could look like:
+Let's say that you have a program that should connect to a few servers. The list of servers should be stored in a configuration file. With NestedText, a `conf.nt` file could look like:
 ```yaml
 -
   name: global-service
