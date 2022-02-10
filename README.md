@@ -251,7 +251,7 @@ See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.r
 The point of NestedText is to not get in to business of supporting ambiguous types. That's why all values are simple strings. Having only simple strings is not useful in practice though. This is why NestedText is intended to be paired with a [Schema Validator](https://nestedtext.org/en/latest/schemas.html)!
 
 A schema validator can:
-* assert that the parsed values are like the expected
+* assert that the parsed values are of the expected types
 * automatically convert them to Ruby class instances like Integer, Float, etc.
 
 The reference implementation in Python [lists](https://nestedtext.org/en/latest/examples.html) a few examples of Python validators. Here below is an example of how this Ruby implementation of NestedText can be paired it with [RSchema](https://github.com/tomdalling/rschema).
