@@ -174,7 +174,7 @@ Other Class | String | `#to_s` will be called if there is no `#encode_nt_with`
 ## Custom Classes Serialization
 This library has support for serialization/deserialization of custom classes as well. This is done by letting the objects tell NestedText what data should be used to represent the object instance with the `#encode_nt_with` method (inspired by `YAML`'s `#encode_with` method). All objects being recursively referenced from a root object being serialized must either implement this method or be one of the core supported NestedText data types from the table above.
 
-A class implementing `#encode_nt_with` is referred to as `Custom Class` in this document.
+A class implementing `#encode_nt_with` is referred to as a `Custom Class` in this document.
 
 ```ruby
 class Apple
