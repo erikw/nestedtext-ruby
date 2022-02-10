@@ -146,7 +146,7 @@ Ruby | [NestedText](https://nestedtext.org/en/latest/basic_syntax.html)
 
 
 ### Strict Mode
-The strict mode determines how classes other than the basic types `String`, `Array` and `Hash` are handled during encoding and decoding. By **default** strict mode is turned **off**.
+The strict mode determines how classes other than the basic types `String`, `Array` and `Hash` are handled during encoding and decoding. By **default** strict mode is **false**.
 
 With `strict: true`
 Ruby | NestedText | Comment
