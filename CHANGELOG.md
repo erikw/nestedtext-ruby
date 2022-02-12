@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.1] - 2022-02-12
+### Fixed
+- Better module documentation.
+
 ## [4.2.0] - 2022-02-08
 ### Fixed
 - Proper Unicode character name lookup.
