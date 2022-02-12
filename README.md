@@ -302,7 +302,7 @@ raise result.error.to_s unless result.valid?
 # Now we have validated data of the right type specified in the schema!
 servers = result.value
 
-# Let's use the values for something in our app...
+# Let's use the values for something in our app
 stable_servers = servers.select { |server| server['stable'] }
 # Not a meaningful sum - just demonstrating that 'port' values are integers and not strings anymore!
 port_sum = servers.map { |server| server['port'] }.sum
