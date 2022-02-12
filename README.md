@@ -297,17 +297,15 @@ data = NestedText.load_file('conf.nt')
 
 # Validate
 result = coercer.validate(data)
+raise result.error.to_s unless result.valid?
 
-if result.valid?
-  servers = result.value
-  # Now 'servers' is known to be valid and have the types specified in the schema.
-  # Thus, we can use it now!
-  stable_servers = servers.select { |server| server['stable'] }
-  # Not a meaningful sum - just demonstrating that 'port's are integers and not strings anymore!
-  port_sum = servers.map { |server| server['port'] }.sum
-else
-  puts result.error
-end
+# Now we have validated data of the right type specified in the schema!
+servers = result.value
+
+# Let's use the values for something in our app...
+stable_servers = servers.select { |server| server['stable'] }
+# Not a meaningful sum - just demonstrating that 'port' values are integers and not strings anymore!
+port_sum = servers.map { |server| server['port'] }.sum
 ```
 
 # Installation
