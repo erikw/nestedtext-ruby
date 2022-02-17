@@ -1,8 +1,6 @@
 --title "NestedText API Documentation"
 --readme README.md
 --embed-mixin NTEncodeMixin
---exclude /server/templates/
---exclude /yard/rubygems/
 --markup markdown
 --markup-provider redcarpet
 lib/nestedtext.rb
