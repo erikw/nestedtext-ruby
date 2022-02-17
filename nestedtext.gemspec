@@ -26,8 +26,8 @@ Gem::Specification.new do |spec|
   }
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    `git ls-files -z`.split("\x0").select do |f|
-      f.match(%r{\A(?:lib/|CHANGELOG.md|CONTRIBUTING.md|LICENSE.txt|README.md|SECURITY.md|nestedtext.gemspec|.yardopts)})
+    `git ls-files -z`.split("\x0").reject do |f|
+      f.match(%r{\A(?:img/|test/|script/|\.github/|\.gitmodules|Rakefile|OSSMETADATA|TODO\.md|\.codeclimate\.yml|\.vimlocal|\.simplecov|\.editorconfig|ebnf.txt|\.gitignore)})
     end
   end
   spec.require_paths = ['lib']
