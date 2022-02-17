@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.4.3] - 2022-02-17
+### Fixed
+- rubydoc.info: try building gem from git-ls | reject instead of select
+
 ## [4.4.2] - 2022-02-17
 ### Fixed
 - rubydoc.info: try includ all of lib/**/*.rb
