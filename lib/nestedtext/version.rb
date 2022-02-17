@@ -2,5 +2,5 @@
 
 module NestedText
   # The version of this library.
-  VERSION = '4.4.3'
+  VERSION = '4.4.4'
 end
