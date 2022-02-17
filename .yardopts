@@ -3,6 +3,14 @@
 --embed-mixin NTEncodeMixin
 --markup markdown
 --markup-provider redcarpet
+--fail-on-warning
+lib/nestedtext.rb
+lib/nestedtext/core_ext.rb
+lib/nestedtext/encode.rb
+lib/nestedtext/decode.rb
+lib/nestedtext/encode_helpers.rb
+lib/nestedtext/error.rb
+lib/nestedtext/version.rb
 -
 CHANGELOG.md
 CONTRIBUTING.md
