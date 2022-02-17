@@ -18,7 +18,7 @@ module NestedText
   def self.load(ntstring, top_class: Object, strict: false)
     raise Errors::WrongInputTypeError.new([String], ntstring) unless ntstring.nil? || ntstring.is_a?(String)
 
-    Parser.new(StringIO.new(ntstring), top_class, strict:).parse
+    Parser.new(StringIO.new(ntstring), top_class, strict: strict).parse
   end
 
   # Decode a NestedText stored in a given file.
@@ -36,7 +36,7 @@ module NestedText
 
     # Open explicitly in text mode to detect \r as line ending.
     File.open(filename, 'rt') do |file|
-      Parser.new(file, top_class, strict:).parse
+      Parser.new(file, top_class, strict: strict).parse
     end
   end
 end

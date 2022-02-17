@@ -84,13 +84,13 @@ module NestedText
     def dump_any(obj, depth: 0, **kwargs)
       trace_cycles(obj) do
         case obj
-        when Hash then dump_hash(obj, depth:, **kwargs)
-        when Array then dump_array(obj, depth:, **kwargs)
-        when String then dump_string(obj, depth:, **kwargs)
+        when Hash then dump_hash(obj, depth: depth, **kwargs)
+        when Array then dump_array(obj, depth: depth, **kwargs)
+        when String then dump_string(obj, depth: depth, **kwargs)
         when nil
-          @strict ? '' : dump_custom_class(nil, depth:, **kwargs)
+          @strict ? '' : dump_custom_class(nil, depth: depth, **kwargs)
         else
-          dump_custom_class(obj, depth:, **kwargs)
+          dump_custom_class(obj, depth: depth, **kwargs)
         end
       end
     end

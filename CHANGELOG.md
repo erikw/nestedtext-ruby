@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.4.6] - 2022-02-17
+### Fixed
+- rubydoc.info: don't force use hash value omission with rubycop. rubydoc.info is not on ruby 3.1 yet.
+
+
 ## [4.4.5] - 2022-02-17
 ### Fixed
 - rubydoc.info: try remove unused module require.

@@ -112,6 +112,10 @@ Style/HashConversion:
   Enabled: true
 Style/HashExcept:
   Enabled: true
+Style/HashSyntax:
+  Enabled: true
+  # Hash Value Omission is a ruby 3.1 feature. rubydocs.info is right now on 3.0.2
+  EnforcedShorthandSyntax: never
 Style/IfWithBooleanLiteralBranches:
   Enabled: true
 Style/InPatternThen:
