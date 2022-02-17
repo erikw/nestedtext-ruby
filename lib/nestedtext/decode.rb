@@ -15,7 +15,6 @@ module NestedText
   # @param strict [Boolean] If strict mode should be used.
   #
   # @return [Object, nil] The parsed object.
-  #
   # @raise [NestedText::Error] if anything went wrong.
   def self.load(ntstring, top_class: Object, strict: false)
     raise Errors::WrongInputTypeError.new([String], ntstring) unless ntstring.nil? || ntstring.is_a?(String)
@@ -31,7 +30,6 @@ module NestedText
   # @param strict [Boolean] If strict mode should be used.
   #
   # @return [Object, nil] The parsed object.
-  #
   # @raise [NestedText::Error] if anything went wrong.
   # @raise [IOError] on issue opening `filename` for reading in text mode.
   def self.load_file(filename, top_class: Object, strict: false)

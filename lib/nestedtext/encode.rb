@@ -28,12 +28,11 @@ module NestedText
   end
 
   # Encode a Ruby object to a NestedText file.
-
+  #
   # Apart from `filename`, this method behaves exactly like dump.
   #
   # @param (see dump)
   # @param filename [String] The file path to write the NestedText result to. The conventional file extension is `.nt`.
-  #
   #
   # @return (see dump)
   # @raise (see dump)
