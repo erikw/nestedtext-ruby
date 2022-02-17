@@ -386,6 +386,11 @@ $ git commit -am "Update CHANGELOG.md" && git push
 $ gem bump --version minor --tag --push --sign
 ```
 
+then watch progress with [gh](https://cli.github.com/)
+```console
+$ gh run watch
+```
+
 
 # Contributing
 Bug reports and pull requests are welcome on GitHub at [erikw/nestedtext-ruby](https://github.com/erikw/nestedtext-ruby).
