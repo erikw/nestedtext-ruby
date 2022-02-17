@@ -3,7 +3,6 @@
 require 'nestedtext/parser'
 require 'nestedtext/errors_internal'
 
-require 'logger'
 require 'stringio'
 
 module NestedText
