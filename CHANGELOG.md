@@ -6,21 +6,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.4.2] - 2022-02-17
+### Fixed
+- rubydoc.info: try includ all of lib/**/*.rb
+
 ## [4.4.1] - 2022-02-17
 ### Fixed
-- Try fix rubydoc.info missing class methods.
+- rubydoc.info: try fix missing class methods.
 
 ## [4.4.0] - 2022-02-17
 ### Fixed
-- rubydoc.info not re-generating for patch versions?
+- rubydoc.info: not re-generating for patch versions?
 
 ## [4.3.1] - 2022-02-17
 ### Fixed
-- Include .yardopts in gem for rubydoc.info
+- rubydoc.info: Include .yardopts in gem
 
 ## [4.3.0] - 2022-02-17
 ### Fixed
-- Try fix rubydoc.info missing class methods.
+- rubydoc.info: try fix missing class methods.
 
 ## [4.2.2] - 2022-02-12
 ### Fixed
