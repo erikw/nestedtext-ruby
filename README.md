@@ -383,7 +383,7 @@ or combined with gem-release:
 ```console
 $ vi CHANGELOG.md
 $ git commit -am "Update CHANGELOG.md" && git push
-$ gem bump --version minor --tag --sign --push
+$ gem bump --version minor --tag --push --sign
 ```
 
 

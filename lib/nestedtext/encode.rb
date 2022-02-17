@@ -37,7 +37,6 @@ module NestedText
   # @return (see dump)
   # @raise (see dump)
   # @raise [IOError] on issues opening the `filename` for writing in text mode.
-  #
   def self.dump_file(obj, filename, **kwargs)
     raise Errors::DumpFileBadPathError, filename unless filename.is_a? String
 
