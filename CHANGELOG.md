@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.4.5] - 2022-02-17
+### Fixed
+- rubydoc.info: try remove unused module require.
+
 ## [4.4.4] - 2022-02-17
 ### Fixed
 - rubydoc.info: revert reject instead of select
