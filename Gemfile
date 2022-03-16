@@ -17,6 +17,7 @@ group :development do
   gem 'guard-bundler', '~> 3.0'
   gem 'guard-minitest', '~> 2.4'
   gem 'guard-rubocop', '~> 1.5'
+  gem 'guard-yard', '~> 2.2'
   gem 'pry-byebug', '~> 3.9'
   gem 'rake', '~> 13.0', require: false
   gem 'redcarpet', '~> 3.5' # To render GitHub flavored Markdown files with yard.
@@ -31,3 +32,5 @@ group :test do
   gem 'rubocop-rake', '~> 0.6', require: false
   gem 'simplecov', '~> 0.21', require: false
 end
+
+gem 'webrick', '~> 1.7', group: :development

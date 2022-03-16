@@ -23,3 +23,8 @@ guard :bundler do
   # Assume files are symlinked from somewhere
   files.each { |file| watch(helper.real_path(file)) }
 end
+
+guard 'yard' do
+  watch(%r{lib\/.+\.rb})
+  watch('README.md')
+end
