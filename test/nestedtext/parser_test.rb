@@ -39,8 +39,8 @@ class ParserTest < NTTest
     scan_mock = Minitest::Mock.new
     def scan_mock.peek
       line_mock = Minitest::Mock.new
-      def line_mock.tag() = :invalid
-      def line_mock.nil?() = false
+      def line_mock.tag = :invalid
+      def line_mock.nil? = false
       line_mock
     end
 

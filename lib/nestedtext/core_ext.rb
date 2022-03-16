@@ -19,5 +19,5 @@ class NilClass
   def self.nt_create(_data) = nil
 
   # Adds support for encoding and decoding nil.
-  def encode_nt_with() = ''
+  def encode_nt_with = ''
 end
