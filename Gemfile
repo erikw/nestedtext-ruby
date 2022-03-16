@@ -11,8 +11,10 @@ gemspec
 # Should rather be here than in the .gemspec
 # Reference: https://github.com/rubygems/bundler/pull/7222
 # However there's an argument for using gemspec too: https://bundler.io/guides/creating_gem.html#testing-our-gem
-group :development, :test do
+group :development do
   gem 'gem-release', '~> 2.0', require: false
+  gem 'guard', '~> 2.18'
+  gem 'guard-minitest', '~> 2.4'
   gem 'pry-byebug', '~> 3.9'
   gem 'rake', '~> 13.0', require: false
   gem 'redcarpet', '~> 3.5' # To render GitHub flavored Markdown files with yard.

@@ -1,0 +1,2 @@
+ directories %w(config lib test ) \
+  .select{|d| Dir.exist?(d) ? d : UI.warning("Directory #{d} does not exist")}
