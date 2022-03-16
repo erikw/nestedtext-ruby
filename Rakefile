@@ -5,7 +5,7 @@ require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'yard'
 
-task default: %i[test rubocop yard]
+task default: :ci
 
 desc 'Build steps to be used by ci runner'
 task ci: %i[test rubocop yard]
