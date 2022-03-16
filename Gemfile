@@ -15,6 +15,7 @@ group :development do
   gem 'gem-release', '~> 2.0', require: false
   gem 'guard', '~> 2.18'
   gem 'guard-minitest', '~> 2.4'
+  gem 'guard-rubocop', '~> 1.5'
   gem 'pry-byebug', '~> 3.9'
   gem 'rake', '~> 13.0', require: false
   gem 'redcarpet', '~> 3.5' # To render GitHub flavored Markdown files with yard.

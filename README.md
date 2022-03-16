@@ -328,7 +328,6 @@ port_sum = servers.map { |server| server['port'] }.sum
 
 
 # Development
-
 1. Clone the repo
    ```console
    $ git clone https://github.com/erikw/nestedtext-ruby.git && cd $(basename "$_" .git)
@@ -339,6 +338,7 @@ port_sum = servers.map { |server| server['port'] }.sum
 1. You can also run `$ script/console` for an interactive prompt that will allow you to experiment.
 1. For local testing, install the gem on local machine with: `$ bundle exec rake install`.
    * or manually with `$ gem build *.gemscpec && gem install *.gem`
+1. Watch changes on file system and execute tests with `$ bundle exec guard`.
 
 
 Extra:
