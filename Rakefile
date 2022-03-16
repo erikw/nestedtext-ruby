@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # Include default tasks like build, release, install etc. See https://github.com/rubygems/rubygems/blob/master/bundler/lib/bundler/gem_helper.rb#L46
-# require "rdoc/task"
 require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'yard'
@@ -63,3 +62,16 @@ task :parse_file do
   cur_dir = File.dirname(__FILE__)
   sh "#{cur_dir}/test/app.rb #{ENV['F']}"
 end
+
+desc 'Watch source files for changes and execute actions'
+task :guard do
+  # Ref: https://github.com/guard/guard/wiki/Use-Guard-programmatically-cookbook
+  # require 'guard'
+  # require 'guard/commander'
+  # Guard.setup
+  # Guard.run_all
+
+  # Unfortuantely it does not work to run programatically, resort to shell.
+  sh 'bundle exec guard --clear'
+end
+task watch: :guard
