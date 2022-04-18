@@ -1,3 +1,5 @@
+# DSL: https://github.com/guard/guard/wiki/Guardfile-DSL---Configuring-Guard
+
 # Disable simplecov as the minimum_coverage failure will overshadow the failed test output in Guard.
 # Ref: https://stackoverflow.com/a/17714286/265508
 guard :minitest, env: { 'NO_COVERAGE' => 'true' } do
