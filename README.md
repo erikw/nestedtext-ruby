@@ -379,7 +379,7 @@ $ git commit -am "Prepare vX.Y.Z" && git push
 $ git tag vX.Y.Z && git push --tags
 ```
 
-or combined with gem-release:
+or **preferred** combined with gem-release:
 ```console
 $ vi CHANGELOG.md
 $ git commit -am "Update CHANGELOG.md" && git push
