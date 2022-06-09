@@ -9,6 +9,7 @@ module NestedText
   # @param obj [Object] The object to encode to NestedText.
   # @param io [IO] Additionally write the output to this IO object.
   #                The caller is responsible for that the IO is closed after the call to this method.
+  #                The file willl end with a newline.
   # @param indentation [Integer] The indentation of nested levels to use.
   # @param strict [Boolean] If strict mode should be used.
   #
@@ -21,7 +22,7 @@ module NestedText
     dumper = Dumper.new(indentation, strict)
     result = dumper.dump obj
     unless io.nil?
-      io.write(result)
+      io.write(result, "\n")
       io.fsync
     end
     dumper.dump obj

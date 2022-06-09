@@ -727,7 +727,7 @@ class EncodeToIO < NTTest
 
     dumped = NestedText.dump_file(obj, @file.path)
     assert_equal exp, dumped
-    assert_equal exp, file_content
+    assert_equal "#{exp}\n", file_content
   end
 
   def test_io_dump_io_param_file
@@ -736,7 +736,7 @@ class EncodeToIO < NTTest
 
     dumped = NestedText.dump(obj, io: @file)
     assert_equal exp, dumped
-    assert_equal exp, file_content
+    assert_equal "#{exp}\n", file_content
   end
 
   def test_io_dump_io_param_stringio
@@ -746,7 +746,7 @@ class EncodeToIO < NTTest
     sio = StringIO.new
     dumped = NestedText.dump(obj, io: sio)
     assert_equal exp, dumped
-    assert_equal exp, sio.string
+    assert_equal "#{exp}\n", sio.string
   end
 
   def test_io_dump_invalid_io_array

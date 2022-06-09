@@ -36,6 +36,6 @@ class CoreExtTest < NTTest
     sio = StringIO.new
     dumped = obj.to_nt(io: sio)
     assert_equal exp, dumped
-    assert_equal exp, sio.string
+    assert_equal "#{exp}\n", sio.string
   end
 end
