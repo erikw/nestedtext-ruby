@@ -376,7 +376,7 @@ Just push a new semver tag and the workflow [cd.yml](.github/workflows/cd.yml) w
 ```console
 $ vi -p lib/nestedtext/version.rb CHANGELOG.md
 $ git commit -am "Prepare vX.Y.Z" && git push
-$ git tag x.y.z && git push --tags
+$ git tag vX.Y.Z && git push --tags
 ```
 
 or combined with gem-release:
