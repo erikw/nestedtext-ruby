@@ -329,8 +329,8 @@ port_sum = servers.map { |server| server['port'] }.sum
 
 # Development
 1. Clone the repo
-   ```console
-   $ git clone https://github.com/erikw/nestedtext-ruby.git && cd $(basename "$_" .git)
+   ```shell
+   git clone https://github.com/erikw/nestedtext-ruby.git && cd $(basename "$_" .git)
    ```
 1. Install a supported ruby version (see .gemspec) with a ruby version manager e.g. [rbenv](https://github.com/rbenv/rbenv), [asdf](http://asdf-vm.com/) or [RVM](https://rvm.io/rvm/install)
 1. run `$ script/setup` or `$ bundle install` to install dependencies
@@ -355,40 +355,40 @@ Instructions for releasing on rubygems.org below. Optionally make a GitHub [rele
 
 ## (manually) Using bundler/gem_tasks rake tasks
 Following instructions from [bundler.io](https://bundler.io/guides/creating_gem.html#releasing-the-gem):
-```console
-$ vi -p lib/nestedtext/version.rb CHANGELOG.md
-$ bundle exec rake build
-$ ver=$(ruby -r ./lib/nestedtext/version.rb -e 'puts NestedText::VERSION')
-$ bundle exec rake release
+```shell
+vi -p lib/nestedtext/version.rb CHANGELOG.md
+bundle exec rake build
+ver=$(ruby -r ./lib/nestedtext/version.rb -e 'puts NestedText::VERSION')
+bundle exec rake release
 ```
 
 ## (semi-manually) Using gem-release gem extension
 Using [gem-release](https://github.com/svenfuchs/gem-release):
-```console
-$ vi CHANGELOG.md && git commit -am "Update CHANGELOG.md" && git push
-$ gem bump --version minor --tag --sign --push --release
+```shell
+vi CHANGELOG.md && git commit -am "Update CHANGELOG.md" && git push
+gem bump --version minor --tag --sign --push --release
 ```
 For `--version`, use `major|minor|patch` as needed.
 
 ## (semi-automatic, preferred) Using GitHub Actions CD
 Just push a new semver tag and the workflow [cd.yml](.github/workflows/cd.yml) will publish a new release at rubygems.org.
 
-```console
-$ vi -p lib/nestedtext/version.rb CHANGELOG.md
-$ git commit -am "Prepare vX.Y.Z" && git push
-$ git tag vX.Y.Z && git push --tags
+```shell
+vi -p lib/nestedtext/version.rb CHANGELOG.md
+git commit -am "Prepare vX.Y.Z" && git push
+git tag vX.Y.Z && git push --tags
 ```
 
 or **preferred** combined with gem-release:
-```console
-$ vi CHANGELOG.md
-$ git commit -am "Update CHANGELOG.md" && git push
-$ gem bump --version minor --tag --push --sign
+```shell
+vi CHANGELOG.md
+git commit -am "Update CHANGELOG.md" && git push
+gem bump --version minor --tag --push --sign
 ```
 
 then watch progress with [gh](https://cli.github.com/)
-```console
-$ gh run watch
+```shell
+gh run watch
 ```
 
 
