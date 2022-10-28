@@ -29,7 +29,7 @@ end
 group :test do
   gem 'minitest-byebug', '~> 0.0.3'
   gem 'minitest-reporters', '~> 1.4', require: false
-  gem 'rubocop', '~> 1.18', require: false
-  gem 'rubocop-rake', '~> 0.6', require: false
+  gem 'rubocop', '~> 1.26.0', require: false
+  gem 'rubocop-rake', '~> 0.6.0', require: false
   gem 'simplecov', '~> 0.21', require: false
 end
