@@ -14,7 +14,9 @@ unless ENV['NO_COVERAGE']
       require 'simplecov_json_formatter'
       SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
     else
-      SimpleCov.formatter SimpleCov::Formatter::HTMLFormatter
+      #SimpleCov.formatter SimpleCov::Formatter::HTMLFormatter
+      require 'simplecov_json_formatter'
+      SimpleCov.formatters = [SimpleCov::Formatter::HTMLFormatter, SimpleCov::Formatter::JSONFormatter ]
     end
   end
 end
