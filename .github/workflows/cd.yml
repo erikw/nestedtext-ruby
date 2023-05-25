@@ -1,4 +1,4 @@
-name: Continuous Deployment   # Well, semi-continuous
+name: Continuous Deployment # Well, semi-continuous
 
 on:
   push:
