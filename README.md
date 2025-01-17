@@ -9,7 +9,7 @@
 [![GitHub Actions: CodeQL Analysis](https://github.com/erikw/nestedtext-ruby/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/erikw/nestedtext-ruby/actions/workflows/codeql-analysis.yml)
 [![Code Climate Maintainability](https://api.codeclimate.com/v1/badges/8409b6cdc3dc62a33f6f/maintainability)](https://codeclimate.com/github/erikw/nestedtext-ruby/maintainability)
 [![Code Climate Test Coverage](https://api.codeclimate.com/v1/badges/8409b6cdc3dc62a33f6f/test_coverage)](https://codeclimate.com/github/erikw/nestedtext-ruby/test_coverage)
-[![SLOC](https://img.shields.io/tokei/lines/github/erikw/nestedtext-ruby?logo=codefactor&logoColor=lightgrey)](#)
+[![SLOC](https://sloc.xyz/github/erikw/nestedtext-ruby)](#)
 [![License](https://img.shields.io/github/license/erikw/nestedtext-ruby?color=informational)](LICENSE.txt)
 [![OSS Lifecycle](https://img.shields.io/osslifecycle/erikw/nestedtext-ruby)](https://github.com/Netflix/osstracker)
 
