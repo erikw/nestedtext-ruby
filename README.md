@@ -1,6 +1,6 @@
 # NestedText Ruby Library [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=NestedText,%20the%20human%20friendly%20data%20format,%20has%20a%20now%20a%20ruby%20library%20for%20easy%20encoding%20and%20decoding&url=https://github.com/erikw/nestedtext-ruby&via=erik_westrup&hashtags=nestedtext,ruby,gem)
 [![Gem Version](https://badge.fury.io/rb/nestedtext.svg)](https://badge.fury.io/rb/nestedtext)
-[![Gem Downloads](https://ruby-gem-downloads-badge.herokuapp.com/nestedtext?color=brightgreen&type=total&label=gem%20downloads)](https://rubygems.org/gems/nestedtext)
+[![Gem Downloads](https://img.shields.io/gem/dt/nestedtext?label=gem%20downloads)](https://rubygems.org/gems/nestedtext)
 [![Documentation](https://img.shields.io/badge/docs-API-informational?logo=readthedocs&logoColor=violet)](https://www.rubydoc.info/gems/nestedtext/NestedText)
 [![Data Format Version Supported](https://img.shields.io/badge/%F0%9F%84%BD%F0%9F%85%83%20Version%20Supported-3.4.0-blueviolet)](https://nestedtext.org/en/v3.3/)
 [![Official Tests](https://img.shields.io/badge/Official%20Tests-Passing-success?logo=cachet)](https://github.com/KenKundert/nestedtext_tests/)
