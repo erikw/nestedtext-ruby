@@ -151,7 +151,7 @@ module NestedText
     class ParseLineTypeNotExpectedError < ParseError
       def initialize(line, type_exps, type_act)
         super(line, line.indentation,
-              "The current line was detected to be #{type_act}, "\
+              "The current line was detected to be #{type_act}, " \
               "but we expected to see any of [#{type_exps.join(', ')}] here.")
       end
     end
@@ -166,7 +166,7 @@ module NestedText
       def initialize(line)
         char = line.content[0]
         # Official-tests kludge; Translate rubys \u00 to python's unicodedata.name \x format.
-        printable_char = char.dump.gsub(/"/, '').gsub(/\\u0*/, '\x').downcase
+        printable_char = char.dump.gsub('"', '').gsub(/\\u0*/, '\x').downcase
 
         explanation = ''
         # Official-tests kludge; ASCII chars have printable names too,
@@ -195,7 +195,7 @@ module NestedText
     class ParseCustomClassNoCreateMethodError < ParseError
       def initialize(line, class_name)
         super(line, line.indentation,
-              "Detected an encode custom class #{class_name} "\
+              "Detected an encode custom class #{class_name} " \
               "but it does not have a #nt_create method, so it can't be deserialzied.")
       end
     end
@@ -275,8 +275,8 @@ module NestedText
 
     class DumpBadIOError < InternalError
       def initialize(io)
-        super('When giving the io argument, it must be of type IO (respond to #write, #fsync).' \
-              " Given: #{io.class.name}")
+        super('When giving the io argument, it must be of type IO (respond to #write, #fsync). ' \
+              "Given: #{io.class.name}")
       end
     end
 

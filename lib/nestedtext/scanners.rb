@@ -132,7 +132,7 @@ module NestedText
     end
 
     def detect_line_tag
-      if @content.length.zero?
+      if @content.length.zero? # rubocop:disable Style/ZeroLengthPredicate
         self.tag = :blank
       elsif @content[0] == '#'
         self.tag = :comment

@@ -45,7 +45,7 @@ module NestedText
     private
 
     def return_object(result)
-      raise Errors::AssertionError, 'Parsed result is of unexpected type.' if \
+      raise Errors::AssertionError, 'Parsed result is of unexpected type.' if
         !result.nil? && ![Hash, Array, String].include?(result.class) && @strict
 
       result
