@@ -23,7 +23,7 @@ group :development do
   gem 'redcarpet', '~> 3.5' # To render GitHub flavored Markdown files with yard.
   gem 'solargraph', require: false
   gem 'webrick', '~> 1.7'
-  gem 'yard', '0.9.26' # Use same as on https://www.rubydoc.info/ (see footer)
+  gem 'yard', '0.9.37' # Use same as on https://www.rubydoc.info/ (see footer)
 end
 
 group :test do
