@@ -333,9 +333,9 @@ port_sum = servers.map { |server| server['port'] }.sum
    git clone https://github.com/erikw/nestedtext-ruby.git && cd $(basename "$_" .git)
    ```
 1. Install a supported ruby version (see .gemspec) with a ruby version manager e.g. [rbenv](https://github.com/rbenv/rbenv), [asdf](http://asdf-vm.com/) or [RVM](https://rvm.io/rvm/install)
-1. run `$ script/setup` or `$ bundle install` to install dependencies
-1. run `$ script/test` or `bundle exec rake test` to run the tests
-1. You can also run `$ script/console` for an interactive prompt that will allow you to experiment.
+1. run `$ scripts/setup` or `$ bundle install` to install dependencies
+1. run `$ scripts/test` or `bundle exec rake test` to run the tests
+1. You can also run `$ scripts/console` for an interactive prompt that will allow you to experiment.
 1. For local testing, install the gem on local machine with: `$ bundle exec rake install`.
    * or manually with `$ gem build *.gemscpec && gem install *.gem`
 1. Watch changes on file system and execute tests with `$ bundle exec guard`.

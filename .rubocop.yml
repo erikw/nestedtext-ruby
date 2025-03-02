@@ -5,7 +5,7 @@ AllCops:
   - lib/**/*.rb
   - test/**/*.rb
   Exclude:
-  - script/*
+  - scripts/*
 
 inherit_mode:
   merge:
