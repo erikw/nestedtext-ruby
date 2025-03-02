@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'nestedtext'
   spec.version       = NestedText::VERSION
   spec.authors       = ['Erik Westrup']
-  spec.email         = ['erik.westrup@gmail.com']
+  spec.email         = ['erik.westrup@icloud.com']
 
   spec.summary       = 'A ruby library for the human friendly data format NestedText (https://nestedtext.org/)'
   spec.description   = 'A ruby library for the human friendly data format NestedText (https://nestedtext.org/). There is support for decoding a NestedText file or string to Ruby data structures, as well as encoding Ruby objects to a NestedText file or string. Furthermore there is support for serialization and deserialization of custom classes. Support for v3.2.1 of the data format will all official tests passing.'
