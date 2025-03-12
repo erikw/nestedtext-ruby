@@ -27,7 +27,8 @@ Provided is support for decoding a NestedText file or string to Ruby data struct
 
 This library is inspired by Ruby's stdlib modules `JSON` and `YAML` as well as the Python [reference implementation](https://github.com/KenKundert/nestedtext) of NestedText. Parsing is done with a LL(1) recursive descent parser and dumping with a recursive DFS traversal of the object references.
 
-To make this library practically useful, you should pair it with a [schema validator](#schema).
+> [!TIP]
+> To make this library practically useful, you should pair it with a [schema validator](#schema).
 
 # What is NestedText?
 Citing from the official [introduction](https://nestedtext.org/en/latest/index.html) page:
@@ -249,7 +250,8 @@ Apple.new("granny smith", 12).to_nt
   NestedText::load_file('path/to/apple_dump.nt')
   ```
 
-See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.rb) for more real working examples.
+> [!TIP]
+> See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.rb) for more real working examples.
 
 # Schema
 The point of NestedText is to not get in to business of supporting ambiguous types. That's why all values are simple strings. Having only simple strings is not useful in practice though. This is why NestedText is intended to be paired with a [Schema Validator](https://nestedtext.org/en/latest/schemas.html)!
