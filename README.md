@@ -372,6 +372,7 @@ bundle exec rake release
 Using [gem-release](https://github.com/svenfuchs/gem-release):
 ```shell
 vi CHANGELOG.md && git commit -am "Update CHANGELOG.md" && git push
+gem signin
 gem bump --version minor --tag --sign --push --release
 ```
 For `--version`, use `major|minor|patch` as needed.
@@ -389,10 +390,14 @@ or **preferred** combined with gem-release:
 ```shell
 vi CHANGELOG.md
 git commit -am "Update CHANGELOG.md" && git push
+gem signin
 gem bump --version minor --tag --push --sign
 ```
 
-then watch progress with [gh](https://cli.github.com/)
+then watch progress with [gh](https://cli.github.com/).
+
+For `--version`, use `major|minor|patch` as needed.
+
 ```shell
 gh run watch
 ```
