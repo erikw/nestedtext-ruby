@@ -18,25 +18,25 @@
     <a href="https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=428442325" title="Open in GitHub Codespaces" ><img alt="Open in GitHub Codespaces" src="https://github.com/codespaces/badge.svg"></a>
 </p>
 
-A ruby library for the human friendly data format [NestedText](https://nestedtext.org/).
+A Ruby library for the human-friendly data format [NestedText](https://nestedtext.org/).
 
-<!-- Use URL to hosted image, so that it shows up at rubydocs.info as well. Using relative image and yardoc option "--asset img:img" did not work. -->
+<!-- Use URL to host image, so that it shows up at rubydocs.info as well. Using the relative image and yardoc option "--asset img:img" did not work. -->
 <a href="#" ><img src="https://raw.githubusercontent.com/erikw/nestedtext-ruby/main/img/logo.webp" align="right" width="420px" alt="nestedtext-ruby logo" /></a>
 
-Provided is support for decoding a NestedText file or string to Ruby data structures, as well as encoding Ruby objects to a NestedText file or string. Furthermore there is support for serialization and deserialization of custom classes. The supported language version of the data format can be seen in the badge above. This implementation pass all the [official tests](https://github.com/KenKundert/nestedtext_tests).
+Provided is support for decoding a NestedText file or string to Ruby data structures, as well as encoding Ruby objects to a NestedText file or string. Furthermore, there is support for serialization and deserialization of custom classes. The supported language version of the data format can be seen in the badge above. This implementation passes all the [official tests](https://github.com/KenKundert/nestedtext_tests).
 
-This library is inspired by Ruby's stdlib modules `JSON` and `YAML` as well as the Python [reference implementation](https://github.com/KenKundert/nestedtext) of NestedText. Parsing is done with a LL(1) recursive descent parser and dumping with a recursive DFS traversal of the object references.
+This library is inspired by Ruby's stdlib modules `JSON` and `YAML` as well as the Python [reference implementation](https://github.com/KenKundert/nestedtext) of NestedText. Parsing is done with an LL(1) recursive descent parser, and dumping is with a recursive DFS traversal of the object references.
 
 > [!TIP]
 > To make this library practically useful, you should pair it with a [schema validator](#schema).
 
 # What is NestedText?
 Citing from the official [introduction](https://nestedtext.org/en/latest/index.html) page:
-> NestedText is a file format for holding structured data to be entered, edited, or viewed by people. It organizes the data into a nested collection of dictionaries, lists, and strings without the need for quoting or escaping. A unique feature of this file format is that it only supports one scalar type: strings.  While the decision to eschew integer, real, date, etc. types may seem counter intuitive, it leads to simpler data files and applications that are more robust.
+> NestedText is a file format for holding structured data to be entered, edited, or viewed by people. It organizes the data into a nested collection of dictionaries, lists, and strings without the need for quoting or escaping. A unique feature of this file format is that it only supports one scalar type: strings.  While the decision to eschew integer, real, date, etc. types may seem counterintuitive, it leads to simpler data files and applications that are more robust.
 >
 > NestedText is convenient for configuration files, address books, account information, and the like. Because there is no need for quoting or escaping, it is particularly nice for holding code fragments.
 
-*"Why do we need another data format?"* is the right question to ask. The answer is that the current popular formats (JSON, YAML, TOML, INI etc.) all have shortcomings which NestedText [addresses](https://nestedtext.org/en/latest/alternatives.html).
+*"Why do we need another data format?"* is the right question to ask. The answer is that the current popular formats (JSON, YAML, TOML, INI, etc.) all have shortcomings which NestedText [addresses](https://nestedtext.org/en/latest/alternatives.html).
 
 ## Example
 Here's a full-fledged example of an address book (from the official docs):
@@ -79,16 +79,16 @@ obj1 = NestedText::load(ntstr)
 obj2 = NestedText::load_file("path/to/data.nt")
 ```
 
-The type of the returned object depends on the top level type in the NestedText data and will be of corresponding native Ruby type. In the example above, `obj1` will be an `Array` and `obj2` will be `Hash` if `data.nt` looks like e.g.
+The type of the returned object depends on the top-level type in the NestedText data and will be of the corresponding native Ruby type. In the example above, `obj1` will be an `Array` and `obj2` will be a `Hash` if `data.nt` looks like e.g.
 
 ```
 key1: value1
 key2: value2
 ```
 
-Thus you must know what you're parsing, or test what you decoded after.
+Thus, you must know what you're parsing, or test what you decoded after.
 
-### Explicit Top Level Type
+### Explicit Top-Level Type
 If you already know what you expect to have, you can guarantee that this is what you will get by telling either function what the expected top type is. If not, an error will be raised.
 
 ```ruby
@@ -99,7 +99,7 @@ array = NestedText::load(ntstr, top_class: Array)
 
 hash = NestedText::load_file("path/to/data.nt", top_class: Hash)
 
-# will raise NestedText::Error as we specify top level String but it will be Array.
+# will raise NestedText::Error as we specify top-level String, but it will be an Array.
 NestedText::load(ntstr, top_class: String)
 ```
 
@@ -142,7 +142,7 @@ k3:
 ```
 
 ## Types
-Ruby classes maps like this to NestedText types:
+Ruby classes map like this to NestedText types:
 Ruby | [NestedText](https://nestedtext.org/en/latest/basic_syntax.html)
 ---|---
 `String`  |`String`
@@ -151,7 +151,7 @@ Ruby | [NestedText](https://nestedtext.org/en/latest/basic_syntax.html)
 
 
 ### Strict Mode
-The strict mode determines how classes other than the basic types `String`, `Array` and `Hash` are handled during encoding and decoding. By **default** strict mode is **false**.
+The strict mode determines how classes other than the basic types `String`, `Array`, and `Hash` are handled during encoding and decoding. By **default** strict mode is **false**.
 
 With `strict: true`
 Ruby | NestedText | Comment
@@ -194,10 +194,10 @@ class Apple
 end
 ```
 
-When an apple instance will be serialized e.g. by `apple.to_nt`, NestedText will call `Apple.encode_nt_with` if it exist and let the returned data be encoded to represent the instance.
+When an Apple instance will be serialized, e.g., by `apple.to_nt`, NestedText will call `Apple.encode_nt_with` if it exists and let the returned data be encoded to represent the instance.
 
 
-To be able to get this instance back when deserializing the NestedText there must be a class method `Class.nt_create(data)`. When deserializing NestedText and the class `Apple` is detected, and the method `#nt_create` exist on the class, it will be called with the decoded data belonging to it. This method should create and return a new instance of the class. In the most simple case it's just translating this to a call to `#new`.
+To be able to get this instance back when deserializing the NestedText, there must be a class method `Class.nt_create(data)`. When deserializing NestedText and the class `Apple` is detected, and the method `#nt_create` exists on the class, it will be called with the decoded data belonging to it. This method should create and return a new instance of the class. In the simplest case, it's just translating this to a call to `#new`.
 
 In full, the `Apple` class should look like:
 
@@ -228,7 +228,7 @@ data:
     - 12
 ```
 
-If you want to add some more super powers to your custom class, you can add the `#to_nt` shortcut by including the `ToNTMixin`:
+If you want to add some more superpowers to your custom class, you can add the `#to_nt` shortcut by including the `ToNTMixin`:
 ```ruby
 class Apple
   include NestedText::ToNTMixin
@@ -240,9 +240,9 @@ Apple.new("granny smith", 12).to_nt
 
 
 **Important notes**:
-* The special key to denote the class name is subject to change in future versions and you **must not** rely on it.
+* The special key to denote the class name is subject to change in future versions, and you **must not** rely on it.
 * Custom Classes **can not be a key** in a Hash. Trying to do this will raise an Error.
-* When deserializing a custom class, this custom class must be available when calling the `#dump*` methods e.g.
+* When deserializing a custom class, this custom class must be available when calling the `#dump*` method,s e.g.
   ```ruby
   require 'nestedtext'
   require_relative 'apple'  # This is needed if Apple is defined in apple.rb and not in this scope already.
@@ -254,13 +254,13 @@ Apple.new("granny smith", 12).to_nt
 > See [encode_custom_classes_test.rb](test/nestedtext/encode_custom_classes_test.rb) for more real working examples.
 
 # Schema
-The point of NestedText is to not get in to business of supporting ambiguous types. That's why all values are simple strings. Having only simple strings is not useful in practice though. This is why NestedText is intended to be paired with a [Schema Validator](https://nestedtext.org/en/latest/schemas.html)!
+The point of NestedText is not to get into to business of supporting ambiguous types. That's why all values are simple strings. Having only simple strings is not useful in practice, though. This is why NestedText is intended to be paired with a [Schema Validator](https://nestedtext.org/en/latest/schemas.html)!
 
 A schema validator can:
 * assert that the parsed values are of the expected types
 * automatically convert them to Ruby class instances like Integer, Float, etc.
 
-The reference implementation in Python [lists](https://nestedtext.org/en/latest/examples.html) a few examples of Python validators. Here below is an example of how this Ruby implementation of NestedText can be paired it with [RSchema](https://github.com/tomdalling/rschema).
+The reference implementation in Python [lists](https://nestedtext.org/en/latest/examples.html) provides a few examples of Python validators. Below is an example of how this Ruby implementation of NestedText can be paired with [RSchema](https://github.com/tomdalling/rschema).
 
 ## Example with RSchema
 The full and working example can be found at [erikw/nestedtext-ruby-test](https://github.com/erikw/nestedtext-ruby-test/blob/main/parse_validate.rb).
@@ -279,7 +279,7 @@ Let's say that you have a program that should connect to a few servers. The list
   stable: false
 ```
 
-After parsing this file with this NestedText library, the values for all keys will be string. But to make practical use of this, we would of course like the values for the `port` keys to be `Integer`, and `stable` should have a value of either `true` or `false`. RSchema can do this conversion for us!
+After parsing this file with the NestedText library, the values for all keys will be strings. But to make practical use of this, we would of course like the values for the `port` keys to be `Integer`, and `stable` should have a value of either `true` or `false`. RSchema can do this conversion for us!
 
 
 ```ruby
@@ -295,7 +295,7 @@ schema = RSchema.define do
   )
 end
 
-# The coercer will automatially convert types
+# The coercer will automatically convert types
 coercer = RSchema::CoercionWrapper::RACK_PARAMS.wrap(schema)
 
 # Parse config file with NestedText
@@ -315,7 +315,7 @@ port_sum = servers.map { |server| server['port'] }.sum
 ```
 
 # Installation
-1. Add this gem to your ruby project's Gemfile
+1. Add this gem to your Ruby project's Gemfile
    - Simply with `$ bundle add nestedtext` when standing inside your project
    - Or manually by adding to `Gemfile`
    ```ruby
@@ -338,13 +338,13 @@ port_sum = servers.map { |server| server['port'] }.sum
    ```shell
    git clone https://github.com/erikw/nestedtext-ruby.git && cd $(basename "$_" .git)
    ```
-1. Install a supported ruby version (see .gemspec) with a ruby version manager e.g. [rbenv](https://github.com/rbenv/rbenv), [asdf](http://asdf-vm.com/) or [RVM](https://rvm.io/rvm/install)
+1. Install a supported Ruby version (see .gemspec) with a Ruby version manager e.g., [rbenv](https://github.com/rbenv/rbenv), [asdf](http://asdf-vm.com/) or [RVM](https://rvm.io/rvm/install)
 1. run `$ scripts/setup` or `$ bundle install` to install dependencies
 1. run `$ scripts/test` or `bundle exec rake test` to run the tests
 1. You can also run `$ scripts/console` for an interactive prompt that will allow you to experiment.
-1. For local testing, install the gem on local machine with: `$ bundle exec rake install`.
+1. For local testing, install the gem on the local machine with: `$ bundle exec rake install`.
    * or manually with `$ gem build *.gemscpec && gem install *.gem`
-1. Watch changes on file system and execute tests with `$ bundle exec guard`.
+1. Watch changes on the file system and execute tests with `$ bundle exec guard`.
 
 
 Extra:
@@ -357,7 +357,7 @@ Extra:
 * To see undocumented methods with [YARD](https://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md): `$ yard stats --list-undoc`
 
 # Releasing
-Instructions for releasing on rubygems.org below. Optionally make a GitHub [release](https://github.com/erikw/nestedtext-ruby/releases) after this for the pushed git tag.
+Instructions for releasing on rubygems.org are below. Optionally make a GitHub [release](https://github.com/erikw/nestedtext-ruby/releases) after this for the pushed git tag.
 
 ## (manually) Using bundler/gem_tasks rake tasks
 Following instructions from [bundler.io](https://bundler.io/guides/creating_gem.html#releasing-the-gem):
@@ -410,5 +410,5 @@ Bug reports and pull requests are welcome on GitHub at [erikw/nestedtext-ruby](h
 The gem is available as open source with the [License](./LICENSE.txt).
 
 # Acknowledgments
-* Thanks to the data format authors making it easier making new implementations by providing an [official test suite](https://github.com/KenKundert/nestedtext_tests).
+* Thanks to the data format authors for making it easier to make new implementations by providing an [official test suite](https://github.com/KenKundert/nestedtext_tests).
 * Thanks to [pixteller](https://pixteller.com/) & [mp4.to](https://mp4.to/webp/) for offering the tools needed for creating an animated logo.
