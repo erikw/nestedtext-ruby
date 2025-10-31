@@ -5,9 +5,15 @@ on:
         required: true
         type: boolean
 
+# OIDC permissions for qlty
+permissions:
+  contents: read
+  id-token: write
+
 env:
   MAIN_RUBY_VER: 3.1
   MAIN_OS: ubuntu
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}-latest
@@ -16,24 +22,27 @@ jobs:
         os: [ubuntu, macos, windows]
         ruby-version: [3.0, 3.1]
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true
-    - name: Run CI Build with Rake
-      run: bundle exec rake ci
-    - name: Publish Code Coverage
-      uses: paambaati/codeclimate-action@v3.0.0
-      if: |
-        inputs.code_coverage &&
-        matrix.os == env.MAIN_OS &&
-        matrix.ruby-version == env.MAIN_RUBY_VER &&
-        github.event_name != 'pull_request'
-      env:
-        CC_TEST_REPORTER_ID: 031d4b3d619508ecf0f2d6ce8f2565d506d4cb24b6fa7ef913af274533021bee
-      with:
-        debug: false
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true
+
+      - name: Run CI Build with Rake
+        run: bundle exec rake ci
+
+      - name: Publish Code Coverage
+      - uses: qltysh/qlty-action/coverage@v2
+        if: |
+          inputs.code_coverage &&
+          matrix.os == env.MAIN_OS &&
+          matrix.ruby-version == env.MAIN_RUBY_VER &&
+          github.event_name != 'pull_request'
+        with:
+          oidc: true
+          format: simplecov
+          files: coverage/.resultset.json

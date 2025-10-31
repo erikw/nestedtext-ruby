@@ -60,7 +60,7 @@ task :parse_file do
   raise 'Provide path to file to parse in envionment variable F' unless ENV.key? 'F'
 
   cur_dir = File.dirname(__FILE__)
-  sh "#{cur_dir}/test/app.rb #{ENV['F']}"
+  sh "#{cur_dir}/test/app.rb #{ENV.fetch('F', nil)}"
 end
 
 desc 'Watch source files for changes and execute actions'
@@ -75,3 +75,10 @@ task :guard do
   sh 'bundle exec guard --clear'
 end
 task watch: :guard
+
+desc 'Run Qlty code analysis'
+task :qlty do
+  sh 'qlty smells --all'
+  sh 'qlty metrics --all --max-depth=2 --sort complexity --limit 10'
+  # sh "qlty lint" # Just runs rubocop, not necessary as we have a task for this already
+end
