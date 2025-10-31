@@ -3,13 +3,16 @@ name: Continuous Deployment # Well, semi-continuous
 on:
   push:
     tags: v[0-9]+.[0-9]+.[0-9]+
+
 env:
   RUBY_VER: 3.1
+
 jobs:
   test:
     uses: ./.github/workflows/test.yml
     with:
       code_coverage: true
+
   release-rubygems:
     needs: [test]
     runs-on: ubuntu-latest
@@ -17,6 +20,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+
+      # TODO this does not work with MFA on rubygems. https://github.com/cadwallion/publish-rubygems-action/issues/19
+      # Until fixed, use manual $(bundle exec rake relese) afer creating a tag, or just just the full $(gem bump --version minor --tag --push --release) with the `--release` switch.
       - name: Release Gem to rubygems.org
         if: contains(github.ref, 'refs/tags/v')
         uses: cadwallion/publish-rubygems-action@master
@@ -24,6 +30,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
           RELEASE_COMMAND: bundle exec rake release
+
   release-github:
     # Manual push can be done as descried here: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-rubygems-registry#publishing-a-package
     needs: [test]
@@ -32,6 +39,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+
       - name: Build and publish gem to GitHub Packages
         if: contains(github.ref, 'refs/tags/v')
         uses: jstastny/publish-gem-to-github@master
